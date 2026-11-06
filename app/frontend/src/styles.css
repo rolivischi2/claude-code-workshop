@@ -1,0 +1,75 @@
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #222;
+}
+
+header {
+  padding: 0.75rem 1.5rem;
+  background: #b00020;
+}
+
+header a {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+main {
+  max-width: 48rem;
+  padding: 1rem 1.5rem;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th,
+td {
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.reservations {
+  padding: 0;
+  list-style: none;
+}
+
+.reservations li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  max-width: 24rem;
+}
+
+label {
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+input {
+  padding: 0.35rem;
+  font: inherit;
+}
+
+.error {
+  margin: 0;
+  color: #b00020;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1rem;
+}

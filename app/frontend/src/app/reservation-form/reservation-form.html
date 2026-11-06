@@ -1,0 +1,57 @@
+@if (room(); as room) {
+  <h1>Neue Reservation – {{ room.name }}</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <label for="title">Titel</label>
+    <input id="title" formControlName="title" data-testid="title" />
+    @if (showErrors('title')) {
+      <p class="error">
+        @if (form.controls.title.hasError('required')) {
+          Titel ist erforderlich.
+        } @else {
+          Titel darf höchstens 120 Zeichen lang sein.
+        }
+      </p>
+    }
+
+    <label for="organizer">Organisator</label>
+    <input id="organizer" formControlName="organizer" data-testid="organizer" />
+    @if (showErrors('organizer')) {
+      <p class="error">
+        @if (form.controls.organizer.hasError('required')) {
+          Organisator ist erforderlich.
+        } @else {
+          Organisator darf höchstens 80 Zeichen lang sein.
+        }
+      </p>
+    }
+
+    <label for="start">Beginn</label>
+    <input id="start" type="datetime-local" formControlName="start" data-testid="start" />
+    @if (showErrors('start')) {
+      <p class="error">Beginn ist erforderlich.</p>
+    }
+
+    <label for="end">Ende</label>
+    <input id="end" type="datetime-local" formControlName="end" data-testid="end" />
+    @if (showErrors('end')) {
+      <p class="error">Ende ist erforderlich.</p>
+    }
+
+    @if (form.controls.start.touched || form.controls.end.touched) {
+      @if (form.hasError('startInPast')) {
+        <p class="error">Der Beginn muss in der Zukunft liegen.</p>
+      }
+      @if (form.hasError('endNotAfterStart')) {
+        <p class="error">Das Ende muss nach dem Beginn liegen.</p>
+      }
+      @if (form.hasError('tooLong')) {
+        <p class="error">Eine Reservation darf höchstens 4 Stunden dauern.</p>
+      }
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()" data-testid="submit">Reservieren</button>
+      <a [routerLink]="['/rooms', room.id]">Abbrechen</a>
+    </div>
+  </form>
+}
