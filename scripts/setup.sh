@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Installs all dependencies and pre-caches everything so the workshop works offline afterwards.
+# Honours HTTP_PROXY / HTTPS_PROXY / NO_PROXY. Safe to run multiple times.
+set -uo pipefail
+source "$(dirname "$0")/lib.sh"
+cd "$REPO_ROOT"
+
+section "Voraussetzungen"
+command -v git >/dev/null && ok "git $(git --version | awk '{print $3}')" || fail "git fehlt"
+if command -v java >/dev/null; then
+  jv="$(java -version 2>&1 | head -1 | sed -E 's/.*"([0-9]+).*/\1/')"
+  [ "$jv" -ge 21 ] && ok "Java $jv" || fail "Java $jv gefunden, mindestens 21 nötig"
+else fail "Java fehlt (JDK 21 oder neuer installieren)"; fi
+if command -v node >/dev/null; then
+  nv="$(version_major "$(node --version)")"
+  [ "$nv" -ge 22 ] && ok "Node $(node --version)" || fail "Node $(node --version) zu alt, mindestens 22 nötig"
+else fail "Node.js fehlt (LTS 22 oder neuer installieren)"; fi
+command -v uv >/dev/null && ok "uv $(uv --version | awk '{print $2}')" || fail "uv fehlt (siehe SETUP.md)"
+command -v claude >/dev/null && ok "Claude Code $(claude --version 2>/dev/null | awk '{print $1}')" \
+  || warn "Claude Code nicht gefunden (siehe SETUP.md) - Setup läuft trotzdem weiter"
+if [ ${#FAILURES[@]} -gt 0 ]; then summary ""; exit 1; fi
+
+section "Proxy"
+if [ -n "${HTTPS_PROXY:-${https_proxy:-}}${HTTP_PROXY:-${http_proxy:-}}" ]; then configure_maven_proxy
+else ok "Kein Proxy gesetzt"; fi
+PROXY_HINT="Hinter einem Firmen-Proxy? HTTPS_PROXY setzen (z.B. export HTTPS_PROXY=http://proxy:8080) und Skript erneut starten."
+
+section "Backend (Maven)"
+cd "$REPO_ROOT/app/backend"
+run_step "Maven-Abhängigkeiten laden" "$PROXY_HINT" ./mvnw -B -q dependency:go-offline
+run_step "Backend bauen und testen" "" ./mvnw -B -q verify
+run_step "Formatter (Spotless) vorladen" "$PROXY_HINT" \
+  ./mvnw -B -q spotless:check -DspotlessFiles='.*RaumreservationApplication\.java'
+
+section "Frontend (npm)"
+cd "$REPO_ROOT/app/frontend"
+run_step "npm-Pakete installieren" "$PROXY_HINT" npm ci --no-audit --no-fund
+run_step "Playwright-Browser (Chromium) installieren" "$PROXY_HINT" npx playwright install chromium
+run_step "Frontend-Tests" "" npm test
+
+section "RAG (Python/uv)"
+cd "$REPO_ROOT/rag"
+run_step "Python-Umgebung (uv sync)" "$PROXY_HINT" uv sync -q
+run_step "Embedding-Modell herunterladen (~220 MB)" "$PROXY_HINT" uv run -q index --download-only
+run_step "Suchindex aufbauen" "" uv run -q index
+
+section "Konfiguration"
+cd "$REPO_ROOT"
+if [ -f .env ]; then ok ".env existiert bereits"
+else cp .env.example .env && ok ".env aus .env.example erzeugt (nur Fake-Werte)"; fi
+
+summary "Weiter mit: scripts/check-setup.sh"
