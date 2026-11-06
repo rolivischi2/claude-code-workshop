@@ -58,7 +58,10 @@ for ref in "${REFS[@]}"; do
   fi
 
   # Formatting must be clean once the hook exercise is solved (seeded violation before that).
-  nn=$((10#$(echo "$ref" | sed -E 's#.*/([0-9]+)$#\1#; s#.*/final$#99#')))
+  case "$ref" in
+    */final) nn=99 ;;
+    *) nn=$(echo "$ref" | sed -nE 's#.*/([0-9]+)$#\1#p'); nn=$((10#${nn:-0})) ;;
+  esac
   spotless="-"
   if [[ "$ref" == solution/* && $nn -ge 6 ]] || [[ "$ref" == start/* && $nn -ge 7 ]]; then
     spotless=$(check spotless "$wt/app/backend" ./mvnw -B -q -o spotless:check)
