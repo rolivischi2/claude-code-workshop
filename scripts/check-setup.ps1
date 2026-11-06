@@ -35,7 +35,7 @@ Set-Location $RepoRoot
 if (Test-Path 'rag/.data/index.db') { Write-Ok 'RAG-Index vorhanden' } else { Write-Fail 'RAG-Index fehlt - scripts\setup.ps1 ausfuehren' }
 
 Write-Section 'Manuell pruefen (in Claude Code)'
-Write-Host "  1. claude.ai > Settings > Privacy: Einstellung zur Modellverbesserung geprueft (siehe SETUP.md)"
+Write-Host "  1. Datenschutz-Einstellung geprueft: https://claude.ai/settings/data-privacy-controls"
 Write-Host "  2. '/context' einmal ausfuehren und den Startverbrauch notieren"
 
 exit (Write-Summary 'Du bist bereit fuer den Workshop.')

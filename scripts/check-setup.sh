@@ -41,7 +41,7 @@ section "Projekt"
 [ -f rag/.data/index.db ] && ok "RAG-Index vorhanden" || fail "RAG-Index fehlt - scripts/setup.sh ausführen"
 
 section "Manuell prüfen (in Claude Code)"
-echo "  1. claude.ai > Settings > Privacy: Einstellung zur Modellverbesserung geprüft (siehe SETUP.md)"
+echo "  1. Datenschutz-Einstellung geprüft: https://claude.ai/settings/data-privacy-controls"
 echo "  2. '/context' einmal ausführen und den Startverbrauch notieren"
 
 summary "Du bist bereit für den Workshop."
