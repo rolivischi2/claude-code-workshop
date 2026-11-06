@@ -42,8 +42,8 @@ Optional für die CLAUDE.md:
 ## Erfolgskriterium
 
 ```bash
-cd app/backend && ./mvnw -q test       # grün, kein @Disabled mehr im ReservationServiceTest
-cd app/frontend && npm test            # grün
+(cd app/backend && ./mvnw -q test)       # grün
+(cd app/frontend && npm test)            # grün
 grep -rn "@Disabled" app/backend/src/test   # keine Treffer
 ```
 

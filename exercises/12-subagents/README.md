@@ -1,6 +1,6 @@
 # Übung 12 – Delegation mit Kontextisolation: Subagents
 
-**Block:** D – Skalieren · **Zeitbudget:** 20 Minuten
+**Block:** D – Skalieren · **Zeitbudget:** 15 Minuten
 
 ## Ziel
 
@@ -46,20 +46,26 @@ End with a verdict: APPROVE or REQUEST CHANGES, and at most 10 findings, most se
 
 Prompt 1:
 ```
-Nutze den reviewer-Subagent, um alle Änderungen unter app/backend/src seit dem Tag start/00
+Nutze den reviewer-Subagent, um alle Änderungen unter app/backend/src seit dem Git-Tag start/00
 zu reviewen (git diff start/00 -- app/backend/src). Fasse sein Ergebnis in 5 Zeilen zusammen.
 ```
 
 ## Erfolgskriterium
 
-Ein Review-Report mit Verdict und Findings liegt vor, und der Hauptkontext ist deutlich kleiner geblieben als der Diff.
+Ein Review-Report mit Verdict und Findings liegt vor, und der Hauptkontext ist deutlich weniger
+gewachsen als der Diff gross ist. Diff-Grösse grob schätzen (4 Zeichen ≈ 1 Token):
+
+```bash
+git diff start/00 -- app/backend/src | wc -c
+```
 
 <details>
 <summary>Hinweise</summary>
 
 - Explizit aufrufen: «Nutze den reviewer-Subagent …» oder `@agent-reviewer`. Mit einer guten
   `description` delegiert Claude auch von selbst.
-- `tools` beschränkt den Reviewer: Er kann nichts editieren. `model: haiku` macht ihn günstig.
+- `tools` beschränkt den Reviewer: Er hat kein Edit und kein Write. Über Bash könnte er trotzdem
+  Dateien ändern. In der Praxis Bash per Permission einschränken. `model: haiku` macht ihn günstig.
 - Edits von Subagents erfasst `/rewind` nicht (Übung 07). Ein reiner Lese-Reviewer ist deshalb doppelt angenehm.
 
 </details>

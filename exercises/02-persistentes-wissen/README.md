@@ -1,6 +1,6 @@
 # Übung 02 – Persistentes Wissen
 
-**Block:** A – Kontext · **Zeitbudget:** 25 Minuten (inkl. Live-Demo)
+**Block:** A – Kontext · **Zeitbudget:** 25 Minuten (inkl. 10 Minuten Live-Demo vorher/nachher durch einen Facilitator)
 
 ## Ziel
 
@@ -33,7 +33,7 @@ CLAUDE.md-Hierarchie (User, Projekt, lokal), Imports mit `@pfad` und Auto Memory
 
 - [ ] Controller → Service → Repository, keine Logik im Controller
 - [ ] Antwort als DTO (Record) über einen Mapper, keine Entity nach aussen
-- [ ] Fehler als Problem Details (RFC 7807) mit `code` im Schema `RR-<Status><Nr>`
+- [ ] Fehler über die Exceptions aus `common/` (hier: `NotFoundException` → 404 als Problem Detail), keine Fehlerbehandlung im Controller
 - [ ] Service-Unit-Test **und** MockMvc-Test
 - [ ] `./mvnw -q test` grün
 
@@ -51,7 +51,7 @@ CLAUDE.md-Hierarchie (User, Projekt, lokal), Imports mit `@pfad` und Auto Memory
 
 ## Befehle
 - Backend testen: `cd app/backend && ./mvnw -q test` (Windows: `mvnw.cmd`)
-- Backend formatieren: `./mvnw -q spotless:apply`
+- Formatieren übernimmt ab Übung 06 ein Hook (nie das ganze Projekt formatieren)
 - Frontend testen: `cd app/frontend && npm test` · Lint: `npm run lint`
 ```
 
@@ -65,7 +65,11 @@ Raums liefert. Gibt es den Raum nicht, soll ein 404 kommen.
 ## Erfolgskriterium
 
 Das Ergebnis aus Teil B erfüllt die Checkliste deutlich besser als Teil A, und die
-`CLAUDE.md` ist committet.
+`CLAUDE.md` ist committet:
+
+```bash
+git log --oneline -1 -- CLAUDE.md
+```
 
 <details>
 <summary>Hinweise</summary>

@@ -9,7 +9,7 @@ Danach läuft alles offline.
 |----------|---------|------------|--------------|
 | Git | aktuell | `git --version` | macOS: `xcode-select --install` · Windows: [Git for Windows](https://git-scm.com/download/win) (inkl. Git Bash) |
 | Java (JDK) | 21 oder neuer | `java -version` | z.B. Eclipse Temurin 21 über `brew install --cask temurin@21` bzw. `winget install EclipseAdoptium.Temurin.21.JDK` |
-| Node.js | 22 oder neuer (LTS) | `node --version` | [nodejs.org](https://nodejs.org) bzw. `brew install node` / `winget install OpenJS.NodeJS.LTS` |
+| Node.js | 22.22 oder 24.15 und neuer (LTS) | `node --version` | [nodejs.org](https://nodejs.org) bzw. `brew install node` / `winget install OpenJS.NodeJS.LTS` |
 | uv (Python) | aktuell | `uv --version` | `brew install uv` bzw. `winget install astral-sh.uv` ([Doku](https://docs.astral.sh/uv/getting-started/installation/)) |
 | Chrome oder Edge | aktuell | – | Für Übung 09 (Playwright MCP). Edge ist auf Windows vorinstalliert. |
 | Claude Code | aktuell | `claude --version` | siehe Schritt 2 |
@@ -51,7 +51,7 @@ Hintergrund: [Data usage](https://code.claude.com/docs/en/data-usage)
 ## 4. Repo klonen und Setup ausführen
 
 ```bash
-git clone <repo-url> claude-code-workshop
+git clone <repo-url> claude-code-workshop      # URL aus der Einladung
 cd claude-code-workshop
 scripts/setup.sh                 # macOS / Linux / Git Bash
 ```
@@ -86,7 +86,7 @@ $env:NO_PROXY    = "localhost,127.0.0.1"
 ## 5. Prüfen
 
 ```bash
-scripts/check-setup.sh           # bzw. scripts\check-setup.ps1
+scripts/check-setup.sh           # Windows: powershell -ExecutionPolicy Bypass -File scripts\check-setup.ps1
 ```
 
 Alles grün? Dann seid ihr bereit. Den Rest prüfen wir gemeinsam in [Übung 00](exercises/00-setup-check/).

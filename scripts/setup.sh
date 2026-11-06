@@ -12,9 +12,8 @@ if command -v java >/dev/null; then
   [ "$jv" -ge 21 ] && ok "Java $jv" || fail "Java $jv gefunden, mindestens 21 nötig"
 else fail "Java fehlt (JDK 21 oder neuer installieren)"; fi
 if command -v node >/dev/null; then
-  nv="$(version_major "$(node --version)")"
-  [ "$nv" -ge 22 ] && ok "Node $(node --version)" || fail "Node $(node --version) zu alt, mindestens 22 nötig"
-else fail "Node.js fehlt (LTS 22 oder neuer installieren)"; fi
+  node_supported && ok "Node $(node --version)" || fail "Node $(node --version) passt nicht, nötig: $NODE_REQUIRED"
+else fail "Node.js fehlt (nötig: $NODE_REQUIRED)"; fi
 command -v uv >/dev/null && ok "uv $(uv --version | awk '{print $2}')" || fail "uv fehlt (siehe SETUP.md)"
 command -v claude >/dev/null && ok "Claude Code $(claude --version 2>/dev/null | awk '{print $1}')" \
   || warn "Claude Code nicht gefunden (siehe SETUP.md) - Setup läuft trotzdem weiter"

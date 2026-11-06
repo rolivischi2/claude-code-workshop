@@ -49,6 +49,13 @@ function Get-Major([string]$version) {
     if ($version -match '(\d+)') { [int]$Matches[1] } else { 0 }
 }
 
+# Angular 22 needs Node ^22.22.3 || ^24.15.0 || >=26; let node check its own version.
+$script:NodeRequired = '22.22.3+ oder 24.15+'
+function Test-NodeSupported {
+    node -e 'const [a,b,c]=process.versions.node.split(/\./).map(Number);process.exit((a===22&&(b>22||(b===22&&c>=3)))||(a===24&&b>=15)||a>=26?0:1)'
+    return ($LASTEXITCODE -eq 0)
+}
+
 function Get-JavaMajor {
     $line = (& java -version 2>&1 | Select-Object -First 1) | Out-String
     if ($line -match '"(\d+)') { [int]$Matches[1] } else { 0 }

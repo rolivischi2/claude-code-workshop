@@ -10,9 +10,8 @@ if (Get-Command java -ErrorAction SilentlyContinue) {
     if ($jv -ge 21) { Write-Ok "Java $jv" } else { Write-Fail "Java $jv gefunden, mindestens 21 noetig" }
 } else { Write-Fail 'Java fehlt (JDK 21 oder neuer installieren)' }
 if (Get-Command node -ErrorAction SilentlyContinue) {
-    $nv = Get-Major (node --version)
-    if ($nv -ge 22) { Write-Ok "Node $(node --version)" } else { Write-Fail "Node $(node --version) zu alt, mindestens 22 noetig" }
-} else { Write-Fail 'Node.js fehlt (LTS 22 oder neuer installieren)' }
+    if (Test-NodeSupported) { Write-Ok "Node $(node --version)" } else { Write-Fail "Node $(node --version) passt nicht, noetig: $NodeRequired" }
+} else { Write-Fail "Node.js fehlt (noetig: $NodeRequired)" }
 if (Get-Command uv -ErrorAction SilentlyContinue) { Write-Ok 'uv' } else { Write-Fail 'uv fehlt (siehe SETUP.md)' }
 if (Get-Command claude -ErrorAction SilentlyContinue) { Write-Ok 'Claude Code' }
 else { Write-Warn 'Claude Code nicht gefunden (siehe SETUP.md) - Setup laeuft trotzdem weiter' }

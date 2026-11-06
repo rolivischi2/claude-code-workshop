@@ -20,8 +20,10 @@ sie während der Pause vom Handy aus. Nach dem Mittag schauen wir das Ergebnis g
 
 ## Aufgabe (optional)
 
-1. In einer laufenden Session: `/remote-control` (kurz `/rc`).
-   Oder neu starten mit `claude --remote-control`.
+1. Eine der drei Varianten:
+   - in einer laufenden Session: `/remote-control` (kurz `/rc`)
+   - neue Session, fernsteuerbar: `claude --remote-control`
+   - reiner Server-Modus mit QR-Code: `claude remote-control`
 2. Am Handy die Claude-App öffnen (Bereich «Code») oder claude.ai/code im Browser.
    Die Session erscheint dort. Bei `claude remote-control` zeigt die Leertaste einen QR-Code.
 3. Vom Handy aus eine kleine Frage stellen, z.B. «Welche Tests gibt es im Backend?».

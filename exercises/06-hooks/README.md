@@ -1,6 +1,6 @@
 # Übung 06 – Deterministisch statt probabilistisch: Hooks
 
-**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 30 Minuten
+**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 25 Minuten
 
 ## Ziel
 
@@ -16,16 +16,21 @@ Hook kann einen Aufruf auch blockieren.
 
 ## Aufgabe
 
-1. **Wichtig:** Diese Session bis Ende Übung 07 offen lassen (für `/rewind`).
-2. Hook-Skripte von Claude bauen lassen (Prompt 1). Sie sind in Node geschrieben und laufen
+1. **Vorher prüfen:** `(cd app/backend && ./mvnw spotless:check)` muss `DurationFormatter.java` melden.
+   Ist die Datei schon formatiert (z.B. weil Claude in Übung 03/04 das ganze Projekt formatiert hat),
+   den Originalzustand zurückholen:
+   `git checkout start/00 -- app/backend/src/main/java/com/example/raumreservation/reservation/DurationFormatter.java`
+2. **Wichtig:** In dieser Session bis Ende Übung 07 kein `/clear` (für `/rewind`).
+3. Hook-Skripte von Claude bauen lassen (Prompt 1). Sie sind in Node geschrieben und laufen
    deshalb gleich auf macOS und Windows.
    - `.claude/hooks/format-edited-file.mjs`: liest das Hook-JSON von stdin
      (`tool_input.file_path`) und formatiert nur diese Datei.
      - `.java` → `./mvnw -q spotless:apply -DspotlessFiles=<Regex auf die Datei>` in `app/backend`
      - `.ts`, `.html`, `.css`, `.scss` unter `app/frontend` → `npx prettier --write <Datei>` in `app/frontend`
    - `.claude/hooks/protect-generated.mjs`: Pfad unter `app/frontend/src/generated/` → Meldung auf stderr und **Exit-Code 2** (blockiert).
-3. Hooks in `.claude/settings.json` eintragen (Vorlage unten), zu den Permissions aus Übung 05 dazu.
-4. Claude neu laden (`/hooks` zeigt die aktiven Hooks) und mit Prompt 2 und 3 testen.
+4. Hooks in `.claude/settings.json` eintragen (Vorlage unten), zu den Permissions aus Übung 05 dazu.
+5. Claude mit `/exit` beenden und mit `claude -c` fortsetzen: Hooks werden beim Start geladen,
+   Verlauf und Checkpoints bleiben erhalten. `/hooks` zeigt die aktiven Hooks. Dann Prompt 2 und 3.
 
 ```json
 {
@@ -68,7 +73,9 @@ ein Javadoc für die Methode format.
 
 Prompt 3:
 ```
-Füge in app/frontend/src/generated/api-types.ts dem RoomDto ein optionales Feld description hinzu.
+Teste unseren Schutz-Hook: Versuche trotz des Generator-Hinweises, in
+app/frontend/src/generated/api-types.ts dem RoomDto ein optionales Feld description
+hinzuzufügen, und zeig mir die Rückmeldung des Hooks.
 ```
 
 ## Erfolgskriterium
@@ -82,10 +89,9 @@ cd app/backend && ./mvnw -q spotless:check     # grün: der Hook hat DurationFor
 <details>
 <summary>Hinweise</summary>
 
-- Vorher prüfen: `./mvnw spotless:check` meldet `DurationFormatter.java`. Meldet es auch
-  Dateien aus euren Übungen 03/04, sind diese vor dem Hook entstanden. Formatiert sie gezielt
-  (z.B. `./mvnw -q spotless:apply -DspotlessFiles='.*Waitlist.*'`, aber **nicht**
-  `DurationFormatter`) oder springt mit `scripts/reset-exercise.sh 06` auf den Referenzstand.
+- Meldet `spotless:check` auch Dateien aus euren Übungen 03/04, sind diese vor dem Hook entstanden.
+  Formatiert sie gezielt (z.B. `./mvnw -q spotless:apply -DspotlessFiles='.*Waitlist.*'`), aber **nicht**
+  `DurationFormatter`, oder springt mit `scripts/reset-exercise.sh 06` auf den Referenzstand.
 - Warum nur die geänderte Datei? Ein `spotless:apply` übers ganze Projekt würde fremde
   Dateien anfassen und jeden Edit verlangsamen.
 - Exit-Code 2 in einem PreToolUse-Hook blockiert. stderr geht als Begründung an Claude.

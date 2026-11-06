@@ -1,6 +1,6 @@
 # Übung 07 – Reversibilität
 
-**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 15 Minuten
+**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 10 Minuten
 
 ## Ziel
 
@@ -14,7 +14,7 @@ beides zurück. Sessions lassen sich fortsetzen und verzweigen. Für alles Dauer
 
 ## Aufgabe
 
-Voraussetzung: dieselbe Session wie in Übung 06.
+Voraussetzung: dieselbe Session wie in Übung 06 (auch nach `claude -c`).
 
 1. Stand von Übung 06 sichern: `git add -A && git commit -m "Add formatting and protection hooks"`
 2. `/rewind` aufrufen (oder Esc Esc bei leerem Prompt) und den Punkt **vor** Prompt 1 aus Übung 06 wählen.

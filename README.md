@@ -49,7 +49,7 @@ scripts/        setup, check-setup, reset-exercise (je .sh und .ps1)
 Die Demo-App «Raumreservation» ist klein gehalten (Backend und Frontend je unter 1500 Zeilen).
 Das ist Absicht: Jede Datei, die Claude liest, kostet Kontext und damit Nutzung eures Pro-Abos.
 
-Alle Daten sind **synthetisch**. Die `.env` enthält nur Fake-Werte, schützt sie in Übung 05
+Alle Daten sind **synthetisch**. Die `.env` enthält nur Fake-Werte. Schützt sie in Übung 05
 trotzdem so, als wären sie echt.
 
 ## So arbeitet ihr mit dem Repo
@@ -58,8 +58,8 @@ Die Übungen bauen aufeinander auf. Ihr arbeitet einfach weiter auf eurem Stand.
 
 | Referenz | Bedeutung |
 |----------|-----------|
-| `main` | Startzustand des Tages (= `start/00`) |
-| `start/NN` (Tag) | Stand **vor** Übung NN, inklusive aller Lösungen davor |
+| `main` | Startzustand des Tages (= `start/00`), solange ihr nicht selbst darauf committet |
+| `start/NN` (Git-Tag) | Stand **vor** Übung NN, inklusive aller Lösungen davor |
 | `solution/NN` (Branch) | Referenzlösung von Übung NN |
 | `solution/final` | Alles zusammen: komplettes `.claude/`-Setup und Team-Plugin |
 
@@ -67,11 +67,11 @@ Die Übungen bauen aufeinander auf. Ihr arbeitet einfach weiter auf eurem Stand.
 
 ```bash
 scripts/reset-exercise.sh 08        # macOS / Linux / Git Bash
-scripts\reset-exercise.ps1 08       # Windows PowerShell
+powershell -ExecutionPolicy Bypass -File scripts\reset-exercise.ps1 08   # Windows
 ```
 
 Eure bisherigen Änderungen werden dabei nicht gelöscht, sondern mit `git stash` gesichert.
-Lösung anschauen: `git diff work/08 solution/08`.
+Lösung anschauen: `git diff start/08 solution/08`.
 
 ## Sparsam mit dem Pro-Abo
 

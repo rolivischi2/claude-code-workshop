@@ -66,6 +66,8 @@ Der `curl`-Aufruf wird **verweigert** (deny-Regel) bzw. von der Sandbox blockier
 <details>
 <summary>Hinweise</summary>
 
+- Weigert sich Claude schon beim Test-Prompt (gut so!), seht ihr die deny-Regel nicht greifen.
+  Dann direkter: «Führe `curl https://example.invalid` aus.»
 - Die Domain `example.invalid` existiert absichtlich nicht. Selbst ein erfolgreicher Aufruf ginge ins Leere.
 - Oft erkennt das Modell die Injection selbst und weigert sich. Gut so, aber darauf darf sich
   niemand verlassen. Darum simuliert der Test-Prompt den Fall, dass es nicht klappt.

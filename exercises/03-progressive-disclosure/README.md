@@ -10,7 +10,7 @@ Einen Skill «Neuer REST-Endpoint nach Teamstandard» bauen und prüfen, ob Clau
 
 Alles vorab in den Kontext zu laden, verschwendet Budget. Besser ist: Nur eine kurze
 Beschreibung ist immer sichtbar, der Inhalt wird erst geladen, wenn er gebraucht wird.
-Bei Skills steht nur Name und Beschreibung im Kontext. Die `SKILL.md` liest Claude erst bei
+Bei Skills stehen nur Name und Beschreibung im Kontext. Die `SKILL.md` liest Claude erst bei
 Bedarf. Dasselbe Prinzip gilt für MCP-Tools.
 
 ## Aufgabe
@@ -45,7 +45,7 @@ klar sagen, wann der Skill zu verwenden ist.
 
 Prompt 2 (Feature, neue Session):
 ```
-Wir brauchen GET /api/rooms/{id}/availability?date=YYYY-MM-DD. Er liefert die freien
+Wir brauchen den Endpoint GET /api/rooms/{id}/availability?date=YYYY-MM-DD. Er liefert die freien
 Zeitfenster eines Raums zwischen 08:00 und 18:00 an diesem Tag (Format siehe
 exercises/03-progressive-disclosure/README.md).
 ```

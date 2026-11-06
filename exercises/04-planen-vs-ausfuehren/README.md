@@ -1,6 +1,6 @@
 # Übung 04 – Planen vs. Ausführen
 
-**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 30 Minuten
+**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 25 Minuten
 
 ## Ziel
 

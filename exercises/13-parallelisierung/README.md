@@ -1,6 +1,6 @@
 # Übung 13 – Parallelisierung mit Worktrees
 
-**Block:** D – Skalieren · **Zeitbudget:** 25 Minuten
+**Block:** D – Skalieren · **Zeitbudget:** 15 Minuten (Demo, wer mag macht mit)
 
 ## Ziel
 
@@ -15,16 +15,18 @@ sie mit `--worktree` selbst an.
 
 ## Aufgabe
 
-1. In `.claude/settings.json` ergänzen, damit Worktrees von **eurem aktuellen Stand** abzweigen
+1. Zuerst den Stand der Übungen 08–12 sichern, sonst fehlt er in den Worktrees:
+   `git add -A && git commit -m "Exercises 08-12"`
+2. In `.claude/settings.json` ergänzen, damit Worktrees von **eurem aktuellen Stand** abzweigen
    (Standard wäre `main`, dann fehlten alle Übungen des Tages):
    ```json
    "worktree": { "baseRef": "head" }
    ```
    Committen: `git commit -am "Branch worktrees from HEAD"`
-2. **Terminal 1:** `claude -w room-search`, dann Prompt A
-3. **Terminal 2:** `claude -w csv-export`, dann Prompt B
-4. Beide laufen lassen. Beobachten: `git worktree list` zeigt beide unter `.claude/worktrees/`.
-5. Beide Sessions beenden und die Worktrees behalten. Dann im Hauptverzeichnis zusammenführen:
+3. **Terminal 1:** `claude -w room-search`, dann Prompt A
+4. **Terminal 2:** `claude -w csv-export`, dann Prompt B
+5. Beide laufen lassen. Beobachten: `git worktree list` zeigt beide unter `.claude/worktrees/`.
+6. Beide Sessions beenden und die Worktrees behalten. Dann im Hauptverzeichnis zusammenführen:
    ```bash
    git merge --no-edit worktree-room-search
    git merge --no-edit worktree-csv-export

@@ -5,8 +5,8 @@ Set-Location $RepoRoot
 Write-Section 'Werkzeuge'
 if ((Get-Command java -ErrorAction SilentlyContinue) -and (Get-JavaMajor) -ge 21) { Write-Ok "Java $(Get-JavaMajor)" }
 else { Write-Fail 'Java 21+ nicht gefunden' }
-if ((Get-Command node -ErrorAction SilentlyContinue) -and (Get-Major (node --version)) -ge 22) { Write-Ok "Node $(node --version)" }
-else { Write-Fail 'Node 22+ nicht gefunden' }
+if ((Get-Command node -ErrorAction SilentlyContinue) -and (Test-NodeSupported)) { Write-Ok "Node $(node --version)" }
+else { Write-Fail "Node $NodeRequired nicht gefunden" }
 if (Get-Command uv -ErrorAction SilentlyContinue) { Write-Ok 'uv' } else { Write-Fail 'uv nicht gefunden' }
 if (Get-Command claude -ErrorAction SilentlyContinue) {
     Write-Ok 'Claude Code'

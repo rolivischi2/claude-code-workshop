@@ -9,7 +9,7 @@ lokalen Marketplace verteilen und in einem frischen Klon installieren.
 
 ## Konzept
 
-Gute Setups bleiben sonst bei Einzelnen hängen. Ein Plugin macht sie für das ganze Team
+Ohne Paketierung bleiben gute Setups bei Einzelnen hängen. Ein Plugin macht sie für das ganze Team
 installierbar. Plugins bündeln Skills, Hooks, MCP-Server und Subagents. Verteilt werden sie
 über einen eigenen Marketplace, im einfachsten Fall ein Ordner im Repo.
 
@@ -30,9 +30,10 @@ installierbar. Plugins bündeln Skills, Hooks, MCP-Server und Subagents. Verteil
    ```
 2. Prüfen: `claude plugin validate plugins/raumreservation-team` und `claude plugin validate plugins`
 3. Committen.
-4. Frischen Klon vom **Startzustand** anlegen (dort gibt es noch kein `.claude/`) und das Plugin nur lokal installieren:
+4. Frischen Klon vom **Startzustand** (`start/00`) anlegen, dort gibt es noch kein `.claude/`-Setup.
+   Das Plugin nur lokal installieren:
    ```bash
-   git clone --branch main . ../ccw-frisch
+   git clone --branch start/00 . ../ccw-frisch
    cd ../ccw-frisch
    claude plugin marketplace add ../claude-code-workshop/plugins --scope local
    claude plugin install raumreservation-team@raumreservation-team-marketplace --scope local
@@ -71,6 +72,7 @@ ein Javadoc für die Methode format.
 - Im Team-Alltag: Marketplace in ein eigenes Repo, Projekte registrieren ihn über
   `extraKnownMarketplaces` und `enabledPlugins` in `.claude/settings.json`.
 - Aufräumen: `claude plugin uninstall raumreservation-team@raumreservation-team-marketplace --scope local`, Klon löschen.
+- MCP-Server im Klon nicht verbunden oder leer? Erwartet: Im Klon fehlen `node_modules` und der RAG-Index.
 - Plugins sind Code mit euren Rechten. Installiert nur, was ihr gelesen habt (siehe Übung 10).
 
 </details>

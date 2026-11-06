@@ -36,7 +36,7 @@ Embedding-Retrieval wirklich, wann reicht lexikalische Suche, und wann schadet d
 | Messung | Recall@5 (ist das richtige Dokument unter den Top 5?) und MRR (wie weit oben?) pro Kategorie |
 | Agent-Anbindung | MCP-Server mit `search_docs` und `get_doc` (`mcp_server/`) |
 
-Alles läuft **lokal und offline**: kein externer Embedding-Dienst, keine Datenbank, kein Docker.
+Alles läuft **lokal und offline**: kein externer Embedding-Dienst, kein Datenbankserver, kein Docker.
 
 ### Die vier Fragekategorien
 
@@ -68,7 +68,7 @@ Zieldokumente vermeiden die Wörter der Frage, ähnlich klingende Ablenkdokument
 ## Grenzen
 
 - 25 Fragen sind eine kleine Stichprobe. Eine Frage entspricht 0.04 Recall. Unterschiede unter ~0.1 nicht überinterpretieren.
-- Ein kleines Embedding-Modell (sieht ca. 128 Wortteile pro Chunk). Grössere Modelle verschieben die Zahlen, nicht aber die grundsätzlichen Muster.
+- Das Embedding-Modell ist klein (es sieht ca. 128 Wortteile pro Chunk). Grössere Modelle verschieben die Zahlen, nicht aber die grundsätzlichen Muster.
 - Der Korpus ist synthetisch und auf Kontraste ausgelegt, also kein Abbild eines echten Wikis.
 
 ## Selbst ausprobieren

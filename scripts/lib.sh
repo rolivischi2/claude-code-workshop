@@ -42,6 +42,10 @@ configure_maven_proxy() {
   fi
 }
 
+# Angular 22 needs Node ^22.22.3 || ^24.15.0 || >=26; let node check its own version.
+NODE_REQUIRED="22.22.3+ oder 24.15+"
+node_supported() { node -e 'const [a,b,c]=process.versions.node.split(/\./).map(Number);process.exit((a===22&&(b>22||(b===22&&c>=3)))||(a===24&&b>=15)||a>=26?0:1)'; }
+
 version_major() { echo "$1" | sed -E 's/[^0-9]*([0-9]+).*/\1/'; }
 
 summary() {

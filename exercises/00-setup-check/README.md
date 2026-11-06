@@ -24,7 +24,7 @@ Kontext = System-Prompt + CLAUDE.md + Skills-Beschreibungen + Verlauf + Tool-Erg
 
 1. Setup-Skript prüfen lassen:
    ```bash
-   scripts/check-setup.sh          # Windows: scripts\check-setup.ps1
+   scripts/check-setup.sh          # Windows: powershell -ExecutionPolicy Bypass -File scripts\check-setup.ps1
    ```
 2. Im Repo-Root `claude` starten und nacheinander eingeben:
    - `/status`: Login-Methode muss euer claude.ai-Konto sein, kein API-Key.

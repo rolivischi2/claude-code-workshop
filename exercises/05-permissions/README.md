@@ -1,6 +1,6 @@
 # Übung 05 – Autonomiestufen und Least Privilege
 
-**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 20 Minuten
+**Block:** B – Steuerung & Sicherheit · **Zeitbudget:** 15 Minuten
 
 ## Ziel
 
@@ -64,7 +64,7 @@ Ihr habt beobachtet, dass
 - `Read(./.env)` gilt relativ zum Projekt-Root. `Read(**/.env)` würde jede `.env` im Baum treffen.
 - Read-Deny-Regeln blockieren auch `cat`, `head`, `tail` und Ähnliches in Bash. **Nicht**
   blockiert ist z.B. ein Python- oder Node-Skript, das die Datei öffnet. Darum geht es in Übung 10.
-- `Bash(git push *)` trifft `git -C . push` nicht. Deny-Regeln sind ein Leitplanke, keine Sicherheitsgrenze.
+- `Bash(git push *)` trifft `git -C . push` nicht. Deny-Regeln sind eine Leitplanke, keine Sicherheitsgrenze.
 - Was ihr mit «don't ask again» erlaubt, landet in `.claude/settings.local.json` (persönlich, nicht committet).
 - Soll Claude diese Datei selbst schreiben? Diskutiert kurz: Wer kontrolliert die Kontrolle?
 

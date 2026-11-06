@@ -7,8 +7,8 @@ cd "$REPO_ROOT"
 section "Werkzeuge"
 jv="$(java -version 2>&1 | head -1 | sed -E 's/.*"([0-9]+).*/\1/')"
 [ "${jv:-0}" -ge 21 ] 2>/dev/null && ok "Java $jv" || fail "Java 21+ nicht gefunden"
-nv="$(version_major "$(node --version 2>/dev/null || echo v0)")"
-[ "$nv" -ge 22 ] && ok "Node $(node --version)" || fail "Node 22+ nicht gefunden"
+if command -v node >/dev/null && node_supported; then ok "Node $(node --version)"
+else fail "Node $NODE_REQUIRED nicht gefunden"; fi
 command -v uv >/dev/null && ok "uv" || fail "uv nicht gefunden"
 if command -v claude >/dev/null; then
   ok "Claude Code $(claude --version 2>/dev/null | awk '{print $1}')"

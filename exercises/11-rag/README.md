@@ -1,6 +1,6 @@
 # Übung 11 – Retrieval: Agentic Search vs. RAG
 
-**Block:** R – Retrieval · **Zeitbudget:** 60 Minuten (4 Teile à ca. 15 Minuten)
+**Block:** R – Retrieval · **Zeitbudget:** 60 Minuten (R1–R3 je ca. 15, R4 ca. 10 Minuten)
 
 ## Ziel
 
@@ -42,7 +42,7 @@ Kontext nach `/context`?
 
 **R2 – Chunking verbessern (15')**
 
-1. `uv run eval` laufen lassen und die Tabelle sichern (`uv run eval > ../eval-vorher.txt`).
+1. `uv run eval` laufen lassen und die Tabelle sichern (`uv run eval > .data/eval-vorher.txt`, der Ordner ist von Git ignoriert).
 2. In `rag/indexer/chunking.py` das naive Chunking durch heading-aware Chunking ersetzen lassen (Prompt 2).
 3. `uv run index && uv run eval` und vergleichen.
 
