@@ -1,0 +1,34 @@
+# Secrets (fake, but treated as real for the permission exercise)
+.env
+.env.local
+
+# Source material not meant for participants
+*.pdf
+
+# Tooling state
+.remember/
+.DS_Store
+.idea/
+.vscode/
+*.iml
+
+# Java
+app/backend/target/
+
+# Angular / Node
+node_modules/
+app/frontend/dist/
+app/frontend/.angular/
+app/frontend/test-results/
+app/frontend/playwright-report/
+
+# Python / RAG
+.venv/
+__pycache__/
+*.pyc
+rag/.data/
+rag/.cache/
+
+# Personal Claude Code settings (team settings in .claude/settings.json are committed)
+.claude/settings.local.json
+CLAUDE.local.md
