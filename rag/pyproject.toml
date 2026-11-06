@@ -1,0 +1,24 @@
+[project]
+name = "raumreservation-rag"
+version = "0.1.0"
+description = "Workshop RAG module: chunking, local embeddings, hybrid search, MCP server and eval"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "fastembed==0.9.1",
+    "sqlite-vec==0.1.9",
+    "mcp==2.3.0",
+    "pyyaml==6.0.3",
+]
+
+[project.scripts]
+index = "indexer.cli:index_main"
+search = "indexer.cli:search_main"
+eval = "eval.evaluate:main"
+rag-mcp = "mcp_server.server:main"
+
+[build-system]
+requires = ["hatchling==1.33.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["indexer", "mcp_server", "eval"]
