@@ -18,8 +18,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -34,6 +34,7 @@ class DeclarationServiceTest {
   private static final String BASEL = "CH001234";
   private static final String ZURICH_AIRPORT = "CH003456";
   private static final String GRN = "26CH1000000000033";
+  private static final String MRN = "30CH0000000000005C";
 
   @Mock DeclarationRepository repository;
   @Mock OfficeService officeService;
@@ -87,7 +88,6 @@ class DeclarationServiceTest {
   }
 
   @Test
-  @Disabled("TODO")
   void allowsDeclarationUpToReferenceAmount() {
     when(repository.findByGuaranteeReferenceAndStatus(GRN, DeclarationStatus.OPEN))
         .thenReturn(List.of(existing("9500.00")));
@@ -135,6 +135,76 @@ class DeclarationServiceTest {
             BusinessRuleException.class, ex -> assertThat(ex.getCode()).isEqualTo("TR-4002"));
   }
 
+  @Test
+  void increasesAmountWithinGuarantee() {
+    TransitDeclaration declaration = givenOpenDeclaration("1000.00", "8500.00");
+
+    DeclarationDto updated = service.updateAmount(MRN, amount("1400.00"));
+
+    assertThat(updated.amount()).isEqualByComparingTo("1400.00");
+    assertThat(declaration.getAmount()).isEqualByComparingTo("1400.00");
+  }
+
+  @Test
+  void allowsIncreaseUpToReferenceAmount() {
+    givenOpenDeclaration("1000.00", "8500.00");
+
+    DeclarationDto updated = service.updateAmount(MRN, amount("1500.00"));
+
+    assertThat(updated.amount()).isEqualByComparingTo("1500.00");
+  }
+
+  @Test
+  void rejectsIncreaseBeyondGuarantee() {
+    TransitDeclaration declaration = givenOpenDeclaration("1000.00", "8500.00");
+
+    assertThatThrownBy(() -> service.updateAmount(MRN, amount("1500.05")))
+        .isInstanceOfSatisfying(
+            BusinessRuleException.class,
+            ex -> {
+              assertThat(ex.getCode()).isEqualTo("TR-4091");
+              assertThat(ex.getMessage()).contains("CHF 1500.00");
+            });
+    assertThat(declaration.getAmount()).isEqualByComparingTo("1000.00");
+  }
+
+  @Test
+  void allowsDecreaseEvenIfGuaranteeIsAlreadyExceeded() {
+    TransitDeclaration declaration = existing("1000.00");
+    when(repository.findByMrn(MRN)).thenReturn(Optional.of(declaration));
+    lenient()
+        .when(repository.findByGuaranteeReferenceAndStatus(GRN, DeclarationStatus.OPEN))
+        .thenReturn(List.of(declaration, existing("12000.00")));
+
+    DeclarationDto updated = service.updateAmount(MRN, amount("500.00"));
+
+    assertThat(updated.amount()).isEqualByComparingTo("500.00");
+  }
+
+  @Test
+  void rejectsCorrectionOfDeclarationThatIsNotOpen() {
+    TransitDeclaration declaration = existing("1000.00");
+    declaration.arrive();
+    when(repository.findByMrn(MRN)).thenReturn(Optional.of(declaration));
+
+    assertThatThrownBy(() -> service.updateAmount(MRN, amount("900.00")))
+        .isInstanceOfSatisfying(
+            BusinessRuleException.class, ex -> assertThat(ex.getCode()).isEqualTo("TR-4092"));
+  }
+
+  /** The declaration under test plus one other open declaration on the same guarantee (10000). */
+  private TransitDeclaration givenOpenDeclaration(String amount, String otherOpenAmount) {
+    TransitDeclaration declaration = existing(amount);
+    when(repository.findByMrn(MRN)).thenReturn(Optional.of(declaration));
+    when(repository.findByGuaranteeReferenceAndStatus(GRN, DeclarationStatus.OPEN))
+        .thenReturn(List.of(declaration, existing(otherOpenAmount)));
+    return declaration;
+  }
+
+  private static UpdateAmountRequest amount(String amount) {
+    return new UpdateAmountRequest(new BigDecimal(amount));
+  }
+
   private static CreateDeclarationRequest request(
       String departure, String destination, String amount, LocalDateTime releasedAt, int days) {
     return new CreateDeclarationRequest(
@@ -143,7 +213,7 @@ class DeclarationServiceTest {
 
   private static TransitDeclaration existing(String amount) {
     return new TransitDeclaration(
-        "30CH0000000000005C",
+        MRN,
         CHIASSO,
         BASEL,
         GRN,

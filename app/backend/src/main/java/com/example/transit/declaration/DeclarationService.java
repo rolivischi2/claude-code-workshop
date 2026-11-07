@@ -59,14 +59,7 @@ public class DeclarationService {
     validateTimes(request.releasedAt(), request.deadlineDays());
 
     Guarantee guarantee = guaranteeService.getGuarantee(request.guaranteeReference());
-    BigDecimal openAmount = openAmount(guarantee.getGrn());
-    if (exceedsReferenceAmount(guarantee, openAmount, request.amount())) {
-      BigDecimal available = guarantee.getReferenceAmount().subtract(openAmount);
-      throw new BusinessRuleException(
-          "TR-4091",
-          HttpStatus.CONFLICT,
-          "Referenzbetrag der Garantie überschritten (noch verfügbar: CHF " + available + ")");
-    }
+    requireCoverage(guarantee, openAmount(guarantee.getGrn()), request.amount());
 
     String mrn = Mrn.generate(LocalDate.now(clock).getYear(), repository.count() + 1);
     return mapper.toDto(repository.save(mapper.toEntity(request, mrn)));
@@ -85,12 +78,48 @@ public class DeclarationService {
   @Transactional
   public DeclarationDto confirmArrival(String mrn) {
     TransitDeclaration declaration = getDeclaration(mrn);
-    if (declaration.getStatus() != DeclarationStatus.OPEN) {
-      throw new BusinessRuleException(
-          "TR-4092", HttpStatus.CONFLICT, "Transitanmeldung " + mrn + " ist nicht offen");
-    }
+    requireOpen(declaration);
     declaration.arrive();
     return mapper.toDto(declaration);
+  }
+
+  /**
+   * Corrects the amount of an OPEN declaration. An increase must still be covered by the guarantee,
+   * where the old amount of this declaration no longer counts as open. A decrease is always
+   * allowed.
+   */
+  @Transactional
+  public DeclarationDto updateAmount(String mrn, UpdateAmountRequest request) {
+    TransitDeclaration declaration = getDeclaration(mrn);
+    requireOpen(declaration);
+    BigDecimal newAmount = request.amount();
+    if (newAmount.compareTo(declaration.getAmount()) > 0) {
+      Guarantee guarantee = guaranteeService.getGuarantee(declaration.getGuaranteeReference());
+      BigDecimal openWithoutThis = openAmount(guarantee.getGrn()).subtract(declaration.getAmount());
+      requireCoverage(guarantee, openWithoutThis, newAmount);
+    }
+    declaration.changeAmount(newAmount);
+    return mapper.toDto(declaration);
+  }
+
+  private static void requireOpen(TransitDeclaration declaration) {
+    if (declaration.getStatus() != DeclarationStatus.OPEN) {
+      throw new BusinessRuleException(
+          "TR-4092",
+          HttpStatus.CONFLICT,
+          "Transitanmeldung " + declaration.getMrn() + " ist nicht offen");
+    }
+  }
+
+  private static void requireCoverage(
+      Guarantee guarantee, BigDecimal openAmount, BigDecimal newAmount) {
+    if (exceedsReferenceAmount(guarantee, openAmount, newAmount)) {
+      BigDecimal available = guarantee.getReferenceAmount().subtract(openAmount);
+      throw new BusinessRuleException(
+          "TR-4091",
+          HttpStatus.CONFLICT,
+          "Referenzbetrag der Garantie überschritten (noch verfügbar: CHF " + available + ")");
+    }
   }
 
   private TransitDeclaration getDeclaration(String mrn) {
@@ -138,6 +167,6 @@ public class DeclarationService {
    */
   static boolean exceedsReferenceAmount(
       Guarantee guarantee, BigDecimal openAmount, BigDecimal newAmount) {
-    return openAmount.add(newAmount).compareTo(guarantee.getReferenceAmount()) >= 0;
+    return openAmount.add(newAmount).compareTo(guarantee.getReferenceAmount()) > 0;
   }
 }

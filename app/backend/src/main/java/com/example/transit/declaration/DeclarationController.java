@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -42,5 +43,11 @@ public class DeclarationController {
   @PostMapping("/{mrn}/arrival")
   public DeclarationDto confirmArrival(@PathVariable String mrn) {
     return service.confirmArrival(mrn);
+  }
+
+  @PutMapping("/{mrn}/amount")
+  public DeclarationDto updateAmount(
+      @PathVariable String mrn, @Valid @RequestBody UpdateAmountRequest request) {
+    return service.updateAmount(mrn, request);
   }
 }

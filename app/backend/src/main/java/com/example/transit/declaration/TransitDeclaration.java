@@ -61,6 +61,10 @@ public class TransitDeclaration {
     this.status = DeclarationStatus.ARRIVED;
   }
 
+  public void changeAmount(BigDecimal amount) {
+    this.amount = amount;
+  }
+
   public Long getId() {
     return id;
   }

@@ -1,8 +1,10 @@
 package com.example.transit.declaration;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,6 +79,54 @@ class DeclarationControllerTest {
     mvc.perform(post("/api/declarations").contentType(MediaType.APPLICATION_JSON).content(body))
         .andExpect(status().isBadRequest())
         .andExpect(jsonPath("$.errors.guaranteeReference").exists());
+  }
+
+  @Test
+  void updateAmountReturnsUpdatedDeclaration() throws Exception {
+    when(service.updateAmount(eq(MRN), any()))
+        .thenReturn(
+            new DeclarationDto(
+                MRN,
+                "CH002345",
+                "CH001234",
+                "26CH1000000000022",
+                new BigDecimal("1200.00"),
+                LocalDateTime.parse("2030-01-14T10:00:00"),
+                LocalDate.parse("2030-01-19"),
+                DeclarationStatus.OPEN,
+                "5 Tage"));
+
+    mvc.perform(
+            put("/api/declarations/" + MRN + "/amount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"amount\": 1200.00}"))
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$.amount").value(1200.00));
+  }
+
+  @Test
+  void updateAmountRejectsNonPositiveAmount() throws Exception {
+    mvc.perform(
+            put("/api/declarations/" + MRN + "/amount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"amount\": 0}"))
+        .andExpect(status().isBadRequest())
+        .andExpect(jsonPath("$.errors.amount").value("Betrag muss grösser als 0 sein"));
+  }
+
+  @Test
+  void updateAmountOfClosedDeclarationIsReturnedAsProblemDetail() throws Exception {
+    when(service.updateAmount(eq(MRN), any()))
+        .thenThrow(
+            new BusinessRuleException(
+                "TR-4092", HttpStatus.CONFLICT, "Transitanmeldung " + MRN + " ist nicht offen"));
+
+    mvc.perform(
+            put("/api/declarations/" + MRN + "/amount")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{\"amount\": 1200.00}"))
+        .andExpect(status().isConflict())
+        .andExpect(jsonPath("$.code").value("TR-4092"));
   }
 
   @Test
