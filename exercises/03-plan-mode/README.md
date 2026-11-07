@@ -22,6 +22,7 @@ Wer bei einer Transitanmeldung einen falschen Abgabenbetrag erfasst hat, soll ih
 - Der Betrag muss grösser als 0 sein, sonst 400.
 - Die Sicherheit muss den **neuen** Betrag decken. Der **alte** Betrag derselben Anmeldung zählt
   dabei nicht mehr zu den offenen Beträgen. Reicht die Sicherheit nicht, 409 mit Code `TR-4091`.
+  Die Meldung nennt den höchsten zulässigen neuen Betrag.
 - Eine Senkung des Betrags ist immer erlaubt.
 
 Ablauf:

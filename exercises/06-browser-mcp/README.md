@@ -63,6 +63,7 @@ Fertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.
 ## Erfolgskriterium
 
 ```bash
+(cd app/backend && ./mvnw -q package -DskipTests)   # nur nötig, wenn das Backend nicht schon läuft
 (cd app/frontend && npm run e2e)    # grün, inkl. neuem Test für die 409-Meldung
 (cd app/frontend && npm test)       # grün
 ```

@@ -71,7 +71,14 @@ const result = spawnSync(plan.command, plan.args, {
 if (result.status !== 0) {
   // Exit 2 in PostToolUse shows stderr to Claude (the edit already happened), so it can react,
   // e.g. fix a syntax error that made the formatter fail.
-  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`.trim().split('\n').slice(-10).join('\n');
+  // Drop JVM warnings and Maven's generic help footer, otherwise they push the real error out of the last lines.
+  const noise = /^(WARNING:|\[ERROR\] ?(\[Help|To see|Re-run|For more|$))/;
+  const output = `${result.stdout ?? ''}${result.stderr ?? ''}`
+    .trim()
+    .split('\n')
+    .filter((line) => !noise.test(line.trim()))
+    .slice(-10)
+    .join('\n');
   console.error(`Formatting ${relPath} failed:\n${output || result.error?.message || 'unknown error'}`);
   process.exit(2);
 }
