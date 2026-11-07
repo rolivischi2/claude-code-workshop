@@ -1,4 +1,5 @@
 import { DecimalPipe } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -7,6 +8,7 @@ import { DeclarationService } from '../api/declaration.service';
 import { GuaranteeService } from '../api/guarantee.service';
 import { OfficeService } from '../api/office.service';
 import { MAX_DEADLINE_DAYS, declarationValidator } from './declaration-validators';
+import { serverErrorMessage } from './server-error-message';
 
 @Component({
   selector: 'app-declaration-form',
@@ -32,6 +34,8 @@ export class DeclarationForm implements OnInit {
     this.offices().filter((o) => o.role !== 'DEPARTURE'),
   );
   protected readonly saving = signal(false);
+  /** German message from the last failed submit, shown above the buttons. */
+  protected readonly serverError = signal<string | null>(null);
   protected readonly maxDeadlineDays = MAX_DEADLINE_DAYS;
 
   protected readonly form = inject(NonNullableFormBuilder).group(
@@ -64,9 +68,13 @@ export class DeclarationForm implements OnInit {
       return;
     }
     this.saving.set(true);
+    this.serverError.set(null);
     this.declarationService.create(this.form.getRawValue()).subscribe({
       next: () => this.router.navigate(['/offices', this.code()]),
-      error: () => this.saving.set(false),
+      error: (error: HttpErrorResponse) => {
+        this.serverError.set(serverErrorMessage(error));
+        this.saving.set(false);
+      },
     });
   }
 }

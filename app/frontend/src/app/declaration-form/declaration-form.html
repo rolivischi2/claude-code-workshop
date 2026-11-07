@@ -71,6 +71,10 @@
       <p class="error">Die Freigabe darf nicht in der Vergangenheit liegen.</p>
     }
 
+    @if (serverError(); as message) {
+      <p class="error" role="alert" data-testid="server-error">{{ message }}</p>
+    }
+
     <div class="actions">
       <button type="submit" [disabled]="saving()" data-testid="submit">Erfassen</button>
       <a [routerLink]="['/offices', office.code]">Abbrechen</a>
