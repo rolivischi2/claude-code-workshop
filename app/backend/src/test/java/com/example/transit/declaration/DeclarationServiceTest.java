@@ -99,6 +99,14 @@ class DeclarationServiceTest {
   }
 
   @Test
+  void openAmountSumsOpenDeclarationsOfGuarantee() {
+    when(repository.findByGuaranteeReferenceAndStatus(GRN, DeclarationStatus.OPEN))
+        .thenReturn(List.of(existing("9500.00"), existing("250.50")));
+
+    assertThat(service.openAmount(GRN)).isEqualByComparingTo("9750.50");
+  }
+
+  @Test
   void rejectsSameDepartureAndDestination() {
     assertThatThrownBy(() -> service.create(request(BASEL, BASEL, "100.00", TOMORROW, 5)))
         .isInstanceOfSatisfying(

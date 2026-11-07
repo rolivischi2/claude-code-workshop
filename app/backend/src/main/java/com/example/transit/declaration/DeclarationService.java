@@ -59,12 +59,7 @@ public class DeclarationService {
     validateTimes(request.releasedAt(), request.deadlineDays());
 
     Guarantee guarantee = guaranteeService.getGuarantee(request.guaranteeReference());
-    BigDecimal openAmount =
-        repository
-            .findByGuaranteeReferenceAndStatus(guarantee.getGrn(), DeclarationStatus.OPEN)
-            .stream()
-            .map(TransitDeclaration::getAmount)
-            .reduce(BigDecimal.ZERO, BigDecimal::add);
+    BigDecimal openAmount = openAmount(guarantee.getGrn());
     if (exceedsReferenceAmount(guarantee, openAmount, request.amount())) {
       BigDecimal available = guarantee.getReferenceAmount().subtract(openAmount);
       throw new BusinessRuleException(
@@ -75,6 +70,15 @@ public class DeclarationService {
 
     String mrn = Mrn.generate(LocalDate.now(clock).getYear(), repository.count() + 1);
     return mapper.toDto(repository.save(mapper.toEntity(request, mrn)));
+  }
+
+  /** Sum of the amounts of all OPEN declarations that the given guarantee covers. */
+  public BigDecimal openAmount(String guaranteeReference) {
+    return repository
+        .findByGuaranteeReferenceAndStatus(guaranteeReference, DeclarationStatus.OPEN)
+        .stream()
+        .map(TransitDeclaration::getAmount)
+        .reduce(BigDecimal.ZERO, BigDecimal::add);
   }
 
   /** Eingangsbestätigung: the goods were presented at the destination office. */
