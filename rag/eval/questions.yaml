@@ -1,112 +1,175 @@
-# Evaluation questions for the RAG exercise (exercise 11).
-# Every question is in German. "expected" lists the doc ids that contain the answer.
-# Categories:
-#   synonym          - target doc uses different words than the question (same language)
-#   cross-lingual    - answer only exists in a French or English doc
-#   exact-identifier - question contains an error code or config key
-#   multi-doc        - the answer needs more than one doc
+# Entwurf – fachliche Prüfung durch Roland ausstehend
+#
+# Evaluationsfragen für das RAG-Experiment auf dem BAZG-Korpus (Transit / NCTS, siehe sources.yaml).
+# Alle Fragen auf Deutsch. "expected" = Dokument-IDs, die die Antwort enthalten (alle nötig).
+# Der Kommentar unter jeder Frage nennt die Belegstelle im konvertierten Markdown
+# (rag/.cache/corpus/<id>.md, Abschnitt bzw. Zeile beim Stand der Konvertierung vom Nov. 2026).
+#
+# Kategorien:
+#   synonym          - die Frage verwendet Wörter, die im Zieldokument nicht vorkommen
+#   cross-lingual    - die Antwort steht nur in einem französischen oder italienischen Dokument
+#   exact-identifier - die Frage enthält einen Code (Meldung, Datenelement, Formular, Ländercode)
+#   multi-doc        - die Antwort braucht mehrere Dokumente
+# showcase: true     - Fragen für die Live-Erzählung mit der Visualisierung (eine pro Kategorie)
+# note               - Hinweis für den Moderator
 questions:
   # --- synonym --------------------------------------------------------------
   - id: S1
     category: synonym
-    question: Was passiert bei einer Doppelbelegung eines Raums?
-    expected: [product-booking-conflicts]
+    question: Was muss der Chauffeur tun, wenn unterwegs die Plombe aufgebrochen ist?
+    expected: [r-14-01-gvv-de]
+    # r-14-01-gvv-de, Ziffer 4.5 "Feststellung eines verletzten Verschlusses durch den Warenführer":
+    # meldet unverzüglich der nächsten Dienststelle oder der Polizei. (Chauffeur/Plombe/aufgebrochen
+    # kommen im Korpus nicht vor.)
   - id: S2
     category: synonym
-    question: Bis wann kann ich eine Reservation gratis absagen?
-    expected: [product-cancellation-policy]
+    question: Welche Währungsangabe gilt für Fakturen in britischen Pfund?
+    expected: [info-brexit-ncts-de]
+    showcase: true
+    note: Dokument sagt «Rechnungen in GBP» und «Währungscode», kein Wort der Frage kommt vor. BM25 liefert null Treffer, die Vektorsuche trifft auf Rang 1.
+    # info-brexit-ncts-de, Abschnitt 4 "Währungscode für Rechnungen in GBP": Währungscode 5 (andere).
   - id: S3
     category: synonym
-    question: Wer muss meinen Pull Request anschauen, bevor er gemergt wird?
-    expected: [guidelines-code-review]
+    question: Muss ich auch für eine Fahrt mit leerem Lastwagen eine Anmeldung beim Zoll machen?
+    expected: [r-10-tp-transportprozess-de]
+    # r-10-tp-transportprozess-de, Ziffer 2.3 "Leerfahrten": im Strassenverkehr bis auf Weiteres
+    # keine Transportanmeldung erforderlich.
   - id: S4
     category: synonym
-    question: Wann dürfen wir neue Versionen live schalten?
-    expected: [ops-deployment-process]
+    question: Gibt es eine Handy-App, die beim Grenzübertritt des Lastwagens die Zollanmeldung automatisch auslöst?
+    expected: [r-10-tp-transportprozess-de]
+    # r-10-tp-transportprozess-de, Ziffer 2.6 / 2.6.1 "Activ App mit Geofencing": kostenlose
+    # Smartphone-App des BAZG zur automatisierten Aktivierung der Warenanmeldung.
   - id: S5
     category: synonym
-    question: Wie schnell muss die Bereitschaftsperson reagieren?
-    expected: [ops-on-call]
+    question: Wie lange ist das Zertifikat für eine Pauschalbürgschaft gültig?
+    expected: [r-14-01-gvv-de]
+    # r-14-01-gvv-de, Ziffer 6.3.3 "Bescheinigung (TC31 und TC33)": Gültigkeitsdauer fünf Jahre,
+    # einmal um weitere fünf Jahre verlängerbar.
   - id: S6
     category: synonym
-    question: Wie lange darf ein Meeting im Raum höchstens dauern?
-    expected: [product-booking-rules]
+    question: Hat es auf dem neuen Zollpapier für den Transit noch Platz für die Auftragsnummer des Spediteurs?
+    expected: [vbd-info-de]
+    # vbd-info-de, Abschnitt "Referenznummer / Dossiernummer des Spediteurs": kein eigenes Feld,
+    # wird im Feld «Hauptverpflichteter [13 07]» aufgedruckt.
   - id: S7
     category: synonym
-    question: Wie stelle ich eine kaputte Produktivversion auf den alten Stand zurück?
-    expected: [ops-rollback]
+    question: Was gilt, wenn der Lastwagen wegen eines Unfalls oder einer gesperrten Strasse zu spät beim Zielzollamt eintrifft?
+    expected: [r-14-01-gvv-de]
+    # r-14-01-gvv-de, Ziffer 5.2 "Nichteinhalten der Durchfuhrfrist": höhere Gewalt (z. B. Unfall
+    # oder gesperrte Verkehrswege) -> Frist gilt als eingehalten, Belege nötig.
   # --- cross-lingual --------------------------------------------------------
   - id: C1
     category: cross-lingual
-    question: Wie oft wird die Datenbank gesichert?
-    expected: [ops-backup-restore]
+    question: Unter welchen Voraussetzungen akzeptiert der Zoll im Postverkehr das CN-Formular als Transitdokument?
+    expected: [r-14-03-poste-fr]
+    # r-14-03-poste-fr, Ziffer 4 "Conditions d'utilisation du formulaire CN en tant que document de
+    # transit": Beförderung durch die nationale Post (Grundversorgung), direkte Übergabe Post zu Post,
+    # Zollinhaltserklärung CN 22/CN 23. (r-14-01-gvv-de 8.4 verweist nur auf R-14-03.)
   - id: C2
     category: cross-lingual
-    question: Ab welcher Antwortzeit wird die Pikett-Person alarmiert?
-    expected: [ops-monitoring-alerts]
+    question: Muss beim Transit mit dem NATO-Formular 302 eine Sicherheit für die Abgaben geleistet werden?
+    expected: [r-14-04-nato-302-it]
+    # r-14-04-nato-302-it, Ziffer 5 "Garanzia dei tributi": keine Sicherheit; NATO und nationale
+    # Streitkräfte haften.
   - id: C3
     category: cross-lingual
-    question: Wie lange werden Logdateien aufbewahrt?
-    expected: [ops-log-retention]
+    question: Wer muss das Zollformular für Militärtransporte ausfüllen, abstempeln und unterschreiben, damit es gültig ist?
+    expected: [r-14-04-nato-302-it]
+    showcase: true
+    note: Antwort steht nur im italienischen R-14-04 («modulo NATO 302»), die Frage nennt weder NATO noch 302. BM25 chancenlos, MiniLM trifft; das grosse e5-Modell verfehlt diese Frage.
+    # r-14-04-nato-302-it, Ziffer 4 "Validità": vollständig ausgefüllt, gestempelt und unterzeichnet
+    # von den Militärbehörden des Versandlandes; der Anmelder unterschreibt die Gestellungsverpflichtung.
   - id: C4
     category: cross-lingual
-    question: Was geschieht, wenn niemand zu einer gebuchten Sitzung erscheint?
-    expected: [product-no-show]
+    question: Innert wie vielen Tagen muss ein zugelassener Empfänger das Ergebnis der Inventarisierung melden?
+    expected: [zve-merkblatt-fr]
+    # zve-merkblatt-fr, Abschnitt 2 "Destinataire agréé": «dans les quatre jours ouvrables».
+    # Achtung: die deutsche Fassung (nicht im Korpus) sagt «4 Kalendertagen».
   - id: C5
     category: cross-lingual
-    question: Welche Räume sind rollstuhlgängig?
-    expected: [product-accessibility]
+    question: Ab wann dürfen zugelassene Versender im Bahnverkehr das vereinfachte Verfahren mit dem CIM-Frachtbrief nicht mehr anwenden?
+    expected: [zve-merkblatt-fr]
+    # zve-merkblatt-fr, Abschnitt 1 "Expéditeur agréé", letzter Punkt: ab 1. Mai 2024 (1 mai 2024).
   - id: C6
     category: cross-lingual
-    question: Wie viele Personen passen maximal auf die Warteliste?
-    expected: [product-waitlist-concept]
-  - id: C7
-    category: cross-lingual
-    question: Wann wird das Personenverzeichnis synchronisiert?
-    expected: [architecture-integration-directory]
-  - id: C8
-    category: cross-lingual
-    question: Wie oft müssen Passwörter und Schlüssel erneuert werden?
-    expected: [ops-secrets-rotation]
+    question: Darf ein zugelassener Empfänger das Fahrzeug abladen, solange der Zoll eine Kontrolle angeordnet hat?
+    expected: [zve-merkblatt-fr]
+    # zve-merkblatt-fr, Abschnitt 2: bei «contrôle: oui» bleibt das Transportmittel blockiert, keine
+    # Manipulation (Verschluss entfernen, abladen) bis zur Freigabe.
   # --- exact-identifier -----------------------------------------------------
   - id: E1
     category: exact-identifier
-    question: Was bedeutet der Fehlercode RR-5031?
-    expected: [errors-server-errors-rr50xx]
+    question: Was bedeutet die Meldung NT044?
+    expected: [r-14-01-anhang-11-2-1-datenaustausch-de]
+    showcase: true
+    note: Reiner Meldungscode. BM25 trifft die Tabellenzeile «NT044 | Inventarisierungsergebnis» direkt, die Vektorsuche (MiniLM) kennt den Code nicht und landet beim Suchverfahren im gVV.
+    # r-14-01-anhang-11-2-1-datenaustausch-de, Tabellenzeile "NT044 | Inventarisierungsergebnis".
   - id: E2
     category: exact-identifier
-    question: Welchen Standardwert hat rr.notify.batch-size?
-    expected: [config-notification-settings]
+    question: Wofür steht der Ländercode XU?
+    expected: [info-brexit-ncts-de]
+    # info-brexit-ncts-de, Abschnitt 3 "Neue Ländercodes": XU = UK ohne Nordirland.
   - id: E3
     category: exact-identifier
-    question: Wofür steht RR-6023?
-    expected: [errors-integration-errors-rr60xx]
+    question: Was ist im Datenelement 16 15 048 049 anzugeben?
+    expected: [r-14-01-anhang-11-6-datenanforderungen-de]
+    # r-14-01-anhang-11-6-datenanforderungen-de, Tabelle Titel II und Titel III
+    # "16 15 048 049 Breitengrad" (Warenort, GNSS).
   - id: E4
     category: exact-identifier
-    question: Wie ist rr.cleanup.cron eingestellt?
-    expected: [config-cleanup-settings]
+    question: Wie viele Sicherheitstitel TC32 dürfen pro Versandvorgang angegeben werden?
+    expected: [r-14-01-gvv-de]
+    # r-14-01-gvv-de, Ziffer 6.1 "Allgemeines": bis zu sieben Titel; Ziffer 6.4.2 "Sicherheitstitel (TC32)".
   - id: E5
     category: exact-identifier
-    question: Was ist der Default von rr.cache.rooms.ttl?
-    expected: [config-cache-settings]
+    question: Wozu erfasst die Dienststelle in Passar die Meldung IE180?
+    expected: [r-14-01-gvv-de]
+    # r-14-01-gvv-de, Ziffer 4.5 und 7.5: Ereignis (z. B. verletzter Verschluss, Umladung) wird
+    # in Passar mit Meldung IE180 erfasst (auch Umladung, Ziffer 7.5.1, und Umleitung, Ziffer 7.4.4).
   - id: E6
     category: exact-identifier
-    question: Welcher Fehler ist RR-4103?
-    expected: [errors-auth-errors-rr41xx]
+    question: Was wird auf dem VBD im Feld [19 10] aufgedruckt?
+    expected: [vbd-info-de]
+    # vbd-info-de, Abschnitt "Nummer des Zollverschluss": Zollverschlüsse oben rechts [19 10].
+    # (r-14-01-gvv-de Ziffer 4.2 nennt das Feld ebenfalls; Anhang 11.6 hat "19 10 000 000 Verschluss".)
+  - id: E7
+    category: exact-identifier
+    question: Welche Kriterien prüft das BAZG nach Art. 57 Abs. 1 bei einem Antrag auf Gesamtsicherheit?
+    expected: [antrag-gesamtsicherheit-de]
+    # antrag-gesamtsicherheit-de, Ziffer 2 "Prüfung der Grundvoraussetzungen ... (Art. 57 Abs. 1)":
+    # keine schweren Verstösse/Straftaten, Zahlungsfähigkeit usw.
   # --- multi-doc ------------------------------------------------------------
   - id: M1
     category: multi-doc
-    question: Wie lange bleiben Namen von Organisatoren gespeichert und welcher Job entfernt sie?
-    expected: [product-data-protection, config-cleanup-settings]
+    question: Was müssen wir an der Gesamtsicherheit ändern, um Transite nach Montenegro zu eröffnen, und welche Angaben verlangt der Antrag auf eine neue Gesamtsicherheit?
+    expected: [info-gvv-beitritt-me-md-de, antrag-gesamtsicherheit-de]
+    # info-gvv-beitritt-me-md-de, Abschnitt 1 "Gesamtsicherheiten": Geltungsbereich der
+    # Verpflichtungserklärung ausdehnen, ggf. neuer Antrag; antrag-gesamtsicherheit-de: Formular.
   - id: M2
     category: multi-doc
-    question: Eine Produktivsetzung ist schiefgegangen und es fehlen Daten. Welche Schritte gibt es?
-    expected: [ops-rollback, ops-backup-restore]
+    question: Welche Verschlüsse lässt das BAZG heute zu und weshalb wurden die Tyden Seals ersetzt?
+    expected: [r-14-01-gvv-de, info-tyden-seal-de]
+    # r-14-01-gvv-de, Ziffer 4.7 "Vom BAZG zugelassene Verschlüsse"; info-tyden-seal-de, Abschnitt 1
+    # "Ausgangslage": Tyden Seals erfüllen ISO 17712:2013 nicht.
   - id: M3
     category: multi-doc
-    question: Welche Regeln gelten für Fehlerantworten der API und warum wurden sie so entschieden?
-    expected: [guidelines-error-handling, architecture-adr-002-problem-details]
+    question: Was ändert sich mit NCTS Phase 5 beim Layout des Versandbegleitdokuments und bei der Angabe der Tarifnummer?
+    expected: [vbd-info-de, info-durchfuhr-reminder-de]
+    showcase: true
+    note: Antwort verteilt auf zwei kurze Infoblätter (VBD-Layout, Tarifnummer). Kein Retrieval-Modus bringt beide in die Top 5; Claude Code mit Grep/Read fand beide mit 3 Tool-Aufrufen.
+    # vbd-info-de: neues Layout ab 02.12.2024, Liste der Positionen; info-durchfuhr-reminder-de:
+    # 6-stellige Tarifnummer je Warenposition Pflicht.
   - id: M4
     category: multi-doc
-    question: Wie funktioniert die Warteliste und ist sie in Produktion schon eingeschaltet?
-    expected: [product-waitlist-concept, config-feature-flags]
+    question: Was passiert mit einer Transportanmeldung bei der Grenzankunft und wie aktiviert die Eingangsdienststelle danach die Warenanmeldung Durchfuhr?
+    expected: [r-10-tp-transportprozess-de, r-14-01-gvv-de]
+    # r-10-tp-transportprozess-de, Ziffer 2.7 "Grenzankunft registrieren"; r-14-01-gvv-de,
+    # Ziffer 7.4.4 "Eingangsdienststelle" (Aktivierung der Warenanmeldung Durchfuhr).
+  - id: M5
+    category: multi-doc
+    question: Welche Fristen gelten im Suchverfahren für die internationale und für die nationale Durchfuhr?
+    expected: [r-14-01-gvv-de, r-14-10-nationales-durchfuhrverfahren-de]
+    # r-14-01-gvv-de, Ziffer 7.9: Antwort innerhalb von 28 Tagen (NT141/IE143);
+    # r-14-10-nationales-durchfuhrverfahren-de, Ziffer 3.6.1.1: Suchanfrage 5 Tage nach Fristverfall,
+    # Anmelder hat 20 Tage Zeit.

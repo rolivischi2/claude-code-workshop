@@ -2,11 +2,12 @@
 # Facilitator check: every start/NN tag and solution/NN branch must build and pass its tests.
 # Each ref is checked out into a temporary git worktree, so your working copy stays untouched.
 #
-#   scripts/verify-all.sh            # backend verify, frontend unit tests, RAG eval
+#   scripts/verify-all.sh            # backend verify, settings schema, spotless, frontend unit tests
 #   scripts/verify-all.sh --e2e      # additionally Playwright e2e (slower, starts backend + frontend per ref)
-#   scripts/verify-all.sh solution/08 start/09   # only these refs
+#   scripts/verify-all.sh solution/04 start/05   # only these refs
 #
-# Requires a completed scripts/setup.sh in this checkout (node_modules, model cache, Maven cache).
+# Requires a completed scripts/setup.sh in this checkout (node_modules, Maven cache).
+# The RAG demo (rag/) is facilitator-only and is not part of the exercise chain.
 set -uo pipefail
 source "$(dirname "$0")/lib.sh"
 cd "$REPO_ROOT"
@@ -57,13 +58,13 @@ for ref in "${REFS[@]}"; do
     else settings="ok"; fi
   fi
 
-  # Formatting must be clean once the hook exercise is solved (seeded violation before that).
+  # Formatting must be clean once the hook exercise (04) is solved (seeded violation before that).
   case "$ref" in
     */final) nn=99 ;;
     *) nn=$(echo "$ref" | sed -nE 's#.*/([0-9]+)$#\1#p'); nn=$((10#${nn:-0})) ;;
   esac
   spotless="-"
-  if [[ "$ref" == solution/* && $nn -ge 6 ]] || [[ "$ref" == start/* && $nn -ge 7 ]]; then
+  if [[ "$ref" == solution/* && $nn -ge 4 ]] || [[ "$ref" == start/* && $nn -ge 5 ]]; then
     spotless=$(check spotless "$wt/app/backend" ./mvnw -B -q -o spotless:check)
   fi
 
@@ -76,13 +77,9 @@ for ref in "${REFS[@]}"; do
   e2e="-"
   [ $E2E -eq 1 ] && e2e=$(check e2e "$wt/app/frontend" npm run e2e)
 
-  mkdir -p "$wt/rag/.cache"
-  ln -s "$REPO_ROOT/rag/.cache/fastembed" "$wt/rag/.cache/fastembed"
-  rag=$(check rag "$wt/rag" sh -c 'uv sync -q --offline && uv run -q --offline index && uv run -q --offline eval')
-
-  RESULTS+=("$(printf '%-16s backend=%-4s settings=%-4s spotless=%-4s frontend=%-4s e2e=%-4s rag=%-4s' \
-    "$ref" "$backend" "$settings" "$spotless" "$frontend" "$e2e" "$rag")")
-  [[ "$backend$settings$spotless$frontend$e2e$rag" == *FAIL* ]] && FAILURES+=("$ref")
+  RESULTS+=("$(printf '%-16s backend=%-4s settings=%-4s spotless=%-4s frontend=%-4s e2e=%-4s' \
+    "$ref" "$backend" "$settings" "$spotless" "$frontend" "$e2e")")
+  [[ "$backend$settings$spotless$frontend$e2e" == *FAIL* ]] && FAILURES+=("$ref")
   git worktree remove --force "$wt"
 done
 

@@ -1,0 +1,108 @@
+# Quellen für den RAG-Korpus: öffentliche Publikationen des BAZG zum Transit-/Versandverfahren (NCTS).
+# `uv run fetch` lädt sie nach rag/.cache/sources/ (nicht im Repo), `uv run convert` macht daraus
+# Markdown in rag/.cache/corpus/. Die PDFs und ihr Text gehören dem BAZG und werden nicht committet.
+#
+# Felder: id (kebab-case mit Sprachsuffix), title, lang, url, sha256 (von `uv run fetch` geprüft;
+# leer = beim ersten Download eintragen), note (warum das Dokument im Korpus ist).
+#
+# Französische/italienische Dokumente sind bewusst NUR in dieser Sprache im Korpus (die deutsche
+# Fassung fehlt absichtlich), damit es Fragen gibt, deren Antwort nur fremdsprachig vorliegt.
+# Stand der Links: November 2026 (Übersichtsseiten: bazg.admin.ch/de/publikationen-transitverfahren
+# und bazg.admin.ch/de/r-14-richtlinie-transitverfahren).
+sources:
+  - id: r-14-01-gvv-de
+    title: R-14-01 Gemeinsames Versandverfahren (gVV)
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/BJ4Xh3T96zwt/R-14-01_Gemeinsames_Versandverfahren_(gVV)_d.pdf
+    sha256: "966f646ebc27f827fcbf7df76c8923dd99297c31899da76c9e0ba418b7d1d66e"
+    note: Hauptrichtlinie zum gVV/NCTS, gross und gut gegliedert; Kern des Korpus.
+  - id: r-14-10-nationales-durchfuhrverfahren-de
+    title: R-14-10 Nationales Durchfuhrverfahren
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/jDCI0r8t5Tlx/R-14-10_Nationales_Durchfuhrverfahren_d.pdf
+    sha256: "b0ad22e5d54d66fde6531d5bb000604cca2baa1def38acf785085d1623a6d8f3"
+    note: Nationales Gegenstück zum gVV; ähnliche Begriffe, andere Regeln (gute Ablenkung für Retrieval).
+  - id: r-14-01-anhang-11-2-1-datenaustausch-de
+    title: R-14-01 Anhang I Ziffer 11.2.1 Datenaustausch mit der anmeldepflichtigen Person
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/tD3fTG9JVMaI/r-14-01-ziffer-1121-it-meldungen-national-dfi.pdf
+    sha256: "43a756b67867155be69eb228e42fadadf373bf8a8b5d1065fb186a5590ae4b09"
+    note: Liste der NCTS-Nachrichten (IE/CC-Codes); Material für Fragen mit exakten Bezeichnern.
+  - id: r-14-01-anhang-11-6-datenanforderungen-de
+    title: R-14-01 Anhang I Ziffer 11.6 Internationale Datenanforderung für Versandanmeldungen
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/WIPnNrnX8bnE/r-14-01-ziffer-116-gvv-datenanforderungen-de.pdf
+    sha256: "85f3f089e213e15c8f76798ba398fad7135ef0e31b63a769aeace1b001c71ce1"
+    note: Datenelemente der Versandanmeldung mit Nummern; exakte Bezeichner, tabellenlastig.
+  - id: r-10-tp-transportprozess-de
+    title: R-10-TP Transportprozess
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/Eh8xSXT7iy3A/R-10-TP_Transportprozess_d.pdf
+    sha256: "3e561f5394bc77320432719fbc523cd6c170773525433b8bb931ab07443f3d70"
+    note: Passar-Transportprozess (Gestellung, Transportanmeldung); schliesst an den Transit an.
+  - id: vbd-info-de
+    title: Information zum neuen Layout des Versandbegleitdokuments (VBD), NCTS Phase 5
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/3-cKac8XVXJJ/DE_VBD_Info.pdf
+    sha256: "c6e699f303f12b5a82c1f99e12fb188d83f1692b6b0bbe86a1a49effa786d2f2"
+    note: Kurzes Infoblatt zum VBD; Ziel für Synonym-Fragen («Zollpapier», «Begleitpapier»).
+  - id: einzelsicherheit-de
+    title: Einzelsicherheit (Formular)
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/CyGd26iVprul/Einzelsicherheit.pdf
+    sha256: "a2d71cb4c3acb6fa58bd48488895ee03ab0a18e8bb1a3f2bf88c30ba3f982ea0"
+    note: Formular Bürgschaftserklärung für eine Einzelsicherheit.
+  - id: antrag-gesamtsicherheit-de
+    title: Antrag auf Gesamtsicherheit
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/7606PF-v0Ue8/Antrag_auf_Gesamtsicherheit.pdf
+    sha256: "9ae4afa94982a0fd8c250d65ceee40bb0ae776be3e324b6186395e3cec940bc3"
+    note: Antragsformular Gesamtsicherheit / Befreiung von der Sicherheitsleistung.
+  - id: gesamtsicherheit-buerge-de
+    title: "Gesamtsicherheit: Verpflichtungserklärung des Bürgen"
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/UWprmJYiou87/Gesamtsicherheit.pdf
+    sha256: "c35a9f5b7d6cda3959a55bce0cb9a2ac9c311a96fc4a13dc90cbdad223603bea"
+    note: Formular des Bürgen zur Gesamtsicherheit.
+  - id: info-durchfuhr-reminder-de
+    title: Information nationale und internationale Durchfuhr – Reminder
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/ca-1WhIKJDlO/Information_Durchfuhr_Reminder_d.pdf
+    sha256: "affdf78afd5039c428ee093d23c31507ba256bca49391832edf672f7c1181afb"
+    note: Kurzinfo mit Erinnerungen an die Wirtschaft.
+  - id: info-gvv-beitritt-me-md-de
+    title: "Gemeinsames Versandverfahren: Beitritt von Montenegro und Moldova"
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/ZJU-rGLxB5cb/Info%20gVV%20Beitritt%20ME_MD_de.pdf
+    sha256: "e35498e5d9df25c985807090a33aa8113e932cb157036706b57aa4d9920f5eae"
+    note: Aktuelle Info zu neuen Vertragsparteien (Ländercodes).
+  - id: info-tyden-seal-de
+    title: Information Verschluss Tyden Seal
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/-QNIc2vRGuQO/Information_Tyden_Seal_extern_d.pdf
+    sha256: "e496f169806412cfa70e0e31b6b6b4f3372196a5060454bed53e42bef3a15a93"
+    note: Zollverschluss; Synonym-Ziel («Plombe»).
+  - id: info-brexit-ncts-de
+    title: "Information Brexit: e-dec Import & Export, NCTS"
+    lang: de
+    url: https://www.bazg.admin.ch/dam/de/sd-web/00h53mpEm0Mz/v2_information-brexit-de.pdf
+    sha256: "5763ce67916792f5a2373444228618f636481dea293fd5f4514857a31e6a7b8e"
+    note: Ländercodes GB/XI im NCTS; exakte Bezeichner.
+  - id: r-14-03-poste-fr
+    title: R-14-03 Trafic postal; procédure de transit simplifiée
+    lang: fr
+    url: https://www.bazg.admin.ch/dam/fr/sd-web/8aIEDaVUd4cN/procedure-de-transit-simplifiee-poste-fr.pdf
+    sha256: "2d6a1da3ad68d1a255fcd295db96f133caf19e2c087e8d89ffed31607dc16847"
+    note: Nur französisch im Korpus (deutsche Fassung bewusst weggelassen); für sprachübergreifende Fragen.
+  - id: r-14-04-nato-302-it
+    title: R-14-04 Regime di transito con il modulo NATO 302
+    lang: it
+    url: https://www.bazg.admin.ch/dam/it/sd-web/k4MiMkI2LbR1/linea-guida-14-04-procedura-di-transito-con-modulo-nato-it.pdf
+    sha256: "aff2ce55a2bd7e79f516e34d2ce9f291e454f043bdc16c22e32e6d5a9c0980d0"
+    note: Nur italienisch im Korpus (deutsche Fassung bewusst weggelassen); für sprachübergreifende Fragen.
+  - id: zve-merkblatt-fr
+    title: "Notice ZVE: principales modifications pour destinataires et expéditeurs agréés (NCTS phase 5, Passar)"
+    lang: fr
+    url: https://www.bazg.admin.ch/dam/fr/sd-web/oLB8XsErxQ79/ZVE%20Merkblatt_f.pdf
+    sha256: "2c7149cf54f0689d80754796e5ce1e2d0b96b751503d6d320f35fc5a0c6009ac"
+    note: Nur französisch im Korpus (deutsche Fassung bewusst weggelassen); Fristen für ZE/ZV, sprachübergreifende Fragen.

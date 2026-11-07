@@ -9,7 +9,6 @@ jv="$(java -version 2>&1 | head -1 | sed -E 's/.*"([0-9]+).*/\1/')"
 [ "${jv:-0}" -ge 21 ] 2>/dev/null && ok "Java $jv" || fail "Java 21+ nicht gefunden"
 if command -v node >/dev/null && node_supported; then ok "Node $(node --version)"
 else fail "Node $NODE_REQUIRED nicht gefunden"; fi
-command -v uv >/dev/null && ok "uv" || fail "uv nicht gefunden"
 if command -v claude >/dev/null; then
   ok "Claude Code $(claude --version 2>/dev/null | awk '{print $1}')"
   auth="$(claude auth status --json 2>/dev/null | node -e '
@@ -25,20 +24,19 @@ if command -v claude >/dev/null; then
   esac
 else fail "Claude Code nicht gefunden"; fi
 
-# Playwright MCP (exercise 09) drives an installed Chrome or Edge, not the Playwright Chromium.
+# Playwright MCP (exercise 06) drives an installed Chrome or Edge, not the Playwright Chromium.
 if [ -d "/Applications/Google Chrome.app" ] || command -v google-chrome >/dev/null || command -v google-chrome-stable >/dev/null; then
-  ok "Google Chrome gefunden (für Playwright MCP, Übung 09)"
+  ok "Google Chrome gefunden (für Playwright MCP, Übung 06)"
 elif [ -d "/Applications/Microsoft Edge.app" ] || command -v microsoft-edge >/dev/null; then
-  ok "Microsoft Edge gefunden (Übung 09: Variante mit --browser msedge verwenden)"
+  ok "Microsoft Edge gefunden (Übung 06: Variante mit --browser msedge verwenden)"
 else
-  warn "Weder Chrome noch Edge gefunden: Übung 09 (Playwright MCP) braucht einen der beiden"
+  warn "Weder Chrome noch Edge gefunden: Übung 06 (Playwright MCP) braucht einen der beiden"
 fi
 
 section "Projekt"
 [ -f .env ] && ok ".env vorhanden (Fake-Werte)" || fail ".env fehlt - scripts/setup.sh ausführen"
 (cd app/backend && run_step "Backend-Tests (offline)" "scripts/setup.sh ausführen" ./mvnw -B -q -o test)
 (cd app/frontend && run_step "Frontend-Tests" "scripts/setup.sh ausführen" npm test)
-[ -f rag/.data/index.db ] && ok "RAG-Index vorhanden" || fail "RAG-Index fehlt - scripts/setup.sh ausführen"
 
 section "Manuell prüfen (in Claude Code)"
 echo "  1. Datenschutz-Einstellung geprüft: https://claude.ai/settings/data-privacy-controls"

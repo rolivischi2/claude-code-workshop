@@ -1,13 +1,16 @@
 [project]
-name = "raumreservation-rag"
+name = "bazg-transit-rag"
 version = "0.1.0"
-description = "Workshop RAG module: chunking, local embeddings, hybrid search, MCP server and eval"
+description = "Facilitator RAG demo on public BAZG transit documents: PDF conversion, chunking, local embeddings, hybrid search, eval, MCP server, visualisation export"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "fastembed==0.9.1",
     "sqlite-vec==0.1.9",
     "mcp==2.3.0",
     "pyyaml==6.0.3",
+    "pymupdf==1.28.2",
+    "pymupdf4llm==1.28.2",
+    "pymupdf-layout==1.28.2",
 ]
 
 [project.scripts]
@@ -15,6 +18,10 @@ index = "indexer.cli:index_main"
 search = "indexer.cli:search_main"
 eval = "eval.evaluate:main"
 rag-mcp = "mcp_server.server:main"
+fetch = "indexer.fetch:main"
+convert = "indexer.pdf:main"
+record-agent = "eval.record_agent:main"
+export-viz = "eval.export_viz:main"
 
 [build-system]
 requires = ["hatchling==1.33.0"]

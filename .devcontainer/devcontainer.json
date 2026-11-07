@@ -1,0 +1,19 @@
+{
+  // Plan B for laptops where Java/Node cannot be installed: GitHub Codespaces or local Docker
+  // ("Dev Containers: Reopen in Container" in VS Code). Everything the exercises need is inside.
+  "name": "claude-code-workshop",
+  "image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": { "version": "24" }
+  },
+  "forwardPorts": [8080, 4200],
+  "portsAttributes": {
+    "8080": { "label": "Backend (Spring Boot)" },
+    "4200": { "label": "Frontend (Angular)" }
+  },
+  // 1) Claude Code (native installer), 2) workshop setup (Maven, npm, Playwright Chromium),
+  // 3) Google Chrome for the Playwright MCP server in exercise 06 (runs headless in the container).
+  "postCreateCommand": "curl -fsSL https://claude.ai/install.sh | bash && scripts/setup.sh && (cd app/frontend && npx playwright install --with-deps chrome)",
+  "remoteEnv": { "PATH": "${containerEnv:PATH}:/home/vscode/.local/bin" },
+  "hostRequirements": { "cpus": 4, "memory": "8gb" }
+}

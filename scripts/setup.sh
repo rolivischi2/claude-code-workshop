@@ -14,7 +14,6 @@ else fail "Java fehlt (JDK 21 oder neuer installieren)"; fi
 if command -v node >/dev/null; then
   node_supported && ok "Node $(node --version)" || fail "Node $(node --version) passt nicht, nötig: $NODE_REQUIRED"
 else fail "Node.js fehlt (nötig: $NODE_REQUIRED)"; fi
-command -v uv >/dev/null && ok "uv $(uv --version | awk '{print $2}')" || fail "uv fehlt (siehe SETUP.md)"
 command -v claude >/dev/null && ok "Claude Code $(claude --version 2>/dev/null | awk '{print $1}')" \
   || warn "Claude Code nicht gefunden (siehe SETUP.md) - Setup läuft trotzdem weiter"
 if [ ${#FAILURES[@]} -gt 0 ]; then summary ""; exit 1; fi
@@ -29,19 +28,13 @@ cd "$REPO_ROOT/app/backend"
 run_step "Maven-Abhängigkeiten laden" "$PROXY_HINT" ./mvnw -B -q dependency:go-offline
 run_step "Backend bauen und testen" "" ./mvnw -B -q verify
 run_step "Formatter (Spotless) vorladen" "$PROXY_HINT" \
-  ./mvnw -B -q spotless:check -DspotlessFiles='.*RaumreservationApplication\.java'
+  ./mvnw -B -q spotless:check -DspotlessFiles='.*TransitApplication\.java'
 
 section "Frontend (npm)"
 cd "$REPO_ROOT/app/frontend"
 run_step "npm-Pakete installieren" "$PROXY_HINT" npm ci --no-audit --no-fund
 run_step "Playwright-Browser (Chromium) installieren" "$PROXY_HINT" npx playwright install chromium
 run_step "Frontend-Tests" "" npm test
-
-section "RAG (Python/uv)"
-cd "$REPO_ROOT/rag"
-run_step "Python-Umgebung (uv sync)" "$PROXY_HINT" uv sync -q
-run_step "Embedding-Modell herunterladen (~220 MB)" "$PROXY_HINT" uv run -q index --download-only
-run_step "Suchindex aufbauen" "" uv run -q index
 
 section "Konfiguration"
 cd "$REPO_ROOT"

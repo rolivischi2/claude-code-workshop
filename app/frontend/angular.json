@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "raumreservation-frontend": {
+    "transit-frontend": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -55,10 +55,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "raumreservation-frontend:build:production"
+              "buildTarget": "transit-frontend:build:production"
             },
             "development": {
-              "buildTarget": "raumreservation-frontend:build:development"
+              "buildTarget": "transit-frontend:build:development"
             }
           },
           "defaultConfiguration": "development",

@@ -1,52 +1,46 @@
-# Zeitplan und Rollen
+# Zeitplan (2,5 h, ein Facilitator)
 
-Rollen: **Manager** (Moderation, Konzepte, Teamregeln), **Co** (Co-Facilitator, Unterstützung im Raum),
-**Roland** (Hands-on-Demos, RAG-Block, Skalieren, Capstone).
+Roland führt allein durch den Nachmittag. Darum gilt: **Input kurz, Übungen klar, Demos vorbereitet.**
+Während der Übungen geht Roland durch den Raum. Die Übungsblätter sind so geschrieben, dass sie
+ohne Erklärung funktionieren.
 
-| Zeit | Block | Inhalt | Lead | Übungen |
-|------|-------|--------|------|---------|
-| 09:00 | Einstieg | Anatomie der Harness (Konzeptlandkarte), Setup-Check, `/model sonnet` | Manager | 00 |
-| 09:30 | A – Kontext | Context Engineering, Persistentes Wissen (Live-Demo vorher/nachher), Progressive Disclosure | Manager, Roland Demo 02 | 01, 02, 03 |
-| 10:45 | Pause | | | |
-| 11:00 | B – Steuerung & Sicherheit | Planen vs. Ausführen, Autonomiestufen, Hooks, Reversibilität | Co / Manager | 04, 05, 06, 07 |
-| 12:15 | Mittag | Roland startet vorher eine längere Aufgabe und steuert sie per Remote Control vom Handy | Roland | 14 (Demo) |
-| 13:15 | C – Verifizieren & Erweitern | Feedback-Loops, MCP (Playwright), Vertrauensgrenzen | Co, Roland für 10 | 08, 09, 10 |
-| 14:30 | Pause | | | |
-| 14:45 | R – Retrieval | Agentic Search vs. RAG, gemessen | Roland | 11 |
-| 15:45 | D – Skalieren | Subagents, Parallelisierung | Roland | 12, 13 |
-| 16:20 | Capstone | Team-Plugin | Roland | 15 |
-| 16:45 | Abschluss | Modell- und Aufwandswahl (`/model`, `/effort`, günstige Subagents), Konzeptlandkarte, erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame CLAUDE.md und Settings im Repo), nächste Schritte | Manager | |
-| 17:00 | Ende | | | |
+| Zeit | Min | Block | Inhalt | Format | Übung |
+|------|-----|-------|--------|--------|-------|
+| 0:00 | 10 | Einstieg | Anatomie der Harness (Konzeptlandkarte), Ziele, Setup-Check, `/model sonnet` | Input + Slash-Commands | 00 |
+| 0:10 | 35 | **A – Kontext und Skills** | Kontext als Budget, `CLAUDE.md`, Progressive Disclosure | 5' Input, 2 Übungen | 01 (15'), 02 (15') |
+| 0:45 | 40 | **B – Steuerung** | Plan Mode, Permissions, Hooks, `/rewind` | 5' Input, 3 Übungen | 03 (15'), 04 (15'), 05 (5') |
+| 1:25 | 10 | Pause | | | |
+| 1:35 | 20 | **C – Browser über MCP** | MCP-Prinzip, Playwright-MCP, Claude prüft sich selbst | 3' Input, 1 Übung | 06 (17') |
+| 1:55 | 20 | **R – Agentic Search vs. RAG** | Visualisierung `rag/viz/`, echte Zahlen auf der NCTS-Dokumentation | Demo | – |
+| 2:15 | 7 | **D – Skalieren** | Reviewer-Subagent, zwei Worktree-Sessions parallel | Demo | – |
+| 2:22 | 8 | Abschluss | Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln, nächste Schritte | Input + Diskussion | – |
+| 2:30 | | Ende | | | |
 
 ## Pro Übung: Aufwand
 
-Gemessen bei einem Dry-Run mit einem **Pro-Konto auf Sonnet**. Spalten «Turns» und «Nutzung»
-werden beim Dry-Run ausgefüllt. Alles über 10 Turns muss vereinfacht werden.
+Gemessen bei einem Dry-Run mit einem **Pro-Konto auf Sonnet**. Die Spalten «Turns» und «Nutzung»
+werden beim Dry-Run ausgefüllt. Alles über 8 Turns muss vereinfacht werden.
 
 | Übung | Zeitbudget | Turns (Dry-Run) | Nutzung 5h-Fenster (Dry-Run) | Bemerkung |
 |-------|-----------|-----------------|------------------------------|-----------|
-| 00 Setup-Check | 10' | zu messen | zu messen | nur Slash-Commands |
-| 01 Kontext | 20' | zu messen | zu messen | Schritt 2 absichtlich teuer |
-| 02 Persistentes Wissen | 25' | zu messen | zu messen | 2 Feature-Prompts + `/init` |
-| 03 Progressive Disclosure | 25' | zu messen | zu messen | |
-| 04 Planen vs. Ausführen | 25' | zu messen | zu messen | grösste Code-Übung am Vormittag |
-| 05 Permissions | 15' | zu messen | zu messen | |
-| 06 Hooks | 25' | zu messen | zu messen | |
-| 07 Reversibilität | 10' | zu messen | zu messen | kaum Modellnutzung |
-| 08 Feedback-Loops | 20' | zu messen | zu messen | |
-| 09 MCP | 30' | zu messen | zu messen | Browser-Snapshots sind teuer |
-| 10 Vertrauensgrenzen | 25' | zu messen | zu messen | |
-| 11 RAG | 60' | zu messen | zu messen | R1 ist der teuerste Teil |
-| 12 Subagents | 15' | zu messen | zu messen | Reviewer auf Haiku |
-| 13 Parallelisierung | 15' | zu messen | zu messen | zwei Sessions gleichzeitig |
-| 14 Remote Control | 10' | – | – | Demo |
-| 15 Team-Plugin | 25' | zu messen | zu messen | |
+| 00 Setup-Check | 5' | zu messen | zu messen | nur Slash-Commands |
+| 01 Kontext und CLAUDE.md | 15' | zu messen | zu messen | 2 Feature-Prompts + `/init` |
+| 02 Skills | 15' | zu messen | zu messen | Skill bauen + 1 Feature-Prompt |
+| 03 Plan Mode | 15' | zu messen | zu messen | grösste Code-Übung |
+| 04 Permissions und Hooks | 15' | zu messen | zu messen | Hooks aus der Vorlage, kaum Iteration |
+| 05 Rewind | 5' | – | – | keine Modellnutzung |
+| 06 Browser über MCP | 17' | zu messen | zu messen | Browser-Snapshots sind teuer |
+
+Ziel: Alle Übungen zusammen brauchen **deutlich weniger als ein 5-Stunden-Fenster** eines Pro-Kontos.
 
 ## Puffer
 
-Der Tag ist dicht. Kandidaten zum Kürzen, falls die Zeit davonläuft:
+Kandidaten zum Kürzen, falls die Zeit davonläuft (in dieser Reihenfolge):
 
-- 07 als 5-Minuten-Demo statt Übung
-- 11: R1 nur als Demo am Beamer, Teilnehmende machen R2–R4
-- 13 als Demo, Teilnehmende schauen zu
-- 14 nur über Mittag, kein eigener Slot
+1. 05 als 2-Minuten-Demo am Beamer statt Übung.
+2. 02: Skill aus `solution/02` übernehmen (`git checkout solution/02 -- .claude/skills`), nur den automatischen Aufruf testen.
+3. R: Szene 1 (Chunking) überspringen, direkt mit einer Showcase-Frage starten.
+4. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
+
+Zeit übrig? Im Abschluss die Frage «Welche MCP-Server würdet ihr im Projekt anbinden, und welche
+davon sehen fremde Inhalte?» (Lethal Trifecta: private Daten, fremde Inhalte, Weg nach aussen).

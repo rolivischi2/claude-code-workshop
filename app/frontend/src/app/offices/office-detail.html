@@ -1,0 +1,35 @@
+@if (office(); as office) {
+  <h1 data-testid="office-name">{{ office.name }}</h1>
+  <p>{{ office.code }} · {{ roleLabels[office.role] }}</p>
+
+  <h2>Transitanmeldungen</h2>
+  <ul class="declarations">
+    @for (d of declarations(); track d.mrn) {
+      <li data-testid="declaration-row">
+        <span>
+          <strong>{{ d.mrn }}</strong> ({{ statusLabels[d.status] }})<br />
+          {{ d.departureOffice }} → {{ d.destinationOffice }} · CHF {{ d.amount | number: '1.2-2'
+          }}<br />
+          Freigabe {{ d.releasedAt | date: 'dd.MM.yyyy HH:mm' }} · Frist
+          {{ d.deadline | date: 'dd.MM.yyyy' }}
+          @if (d.status === 'OPEN') {
+            ({{ d.remaining }})
+          }
+        </span>
+        @if (d.status === 'OPEN' && d.destinationOffice === office.code) {
+          <button type="button" data-testid="confirm-arrival" (click)="confirmArrival(d)">
+            Eingang bestätigen
+          </button>
+        }
+      </li>
+    } @empty {
+      <li>Keine Transitanmeldungen.</li>
+    }
+  </ul>
+
+  @if (office.role !== 'DESTINATION') {
+    <a [routerLink]="['/offices', office.code, 'declare']" data-testid="new-declaration">
+      Transitanmeldung erfassen
+    </a>
+  }
+}

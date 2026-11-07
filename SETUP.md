@@ -1,7 +1,9 @@
 # Setup
 
-Bitte **vor dem Workshop** erledigen (ca. 30 Minuten, das meiste ist Download).
+Bitte **vor dem Workshop** erledigen (ca. 20 Minuten, das meiste ist Download).
 Danach läuft alles offline.
+
+> Ihr dürft auf eurem Laptop nichts installieren? Dann nehmt [Variante B: Devcontainer](#variante-b-devcontainer-codespaces-oder-docker).
 
 ## 1. Voraussetzungen
 
@@ -10,12 +12,10 @@ Danach läuft alles offline.
 | Git | aktuell | `git --version` | macOS: `xcode-select --install` · Windows: [Git for Windows](https://git-scm.com/download/win) (inkl. Git Bash) |
 | Java (JDK) | 21 oder neuer | `java -version` | z.B. Eclipse Temurin 21 über `brew install --cask temurin@21` bzw. `winget install EclipseAdoptium.Temurin.21.JDK` |
 | Node.js | 22.22 oder 24.15 und neuer (LTS) | `node --version` | [nodejs.org](https://nodejs.org) bzw. `brew install node` / `winget install OpenJS.NodeJS.LTS` |
-| uv (Python) | aktuell | `uv --version` | `brew install uv` bzw. `winget install astral-sh.uv` ([Doku](https://docs.astral.sh/uv/getting-started/installation/)) |
-| Chrome oder Edge | aktuell | – | Für Übung 09 (Playwright MCP). Edge ist auf Windows vorinstalliert. |
+| Chrome oder Edge | aktuell | – | Für Übung 06 (Playwright MCP). Edge ist auf Windows vorinstalliert. |
 | Claude Code | aktuell | `claude --version` | siehe Schritt 2 |
 
-Maven und Python müsst ihr **nicht** installieren: Das Backend bringt den Maven-Wrapper mit,
-und `uv` lädt Python 3.12 selbst.
+Maven müsst ihr **nicht** installieren: Das Backend bringt den Maven-Wrapper mit.
 
 ## 2. Claude Code installieren und einloggen
 
@@ -26,7 +26,7 @@ curl -fsSL https://claude.ai/install.sh | bash        # macOS / Linux / WSL
 irm https://claude.ai/install.ps1 | iex               # Windows PowerShell
 ```
 
-Dann im Repo `claude` starten und mit eurem **claude.ai-Konto (Pro)** einloggen:
+Dann im Repo `claude` starten und mit eurem **claude.ai-Konto (Pro reicht)** einloggen:
 
 ```
 /login      → «Claude account with subscription» wählen
@@ -35,7 +35,6 @@ Dann im Repo `claude` starten und mit eurem **claude.ai-Konto (Pro)** einloggen:
 
 > **Wichtig:** Kein API-Key. Falls `ANTHROPIC_API_KEY` in eurer Shell gesetzt ist, nimmt
 > Claude Code diesen statt eures Abos. Variable entfernen und `/login` erneut ausführen.
-> Remote Control (Übung 14) funktioniert nur mit claude.ai-Login.
 
 ## 3. Privatsphäre prüfen
 
@@ -62,8 +61,8 @@ cd claude-code-workshop
 powershell -ExecutionPolicy Bypass -File scripts\setup.ps1     # Windows
 ```
 
-Das Skript lädt Maven-Abhängigkeiten, npm-Pakete, den Playwright-Browser und das
-Embedding-Modell (~220 MB), baut den Suchindex und erzeugt eine `.env` mit **Fake-Werten**.
+Das Skript lädt Maven-Abhängigkeiten, npm-Pakete und den Playwright-Browser, führt die Tests
+einmal aus und erzeugt eine `.env` mit **Fake-Werten**.
 Es lässt sich beliebig oft wiederholen.
 
 ### Hinter einem Firmen-Proxy
@@ -90,6 +89,18 @@ scripts/check-setup.sh           # Windows: powershell -ExecutionPolicy Bypass -
 ```
 
 Alles grün? Dann seid ihr bereit. Den Rest prüfen wir gemeinsam in [Übung 00](exercises/00-setup-check/).
+
+## Variante B: Devcontainer (Codespaces oder Docker)
+
+Für Laptops, auf denen ihr weder Java noch Node installieren dürft. Alles läuft in einem Container.
+
+- **GitHub Codespaces:** Repo auf GitHub öffnen → «Code» → «Codespaces» → «Create codespace».
+- **Lokal mit Docker:** Repo in VS Code öffnen → «Dev Containers: Reopen in Container».
+
+Der Container installiert Claude Code und führt `scripts/setup.sh` selbst aus (dauert beim
+ersten Mal ein paar Minuten). Danach im Terminal des Containers `claude` starten und `/login`
+ausführen. Ports 8080 und 4200 werden automatisch weitergeleitet. In Übung 06 läuft der
+Browser im Container ohne Fenster: `"--headless"` zu den `args` des MCP-Servers hinzufügen.
 
 ## Probleme?
 

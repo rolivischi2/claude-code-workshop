@@ -1,4 +1,7 @@
-"""Retrieval evaluation: `uv run eval [--mode bm25|vector|hybrid|all] [-k 5] [--details]`.
+"""Retrieval evaluation: `uv run eval [--variant NAME] [--mode bm25|vector|hybrid|all] [-k 5] [--details]`.
+
+Without --variant, every index variant that has been built (`uv run index --all`) is evaluated.
+Results are also written to rag/.data/eval-results.json (read by `uv run export-viz`).
 
 Metrics per question, computed on the *documents* behind the top-k chunks:
 - recall@k: share of expected docs that appear in the top k
@@ -6,6 +9,7 @@ Metrics per question, computed on the *documents* behind the top-k chunks:
 """
 
 import argparse
+import json
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -13,10 +17,25 @@ from pathlib import Path
 import yaml
 
 from indexer import store
-from indexer.search import search
+from indexer.config import DATA_DIR, VARIANTS, Variant
+from indexer.embeddings import embed
+from indexer.search import ranked_ids
 
 QUESTIONS = Path(__file__).resolve().parent / "questions.yaml"
+RESULTS = DATA_DIR / "eval-results.json"
 CATEGORIES = ["synonym", "cross-lingual", "exact-identifier", "multi-doc"]
+MODES = ["bm25", "vector", "hybrid"]
+
+
+def load_questions(path: Path = QUESTIONS) -> list[dict]:
+    """Questions with id, category, question, expected and the optional showcase/note fields."""
+    questions = yaml.safe_load(path.read_text(encoding="utf-8"))["questions"]
+    for q in questions:
+        if q["category"] not in CATEGORIES:
+            raise ValueError(f"{q['id']}: unknown category {q['category']!r}")
+        q.setdefault("showcase", False)
+        q.setdefault("note", "")
+    return questions
 
 
 def score_question(expected: list[str], retrieved_docs: list[str]) -> tuple[float, float]:
@@ -26,69 +45,99 @@ def score_question(expected: list[str], retrieved_docs: list[str]) -> tuple[floa
     return recall, rr
 
 
-def evaluate(mode: str, k: int, questions: list[dict]) -> tuple[dict, list[tuple]]:
-    per_category = defaultdict(list)
-    misses = []
-    for q in questions:
-        docs = [r.doc_id for r in search(q["question"], mode, k)]
-        recall, rr = score_question(q["expected"], docs)
-        per_category[q["category"]].append((recall, rr))
-        if recall < 1.0:
-            misses.append((q["id"], q["question"], q["expected"], list(dict.fromkeys(docs))))
-    return per_category, misses
+def evaluate(variant: Variant, modes: list[str], k: int, questions: list[dict]) -> dict:
+    """Returns {mode: [ {id, category, recall, rr, docs}, ... ]} for one index variant."""
+    query_vectors = embed([q["question"] for q in questions], variant.model, kind="query")
+    results: dict[str, list[dict]] = {m: [] for m in modes}
+    with store.connect(variant.db_path) as conn:
+        for q, qv in zip(questions, query_vectors):
+            for mode in modes:
+                ranked = ranked_ids(conn, q["question"], mode, k, variant, query_vector=qv)
+                chunks = store.load_chunks(conn, [i for i, _ in ranked])
+                docs = [chunks[i][0] for i, _ in ranked if i in chunks]
+                recall, rr = score_question(q["expected"], docs)
+                results[mode].append({"id": q["id"], "category": q["category"], "recall": recall,
+                                      "rr": rr, "docs": list(dict.fromkeys(docs))})
+    return results
 
 
-def summarize(values: list[tuple[float, float]]) -> tuple[float, float]:
-    n = max(len(values), 1)
-    return sum(v[0] for v in values) / n, sum(v[1] for v in values) / n
+def summarize(rows: list[dict]) -> tuple[float, float, int]:
+    n = len(rows)
+    if not n:
+        return 0.0, 0.0, 0
+    return sum(r["recall"] for r in rows) / n, sum(r["rr"] for r in rows) / n, n
+
+
+def table_rows(variant_name: str, per_mode: dict) -> list[dict]:
+    """One row per (mode, category) plus category "all", the shape used by the visualisation."""
+    rows = []
+    for mode, results in per_mode.items():
+        for cat in CATEGORIES + ["all"]:
+            subset = results if cat == "all" else [r for r in results if r["category"] == cat]
+            recall, mrr, n = summarize(subset)
+            rows.append({"variant": variant_name, "mode": mode, "category": cat,
+                         "recall": round(recall, 3), "mrr": round(mrr, 3), "n": n})
+    return rows
+
+
+def print_table(variant: Variant, per_mode: dict, k: int, questions: list[dict]) -> None:
+    with store.connect(variant.db_path) as conn:
+        s = store.settings(conn)
+    print(f"\n=== {variant.name}  (model {variant.model.key}, chunking {variant.chunking}, "
+          f"chunk_size={s.get('chunk_size')}, overlap={s.get('overlap')}, k={k}, "
+          f"questions={len(questions)})")
+    header = f"{'category':<17}{'n':>3}" + "".join(f"  {m + ' R@' + str(k):>12}{'MRR':>6}" for m in per_mode)
+    print(header)
+    print("-" * len(header))
+    for cat in CATEGORIES + ["all"]:
+        cells, n = "", 0
+        for results in per_mode.values():
+            subset = results if cat == "all" else [r for r in results if r["category"] == cat]
+            recall, mrr, n = summarize(subset)
+            cells += f"  {recall:>12.2f}{mrr:>6.2f}"
+        if cat == "all":
+            print("-" * len(header))
+        print(f"{cat:<17}{n:>3}{cells}")
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate retrieval quality.")
-    parser.add_argument("--mode", choices=["bm25", "vector", "hybrid", "all"], default="all")
+    parser.add_argument("--variant", help=f"one of: {', '.join(VARIANTS)} (default: all built)")
+    parser.add_argument("--mode", choices=MODES + ["all"], default="all")
     parser.add_argument("-k", type=int, default=5)
     parser.add_argument("--details", action="store_true", help="list questions that missed")
     args = parser.parse_args()
 
-    if not store.DB_PATH.exists():
-        sys.exit("No index found. Run `uv run index` first.")
-    questions = yaml.safe_load(QUESTIONS.read_text(encoding="utf-8"))["questions"]
-    modes = ["bm25", "vector", "hybrid"] if args.mode == "all" else [args.mode]
+    if args.variant and args.variant not in VARIANTS:
+        sys.exit(f"unknown variant {args.variant!r}; known: {', '.join(VARIANTS)}")
+    candidates = [VARIANTS[args.variant]] if args.variant else list(VARIANTS.values())
+    variants = [v for v in candidates if v.db_path.exists()]
+    if not variants:
+        sys.exit("No index found. Run `uv run index` (or `uv run index --all`) first.")
+    questions = load_questions()
+    modes = MODES if args.mode == "all" else [args.mode]
 
-    results = {}
-    for mode in modes:
-        try:
-            results[mode] = evaluate(mode, args.k, questions)
-        except NotImplementedError as exc:
-            print(f"[{mode}] not available yet: {exc} is still a TODO")
-    if not results:
-        sys.exit(1)
-
-    with store.connect() as conn:
-        s = store.settings(conn)
-    print(f"k={args.k}  chunk_size={s.get('chunk_size')}  overlap={s.get('overlap')}  "
-          f"questions={len(questions)}\n")
-    header = f"{'category':<17}{'n':>3}" + "".join(f"  {m + ' R@' + str(args.k):>12}{'MRR':>6}" for m in results)
-    print(header)
-    print("-" * len(header))
-    counts = defaultdict(int)
-    for q in questions:
-        counts[q["category"]] += 1
-    for cat in CATEGORIES + ["overall"]:
-        cells = ""
-        for mode, (per_category, _) in results.items():
-            values = (
-                [v for vs in per_category.values() for v in vs] if cat == "overall" else per_category[cat]
-            )
-            recall, mrr = summarize(values)
-            cells += f"  {recall:>12.2f}{mrr:>6.2f}"
-        n = len(questions) if cat == "overall" else counts[cat]
-        if cat == "overall":
-            print("-" * len(header))
-        print(f"{cat:<17}{n:>3}{cells}")
-
-    if args.details:
-        for mode, (_, misses) in results.items():
-            print(f"\nMisses [{mode}]:")
-            for qid, question, expected, got in misses:
-                print(f"  {qid} {question}\n     expected {expected}\n     got      {got}")
+    output = {"k": args.k, "modes": modes, "categories": CATEGORIES, "variants": [], "rows": [],
+              "per_question": {}}
+    for v in variants:
+        per_mode = evaluate(v, modes, args.k, questions)
+        print_table(v, per_mode, args.k, questions)
+        output["variants"].append(v.name)
+        output["rows"].extend(table_rows(v.name, per_mode))
+        output["per_question"][v.name] = per_mode
+        if args.details:
+            texts = {q["id"]: q for q in questions}
+            for mode, results in per_mode.items():
+                misses = [r for r in results if r["recall"] < 1.0]
+                print(f"\nMisses [{v.name} / {mode}]: {len(misses)}")
+                for r in misses:
+                    q = texts[r["id"]]
+                    print(f"  {r['id']} {q['question']}\n     expected {q['expected']}\n"
+                          f"     got      {r['docs']}")
+    skipped = [v.name for v in candidates if not v.db_path.exists()]
+    if skipped:
+        print(f"\nnot built (skipped): {', '.join(skipped)}  ->  uv run index --all")
+    if args.mode == "all":
+        RESULTS.parent.mkdir(parents=True, exist_ok=True)
+        RESULTS.write_text(json.dumps(output, indent=1, ensure_ascii=False), encoding="utf-8")
+        print(f"\nwritten: {RESULTS.relative_to(RESULTS.parent.parent)}")

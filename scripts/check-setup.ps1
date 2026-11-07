@@ -7,7 +7,6 @@ if ((Get-Command java -ErrorAction SilentlyContinue) -and (Get-JavaMajor) -ge 21
 else { Write-Fail 'Java 21+ nicht gefunden' }
 if ((Get-Command node -ErrorAction SilentlyContinue) -and (Test-NodeSupported)) { Write-Ok "Node $(node --version)" }
 else { Write-Fail "Node $NodeRequired nicht gefunden" }
-if (Get-Command uv -ErrorAction SilentlyContinue) { Write-Ok 'uv' } else { Write-Fail 'uv nicht gefunden' }
 if (Get-Command claude -ErrorAction SilentlyContinue) {
     Write-Ok 'Claude Code'
     try {
@@ -18,12 +17,12 @@ if (Get-Command claude -ErrorAction SilentlyContinue) {
     } catch { Write-Warn 'Login-Status nicht lesbar: in Claude Code /status pruefen' }
 } else { Write-Fail 'Claude Code nicht gefunden' }
 
-# Playwright MCP (exercise 09) drives an installed Chrome or Edge, not the Playwright Chromium.
+# Playwright MCP (exercise 06) drives an installed Chrome or Edge, not the Playwright Chromium.
 $chromePaths = @("$env:ProgramFiles\Google\Chrome\Application\chrome.exe", "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe", "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe", '/Applications/Google Chrome.app')
 $edgePaths = @("${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe", "$env:ProgramFiles\Microsoft\Edge\Application\msedge.exe", '/Applications/Microsoft Edge.app')
-if ($chromePaths | Where-Object { $_ -and (Test-Path $_) }) { Write-Ok 'Google Chrome gefunden (fuer Playwright MCP, Uebung 09)' }
-elseif ($edgePaths | Where-Object { $_ -and (Test-Path $_) }) { Write-Ok 'Microsoft Edge gefunden (Uebung 09: Variante mit --browser msedge verwenden)' }
-else { Write-Warn 'Weder Chrome noch Edge gefunden: Uebung 09 (Playwright MCP) braucht einen der beiden' }
+if ($chromePaths | Where-Object { $_ -and (Test-Path $_) }) { Write-Ok 'Google Chrome gefunden (fuer Playwright MCP, Uebung 06)' }
+elseif ($edgePaths | Where-Object { $_ -and (Test-Path $_) }) { Write-Ok 'Microsoft Edge gefunden (Uebung 06: Variante mit --browser msedge verwenden)' }
+else { Write-Warn 'Weder Chrome noch Edge gefunden: Uebung 06 (Playwright MCP) braucht einen der beiden' }
 
 Write-Section 'Projekt'
 if (Test-Path '.env') { Write-Ok '.env vorhanden (Fake-Werte)' } else { Write-Fail '.env fehlt - scripts\setup.ps1 ausfuehren' }
@@ -32,7 +31,6 @@ Invoke-Step 'Backend-Tests (offline)' 'scripts\setup.ps1 ausfuehren' (Get-Mvnw) 
 Set-Location (Join-Path $RepoRoot 'app/frontend')
 Invoke-Step 'Frontend-Tests' 'scripts\setup.ps1 ausfuehren' 'npm' @('test')
 Set-Location $RepoRoot
-if (Test-Path 'rag/.data/index.db') { Write-Ok 'RAG-Index vorhanden' } else { Write-Fail 'RAG-Index fehlt - scripts\setup.ps1 ausfuehren' }
 
 Write-Section 'Manuell pruefen (in Claude Code)'
 Write-Host "  1. Datenschutz-Einstellung geprueft: https://claude.ai/settings/data-privacy-controls"

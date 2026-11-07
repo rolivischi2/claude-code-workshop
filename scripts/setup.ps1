@@ -12,7 +12,6 @@ if (Get-Command java -ErrorAction SilentlyContinue) {
 if (Get-Command node -ErrorAction SilentlyContinue) {
     if (Test-NodeSupported) { Write-Ok "Node $(node --version)" } else { Write-Fail "Node $(node --version) passt nicht, noetig: $NodeRequired" }
 } else { Write-Fail "Node.js fehlt (noetig: $NodeRequired)" }
-if (Get-Command uv -ErrorAction SilentlyContinue) { Write-Ok 'uv' } else { Write-Fail 'uv fehlt (siehe SETUP.md)' }
 if (Get-Command claude -ErrorAction SilentlyContinue) { Write-Ok 'Claude Code' }
 else { Write-Warn 'Claude Code nicht gefunden (siehe SETUP.md) - Setup laeuft trotzdem weiter' }
 if ($Failures.Count -gt 0) { Write-Summary ''; exit 1 }
@@ -27,19 +26,13 @@ Set-Location (Join-Path $RepoRoot 'app/backend')
 $mvnw = Get-Mvnw
 Invoke-Step 'Maven-Abhaengigkeiten laden' $proxyHint $mvnw @('-B', '-q', 'dependency:go-offline')
 Invoke-Step 'Backend bauen und testen' '' $mvnw @('-B', '-q', 'verify')
-Invoke-Step 'Formatter (Spotless) vorladen' $proxyHint $mvnw @('-B', '-q', 'spotless:check', '-DspotlessFiles=.*RaumreservationApplication\.java')
+Invoke-Step 'Formatter (Spotless) vorladen' $proxyHint $mvnw @('-B', '-q', 'spotless:check', '-DspotlessFiles=.*TransitApplication\.java')
 
 Write-Section 'Frontend (npm)'
 Set-Location (Join-Path $RepoRoot 'app/frontend')
 Invoke-Step 'npm-Pakete installieren' $proxyHint 'npm' @('ci', '--no-audit', '--no-fund')
 Invoke-Step 'Playwright-Browser (Chromium) installieren' $proxyHint 'npx' @('playwright', 'install', 'chromium')
 Invoke-Step 'Frontend-Tests' '' 'npm' @('test')
-
-Write-Section 'RAG (Python/uv)'
-Set-Location (Join-Path $RepoRoot 'rag')
-Invoke-Step 'Python-Umgebung (uv sync)' $proxyHint 'uv' @('sync', '-q')
-Invoke-Step 'Embedding-Modell herunterladen (~220 MB)' $proxyHint 'uv' @('run', '-q', 'index', '--download-only')
-Invoke-Step 'Suchindex aufbauen' '' 'uv' @('run', '-q', 'index')
 
 Write-Section 'Konfiguration'
 Set-Location $RepoRoot

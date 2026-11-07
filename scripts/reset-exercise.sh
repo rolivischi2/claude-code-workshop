@@ -7,7 +7,7 @@ cd "$REPO_ROOT"
 
 nn="${1:-}"
 if ! [[ "$nn" =~ ^[0-9]{2}$ ]]; then
-  echo "Aufruf: scripts/reset-exercise.sh NN   (z.B. scripts/reset-exercise.sh 08)"
+  echo "Aufruf: scripts/reset-exercise.sh NN   (z.B. scripts/reset-exercise.sh 03)"
   echo "Verfügbar: $(git tag -l 'start/*' | sed 's#start/##' | tr '\n' ' ')"
   exit 2
 fi

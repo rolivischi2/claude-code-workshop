@@ -32,12 +32,12 @@ td {
   text-align: left;
 }
 
-.reservations {
+.declarations {
   padding: 0;
   list-style: none;
 }
 
-.reservations li {
+.declarations li {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -57,7 +57,8 @@ label {
   font-weight: bold;
 }
 
-input {
+input,
+select {
   padding: 0.35rem;
   font: inherit;
 }
@@ -72,4 +73,11 @@ input {
   gap: 1rem;
   align-items: center;
   margin-top: 1rem;
+}
+
+footer {
+  max-width: 48rem;
+  padding: 1rem 1.5rem;
+  color: #666;
+  font-size: 0.85rem;
 }

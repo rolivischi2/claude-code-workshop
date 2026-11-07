@@ -16,6 +16,8 @@ class Document:
     tags: list[str]
     path: str
     body: str  # markdown without front matter
+    url: str = ""  # original source (PDF) of a converted document
+    pages: int = 0
 
 
 def parse_document(path: Path, root: Path = CORPUS_DIR) -> Document:
@@ -31,6 +33,8 @@ def parse_document(path: Path, root: Path = CORPUS_DIR) -> Document:
         tags=list(meta.get("tags", [])),
         path=path.relative_to(root).as_posix(),
         body=body.strip(),
+        url=meta.get("url", ""),
+        pages=int(meta.get("pages", 0)),
     )
 
 

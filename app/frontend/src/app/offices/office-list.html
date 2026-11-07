@@ -1,0 +1,25 @@
+<h1>Zollstellen</h1>
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Rolle</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (office of offices(); track office.code) {
+      <tr data-testid="office-row">
+        <td>{{ office.code }}</td>
+        <td>
+          <a [routerLink]="['/offices', office.code]">{{ office.name }}</a>
+        </td>
+        <td>{{ roleLabels[office.role] }}</td>
+      </tr>
+    } @empty {
+      <tr>
+        <td colspan="3">Keine Zollstellen gefunden.</td>
+      </tr>
+    }
+  </tbody>
+</table>

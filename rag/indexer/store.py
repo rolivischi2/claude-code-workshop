@@ -8,10 +8,10 @@ from pathlib import Path
 import sqlite_vec
 
 from indexer.chunking import Chunk
-from indexer.config import DB_PATH, EMBEDDING_DIM
+from indexer.config import DB_PATH
 from indexer.corpus import Document
 
-SCHEMA = f"""
+SCHEMA = """
 CREATE TABLE docs (id TEXT PRIMARY KEY, title TEXT, lang TEXT, tags TEXT, path TEXT, body TEXT);
 CREATE TABLE chunks (
     id INTEGER PRIMARY KEY, doc_id TEXT, chunk_index INTEGER,
@@ -22,7 +22,7 @@ CREATE VIRTUAL TABLE chunks_fts USING fts5(
     text, heading_path, content='chunks', content_rowid='id',
     tokenize='unicode61 remove_diacritics 2'
 );
-CREATE VIRTUAL TABLE chunks_vec USING vec0(embedding float[{EMBEDDING_DIM}] distance_metric=cosine);
+CREATE VIRTUAL TABLE chunks_vec USING vec0(embedding float[{dim}] distance_metric=cosine);
 """
 
 # Very common words carry no signal for BM25 and only add noise to the OR query.
@@ -30,7 +30,8 @@ STOPWORDS = set(
     """der die das den dem des ein eine einer eines einem und oder wie was wer wann wo wird werden
     ist sind bei mit von für auf aus im in zu zum zur bis ab ich wir man es muss darf kann
     oft lange welche welcher welches gibt gilt hat haben soll sollen einen dürfen höchstens
-    maximal schon noch viele warum steht bedeutet passiert geschieht
+    maximal schon noch viele warum steht bedeutet passiert geschieht welchen welchem nach an als
+    nicht sich dass sie er ihr mein meine meinen unser unsere ich mir mich braucht brauche
     le la les un une des du de et ou est sont pour par dans sur avec
     the a an and or is are of to in on for with what how when who which""".split()
 )
@@ -49,7 +50,7 @@ def build(docs: list[Document], chunks: list[Chunk], vectors, settings: dict,
     db_path.parent.mkdir(parents=True, exist_ok=True)
     db_path.unlink(missing_ok=True)
     with connect(db_path) as conn:
-        conn.executescript(SCHEMA)
+        conn.executescript(SCHEMA.format(dim=vectors.shape[1]))
         conn.executemany(
             "INSERT INTO docs VALUES (?, ?, ?, ?, ?, ?)",
             [(d.id, d.title, d.lang, json.dumps(d.tags), d.path, d.body) for d in docs],
@@ -67,10 +68,15 @@ def build(docs: list[Document], chunks: list[Chunk], vectors, settings: dict,
         conn.executemany("INSERT INTO meta VALUES (?, ?)", [(k, str(v)) for k, v in settings.items()])
 
 
+def query_terms(text: str) -> list[str]:
+    """The search terms BM25 actually uses: lower-cased words without stopwords, deduplicated."""
+    terms = [t for t in re.findall(r"\w+", text.lower()) if len(t) > 1 and t not in STOPWORDS]
+    return list(dict.fromkeys(terms))
+
+
 def fts_query(text: str) -> str:
     """Turns free text into an FTS5 OR-query of quoted terms (quoting avoids syntax errors)."""
-    terms = [t for t in re.findall(r"\w+", text.lower()) if len(t) > 1 and t not in STOPWORDS]
-    return " OR ".join(f'"{t}"' for t in dict.fromkeys(terms))
+    return " OR ".join(f'"{t}"' for t in query_terms(text))
 
 
 def bm25_ids(conn: sqlite3.Connection, query: str, limit: int) -> list[tuple[int, float]]:
@@ -113,6 +119,15 @@ def load_doc(conn: sqlite3.Connection, doc_id: str) -> dict | None:
     doc = dict(zip(keys, row))
     doc["tags"] = json.loads(doc["tags"])
     return doc
+
+
+def all_vectors(conn: sqlite3.Connection) -> tuple[list[int], "np.ndarray"]:
+    """Every chunk id with its stored embedding (used for the 2D map of the visualisation)."""
+    import numpy as np
+
+    rows = conn.execute("SELECT rowid, embedding FROM chunks_vec ORDER BY rowid").fetchall()
+    ids = [r[0] for r in rows]
+    return ids, np.array([np.frombuffer(r[1], dtype=np.float32) for r in rows])
 
 
 def settings(conn: sqlite3.Connection) -> dict[str, str]:

@@ -1,6 +1,6 @@
 # Übung 00 – Setup-Check
 
-**Block:** Einstieg · **Zeitbudget:** 10 Minuten
+**Block:** Einstieg · **Zeitbudget:** 5 Minuten (das Setup selbst ist Hausaufgabe, siehe [SETUP.md](../../SETUP.md))
 
 ## Ziel
 
@@ -9,7 +9,7 @@ Alle starten mit einer funktionierenden Umgebung, dem richtigen Login und einem 
 ## Konzept
 
 Claude Code ist eine Harness: ein Modell in einer Schleife, mit Werkzeugen, Kontext und
-Steuerung. Alle Blöcke des Tages haben einen festen Platz auf dieser Karte. Bevor wir sie
+Steuerung. Alle Blöcke des Nachmittags haben einen festen Platz auf dieser Karte. Bevor wir sie
 einzeln anschauen, prüfen wir, dass die Grundlage steht.
 
 ```
@@ -28,7 +28,7 @@ Kontext = System-Prompt + CLAUDE.md + Skills-Beschreibungen + Verlauf + Tool-Erg
    ```
 2. Im Repo-Root `claude` starten und nacheinander eingeben:
    - `/status`: Login-Methode muss euer claude.ai-Konto sein, kein API-Key.
-   - `/model sonnet`: Sonnet für den ganzen Tag. Der Standard ist Opus, das braucht euer Kontingent deutlich schneller auf.
+   - `/model sonnet`: Sonnet für den ganzen Nachmittag. Der Standard ist Opus, das braucht euer Kontingent deutlich schneller auf.
    - `/usage`: euer aktueller Verbrauch im 5-Stunden-Fenster und in der Woche.
    - `/context`: Wie viel Kontext ist belegt, **bevor** ihr etwas gefragt habt? Zahl notieren.
 3. Privatsphäre-Einstellung unter
@@ -51,7 +51,7 @@ scripts/check-setup.sh     # alles grün
 
 - Rot bei «Login»? `/logout`, dann `/login` und «Claude account with subscription» wählen.
 - `ANTHROPIC_API_KEY` in der Shell gesetzt? Entfernen, sonst verrechnet Claude Code über die API.
-- Fehlt Chrome/Edge (Warnung), funktioniert alles ausser Übung 09.
+- Fehlt Chrome/Edge (Warnung), funktioniert alles ausser Übung 06.
 
 </details>
 

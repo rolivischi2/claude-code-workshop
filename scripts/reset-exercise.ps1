@@ -5,7 +5,7 @@ param([string]$Exercise)
 Set-Location $RepoRoot
 
 if ($Exercise -notmatch '^\d{2}$') {
-    Write-Host 'Aufruf: scripts\reset-exercise.ps1 NN   (z.B. scripts\reset-exercise.ps1 08)'
+    Write-Host 'Aufruf: scripts\reset-exercise.ps1 NN   (z.B. scripts\reset-exercise.ps1 03)'
     Write-Host "Verfuegbar: $((git tag -l 'start/*') -replace 'start/', '' -join ' ')"
     exit 2
 }

@@ -1,7 +1,8 @@
 # Fallback: Wenn das Pro-Limit erreicht ist
 
-Pro hat ein **rollendes 5-Stunden-Fenster** plus ein **Wochenlimit**. Wer früh viel mit Opus
-arbeitet, kann am Nachmittag blockiert sein.
+Pro hat ein **rollendes 5-Stunden-Fenster** plus ein **Wochenlimit**. Die Übungen sind so
+ausgelegt, dass sie zusammen deutlich unter einem Fenster bleiben. Wer aber am selben Tag schon
+viel mit Opus gearbeitet hat, kann trotzdem blockiert sein.
 
 ## Vorbeugen (im Einstieg ansagen)
 
@@ -9,7 +10,7 @@ arbeitet, kann am Nachmittag blockiert sein.
 - `/usage` zwischendurch zeigen lassen (kostet keine Tokens).
 - Eine Übung = eine Session, danach `/clear`.
 - Keine «lies alles»-Prompts, keine endlosen Korrekturrunden. Lieber `/rewind` und neu formulieren.
-- `/effort low` für einfache Aufgaben (z.B. Übung 05, 07, 15).
+- `/effort low` für einfache Aufgaben (z.B. Übung 04).
 
 ## Wenn es passiert
 
@@ -23,12 +24,13 @@ arbeitet, kann am Nachmittag blockiert sein.
    git diff start/NN solution/NN       # was die Lösung ändert
    ```
    Die Diffs der Lösungen sind klein und eignen sich gut zum Lesen.
-4. **Übungen ohne Modell:** 07 (Git-Teil), 11 (`uv run eval` läuft lokal) und 15
-   (`claude plugin validate`) gehen auch ohne Budget weiter.
+4. **Übungen ohne Modell:** 05 (`/rewind` und Git) und der Permissions-Teil von 04
+   (verweigerte Aufrufe kosten fast nichts) gehen auch fast ohne Budget weiter.
 5. **Usage Credits:** Wer selbst zahlen will, kann unter `/usage-credits` zusätzliche
    Nutzung kaufen. Bitte **nicht** im Workshop empfehlen, nur erwähnen, falls jemand fragt.
 
 ## Für Facilitators
 
-- Die Facilitators sollten ein Konto mit höherem Limit dabeihaben, um Demos notfalls am Beamer weiterzuführen.
-- Wer am Vormittag über 50 % des 5h-Fensters liegt (`/usage`), bekommt den Hinweis, auf Haiku zu wechseln.
+- Der Facilitator braucht ein Konto mit höherem Limit, um die Demos R und D am Beamer sicher zu zeigen.
+  Die RAG-Demo selbst braucht **kein** Modell: Sie spielt vorberechnete Daten ab.
+- Wer nach Block B über 50 % des 5h-Fensters liegt (`/usage`), bekommt den Hinweis, für Übung 06 auf Haiku zu wechseln.

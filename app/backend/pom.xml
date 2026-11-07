@@ -12,10 +12,10 @@
   </parent>
 
   <groupId>com.example</groupId>
-  <artifactId>raumreservation</artifactId>
+  <artifactId>transit</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>raumreservation</name>
-  <description>Workshop demo: room reservation service</description>
+  <name>transit</name>
+  <description>Workshop demo: synthetic NCTS transit declarations</description>
 
   <properties>
     <java.version>21</java.version>

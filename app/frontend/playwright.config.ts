@@ -8,8 +8,8 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: [
     {
-      command: 'java -jar ../backend/target/raumreservation-0.0.1-SNAPSHOT.jar',
-      url: 'http://localhost:8080/api/rooms',
+      command: 'java -jar ../backend/target/transit-0.0.1-SNAPSHOT.jar',
+      url: 'http://localhost:8080/api/offices',
       reuseExistingServer: true,
       timeout: 120_000,
     },

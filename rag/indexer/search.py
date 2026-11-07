@@ -1,15 +1,18 @@
 """Lexical (BM25), vector and hybrid search over the index."""
 
+import sqlite3
 from dataclasses import dataclass
 from typing import Literal
 
 from indexer import store
+from indexer.config import MAIN_VARIANT, Variant
 from indexer.embeddings import embed
 
 Mode = Literal["bm25", "vector", "hybrid"]
 # Each retriever contributes its top 2*k before fusion. Deeper lists sound better but hurt:
 # a weak retriever's mid-ranked noise then appears in both lists and outvotes the other's top hit.
 CANDIDATES_PER_K = 2
+RRF_K = 60
 
 
 @dataclass(frozen=True)
@@ -22,7 +25,7 @@ class SearchResult:
 
 
 def reciprocal_rank_fusion(
-    rankings: list[list[int]], k: int = 60
+    rankings: list[list[int]], k: int = RRF_K
 ) -> list[tuple[int, float]]:
     """Fuses several rankings of chunk ids into one, best first.
 
@@ -47,19 +50,27 @@ def reciprocal_rank_fusion(
     return [(chunk_id, scores[chunk_id]) for chunk_id in ordered]
 
 
-def search(query: str, mode: Mode = "hybrid", k: int = 5) -> list[SearchResult]:
-    with store.connect() as conn:
-        if mode == "bm25":
-            ranked = store.bm25_ids(conn, query, k)
-        elif mode == "vector":
-            ranked = store.vector_ids(conn, embed([query])[0], k)
-        elif mode == "hybrid":
-            depth = CANDIDATES_PER_K * k
-            lexical = [i for i, _ in store.bm25_ids(conn, query, depth)]
-            semantic = [i for i, _ in store.vector_ids(conn, embed([query])[0], depth)]
-            ranked = reciprocal_rank_fusion([lexical, semantic])[:k]
-        else:
-            raise ValueError(f"unknown mode: {mode}")
+def ranked_ids(conn: sqlite3.Connection, query: str, mode: Mode, k: int,
+               variant: Variant = MAIN_VARIANT, query_vector=None) -> list[tuple[int, float]]:
+    """(chunk_id, score) pairs, best first. `query_vector` skips re-embedding the query."""
+    if mode == "bm25":
+        return store.bm25_ids(conn, query, k)
+    if query_vector is None:
+        query_vector = embed([query], variant.model, kind="query")[0]
+    if mode == "vector":
+        return store.vector_ids(conn, query_vector, k)
+    if mode == "hybrid":
+        depth = CANDIDATES_PER_K * k
+        lexical = [i for i, _ in store.bm25_ids(conn, query, depth)]
+        semantic = [i for i, _ in store.vector_ids(conn, query_vector, depth)]
+        return reciprocal_rank_fusion([lexical, semantic])[:k]
+    raise ValueError(f"unknown mode: {mode}")
+
+
+def search(query: str, mode: Mode = "hybrid", k: int = 5,
+           variant: Variant = MAIN_VARIANT) -> list[SearchResult]:
+    with store.connect(variant.db_path) as conn:
+        ranked = ranked_ids(conn, query, mode, k, variant)
         chunks = store.load_chunks(conn, [i for i, _ in ranked])
     return [
         SearchResult(*chunks[row_id], score=round(score, 4))

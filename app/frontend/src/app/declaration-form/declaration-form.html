@@ -1,0 +1,79 @@
+@if (office(); as office) {
+  <h1>Transitanmeldung erfassen – {{ office.name }}</h1>
+  <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <label for="departureOffice">Abgangszollstelle</label>
+    <select id="departureOffice" formControlName="departureOffice" data-testid="departure">
+      @for (o of departureOffices(); track o.code) {
+        <option [value]="o.code">{{ o.name }} ({{ o.code }})</option>
+      }
+    </select>
+    @if (showErrors('departureOffice')) {
+      <p class="error">Abgangszollstelle ist erforderlich.</p>
+    }
+
+    <label for="destinationOffice">Bestimmungszollstelle</label>
+    <select id="destinationOffice" formControlName="destinationOffice" data-testid="destination">
+      <option value="">Bitte wählen</option>
+      @for (o of destinationOffices(); track o.code) {
+        <option [value]="o.code">{{ o.name }} ({{ o.code }})</option>
+      }
+    </select>
+    @if (showErrors('destinationOffice')) {
+      <p class="error">Bestimmungszollstelle ist erforderlich.</p>
+    }
+
+    <label for="guaranteeReference">Sicherheit (GRN)</label>
+    <select id="guaranteeReference" formControlName="guaranteeReference" data-testid="guarantee">
+      <option value="">Bitte wählen</option>
+      @for (g of guarantees(); track g.grn) {
+        <option [value]="g.grn">
+          {{ g.grn }} – {{ g.holder }} (Referenzbetrag CHF
+          {{ g.referenceAmount | number: '1.2-2' }})
+        </option>
+      }
+    </select>
+    @if (showErrors('guaranteeReference')) {
+      <p class="error">Sicherheit ist erforderlich.</p>
+    }
+
+    <label for="amount">Abgabenbetrag (CHF)</label>
+    <input id="amount" type="number" step="0.05" formControlName="amount" data-testid="amount" />
+    @if (showErrors('amount')) {
+      <p class="error">Der Betrag muss grösser als 0 sein.</p>
+    }
+
+    <label for="releasedAt">Freigabe</label>
+    <input
+      id="releasedAt"
+      type="datetime-local"
+      formControlName="releasedAt"
+      data-testid="released-at"
+    />
+    @if (showErrors('releasedAt')) {
+      <p class="error">Freigabe ist erforderlich.</p>
+    }
+
+    <label for="deadlineDays">Gestellungsfrist (Tage)</label>
+    <input
+      id="deadlineDays"
+      type="number"
+      formControlName="deadlineDays"
+      data-testid="deadline-days"
+    />
+    @if (showErrors('deadlineDays')) {
+      <p class="error">Die Frist muss zwischen 1 und {{ maxDeadlineDays }} Tagen liegen.</p>
+    }
+
+    @if (form.controls.destinationOffice.touched && form.hasError('sameOffice')) {
+      <p class="error">Abgangs- und Bestimmungszollstelle müssen verschieden sein.</p>
+    }
+    @if (form.controls.releasedAt.touched && form.hasError('releaseInPast')) {
+      <p class="error">Die Freigabe darf nicht in der Vergangenheit liegen.</p>
+    }
+
+    <div class="actions">
+      <button type="submit" [disabled]="saving()" data-testid="submit">Erfassen</button>
+      <a [routerLink]="['/offices', office.code]">Abbrechen</a>
+    </div>
+  </form>
+}
