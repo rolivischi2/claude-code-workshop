@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentische Suche vs. RAG</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <nav class="fields" id="fields" aria-label="Szenen"></nav>
+    <button class="qchip" id="qchip" type="button" title="Frage wählen (q)"></button>
+  </header>
+  <section class="head" id="head">
+    <h1 id="title"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="beats" id="beats" aria-hidden="true"></div>
+  </section>
+  <main class="stage" id="stage"></main>
+  <footer class="foot">
+    <span class="keys"><kbd>←</kbd><kbd>→</kbd> Schritt <kbd>1</kbd>–<kbd>7</kbd> Szene <kbd>q</kbd> Frage <kbd>r</kbd> nochmals <kbd>f</kbd> Vollbild <kbd>?</kbd> Hilfe</span>
+    <span class="meta" id="meta"></span>
+    <span class="badge-sample" id="sample" hidden>Beispieldaten</span>
+  </footer>
+</div>
+<div class="overlay" id="picker" hidden></div>
+<div class="overlay" id="help" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Daten: data.js (aus der Pipeline, uv run export-viz). Fehlt sie, wird data.sample.js geladen. -->
+<script src="data.js"></script>
+<script src="viz.js"></script>
+<script src="scenes-retrieval.js"></script>
+<script src="scenes-results.js"></script>
+<script>
+  (function () {
+    if (window.DATA) { VIZ.boot(window.DATA, false); return; }
+    var s = document.createElement('script');
+    s.src = 'data.sample.js';
+    s.onload = function () { VIZ.boot(window.DATA, true); };
+    s.onerror = function () { VIZ.fail('Weder data.js noch data.sample.js gefunden.'); };
+    document.head.appendChild(s);
+  })();
+</script>
+</body>
+</html>

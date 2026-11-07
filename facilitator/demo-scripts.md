@@ -33,7 +33,7 @@ Erscheint oben das Badge «Beispieldaten», fehlt `data.js`: `uv run export-viz`
 | 4–7 | 2 BM25 | **S2** «Währungsangabe … britischen Pfund»: BM25 findet **nichts** | «Das Dokument sagt GBP, nie Pfund. Lexikalische Suche ist blind für Synonyme.» |
 | 7–10 | 3 Vektor | **S2** trifft sofort. Dann **E1** «Was bedeutet NT044?»: Vektor findet den Code nicht einmal in den Top 10 | «Vektoren verstehen Bedeutung, aber nicht Bezeichner.» |
 | 10–12 | 3 Vektor | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
-| 12–14 | 4 Fusion | **E1** im Hybrid: Treffer auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Wenn die blinden Flecken verschieden sind, hilft Fusion.» |
+| 12–14 | 4 Fusion | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
 | 14–17 | 5 Agentic | Aufgezeichnete Läufe: 3–4 Turns, 20–35k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
 | 17–20 | 6 Scoreboard | Variante wechseln: MiniLM vs. e5-large. Dann Kernbotschaften | siehe unten |
 
