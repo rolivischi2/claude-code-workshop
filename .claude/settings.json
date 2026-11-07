@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(git push *)",
+      "Read(./.env)",
+      "Read(./.env.*)"
+    ],
+    "ask": [
+      "Bash(rm *)"
+    ]
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/format-edited-file.mjs"] }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write",
+        "hooks": [
+          { "type": "command", "command": "node", "args": ["${CLAUDE_PROJECT_DIR}/.claude/hooks/protect-generated.mjs"] }
+        ]
+      }
+    ]
+  }
+}
