@@ -164,7 +164,7 @@ questions:
     question: Was ändert sich mit NCTS Phase 5 beim Layout des Versandbegleitdokuments und bei der Angabe der Tarifnummer?
     expected: [vbd-info-de, info-durchfuhr-reminder-de]
     showcase: true
-    note: Antwort verteilt auf zwei kurze Infoblätter (VBD-Layout, Tarifnummer). BM25 bringt beide in die Top 5, Vektor und Hybrid nur eines; Claude Code mit Grep/Read fand beide mit 3 Tool-Aufrufen.
+    note: Antwort verteilt auf zwei kurze Infoblätter (VBD-Layout, Tarifnummer). BM25 bringt beide in die Top 5, Vektor und Hybrid nur eines; Claude Code mit Grep/Read hat beide mit 3 Tool-Aufrufen gefunden.
     note_bm25: Die Antwort steht in zwei kurzen Infoblättern (VBD-Layout, Tarifnummer). BM25 findet beide in den Top 5.
     note_vector: Die Antwort steht in zwei kurzen Infoblättern. Die Vektorsuche findet in den Top 5 nur eines davon.
     # vbd-info-de: neues Layout ab 02.12.2024, Liste der Positionen; info-durchfuhr-reminder-de:

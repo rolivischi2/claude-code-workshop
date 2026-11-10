@@ -49,8 +49,8 @@
     step: function (b, animate) { if (b === 1 && animate) runLoop(); }
   };
   VIZ.defs.rueckblick = {
-    id: 'rueckblick', nav: 'Rückblick', title: 'Rückblick: alle Teile im Einsatz',
-    lead: 'Alle Teile der Harness und die Übung oder Demo, in der sie heute vorkamen.',
+    id: 'rueckblick', nav: 'Rückblick', title: 'Rückblick',
+    lead: 'Alle Teile der Harness, je mit der Übung oder Demo von heute.',
     beats: 1,
     render: function (stage) {
       stage.classList.add('recap');
@@ -84,7 +84,7 @@
     lead: 'Was immer geladen ist, kostet in jedem Turn. Was erst bei Bedarf geladen wird, kostet nur dann.',
     beats: 6,
     guess: function () {
-      return { before: 1, question: 'Wie viel Kontext war in Übung 00 belegt, bevor ihr etwas eingegeben habt?',
+      return { before: 1, question: 'Wie viel Kontext ist in Übung 00 belegt gewesen, bevor ihr etwas eingegeben habt?',
         options: ['unter 5 %', '5 bis 15 %', 'über 15 %'], correct: null,
         reveal: 'Eure Zahl aus /context. Dieser Anteil wird in jedem Turn mitgesendet.' };
     },
@@ -157,7 +157,7 @@
       stage.appendChild(at(h('div', { class: 'rewind' },
         h('div', { class: 'rewind-head' }, h('b', { text: '/rewind' }), h('span', { text: 'Vor jedem Prompt legt Claude Code einen Checkpoint an. Zurücksetzen lassen sich Code, Konversation oder beides.' })),
         h('div', { class: 'rewind-line' }, cps.map(function (c, i) { return h('div', { class: 'cp', 'data-i': i }, h('i'), h('span', { text: c })); })),
-        h('p', { class: 'muted small', text: 'Erfasst werden Änderungen über Edit und Write. Dateien, die nur per Bash oder von aussen geändert wurden, bleiben unverändert. Für dauerhafte Stände: Git.' })), 5, 'up'));
+        h('p', { class: 'muted small', text: 'Erfasst werden Änderungen über Edit und Write. Dateien, die nur per Bash oder von aussen geändert worden sind, bleiben unverändert. Für dauerhafte Stände: Git.' })), 5, 'up'));
     },
     step: function (b, animate) {
       var c = CALLS[b] || null, out = document.getElementById('lp-out');

@@ -22,7 +22,7 @@ Kontext = System-Prompt + CLAUDE.md + Skills-Beschreibungen + Verlauf + Tool-Erg
 
 ## Aufgabe
 
-`scripts/check-setup.sh` war Teil der Hausaufgabe und läuft hier **nicht** nochmals (es führt alle
+`scripts/check-setup.sh` gehört zur Hausaufgabe und läuft hier **nicht** nochmals (es führt alle
 Tests aus und dauert mehrere Minuten). Windows: Die Befehle der Übungsblätter sind für **Git Bash** geschrieben.
 
 1. Im Repo-Root `claude` starten und nacheinander eingeben:

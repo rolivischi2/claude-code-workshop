@@ -115,7 +115,7 @@ ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des
   ```bash
   cd app/backend && ./mvnw -q spotless:check     # grün
   ```
-- Bei Prompt 5 wurde der Edit **blockiert**.
+- Bei Prompt 5 ist der Edit **blockiert** worden.
 
 <details>
 <summary>Hinweise</summary>

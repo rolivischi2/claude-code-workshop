@@ -54,7 +54,7 @@ Sicherheit (Format siehe exercises/02-skills/README.md).
 cd app/backend && ./mvnw -q test        # grün, inkl. neuer Tests
 ```
 
-Und: Der Skill wurde ohne Erwähnung geladen, der Endpoint hält sich an die Checkliste aus Übung 01.
+Und: Der Skill ist ohne Erwähnung geladen worden, der Endpoint hält sich an die Checkliste aus Übung 01.
 
 <details>
 <summary>Hinweise</summary>

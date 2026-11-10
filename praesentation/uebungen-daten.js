@@ -81,7 +81,7 @@ window.UEBUNGEN = [
       { label: 'Prompt 1 (Skill bauen)', text: 'Erstelle einen Project Skill unter .claude/skills/rest-endpoint/SKILL.md. Er beschreibt\nSchritt für Schritt, wie in diesem Backend ein neuer REST-Endpoint nach unserem Teamstandard\nentsteht (Schichten, DTO-Record + Mapper, Fehler als Problem Details, Tests). Verweise auf\nbestehende Dateien als Vorlage statt Code zu kopieren. Die description im Frontmatter soll\nklar sagen, wann der Skill zu verwenden ist.' },
       { label: 'Prompt 2 (Feature, neue Session)', text: 'Wir brauchen den Endpoint GET /api/guarantees/{grn}/balance. Er liefert den Saldo einer\nSicherheit (Format siehe exercises/02-skills/README.md).' }
     ],
-    fertig: { text: 'Tests grün, inklusive der neuen. Der Skill wurde geladen, ohne dass ihr ihn erwähnt habt.', cmd: 'cd app/backend && ./mvnw -q test' },
+    fertig: { text: 'Tests grün, inklusive der neuen. Der Skill ist geladen worden, ohne dass ihr ihn erwähnt habt.', cmd: 'cd app/backend && ./mvnw -q test' },
     tipp: 'Im Skill auf bestehende Dateien verweisen, statt Code hineinzukopieren. Das hält ihn kurz.'
   },
   {
@@ -151,7 +151,7 @@ window.UEBUNGEN = [
       { label: 'Prompt 4', text: 'Ergänze in app/backend/src/main/java/com/example/transit/declaration/FristFormatter.java\nein Javadoc für die Methode format.' },
       { label: 'Prompt 5', text: 'Teste unseren Schutz-Hook: Versuche, in app/frontend/src/generated/api-types.ts dem OfficeDto\nein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des Hooks.' }
     ],
-    fertig: { text: 'Der Formatier-Hook hat `FristFormatter` formatiert. Bei Prompt 5 wurde der Edit blockiert.', cmd: 'cd app/backend && ./mvnw -q spotless:check' },
+    fertig: { text: 'Der Formatier-Hook hat `FristFormatter` formatiert. Bei Prompt 5 ist der Edit blockiert worden.', cmd: 'cd app/backend && ./mvnw -q spotless:check' },
     tipp: 'Ein Hook läuft ausserhalb des Modells. Formatieren per Hook kostet keine Tokens.'
   },
   {

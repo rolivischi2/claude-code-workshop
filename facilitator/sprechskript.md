@@ -28,7 +28,7 @@ kurz vorlesen, was das Ziel ist, dann `z` für die Uhr. Die Folie bleibt währen
 `g` Schätzfragen aus/ein · `?` Hilfe. Im Abschnitt Suche zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Messung: Detail-Diagramme).
 
 **Schätzfrage:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` zeigt die Antwort,
-`→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch lag, sondern gleich die Erklärung zeigen.
+`→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch gelegen hat, sondern gleich die Erklärung zeigen.
 
 **Vor dem Start:** Seite offen, Vollbild, Benachrichtigungen aus. Im Abschnitt Suche darf unten
 rechts **nicht** «Beispieldaten» stehen.
@@ -67,7 +67,7 @@ rechts **nicht** «Beispieldaten» stehen.
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | leerer Balken «Kontextfenster» | «Dieser Balken ist das Arbeitsgedächtnis des Modells. Was nicht drin ist, weiss es nicht. Was drin ist, bezahlt ihr.» |
-| `→` | **Schätzfrage:** «Wie viel Kontext war in Übung 00 belegt …?» | Abstimmen lassen. Antwort zeigen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. |
+| `→` | **Schätzfrage:** «Wie viel Kontext ist in Übung 00 belegt gewesen …?» | Abstimmen lassen. Antwort zeigen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. |
 | `→` | dunkle Segmente: System-Prompt, CLAUDE.md, Beschreibungen | «Das ist belegt, bevor ihr ein Wort tippt: System-Prompt und Werkzeuge, eure CLAUDE.md, die Beschreibungen der Skills, die Namen der MCP-Tools. Das Bild ist ein Schema, eure echte Zahl ist die aus `/context`.» |
 | `→` | Turn 1: kleines graues, grosses ockerfarbenes Segment | «Erster Turn. Euer Prompt ist winzig. Gross ist, was Claude dafür *liest*: Dateien, Suchergebnisse, Testausgaben. Tool-Ergebnisse sind fast immer der grösste Posten.» |
 | `→` | Balken wächst, darunter «Turn 1/2/3 sendet» | «Und jetzt der Punkt, den viele unterschätzen: Jeder Turn schickt *alles Bisherige* wieder mit. Der Prompt-Cache macht den unveränderten Anfang billiger, aber nicht kleiner. Darum der Token-Tipp auf den Blättern: Kritik in einem Prompt sammeln statt in fünf.» |
@@ -111,7 +111,7 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Was passiert bei einem anderen Exit-Code als 2?* Der Aufruf läuft weiter, die erste Zeile von stderr erscheint als Hinweis. Nur 2 blockiert.
 - *Ist deny eine Sicherheitsgrenze?* Nein, eine Leitplanke. Ein Skript, das die Datei selbst öffnet, kommt daran vorbei. Für harte Grenzen gibt es die Bash-Sandbox und Managed Settings.
 - *Welche Settings-Datei gewinnt?* Von oben nach unten: Managed, Kommandozeile, `settings.local.json`, `settings.json` im Projekt, User. Listen wie `permissions.allow` werden zusammengeführt.
-- *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert wurden. Darum ersetzt Rewind Git nicht.
+- *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
 - *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
 - *Warum Hooks als Node-Skript?* Dieselbe Konfiguration läuft auf macOS und Windows, weil keine Shell dazwischen ist.
 
@@ -256,7 +256,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | (Start) | Chunk → «Embedding-Modell» → Zahlenstreifen | «Bevor wir suchen, müssen wir verstehen, was im Index liegt. Ein Embedding-Modell macht aus einem Text eine feste Liste von 384 Zahlen. Ähnliche Bedeutung ergibt ähnliche Zahlen. Das ist ein kleines, eigenes Modell, es läuft hier auf dem Laptop. Mit Claude hat es nichts zu tun.» |
 | `→` | Tabelle: eine Zeile pro Chunk, mit Zahlenstreifen | «Und das ist schon die ganze Vektor-Datenbank: eine Tabelle. Pro Chunk eine Zeile, mit dem Text und seinen 384 Zahlen. Die Streifen zeigen die ersten sechzehn davon. Bei uns sind es 1206 Zeilen in einer einzigen SQLite-Datei.» |
 | `→` | blaue Zeile «die Frage» | «Die Frage geht durch dasselbe Modell und wird ebenfalls zu 384 Zahlen.» |
-| `→` | Spalte «Ähnlichkeit zur Frage» füllt sich, Zeilen sortieren sich | «Suchen heisst jetzt: die Zahlen der Frage mit jeder Zeile vergleichen und nach Ähnlichkeit sortieren. Die obersten Zeilen sind die ‹nächsten Nachbarn›. Kein einziges Wort wurde verglichen.» |
+| `→` | Spalte «Ähnlichkeit zur Frage» füllt sich, Zeilen sortieren sich | «Suchen heisst jetzt: die Zahlen der Frage mit jeder Zeile vergleichen und nach Ähnlichkeit sortieren. Die obersten Zeilen sind die ‹nächsten Nachbarn›. Kein einziges Wort ist verglichen worden.» |
 | `→` | drei Merkkästen | «Darum findet ‹Pfund› das Dokument mit ‹GBP›. Und darum geht ein Code wie NT044 verloren. Eine spezielle Datenbank braucht es erst bei Millionen von Zeilen: Dann hilft ein Index, der nicht jede Zeile prüfen muss.» |
 
 **Übergang:** «Eine Tabelle mit 384 Spalten kann niemand lesen. Darum zeichnen wir sie jetzt als Karte.»
@@ -297,7 +297,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 |-------|--------------|----------|
 | (Start) | zwei Ranglisten nebeneinander | «Jede Suche hat einen blinden Fleck, und zwar dort, wo die andere stark ist. Also beide zusammen.» |
 | `→` | Karten wandern in eine gemeinsame Reihenfolge, mit `1/(60+Rang)` | «Reciprocal Rank Fusion: Jede Liste vergibt Punkte nach Rang, eins durch sechzig plus Rang. Die Punkte werden addiert. Es zählt nur die Position, nicht der Score. Darum lassen sich zwei völlig verschiedene Verfahren mischen.» |
-| `→` | Urteil | Bei S2: «Der Vektor-Treffer bleibt auf Rang 1.» Dann `q` → **E1**: «Und hier schadet die Fusion. BM25 hatte den Treffer auf Rang 1, das Rauschen der Vektoren drückt ihn auf Rang 2.» |
+| `→` | Urteil | Bei S2: «Der Vektor-Treffer bleibt auf Rang 1.» Dann `q` → **E1**: «Und hier schadet die Fusion. BM25 hat den Treffer auf Rang 1 gehabt, das Rauschen der Vektoren drückt ihn auf Rang 2.» |
 
 **Satz:** «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.»
 
@@ -322,7 +322,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 |-------|--------------|----------|
 | (Start) | Reihe BM25: 25 Punkte, nach Kategorie gruppiert, 0.76 | «Vier Fragen sind Anekdoten. Darum 25 Fragen, vor der ersten Messung geschrieben. Jede Frage ist ein Punkt. Voll heisst: Das richtige Dokument steht in den Top 5. Schaut, wo BM25 die Lücken hat: bei den Fragen in einer anderen Sprache.» |
 | `→` | Reihe Vektor, 0.76 | «Die Vektorsuche: gleiche Quote, 0.76. Aber die Lücken sind an anderen Stellen: bei den Bezeichnern und bei den Synonymen.» |
-| `→` | Reihe Hybrid, 0.92 | «Und zusammen: 0.92. Hybrid gewinnt hier klar, weil die Fehler fast nicht überlappen. Die halben Punkte sind Fragen mit zwei erwarteten Dokumenten, von denen nur eines gefunden wurde.» |
+| `→` | Reihe Hybrid, 0.92 | «Und zusammen: 0.92. Hybrid gewinnt hier klar, weil die Fehler fast nicht überlappen. Die halben Punkte sind Fragen mit zwei erwarteten Dokumenten, von denen nur eines gefunden worden ist.» |
 | `→` | **Schätzfrage:** anderes Embedding-Modell, Sprachwechsel | Abstimmen. Antwort zeigen: «Schlechter. Von 0.83 auf 0.50.» |
 | `→` | drei Karten: Varianten im Vergleich | «Gilt das immer? Links mit dem einfachen Chunking, in der Mitte unsere Variante, rechts mit einem deutlich grösseren Modell. Rechts bringt Hybrid nichts mehr: 0.86 wie Vektor allein. Und das grosse Modell ist beim Sprachwechsel schlechter. Grösser ist nicht einfach besser. Am eigenen Korpus messen.» |
 
@@ -333,7 +333,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Was ist Recall@5?* Der Anteil der erwarteten Dokumente, die unter den ersten fünf Ergebnissen stehen. 0.76 entspricht 19 von 25 Fragen (zwei halbe Punkte zählen als einer).
 - *Was ist MRR?* Mean Reciprocal Rank: der Durchschnitt von eins durch den Rang des ersten Treffers. Er misst, wie weit oben der Treffer steht. Rang 1 gibt 1, Rang 2 gibt 0.5.
 - *Sind 25 Fragen genug?* Für eine Richtung ja, für Feinheiten nein. Eine Frage entspricht 0.04. Unterschiede unter 0.1 nicht überinterpretieren.
-- *Wer hat die Fragen geschrieben?* Entwurf von Claude, fachliche Prüfung durch dich (**noch offen**, vor dem Workshop erledigen), vor der ersten Messung festgelegt. Die Parameter wurden danach nicht mehr angepasst.
+- *Wer hat die Fragen geschrieben?* Entwurf von Claude, fachliche Prüfung durch dich (**noch offen**, vor dem Workshop erledigen), vor der ersten Messung festgelegt. Die Parameter sind danach nicht mehr angepasst worden.
 - *Warum ist BM25 bei Synonymen so gut (0.86)?* Gezählt wird auf Dokumentebene, und das grosse Dokument R-14-01 trifft fast immer irgendwo. Die Zahl ist geschönt, sag das offen.
 - *Warum ist das grosse Modell schlechter?* Das wissen wir nicht sicher. Gemessen ist: Es verfehlt mehr Fragen, deren Antwort in einem anderssprachigen Dokument steht. Genau darum misst man.
 
@@ -342,7 +342,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 1. *Jeder Retriever hat einen blinden Fleck.* «Ihr habt es an den Punkten gesehen.»
-2. *Hybrid ist kein Automatismus.* «Mit dem anderen Modell war der Vorteil weg.»
+2. *Hybrid ist kein Automatismus.* «Mit dem anderen Modell ist der Vorteil weg gewesen.»
 3. *Chunking verändert, was gefunden wird.* «Bei uns ein bis zwei Fragen. Das ist Rauschen, und das sage ich lieber offen.»
 4. *Für Code im Repo reicht agentische Suche fast immer.* «RAG lohnt sich für grosse, mehrsprachige Wissensbestände ausserhalb des Repos, oder wenn viele Leute dieselben Fragen stellen.»
 

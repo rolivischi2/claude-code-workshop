@@ -97,7 +97,7 @@
   /* ---------- Titelfolie mit Ablauf ---------- */
   VIZ.defs.titel = {
     id: 'titel', nav: 'Ablauf', title: 'Claude Code Workshop',
-    lead: 'Agentic Engineering in der Praxis. Ein Nachmittag, sieben Übungen, zwei Demos am Beamer.',
+    lead: 'Ablauf des Nachmittags. Zeiten ab Beginn.',
     beats: 1,
     render: function (stage) {
       var rows = window.ABLAUF || [];
@@ -113,7 +113,7 @@
   /* ---------- Pause ---------- */
   VIZ.defs.pause = {
     id: 'pause', nav: 'Pause', title: 'Pause', minutes: 10,
-    lead: '10 Minuten. Danach geht es mit MCP und dem Browser weiter.',
+    lead: '10 Minuten. Danach: MCP und Übung 06.',
     beats: 1,
     help: [],
     keys: clockKeys('pause', 10),

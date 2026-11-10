@@ -44,12 +44,12 @@ git status --short       # leer
 <summary>Hinweise</summary>
 
 - Checkpoints erfassen Änderungen über Claudes Datei-Werkzeuge (Edit/Write). **Nicht** erfasst sind
-  Dateien, die nur per Bash, von einem Subagent oder von aussen geändert wurden. Hat Claude eine Datei
+  Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Hat Claude eine Datei
   aber einmal selbst editiert, nimmt der Rewind auch spätere Bash-Änderungen an ihr zurück.
 - Spannende Frage: Der Hook aus Übung 04 hat `FristFormatter.java` per Maven umformatiert,
   also **nicht** über Edit. Was zeigt `git diff` nach dem Rewind für diese Datei?
 - Und `format-edited-file.mjs`? Das habt ihr mit `cp` kopiert, nicht Claude mit Write. Was macht der Rewind damit?
-- «Restore conversation» allein ist nützlich, wenn der Code gut ist, die Diskussion aber in eine Sackgasse lief.
+- «Restore conversation» allein ist nützlich, wenn der Code gut ist, die Diskussion aber in eine Sackgasse gelaufen ist.
 - Checkpoints sind lokal und an die Session gebunden. Git ist das Netz fürs Team.
 
 </details>
