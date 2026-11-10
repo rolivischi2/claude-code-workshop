@@ -1,43 +1,51 @@
-# Sprechskript – beide Präsentationen, Schritt für Schritt
+# Sprechskript – Folie für Folie
 
-Zum Proben. Für jede Szene: Ziel, Zeit, dann pro Tastendruck **was erscheint** und **was du sagst**,
-der Übergang und die Fragen, die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage,
-keine Texte zum Ablesen. Am Schluss steht ein Glossar mit Definitionen in einem Satz.
+Zum Proben. Das Skript folgt der Präsentation in ihrer Reihenfolge: 7 Abschnitte, 30 Folien.
+Für jede Folie: Ziel, dann pro Tastendruck **was erscheint** und **was du sagst**, der Übergang und die Fragen,
+die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage, keine Texte zum Ablesen.
+Am Schluss steht ein Glossar mit Definitionen in einem Satz.
 
-Alles läuft in **einer** Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
-Sie folgt dem Ablauf des Nachmittags. Zu jeder Übung gibt es eine eigene Folie mit Aufgabe, Schritten,
-Prompts und Prüfung. Dort startet `z` die Uhr.
+Die Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
 
-| Abschnitt | Szenen | Wann |
-|-----------|--------|------|
-| ▶ Start | Ablauf · Überblick · Übung 00 | 0:00 |
-| A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 | 0:10 |
-| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Rewind · Übung 05 · Pause | 0:45 |
-| C MCP | MCP · Übung 06 | 1:35 |
-| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Test · Messung · Fazit | 1:55 |
-| D Skalieren | Skalieren · Demo · (Live-Demo im eigenen Terminal) · Ablauf | 2:15 |
-| ■ Schluss | Rückblick | 2:22 |
+| Abschnitt | Wann | Folien (Kürzel im Skript) |
+|-----------|------|---------------------------|
+| ▶ Start | 0:00 | Start 1 Ablauf · Start 2 Überblick · Start 3 Übung 00 |
+| A Kontext | 0:10 | A1 Kontext · A2 Übung 01 A · A3 Übung 01 B · A4 Übung 02 |
+| B Steuerung | 0:45 | B1 Leitplanken · B2 Übung 03 · B3 Übung 04 A · B4 Übung 04 B · B5 Rewind · B6 Übung 05 · B7 Pause (1:25) |
+| C MCP | 1:35 | C1 MCP · C2 Übung 06 |
+| R Suche | 1:55 | R1 Korpus · R2 Chunking · R3 BM25 · R4 Vektor-DB · R5 Vektorsuche · R6 Hybrid · R7 Agent · R8 Test · R9 Messung · R10 Fazit |
+| D Skalieren | 2:15 | D1 Skalieren · D2 Demo · (Live-Demo im eigenen Terminal) · D3 Ablauf |
+| ■ Schluss | 2:22 | Schluss 1 Rückblick |
 
-Die Szenennummern in den Überschriften unten zählen innerhalb von Teil 1 (Konzept-Szenen) und Teil 2
-(Abschnitt Suche). In der Präsentation springst du mit `o` (Übersicht) oder Shift+`→` zum Abschnitt.
+Das Kürzel ist der Abschnitt plus die Nummer der Folie im Abschnitt. Die Nummer ist zugleich die Zifferntaste:
+In Abschnitt B springt `5` zur Folie Rewind. R10 hat keine Zifferntaste, dorthin mit `→` oder `o`.
 
-**Übungsfolien:** Beim Start einer Übung die Folie öffnen, mit `→` Aufgabe, Schritte und Prompts zeigen,
-kurz vorlesen, was das Ziel ist, dann `z` für die Uhr. Die Folie bleibt während der Übung stehen.
+**Tasten:** `→` nächster Schritt · `←` zurück · Shift+`→` nächster Abschnitt · Ziffer = Folie im Abschnitt · `o` Übersicht · `f` Vollbild ·
+`r` Animation nochmals · `g` Schätzfragen aus/ein · `?` Hilfe. Auf Übungsfolien und in der Pause `z` Uhr starten/anhalten, `x` Uhr zurücksetzen.
+Im Abschnitt R zusätzlich `q` Frage wählen und `t` (Chunking umschalten).
 
-**Tasten:** `→` nächster Schritt · `←` zurück · Shift+`→` nächster Abschnitt · Zahl = Szene im Abschnitt · `o` Übersicht · `f` Vollbild · `r` Animation nochmals ·
-`g` Schätzfragen aus/ein · `?` Hilfe. Im Abschnitt Suche zusätzlich `q` Frage wählen, `t` (Chunking).
+**Übungsfolien:** Jede hat drei Schritte: Ziel und Aufgabe, dann die Schritte, dann Prompts und Prüfung.
+Mit `→` durchgehen, das Ziel in einem Satz sagen, dann `z` für die Uhr. Die Folie bleibt während der Übung stehen.
+Die Uhr wird in den letzten zwei Minuten rot.
 
 **Schätzfrage:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` zeigt die Antwort,
 `→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch gelegen hat, sondern gleich die Erklärung zeigen.
+Schätzfragen gibt es auf A1, B1, R3, R5, R7 und R9.
 
-**Vor dem Start:** Seite offen, Vollbild, Benachrichtigungen aus. Im Abschnitt Suche darf unten
+**Vor dem Start:** Seite offen, Vollbild, Benachrichtigungen aus. Im Abschnitt R darf unten
 rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-# Teil 1 – Konzepte
+# ▶ Start (0:00, 10 Minuten)
 
-## Szene 1 · Überblick (0:00, 5 Minuten)
+## Start 1 · Ablauf (1 Minute)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Titel und Zeitplan des Nachmittags, pro Block die Übungen | «Zweieinhalb Stunden, eine Pause. Das Muster ist immer gleich: kurzer Input, dann macht ihr es selbst im Terminal. Die Übungsblätter liegen im Repo unter `exercises/`, und jede Übung steht auch hier auf dem Beamer.» |
+
+## Start 2 · Überblick (4 Minuten)
 
 **Ziel:** Alle haben dasselbe Bild im Kopf: ein Modell in einer Schleife. Jede Übung bekommt einen Platz.
 
@@ -58,9 +66,25 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Wer entscheidet, wann Schluss ist?* Das Modell: Es antwortet ohne weiteren Tool-Aufruf. Ihr könnt jederzeit mit Esc unterbrechen.
 - *Ist das bei anderen Coding-Agenten gleich?* Das Grundmuster ja. Unterschiede liegen bei Werkzeugen, Kontextverwaltung und Steuerung.
 
+## Start 3 · Übung 00 – Setup-Check (5 Minuten)
+
+**Ziel der Übung:** Alle arbeiten mit dem richtigen Login und mit Sonnet. Alle kennen die eigene Startbelegung des Kontexts.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Nur Slash-Commands, das kostet keine Tokens. Wichtig ist die Zahl aus `/context`. Schreibt sie auf.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Prüfen, ob alle auf Sonnet sind und ob jemand mit dem Login hängt.
+
+**Abholen nach der Übung:** Nichts. Die Zahl aus `/context` kommt gleich in der Schätzfrage von A1.
+
 ---
 
-## Szene 2 · Kontext (0:10, 5 Minuten)
+# A Kontext (0:10, 35 Minuten)
+
+## A1 · Kontext (5 Minuten)
 
 **Ziel:** Kontext kostet in jedem Turn. Darum lohnt sich, was erst bei Bedarf geladen wird.
 
@@ -86,9 +110,53 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Wann CLAUDE.md, wann Skill?* Immer gültig und kurz: CLAUDE.md. Nur für bestimmte Aufgaben und länger: Skill.
 - *Woher weiss Claude, wann ein Skill passt?* Aus der `description` im Kopf der `SKILL.md`. Darum ist dieser eine Satz das Wichtigste am Skill.
 
+## A2 · Übung 01 A – ohne CLAUDE.md (7 Minuten)
+
+**Ziel der Übung:** Sehen, was Kontext kostet. Und sehen, was Claude ohne Projektregeln baut.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ein Feature-Prompt, keine Nachbesserung. Es zählt die erste Antwort, die brauchen wir für den Vergleich.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Wer nachbessert, bremsen: Der Vergleich mit Teil B funktioniert nur mit der ersten Antwort.
+
+**Abholen nach der Übung:** Noch nichts. Direkt weiter zu Teil B.
+
+## A3 · Übung 01 B – mit CLAUDE.md (8 Minuten)
+
+**Ziel der Übung:** Derselbe Prompt, diesmal mit Teamkonventionen in der CLAUDE.md.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Derselbe Prompt wie eben. Der einzige Unterschied ist die CLAUDE.md. Achtet auf das Ergebnis, nicht nur auf die Zahl.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Auf das Mapping hinweisen: Ohne CLAUDE.md kopiert Claude das Muster aus `GuaranteeService`, mit CLAUDE.md entsteht ein `GuaranteeMapper`.
+
+**Abholen nach der Übung:** «Was ist bei euch anders gewesen als in Teil A?» Zwei, drei Stimmen.
+
+## A4 · Übung 02 – Skills (15 Minuten)
+
+**Ziel der Übung:** Einen Skill «Neuer REST-Endpoint nach Teamstandard» bauen und prüfen, ob Claude ihn von sich aus lädt.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr baut einen Skill und prüft, ob Claude ihn von selbst lädt. Entscheidend ist der eine Satz in der `description`.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Wer Code in den Skill kopiert: auf bestehende Dateien verweisen lassen, das hält den Skill kurz.
+
+**Abholen nach der Übung:** «Bei wem hat Claude den Skill von selbst geladen? Bei wem nicht, und wie lautet eure Beschreibung?»
+
 ---
 
-## Szene 3 · Leitplanken (0:45, 5 Minuten)
+# B Steuerung (0:45, 40 Minuten, danach Pause)
+
+## B1 · Leitplanken (4 Minuten)
 
 **Ziel:** Jeder Tool-Aufruf läuft durch dieselben Tore. Eine Regel ist eine Garantie, eine Anweisung in der CLAUDE.md nur eine Bitte.
 
@@ -101,7 +169,7 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | `Edit src/generated/…` bleibt beim Hook stehen | «Für alles, was sich nicht als Muster schreiben lässt, gibt es Hooks: ein Skript von euch. Endet es mit Exit-Code 2, ist der Aufruf blockiert, und die Begründung geht zurück an Claude. Die Regeln werden dann gar nicht mehr gefragt.» |
 | `→` | `rm -r scratch/wegwerf` hält bei ask | «Und ask heisst: Claude hält an und fragt euch. Für alles, was selten und heikel ist.» |
 
-**Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen.»
+**Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen. Rewind, das Netz darunter, kommt vor Übung 05.»
 
 **Häufige Fragen**
 
@@ -110,11 +178,53 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Was passiert bei einem anderen Exit-Code als 2?* Der Aufruf läuft weiter, die erste Zeile von stderr erscheint als Hinweis. Nur 2 blockiert.
 - *Ist deny eine Sicherheitsgrenze?* Nein, eine Leitplanke. Ein Skript, das die Datei selbst öffnet, kommt daran vorbei. Für harte Grenzen gibt es die Bash-Sandbox und Managed Settings.
 - *Welche Settings-Datei gewinnt?* Von oben nach unten: Managed, Kommandozeile, `settings.local.json`, `settings.json` im Projekt, User. Listen wie `permissions.allow` werden zusammengeführt.
-- *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
-- *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
 - *Warum Hooks als Node-Skript?* Dieselbe Konfiguration läuft auf macOS und Windows, weil keine Shell dazwischen ist.
 
-**Folie «Rewind»** (direkt vor Übung 05, rund 1 Minute, fünf Schritte)
+## B2 · Übung 03 – Plan Mode (15 Minuten)
+
+**Ziel der Übung:** Ein Feature zuerst planen lassen, den Plan kritisch prüfen und erst dann umsetzen.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Erst planen lassen, dann den Plan kritisieren, dann umsetzen. Sammelt eure Kritik in einem Prompt: Jeder Turn schickt den ganzen Kontext nochmals.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Das ist die grösste Code-Übung. Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen.
+
+**Abholen nach der Übung:** «Was habt ihr am Plan geändert, bevor Code entstanden ist?»
+
+## B3 · Übung 04 A – Permissions (6 Minuten)
+
+**Ziel der Übung:** Festlegen, was Claude in diesem Projekt nie darf und wo es nachfragen muss.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr schreibt deny- und ask-Regeln und probiert aus, ob sie halten. Ein verweigerter Aufruf kostet fast nichts.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Bei wem eine Regel nicht greift: Schreibweise des Musters und die Settings-Datei prüfen.
+
+**Abholen nach der Übung:** Noch nichts. Direkt weiter zu Teil B.
+
+## B4 · Übung 04 B – Hooks (9 Minuten)
+
+**Ziel der Übung:** Zwei Hooks einbinden: Einer formatiert nach jedem Edit die geänderte Datei, einer blockiert Edits an generiertem Code.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Zwei Hooks aus der Vorlage. Der eine formatiert, der andere blockiert. Beide laufen ausserhalb des Modells und kosten keine Tokens.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Die Hooks kommen aus der Vorlage, hier wird kaum iteriert. Wer fertig ist, kann den blockierenden Hook mit einem Edit an generiertem Code testen.
+
+**Abholen nach der Übung:** «Was hat Claude gemacht, nachdem der Hook blockiert hat?»
+
+## B5 · Rewind (1 Minute)
+
+**Ziel:** Alle wissen vor Übung 05, was ein Checkpoint ist und was `/rewind` zurücksetzt.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -124,9 +234,36 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | drei Karten mit den Menüpunkten | «Dann fragt Claude Code, was zurückgeht: Code und Verlauf, nur der Verlauf oder nur der Code. In der Übung nehmt ihr den ersten Punkt.» |
 | `→` | Hinweis zu den Grenzen | «Erfasst wird nur, was über Edit und Write geändert worden ist. Was ein Bash-Befehl geändert hat, bleibt. Darum ersetzt Rewind Git nicht.» → Übung 05. |
 
+**Häufige Fragen**
+
+- *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
+- *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
+
+## B6 · Übung 05 – Rewind (5 Minuten)
+
+**Ziel der Übung:** Mit `/rewind` zu einem früheren Stand zurückgehen, mit Git vergleichen und wieder nach vorne kommen.
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Dieselbe Session wie in Übung 04. Zuerst committen, dann zurück zum Punkt vor Prompt 3, mit ‹Restore code and conversation›. Und ganz wichtig: Am Schluss startet ihr die App, sie fährt während der Pause hoch.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+
+**Im Raum:** Kontrollieren, dass vor der Pause bei allen Backend und Frontend laufen. Übung 06 braucht die App.
+
+**Abholen nach der Übung:** Keine Runde. Direkt in die Pause.
+
+## B7 · Pause (1:25, 10 Minuten)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Uhr mit 10 Minuten, Hinweis auf die laufende App | «Zehn Minuten. Lasst die App laufen.» `z` startet die Uhr. |
+
 ---
 
-## Szene 4 · MCP (1:35, 3 Minuten)
+# C MCP (1:35, 20 Minuten)
+
+## C1 · MCP (3 Minuten)
 
 **Ziel:** MCP ist ein Stecker, kein Produkt. Und: Ein Agent, der sein Ergebnis sieht, braucht weniger Kontrolle.
 
@@ -148,69 +285,23 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Brauche ich MCP, wenn es ein CLI gibt?* Oft nicht. Ein gutes CLI über Bash reicht häufig und kostet weniger Kontext. MCP lohnt sich bei strukturierten Daten, Anmeldung und geteilten Diensten.
 - *Warum `node` statt `npx` in der Vorlage?* Es nutzt das bereits installierte Paket, funktioniert offline und auf Windows ohne Umweg.
 
----
+## C2 · Übung 06 – Browser über MCP (17 Minuten)
 
-## Szene 5 · Skalieren (2:15, Demo D, 7 Minuten)
+**Ziel der Übung:** Den Playwright-MCP-Server einbinden. Claude reproduziert einen Frontend-Fehler selbst im Browser, behebt ihn und prüft das Ergebnis.
 
-**Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr tragt den Server in `.mcp.json` ein, startet Claude neu und bestätigt den Server. Dann ein Prompt: reproduzieren, beheben, im Browser prüfen, Test ergänzen.» |
+| `→` | Schritte | Schritte kurz vorlesen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Form:** Reine Live-Demo, drei Folien. «Skalieren» erklärt das Konzept (rund 2 Minuten). «Demo» kündigt die
-Demo an und bleibt stehen, bis du auf dein Terminal wechselst und den Bildschirm teilst. «Ablauf» zeigt nach der
-Demo als Animation, was passiert ist. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
+**Im Raum:** Häufigste Hänger: Claude nicht neu gestartet, Server nicht bestätigt (`/mcp` muss `playwright` als verbunden zeigen), App läuft nicht. Browser-Snapshots sind gross: genaue Anweisungen sparen Klick-Runden.
 
-| Taste | Auf dem Bild | Du sagst |
-|-------|--------------|----------|
-| (Start) | Balken «Hauptsession», wenig belegt | «Das ist eine Session. Jetzt soll jemand einen grossen Diff reviewen. Liest die Hauptsession ihn selbst, steht der ganze Diff danach in ihrem Kontext.» |
-| `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geht der Auftrag an einen Subagent. Er hat ein eigenes Kontextfenster und liest alles, was er braucht.» |
-| `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Der Reviewer läuft auf Haiku, also günstiger. Ich zeige das gleich live mit `/context` vorher und nachher.» |
-| `→` | Repo fächert sich in zwei Worktrees auf | «Zweiter Teil: zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» |
-| `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» |
-
-**Folie «Demo»** (ein Schritt)
-
-| Taste | Auf dem Bild | Du sagst |
-|-------|--------------|----------|
-| `→` | Zwei Karten: Teil 1 Reviewer-Subagent, Teil 2 zwei Sessions in Worktrees, je mit «Achtet auf» | «Jetzt zeige ich das live. Achtet in Teil 1 auf `/context` vorher und nachher, in Teil 2 darauf, wo die Dateien liegen.» → **Ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. Danach zurück zur Präsentation. |
-
-**Folie «Ablauf»** (nach der Demo, fünf Schritte)
-
-| Taste | Auf dem Bild | Du sagst |
-|-------|--------------|----------|
-| `→` | Linie «Hauptsession» mit dem Auftrag | «Nochmals als Bild. Die Hauptsession hat den Auftrag bekommen.» |
-| `→` | Abzweigung zum Subagent, fünf Tool-Aufrufe erscheinen nacheinander | «Sie hat ihn an den Reviewer abgegeben. Er hat den Diff und die Dateien in seinem eigenen Fenster gelesen. Die Hauptsession hat gewartet.» |
-| `→` | Linie zurück nach oben, «nur der Bericht» | «Zurückgekommen ist nur der Bericht. Darum ist `/context` kaum gewachsen.» |
-| `→` | Zwei Branches zweigen ab, Commits erscheinen abwechselnd | «Teil 2: Beide Sessions sind vom selben Stand abgezweigt, jede in ein eigenes Verzeichnis und auf einen eigenen Branch. Sie haben gleichzeitig gearbeitet.» |
-| `→` | Beide Branches laufen zurück, `git merge …` | «Das Zusammenführen habe ich nicht gezeigt, weil die Sessions noch laufen. Es ist normales Git: `git merge` oder ein Pull Request pro Branch.» |
-
-**Häufige Fragen**
-
-- *Sieht der Subagent meinen Verlauf?* Nein. Er startet mit seinem eigenen System-Prompt und dem Auftrag. Was er wissen muss, gehört in den Auftrag.
-- *Wo liegen Subagents?* Im Projekt unter `.claude/agents/`, persönlich unter `~/.claude/agents/`. Eine Markdown-Datei mit Name, Beschreibung, erlaubten Tools und Modell.
-- *Kann ein Subagent Dateien ändern?* Wenn seine Tools das erlauben. Der Reviewer hier darf nur lesen und Bash.
-- *Was ist ein Git-Worktree?* Ein zweites Arbeitsverzeichnis desselben Repos auf einem anderen Branch. Git kann das seit Jahren, `claude -w` legt es unter `.claude/worktrees/` an.
-- *Von welchem Stand zweigt der Worktree ab?* Standard ist der Default-Branch vom Remote. Mit `"worktree": {"baseRef": "head"}` vom aktuellen lokalen Stand.
-- *Wie viele Sessions parallel sind sinnvoll?* So viele, wie ihr reviewen könnt. Der Engpass seid ihr, nicht die Agenten. Und das Kontingent wird geteilt.
+**Abholen nach der Übung:** «Hat Claude den Fehler selbst gesehen? Woran habt ihr das gemerkt?»
 
 ---
 
-## Szene 6 · Rückblick (2:22, 8 Minuten)
-
-| Taste | Auf dem Bild | Du sagst |
-|-------|--------------|----------|
-| (Start) | Landkarte, alle Teile grün, Schleife läuft | «Das ist die Karte vom Anfang. Der Unterschied: Jedes Teil habt ihr heute selbst in der Hand gehabt. Kontext mit CLAUDE.md und Skills. Steuerung mit Plan Mode, Permissions, Hooks und Rewind. Erweitern mit MCP. Und skalieren mit Subagents und Worktrees.» |
-
-Danach ohne Folienwechsel: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`), Links im README.
-
-**Häufige Fragen im Abschluss**
-
-- *Welches Modell wofür?* Sonnet als Standard. Das grösste Modell für schwierige Planung und knifflige Fehler. Haiku für Subagents, die suchen und lesen.
-- *Was macht `/effort`?* Es stellt ein, wie viel das Modell nachdenkt, bevor es antwortet. Mehr Aufwand kostet mehr Kontingent und Zeit.
-- *Womit sollen wir im Team anfangen?* Mit einer gemeinsamen `CLAUDE.md` und einer `settings.json` mit zwei, drei deny-Regeln. Beides committen.
-- *Dürfen wir Kundendaten verwenden?* Das ist eine Frage eurer Projektregeln und der Privatsphäre-Einstellung des Kontos, nicht des Werkzeugs. Vor dem ersten Einsatz klären.
-
----
-
-# Teil 2 – Agentic Search vs. RAG (Demo R, 20 Minuten)
+# R Suche: Agentic Search vs. RAG (1:55, 20 Minuten)
 
 **Roter Faden:** Echte Dokumentation, zwei Wege zur Antwort. Erst zeigen, wo jede Suche blind ist, dann messen,
 dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und nicht nachgetunt.
@@ -224,7 +315,13 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | **C3** | Wer muss das Zollformular für Militärtransporte ausfüllen …? | Sprachwechsel: Antwort nur im italienischen Dokument. BM25 nichts, Vektor Rang 1 |
 | **M3** | Was ändert sich mit NCTS Phase 5 beim Layout … und bei der Tarifnummer? | Zwei Dokumente: BM25 findet beide in den Top 5, Vektor und Hybrid nur eines, der Agent findet beide |
 
-## Szene 1 · Korpus (0–1½')
+Auf einem geraden Durchgang zeigt die Präsentation nur **S2**. Die anderen drei Fragen sieht das Publikum
+nur, wenn du mit `q` wechselst (vorgesehen auf R3, R5, R6 und R7).
+
+**Zeit:** Der Abschnitt hat keine Reserve. Die Folie R8 «Test» ist neu dazugekommen und noch nicht gestoppt.
+Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
+
+## R1 · Korpus (0–1½')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -234,7 +331,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Warum nicht einfach alles in den Kontext?* 267 Seiten bei jedem Turn mitzuschicken ist teuer und macht Antworten ungenauer. · *Sind die Dokumente im Repo?* Nein, sie werden von der BAZG-Seite geladen, die Liste steht in `rag/sources.yaml`.
 
-## Szene 2 · Chunking (1½–3')
+## R2 · Chunking (1½–3')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -246,7 +343,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Wie gross soll ein Chunk sein?* Gross genug für einen vollständigen Gedanken, klein genug, dass fünf davon in den Kontext passen. · *Wozu Überlappung?* Damit ein Satz an der Schnittkante in mindestens einem Chunk ganz bleibt. · *Bringt das besseres Chunking etwas?* Hier ein bis zwei Fragen von 25. Das ist im Rauschen. Sag das so.
 
-## Szene 3 · BM25 (3–5½'), Fragen S2, dann E1
+## R3 · BM25 (3–5½'), Fragen S2, dann E1
 
 **Ziel:** Alle verstehen die drei Schritte der Stichwortsuche und sehen, warum sie bei S2 nichts findet.
 
@@ -273,7 +370,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Woher kommen die Füllwörter?* Aus einer festen Stoppwortliste in `rag/indexer/store.py`.
 - *Sind die Zahlen echt?* Ja. Die Chunk-Zahlen stammen aus dem Index, die Scores aus SQLite FTS5.
 
-## Szene 4 · Vektor-DB (5½–7½'), Frage S2
+## R4 · Vektor-DB (5½–7½'), Frage S2
 
 **Ziel:** Bevor die Karte kommt, sehen alle, was eigentlich gespeichert und verglichen wird: Zahlen pro Chunk.
 
@@ -295,14 +392,14 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Was bedeuten die einzelnen Zahlen?* Einzeln nichts Lesbares. Erst das Muster aller 384 Zahlen zusammen beschreibt die Bedeutung.
 - *Woher kommen die Zahlen auf der Folie?* Es sind die echten ersten 16 Werte aus dem Index, die Ähnlichkeiten sind die echten Kosinus-Werte der Suche.
 
-## Szene 5 · Vektorsuche (7½–11½'), Fragen S2, E1, C3
+## R5 · Vektorsuche (7½–11½'), Fragen S2, E1, C3
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | Karte: jeder Punkt ein Chunk | «Dieselbe Tabelle, jetzt als Karte. Jede Zeile ist ein Punkt, und Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die 384 Zahlen sind dafür auf zwei zusammengedrückt, die Abstände stimmen also nur ungefähr.» |
 | `→` | die Frage fliegt als Stern ein | «Die Frage wird mit demselben Modell zu einem Punkt.» |
 | `→` | **Schätzfrage**, dann Linien zu den nächsten Nachbarn, Ergebnisliste | Abstimmen, auflösen. «Gesucht sind die nächsten Nachbarn.» |
-| `→` | Ausschnitt um die Frage, grünes Ergebnis | «Rang 1. Dieselbe Frage, an der BM25 gescheitert ist. Das Modell weiss, dass Pfund und GBP dasselbe meinen.» |
+| `→` | Ausschnitt um die Frage, grünes Ergebnis. Grüne Ringe um alle Chunks des erwarteten Dokuments, darunter ein Satz zu Chunks und Dokumenten | «Rang 1. Dieselbe Frage, an der BM25 gescheitert ist. Das Modell weiss, dass Pfund und GBP dasselbe meinen. Zu den Ringen: Das erwartete Dokument besteht aus 8 Chunks, jeder ist ein Punkt. Zwei davon stehen in den Top 5, Rang 1 und Rang 4. Die anderen sechs handeln von etwas anderem und liegen darum weit weg. Die Suche liefert Chunks, keine Dokumente.» |
 | `→` | Formel der Kosinus-Ähnlichkeit, darunter angewendet auf Zeile 112. Auf jeder Linie steht ihr Wert, die Linie zu Rang 1 ist dick | «Warum Rang 1? Für jede Zeile der Tabelle wird diese Formel gerechnet: die Zahlen der Frage mal die Zahlen des Chunks, aufsummiert, geteilt durch die Längen. Für Zeile 112 ergibt das 0.61. Das ist der höchste Wert aller 1206 Zeilen. Die anderen Linien zeigen 0.53, 0.50, 0.48.» |
 | `q` → **E1**, dann `→` bis zum Urteil | NT044: Vektor verfehlt | «Und jetzt die Gegenprobe. Was bedeutet die Meldung NT044? Für die Stichwortsuche ist das ein Geschenk. Die Vektorsuche findet den Code nicht einmal in den Top 10. Ziffern tragen kaum Bedeutung, NT044 und NT045 liegen fast aufeinander.» |
 | `q` → **C3**, dann `→` bis zum Urteil | italienisches Dokument auf Rang 1 | «Dritte Frage, auf Deutsch gestellt. Die Antwort steht nur im italienischen Dokument. BM25 hat keine Chance, das mehrsprachige Modell springt über die Sprachgrenze.» |
@@ -312,13 +409,14 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 **Fragen**
 
 - *Was ist ein Embedding?* Eine Liste von Zahlen, die die Bedeutung eines Textes beschreibt. Ähnliche Texte bekommen ähnliche Zahlen.
+- *Warum sind nicht alle Punkte mit Ring verbunden?* Verbunden sind die fünf ähnlichsten Chunks. Ein Ring heisst nur: Dieser Chunk gehört zum erwarteten Dokument. Die Frage gilt als gefunden, sobald einer davon in den Top 5 steht.
 - *Wie misst man Nähe?* Hier über die Kosinus-Distanz: den Winkel zwischen zwei Vektoren.
 - *Welches Modell ist das?* `paraphrase-multilingual-MiniLM-L12-v2`, klein, mehrsprachig, läuft lokal auf dem Laptop. Es gehen keine Daten nach aussen.
 - *Wie kommt die Karte zustande?* Hauptkomponentenanalyse (PCA) von 384 auf 2 Dimensionen. Abstände stimmen nur ungefähr, die Nachbarn stammen aus der echten Rangliste.
 - *Wo werden die Vektoren gespeichert?* In derselben SQLite-Datei, mit der Erweiterung sqlite-vec. Eine eigene Vektor-Datenbank braucht es bei dieser Grösse nicht.
 - *Hat das etwas mit dem Sprachmodell zu tun?* Nein. Embedding-Modelle sind eigene, viel kleinere Modelle. Claude kommt in diesem Teil gar nicht vor.
 
-## Szene 6 · Hybrid (11½–13½'), Fragen S2, dann E1
+## R6 · Hybrid (11½–13½'), Fragen S2, dann E1
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -330,7 +428,9 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Warum 60?* Der Wert aus der Originalarbeit zu RRF von 2009. Er dämpft den Vorsprung der obersten Ränge und ist kaum empfindlich. · *Warum nicht die Scores addieren?* BM25-Scores und Kosinus-Werte haben verschiedene Skalen und sind nicht vergleichbar. · *Geht das besser?* Ja, etwa mit einem Reranker, der die Kandidaten nochmals bewertet. Das kostet Zeit und ein weiteres Modell.
 
-## Szene 7 · Agent (13½–16½'), Frage C3 oder M3
+## R7 · Agent (13½–16'), Frage C3 oder M3
+
+**Ziel:** Alle sehen den Weg von der Frage zur Antwort: ein Punkt pro Turn. Ein Turn ist eine Antwort des Modells, also ein Tool-Aufruf oder am Schluss der Text.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -341,9 +441,11 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Zahlen im Kopf:** alle 4 Fragen richtig · S2 3 Turns, rund 22'000 Tokens · C3 4 Turns, 31'000 · E1 3 Turns, 22'000 · M3 4 Turns, 36'000 · je 5 bis 10 Sekunden.
 
-**Fragen:** *Skaliert das?* Bei 16 Dateien mühelos. Bei Tausenden liefert Grep zu viele Treffer, Turns und Kontext steigen. Dort beginnt der Bereich von RAG. · *Kann man beides verbinden?* Ja: Der Index wird ein Werkzeug des Agenten, zum Beispiel über MCP. Im Repo liegt dafür `rag/mcp_server/`. · *Warum zählen Tokens bei Grep?* Jedes Suchergebnis landet im Kontext und wird in den folgenden Turns wieder mitgeschickt.
+**Fragen:** *Skaliert das?* Bei 16 Dateien mühelos. Bei Tausenden liefert Grep zu viele Treffer, Turns und Kontext steigen. Dort beginnt der Bereich von RAG. · *Kann man beides verbinden?* Ja: Der Index wird ein Werkzeug des Agenten, zum Beispiel über MCP. Im Repo liegt dafür `rag/mcp_server/`. · *Warum zählen Tokens bei Grep?* Jedes Suchergebnis landet im Kontext und wird in den folgenden Turns wieder mitgeschickt. · *Warum 3 Turns bei nur 2 Tool-Aufrufen?* Der letzte Turn ist die Antwort selbst. Darin ruft Claude kein Tool mehr auf.
 
-## Folie «Test» (vor der Messung, rund 1 Minute)
+## R8 · Test (16–17')
+
+**Ziel:** Bevor die Punkte kommen, wissen alle, was gemessen wird und was die vier Gruppen sind.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -351,7 +453,9 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | `→` | vier Karten: Synonym, Andere Sprache, Code oder Kennung, Mehrere Dokumente, je mit einer Beispielfrage | «Die Fragen sind in vier Gruppen geteilt. Jede Gruppe prüft eine andere Schwäche. Pro Gruppe steht eine Beispielfrage. Die Pfund-Frage kennt ihr.» (Hast du vorher mit `q` auch NT044, Militärtransporte oder das Versandbegleitdokument gezeigt, darauf verweisen.) |
 | `→` | Hinweis | «Auf der nächsten Folie ist jede Frage ein Punkt. Die vier Beispielfragen sind umrandet, jede in ihrer Gruppe.» |
 
-## Szene 8 · Messung (16½–19')
+**Fragen:** *Warum zählt ihr Dokumente und nicht Chunks?* Weil vorab nur festgelegt ist, in welchem Dokument die Antwort steht. Das ist grosszügig: Ein Treffer im richtigen Dokument kann an der falschen Stelle liegen. · *Was heisst der halbe Punkt?* Die Frage erwartet zwei Dokumente, gefunden ist eines.
+
+## R9 · Messung (17–19')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -360,7 +464,6 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | `→` | Reihe Hybrid, 0.92 | «Und zusammen: 0.92. Hybrid gewinnt hier klar, weil die Fehler fast nicht überlappen. Die halben Punkte sind Fragen mit zwei erwarteten Dokumenten, von denen nur eines gefunden worden ist.» |
 | `→` | **Schätzfrage:** anderes Embedding-Modell, Sprachwechsel | Abstimmen. Antwort zeigen: «Schlechter. Von 0.83 auf 0.50.» |
 | `→` | drei Karten: Varianten im Vergleich | «Gilt das immer? Links mit dem einfachen Chunking, in der Mitte unsere Variante, rechts mit einem deutlich grösseren Modell. Rechts bringt Hybrid nichts mehr: 0.86 wie Vektor allein. Und das grosse Modell ist beim Sprachwechsel schlechter. Grösser ist nicht einfach besser. Am eigenen Korpus messen.» |
-
 
 **Fragen**
 
@@ -371,7 +474,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Warum ist BM25 bei Synonymen so gut (0.86)?* Gezählt wird auf Dokumentebene, und das grosse Dokument R-14-01 trifft fast immer irgendwo. Die Zahl ist geschönt, sag das offen.
 - *Warum ist das grosse Modell schlechter?* Das wissen wir nicht sicher. Gemessen ist: Es verfehlt mehr Fragen, deren Antwort in einem anderssprachigen Dokument steht. Genau darum misst man.
 
-## Szene 9 · Fazit (19–20')
+## R10 · Fazit (19–20')
 
 Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
@@ -382,7 +485,7 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 **Ein Satz zum Schluss (Vertrauensgrenze):** «Was eine Suche zurückgibt, ist fremder Inhalt und landet im Kontext des Agenten, auch eine versteckte Anweisung. Darum gelten die Permissions aus Übung 04 auch hier.»
 
-**Übergang zu Demo D:** «Der Agent hat gerade viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Konzepte, Szene 5 «Skalieren».
+**Übergang zu Demo D:** «Der Agent hat gerade viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Abschnitt D, Folie «Skalieren» (Shift+`→`).
 
 **Fragen**
 
@@ -391,7 +494,75 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 - *Was ist die «Lethal Trifecta»?* Drei Dinge, die zusammen gefährlich sind: Zugriff auf private Daten, Kontakt mit fremden Inhalten und ein Weg nach aussen. Fehlt eines, kann eine eingeschleuste Anweisung keine Daten abziehen.
 - *Wann würdest du RAG bauen?* Wenn der Bestand so gross ist, dass Grep zu viele Treffer liefert, wenn er in mehreren Sprachen vorliegt oder wenn viele Leute dieselben Fragen stellen. Dann zuerst 20 bis 30 echte Fragen sammeln und messen.
 
-**Plan B:** Streikt der Browser, im Terminal `uv run search "Welche Währungsangabe gilt für Fakturen in britischen Pfund?" --mode bm25`, dann `--mode vector`, dann `uv run eval`.
+**Plan B für den ganzen Abschnitt R:** Streikt der Browser, im Terminal `uv run search "Welche Währungsangabe gilt für Fakturen in britischen Pfund?" --mode bm25`, dann `--mode vector`, dann `uv run eval`.
+
+---
+
+# D Skalieren (2:15, 7 Minuten)
+
+**Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
+
+**Form:** Drei Folien und eine Live-Demo. D1 erklärt das Konzept. D2 kündigt die Demo an und bleibt stehen,
+während du auf dein Terminal wechselst und den Bildschirm teilst. D3 zeigt nach der Demo als Animation,
+was passiert ist. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
+
+**Zeit:** Das Budget ist 7 Minuten und ist für die Live-Demo allein geplant gewesen (3 + 4 Minuten).
+Mit D1 und D3 reicht es nur, wenn die Live-Demo bei rund 4 Minuten bleibt. Sonst geht die Zeit vom Abschluss ab.
+Noch nicht gestoppt.
+
+## D1 · Skalieren (rund 1½ Minuten)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Balken «Hauptsession», wenig belegt | «Das ist eine Session. Jetzt soll jemand einen grossen Diff reviewen. Liest die Hauptsession ihn selbst, steht der ganze Diff danach in ihrem Kontext.» |
+| `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geht der Auftrag an einen Subagent. Er hat ein eigenes Kontextfenster und liest alles, was er braucht.» |
+| `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Der Reviewer läuft auf Haiku, also günstiger. Ich zeige das gleich live mit `/context` vorher und nachher.» |
+| `→` | Repo fächert sich in zwei Worktrees auf | «Zweiter Teil: zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» |
+| `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» Weiter mit `→` zur Folie «Demo». |
+
+## D2 · Demo (Folie bleibt stehen, Live-Demo rund 4 Minuten)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| `→` | Zwei Karten: Teil 1 Reviewer-Subagent, Teil 2 zwei Sessions in Worktrees, je mit «Achtet auf» | «Jetzt zeige ich das live. Achtet in Teil 1 auf `/context` vorher und nachher, in Teil 2 darauf, wo die Dateien liegen.» → **Ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. Danach zurück zur Präsentation. |
+
+## D3 · Ablauf (nach der Demo, rund 1½ Minuten)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| `→` | Linie «Hauptsession» mit dem Auftrag | «Nochmals als Bild. Die Hauptsession hat den Auftrag bekommen.» |
+| `→` | Abzweigung zum Subagent, fünf Tool-Aufrufe erscheinen nacheinander | «Sie hat ihn an den Reviewer abgegeben. Er hat den Diff und die Dateien in seinem eigenen Fenster gelesen. Die Hauptsession hat gewartet.» |
+| `→` | Linie zurück nach oben, «nur der Bericht» | «Zurückgekommen ist nur der Bericht. Darum ist `/context` kaum gewachsen.» |
+| `→` | Zwei Branches zweigen ab, Commits erscheinen abwechselnd | «Teil 2: Beide Sessions sind vom selben Stand abgezweigt, jede in ein eigenes Verzeichnis und auf einen eigenen Branch. Sie haben gleichzeitig gearbeitet.» |
+| `→` | Beide Branches laufen zurück, `git merge …` | «Das Zusammenführen habe ich nicht gezeigt, weil die Sessions noch laufen. Es ist normales Git: `git merge` oder ein Pull Request pro Branch.» |
+
+**Häufige Fragen**
+
+- *Sieht der Subagent meinen Verlauf?* Nein. Er startet mit seinem eigenen System-Prompt und dem Auftrag. Was er wissen muss, gehört in den Auftrag.
+- *Wo liegen Subagents?* Im Projekt unter `.claude/agents/`, persönlich unter `~/.claude/agents/`. Eine Markdown-Datei mit Name, Beschreibung, erlaubten Tools und Modell.
+- *Kann ein Subagent Dateien ändern?* Wenn seine Tools das erlauben. Der Reviewer hier darf nur lesen und Bash.
+- *Was ist ein Git-Worktree?* Ein zweites Arbeitsverzeichnis desselben Repos auf einem anderen Branch. Git kann das seit Jahren, `claude -w` legt es unter `.claude/worktrees/` an.
+- *Von welchem Stand zweigt der Worktree ab?* Standard ist der Default-Branch vom Remote. Mit `"worktree": {"baseRef": "head"}` vom aktuellen lokalen Stand.
+- *Wie viele Sessions parallel sind sinnvoll?* So viele, wie ihr reviewen könnt. Der Engpass seid ihr, nicht die Agenten. Und das Kontingent wird geteilt.
+
+---
+
+# ■ Schluss (2:22, 8 Minuten)
+
+## Schluss 1 · Rückblick
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Landkarte, alle Teile grün, Schleife läuft | «Das ist die Karte vom Anfang. Der Unterschied: Jedes Teil habt ihr heute selbst in der Hand gehabt. Kontext mit CLAUDE.md und Skills. Steuerung mit Plan Mode, Permissions, Hooks und Rewind. Erweitern mit MCP. Und skalieren mit Subagents und Worktrees.» |
+
+Danach ohne Folienwechsel: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`), Links im README.
+
+**Häufige Fragen im Abschluss**
+
+- *Welches Modell wofür?* Sonnet als Standard. Das grösste Modell für schwierige Planung und knifflige Fehler. Haiku für Subagents, die suchen und lesen.
+- *Was macht `/effort`?* Es stellt ein, wie viel das Modell nachdenkt, bevor es antwortet. Mehr Aufwand kostet mehr Kontingent und Zeit.
+- *Womit sollen wir im Team anfangen?* Mit einer gemeinsamen `CLAUDE.md` und einer `settings.json` mit zwei, drei deny-Regeln. Beides committen.
+- *Dürfen wir Kundendaten verwenden?* Das ist eine Frage eurer Projektregeln und der Privatsphäre-Einstellung des Kontos, nicht des Werkzeugs. Vor dem ersten Einsatz klären.
 
 ---
 
@@ -404,7 +575,7 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 | Tool-Aufruf | Vorschlag des Modells, ein Werkzeug mit bestimmten Parametern auszuführen |
 | Token | Textstück, mit dem das Modell rechnet, grob drei bis vier Zeichen |
 | Kontextfenster | Alles, was das Modell in einem Turn sieht, mit einer festen Obergrenze |
-| Turn | Eine Runde: Anfrage ans Modell, Antwort oder Tool-Aufruf |
+| Turn | Eine Antwort des Modells: ein Tool-Aufruf oder am Schluss der Text |
 | Prompt-Cache | Zwischenspeicher für den unveränderten Anfang einer Anfrage, senkt den Preis |
 | Compaction | Verlauf wird durch eine Zusammenfassung ersetzt (`/compact` oder automatisch) |
 | CLAUDE.md | Projektgedächtnis, das in jedem Turn mitgeschickt wird |

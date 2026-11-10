@@ -18,17 +18,23 @@ ohne Erklärung funktionieren.
 
 ## Bilder zu den Inputs
 
-Die Inputs werden nicht länger. Die Szenen aus `praesentation/` ersetzen Erklärzeit:
+Die Folien aus `praesentation/` ersetzen Erklärzeit:
 
-| Zeit | Szene | Schätzfrage (Handzeichen) |
-|------|-------|--------------------------|
-| 0:00 | 1 Überblick | – |
-| 0:10 | 2 Kontext | Startbelegung aus Übung 00 |
-| 0:45 | 3 Leitplanken | allow im Projekt gegen deny beim User |
-| 1:35 | 4 MCP | – |
-| 1:55 | `praesentation/` (9 Szenen) | BM25, Vektor, Turns des Agents, grösseres Modell |
-| 2:15 | 5 Skalieren | – |
-| 2:22 | 6 Rückblick | – |
+| Zeit | Folien (Kürzel wie im Sprechskript) | Schätzfrage (Handzeichen) |
+|------|--------------------------------------|--------------------------|
+| 0:00 | Start 1 Ablauf · Start 2 Überblick | – |
+| 0:10 | A1 Kontext | Startbelegung aus Übung 00 |
+| 0:45 | B1 Leitplanken | allow im Projekt gegen deny beim User |
+| vor Übung 05 | B5 Rewind (rund 1 Minute, aus dem Input von B) | – |
+| 1:35 | C1 MCP | – |
+| 1:55 | R1 bis R10 (Korpus bis Fazit, neu mit R8 «Test») | BM25, Vektor, Turns des Agents, grösseres Modell |
+| 2:15 | D1 Skalieren · D2 Demo · Live-Demo · D3 Ablauf | – |
+| 2:22 | Schluss 1 Rückblick | – |
+
+Zu jeder Übung gibt es eine eigene Folie (Start 3, A2 bis A4, B2 bis B4, B6, C2) mit Uhr (`z`), dazu B7 Pause.
+
+**Noch nicht gestoppt:** R8 «Test» (rund 1 Minute) liegt im 20-Minuten-Budget von R, das schon vorher keine
+Reserve hatte. D1 und D3 liegen im 7-Minuten-Budget von D, das für die Live-Demo allein geplant gewesen ist.
 
 Eine Schätzfrage kostet rund 30 Sekunden. `g` schaltet alle aus.
 
@@ -55,8 +61,9 @@ Kandidaten zum Kürzen, falls die Zeit davonläuft (in dieser Reihenfolge):
 
 1. 05 als 2-Minuten-Demo am Beamer statt Übung.
 2. 02: Skill aus `solution/02` übernehmen (`git checkout solution/02 -- .claude/skills`), nur den automatischen Aufruf testen.
-3. R: Schätzfragen mit `g` ausschalten und Szene 2 (Chunking) überspringen. Demo R hat mit der Szene «Vektor-DB» keine Reserve mehr.
-4. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
+3. R: Schätzfragen mit `g` ausschalten und R2 (Chunking) überspringen. Demo R hat mit den Folien «Vektor-DB» und «Test» keine Reserve mehr.
+4. D: D1 «Skalieren» nur kurz zeigen oder D3 «Ablauf» weglassen, die Live-Demo trägt allein.
+5. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
 
 Zeit übrig? Im Abschluss die Frage «Welche MCP-Server würdet ihr im Projekt anbinden, und welche
 davon sehen fremde Inhalte?» (Lethal Trifecta: private Daten, fremde Inhalte, Weg nach aussen).

@@ -52,7 +52,7 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Konzeptlandkarte (`praesentation/`, Szene 1): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
+| 0–5 | Konzeptlandkarte (`praesentation/`, Folie «Überblick»): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
 | 5–10 | Alle: `/status`, `/model sonnet`, `/usage`, `/context`. Wer rot ist: Nachbar oder Devcontainer, nicht jetzt debuggen. |
 
 ### A – Kontext und Skills (0:10–0:45)
@@ -69,7 +69,7 @@ Botschaft: Die CLAUDE.md macht den Unterschied in den Details, die nicht im Code
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Input mit Szene 3 «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien). Rewind (Netz) hat eine eigene Folie direkt vor Übung 05. |
+| 0–5 | Input mit der Folie «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien). Rewind (Netz) hat eine eigene Folie direkt vor Übung 05. |
 | 5–20 | Übung 03. Nach der Plan-Kritik kurz fragen: «Wer hat den Fehler bei genau 500 Franken gefunden?» |
 | 20–35 | Übung 04 |
 | 35–40 | Übung 05 (bei Zeitnot als Demo am Beamer) |
@@ -82,7 +82,7 @@ Backend und Frontend für Übung 06 starten die Teilnehmenden **vor** der Pause 
 
 | Min | Was |
 |-----|-----|
-| 0–3 | Input mit Szene 4 «MCP»: MCP als Standard-Steckdose. Feedback-Loop: Ein Agent, der sein Ergebnis selbst sieht, braucht weniger Kontrolle. |
+| 0–3 | Input mit der Folie «MCP»: MCP als Standard-Steckdose. Feedback-Loop: Ein Agent, der sein Ergebnis selbst sieht, braucht weniger Kontrolle. |
 | 3–20 | Übung 06. Wer fertig ist: `/mcp` anschauen, wie viel Kontext belegen die Tool-Definitionen? |
 
 ### R – Agentic Search vs. RAG (1:55–2:15)
@@ -97,7 +97,7 @@ Siehe demo-scripts.md, Demo D. Zuerst die Folien «Skalieren» und «Demo», dan
 
 ### Abschluss (2:22–2:30)
 
-- Szene «Rückblick»: der Überblick vom Anfang mit allen Teilen.
+- Folie «Rückblick»: der Überblick vom Anfang mit allen Teilen.
 - Modell- und Aufwandswahl: `/model`, `/effort`, günstige Subagents (Haiku).
 - Erste Teamregeln sammeln: Review-Pflicht, Umgang mit Kunden- und Projektdaten,
   gemeinsame `CLAUDE.md` und `.claude/settings.json` im Repo.

@@ -22,9 +22,9 @@ Nutzung, 4 kurze Läufe mit Sonnet). Die aufgenommenen Läufe liegen in `rag/.ca
 Dann `praesentation/index.html` im Browser öffnen (funktioniert offline über `file://`).
 Erscheint oben das Badge «Beispieldaten», fehlt `data.js`: `uv run export-viz` erneut.
 
-**Steuerung:** ←/→ Szene bzw. Animationsschritt, 1–9 springen, `q` Fragenauswahl, `r` Animation wiederholen.
+**Steuerung:** ←/→ Schritt, Shift+←/→ Abschnitt, 1–9 Folie im Abschnitt, `o` Übersicht, `q` Fragenauswahl, `r` Animation wiederholen.
 
-**Schätzfragen:** In den Szenen 3, 5, 7 und 8 erscheint vor der Auflösung eine Frage ans Publikum
+**Schätzfragen:** Auf den Folien R3, R5, R7 und R9 erscheint vor der Auflösung eine Frage ans Publikum
 (Handzeichen). `→` löst auf, nochmals `→` fährt weiter. Die richtige Antwort wird aus `data.js`
 berechnet. Bei Zeitnot schaltet `g` alle Schätzfragen aus (rund 30 Sekunden pro Runde).
 
@@ -32,18 +32,19 @@ Das ausformulierte Skript mit Sätzen pro Schritt, häufigen Fragen und Glossar 
 
 ### Ablauf
 
-| Min | Szene | Was zeigen | Satz |
+| Min | Folie | Was zeigen | Satz |
 |-----|-------|------------|------|
-| 0–1½ | 1 Korpus | 16 BAZG-Dokumente, 267 Seiten, de/fr/it. Dann die zwei Wege: Index bauen oder selbst suchen | «Echte Projektdoku. Wie findet ein Agent darin die richtige Stelle?» |
-| 1½–3 | 2 Chunking | fester Schnitt vs. Überschriftenpfad | «Was ein Chunk ist, bestimmt, was gefunden werden kann.» |
-| 3–5½ | 3 BM25 | **S2** «Währungsangabe … britischen Pfund». **Schätzfrage:** Findet BM25 es? Auflösung: **nichts** | «Das Dokument sagt GBP, nie Pfund. Lexikalische Suche ist blind für Synonyme.» |
-| 5½–7½ | 4 Vektor-DB | **S2**: Text → Embedding-Modell → 384 Zahlen. Tabelle mit einer Zeile pro Chunk, die Frage als weitere Zeile, Ähnlichkeit pro Zeile, Zeilen sortieren sich. Echte Zahlen aus dem Index | «Eine Vektor-Datenbank ist eine Tabelle mit Zahlen. Suchen heisst: Zahlen vergleichen, keine Wörter.» |
-| 7½–10 | 5 Vektorsuche | **S2** trifft sofort (Schätzfrage). Dann **E1** «Was bedeutet NT044?»: Vektor findet den Code nicht einmal in den Top 10 | «Vektoren verstehen Bedeutung, aber nicht Bezeichner.» |
-| 10–11½ | 5 Vektorsuche | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
-| 11½–13½ | 6 Hybrid | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
-| 13½–16½ | 7 Agent | **Schätzfrage:** Wie viele Turns? Aufgezeichnete Läufe: 3–4 Turns, 21–36k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
-| 16½–19 | 8 Messung | Jede Frage ein Punkt: Reihe BM25, Reihe Vektor, Reihe Hybrid. **Schätzfrage** zum grösseren Modell, dann drei Karten mit den Varianten. | siehe unten |
-| 19–20 | 9 Fazit | vier Kernaussagen | |
+| 0–1½ | R1 Korpus | 16 BAZG-Dokumente, 267 Seiten, de/fr/it. Dann die zwei Wege: Index bauen oder selbst suchen | «Echte Projektdoku. Wie findet ein Agent darin die richtige Stelle?» |
+| 1½–3 | R2 Chunking | fester Schnitt vs. Überschriftenpfad | «Was ein Chunk ist, bestimmt, was gefunden werden kann.» |
+| 3–5½ | R3 BM25 | **S2** «Währungsangabe … britischen Pfund». **Schätzfrage:** Findet BM25 es? Auflösung: **nichts** | «Das Dokument sagt GBP, nie Pfund. Lexikalische Suche ist blind für Synonyme.» |
+| 5½–7½ | R4 Vektor-DB | **S2**: Text → Embedding-Modell → 384 Zahlen. Tabelle mit einer Zeile pro Chunk, die Frage als weitere Zeile, Ähnlichkeit pro Zeile, Zeilen sortieren sich. Echte Zahlen aus dem Index | «Eine Vektor-Datenbank ist eine Tabelle mit Zahlen. Suchen heisst: Zahlen vergleichen, keine Wörter.» |
+| 7½–10 | R5 Vektorsuche | **S2** trifft sofort (Schätzfrage). Dann **E1** «Was bedeutet NT044?»: Vektor findet den Code nicht einmal in den Top 10 | «Vektoren verstehen Bedeutung, aber nicht Bezeichner.» |
+| 10–11½ | R5 Vektorsuche | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
+| 11½–13½ | R6 Hybrid | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
+| 13½–16 | R7 Agent | **Schätzfrage:** Wie viele Turns? Der Lauf als Weg von der Frage zur Antwort, ein Punkt pro Turn. Aufgezeichnete Läufe: 3–4 Turns, 21–36k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
+| 16–17 | R8 Test | Wie gemessen wird: 25 Fragen, erwartetes Dokument, Top 5, Recall@5. Vier Gruppen mit je einer Beispielfrage | «Vier Fragen sind Anekdoten. Darum ein fester Satz von Fragen.» |
+| 17–19 | R9 Messung | Jede Frage ein Punkt: Reihe BM25, Reihe Vektor, Reihe Hybrid. **Schätzfrage** zum grösseren Modell, dann drei Karten mit den Varianten. | siehe unten |
+| 19–20 | R10 Fazit | vier Kernaussagen | |
 
 ### Gemessene Zahlen (Recall@5, in Klammern MRR, 25 Fragen, k=5)
 

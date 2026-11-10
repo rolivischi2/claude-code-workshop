@@ -58,8 +58,8 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 Kürzungsreserve in dieser Reihenfolge: 05 als Demo → 02 Skill aus `solution/02` übernehmen →
 R ohne Schätzfragen (`g`) und ohne Chunking-Szene → D nur am Beamer → 03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
 
-Zu jedem Input gibt es eine animierte Szene in `praesentation/` (Überblick, Kontext, Leitplanken, MCP,
-Skalieren, Rückblick). Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
+Zu jedem Input gibt es animierte Folien in `praesentation/` (Überblick, Kontext, Leitplanken, Rewind, MCP,
+Skalieren mit Demo und Ablauf, Rückblick). Das Sprechskript folgt den Folien mit Kürzeln wie A1 oder R8. Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
 **Schätzfragen** (erst per Handzeichen raten, dann auflösen) in den Konzept-Szenen und in Demo R.
 
 ## 4. Übungen (Hands-on, `exercises/`)
@@ -173,21 +173,22 @@ Retrieval-Ergebnisse sind fremde Inhalte.
 **Visualisierung** `praesentation/index.html` (statisch, offline über `file://`, lädt `data.js`,
 sonst `data.sample.js` mit Badge «Beispieldaten»):
 
-| Szene | Inhalt |
+| Folie | Inhalt |
 |-------|--------|
-| 1 Korpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
-| 2 Chunking | feste Länge vs. Überschriftenpfad (`t`) |
-| 3 BM25 | drei Schritte mit echten Werten: Frage zerlegen (Füllwörter weg), Seltenheit je Suchbegriff (in wie vielen Chunks, Gewicht), Chunks bewerten (Rangliste) |
-| 4 Vektor-DB | Text → Embedding-Modell → 384 Zahlen; die Datenbank als Tabelle, Ähnlichkeit zur Frage pro Zeile (echte Werte) |
-| 5 Vektorsuche | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
-| 6 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
-| 7 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
-| 8 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten |
-| 9 Fazit | vier Kernaussagen |
+| R1 Korpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
+| R2 Chunking | feste Länge vs. Überschriftenpfad (`t`) |
+| R3 BM25 | drei Schritte mit echten Werten: Frage zerlegen (Füllwörter weg), Seltenheit je Suchbegriff (in wie vielen Chunks, Gewicht), Chunks bewerten (Rangliste) |
+| R4 Vektor-DB | Text → Embedding-Modell → 384 Zahlen; die Datenbank als Tabelle, Ähnlichkeit zur Frage pro Zeile (echte Werte) |
+| R5 Vektorsuche | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn, Ringe um die Chunks des erwarteten Dokuments, Kosinus-Formel am Treffer auf Rang 1 |
+| R6 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
+| R7 Agent | aufgezeichneter Lauf als Weg von der Frage zur Antwort, ein Punkt pro Turn (Turns, Tokens) |
+| R8 Test | wie gemessen wird (25 Fragen, erwartetes Dokument, Top 5, Recall@5) und die vier Fragengruppen mit je einer Beispielfrage |
+| R9 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten |
+| R10 Fazit | vier Kernaussagen |
 
-Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`9`, `q` Frage, `g` Schätzfragen aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
+Tasten: ←/→ Schritt, Shift+←/→ Abschnitt, `1`–`9` Folie im Abschnitt, `o` Übersicht, `q` Frage, `g` Schätzfragen aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
 
-Schätzfragen in den Szenen 3, 5, 7 und 8. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
+Schätzfragen auf R3, R5, R7 und R9. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
 Kurze Erklärkästen («tidbits») stehen dort, wo ein Begriff zum ersten Mal vorkommt.
 
 ## 9. Demo D – Skalieren (7')

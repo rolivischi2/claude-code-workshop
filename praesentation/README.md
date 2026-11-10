@@ -84,7 +84,7 @@ Aussagen der Konzept-Szenen zu Reihenfolgen und Verhalten sind gegen die Doku vo
 window.DATA = {
   meta: {
     generated: "2026-11-07T10:00:00Z",
-    variant: "heading+MiniLM",    // Variante, aus der Rankings und Karte stammen (markiert in Szene 8)
+    variant: "heading+MiniLM",    // Variante, aus der Rankings und Karte stammen (markiert auf der Folie «Messung»)
     note: "…",                    // freier Hinweis der Pipeline, wird nicht angezeigt
     model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
     chunking: "heading",          // "heading" | "fixed"
@@ -158,9 +158,9 @@ Alle Texte UTF-8, deutsche Texte in Schweizer Schreibweise (ss, nie ß).
 
 ### Wie die Seite mit fehlenden Teilen umgeht
 
-- Kein `agent` oder kein Lauf für die gewählte Frage: Szene 5 zeigt einen Hinweis und die
+- Kein `agent` oder kein Lauf für die gewählte Frage: die Folie «Agent» zeigt einen Hinweis und die
   Fragen, für die es eine Aufzeichnung gibt.
-- `hybrid` ist `null`: Szene 4 zeigt die beiden Listen und einen Hinweis statt der Fusion.
+- `hybrid` ist `null`: die Folie «Hybrid» zeigt die beiden Listen und einen Hinweis statt der Fusion.
 - Kein `query_xy`: Die Frage wird in die Mitte ihrer Top-k-Nachbarn gesetzt und als
   «Position geschätzt» beschriftet.
 - Keine Frage mit `showcase: true`: Die Auswahl zeigt alle Fragen nach Kategorie, Start ist
