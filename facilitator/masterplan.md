@@ -182,7 +182,7 @@ sonst `data.sample.js` mit Badge «Beispieldaten»):
 | 5 Vektorsuche | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
 | 6 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
 | 7 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
-| 8 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
+| 8 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten |
 | 9 Fazit | vier Kernaussagen |
 
 Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`9`, `q` Frage, `g` Schätzfragen aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.

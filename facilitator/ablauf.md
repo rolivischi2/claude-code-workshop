@@ -92,7 +92,7 @@ das Wissen in 267 Seiten Zolldokumentation steht?»
 
 ### D – Skalieren (2:15–2:22)
 
-Siehe demo-scripts.md, Demo D. Zuerst die Szene «Skalieren», dann die Live-Demo im eigenen Terminal
+Siehe demo-scripts.md, Demo D. Zuerst die Folien «Skalieren» und «Demo», dann die Live-Demo im eigenen Terminal, danach die Folie «Ablauf»
 (Bildschirm teilen). Die Teilnehmenden schauen zu, sie machen hier nichts selbst.
 
 ### Abschluss (2:22–2:30)

@@ -126,7 +126,7 @@ function plainAnswer(md) {
   }
   function vsRow(label, a, b) { return h('tr', {}, h('th', { text: label }), h('td', { text: a }), h('td', { text: b })); }
 
-  /* ===================== 7 Messung, Detail (Taste d) ===================== */
+  /* ===================== Messung: Hilfsfunktionen ===================== */
   function variants(ctx) {
     var E = ctx.data.eval;
     if (!E || !E.rows || !E.rows.length) return [];
@@ -141,110 +141,6 @@ function plainAnswer(md) {
     }).join(' + ');
   }
   VIZ.variantLabel = variantLabel;
-
-  VIZ.defs.score = {
-    id: 'score', usesData: true, nav: 'Messung', title: 'Messung im Detail',
-    lead: function (ctx) {
-      var k = (ctx.data.eval && ctx.data.eval.k) || ctx.k;
-      return 'Recall@' + k + ': Steht das erwartete Dokument in den Top ' + k + '? MRR: Auf welchem Rang steht der erste Treffer?';
-    },
-    beats: function (ctx) { return Math.max(1, variants(ctx).length); },
-    help: [['v', 'Messung im Detail: nächste Variante']],
-    keys: {
-      v: function (ctx) {
-        var n = VIZ.beatCount(), f = VIZ.state.beat;
-        VIZ.state.beat = (f + 1) % n;
-        VIZ.apply(VIZ.state.beat, true, f);
-      },
-      d: function () { VIZ.scenes[VIZ.state.scene] = VIZ.defs.messung; VIZ.render(99, true); }
-    },
-    render: function (stage, ctx) {
-      var E = ctx.data.eval, vs = variants(ctx);
-      this._ok = !!vs.length;
-      if (!vs.length) { stage.appendChild(ui.empty('Keine Messwerte', 'eval.rows fehlt in den Daten.')); return; }
-      var modes = (E.modes && E.modes.length) ? E.modes : ['bm25', 'vector', 'hybrid'];
-      var cats = ((E.categories && E.categories.length) ? E.categories : ['synonym', 'cross-lingual', 'exact-identifier', 'multi-doc']).concat(['all']);
-      this._E = E; this._modes = modes; this._cats = cats; this._vs = vs;
-      var self = this;
-      var bar = h('div', { class: 'toolbar' },
-        h('div', { class: 'seg', role: 'group', 'aria-label': 'Variante' }, vs.map(function (v, i) {
-          return h('button', { type: 'button', class: 'seg-btn', 'data-v': i, onclick: function () {
-            var f = VIZ.state.beat; if (f === i) return; VIZ.state.beat = i; VIZ.apply(i, true, f);
-          } }, variantLabel(v), v === ctx.data.meta.variant ? h('span', { class: 'seg-note', text: 'Szenen ' + VIZ.questionScenes() }) : null);
-        })),
-        h('span', { class: 'toolbar-hint' }, h('kbd', { text: 'v' }), ' Variante ', h('kbd', { text: 'd' }), ' zurück zur Übersicht'),
-        h('div', { class: 'legend modes' }, modes.map(function (m) {
-          return h('span', {}, h('i', { class: 'sw m-' + m }), VIZ.MODE[m] || m);
-        }), h('span', { class: 'ghost-legend' }, h('i', { class: 'sw ghost' }), 'vorherige Variante')));
-      stage.appendChild(bar);
-      var k = E.k || ctx.k;
-      stage.appendChild(h('div', { class: 'charts' }, chart('recall', 'Recall@' + k, modes, cats, E), chart('mrr', 'MRR', modes, cats, E)));
-      var nAll = E.rows.filter(function (r) { return r.category === 'all'; }).map(function (r) { return r.n; })[0];
-      stage.appendChild(h('p', { class: 'caption', text: 'n = Anzahl Fragen pro Kategorie. Bei n = 6 ändert eine einzige Frage den Recall um 0.17' +
-        (nAll ? ', über alle ' + nAll + ' Fragen um ' + VIZ.num(1 / nAll, 2) : '') + '. Kleine Unterschiede sind nicht belastbar.' }));
-    },
-    step: function (b, animate, from) {
-      if (!this._ok) return;
-      var self = this, v = this._vs[b], pv = from >= 0 && from !== b ? this._vs[from] : null;
-      Array.prototype.forEach.call(document.querySelectorAll('.seg-btn'), function (x) { x.classList.toggle('on', +x.getAttribute('data-v') === b); });
-      var rows = {};
-      this._E.rows.forEach(function (r) { rows[r.variant + '|' + r.mode + '|' + r.category] = r; });
-      function apply() {
-        Array.prototype.forEach.call(document.querySelectorAll('.bar'), function (el) {
-          var key = el.getAttribute('data-key'), metric = el.getAttribute('data-metric');
-          var r = rows[v + '|' + key], p = pv ? rows[pv + '|' + key] : null;
-          var val = r ? r[metric] : null;
-          el.style.height = (val ? Math.max(0.5, val * 100) : 0) + '%';
-          el.classList.toggle('missing', val === null || val === undefined);
-          var lab = el.querySelector('.bar-val');
-          lab.textContent = val === null || val === undefined ? '–' : VIZ.num(val, 2);
-          lab.style.marginBottom = '0px';
-          var g = el.parentNode.querySelector('.ghost[data-key="' + key + '"]');
-          if (g) {
-            var pval = p ? p[metric] : null;
-            var show = pv && pval !== null && pval !== undefined && Math.abs(pval - (val || 0)) > 0.004;
-            g.style.bottom = (pval || 0) * 100 + '%';
-            g.style.visibility = show ? 'visible' : 'hidden';
-            if (show) {
-              /* Wert über die Markierung der vorherigen Variante heben, wenn sie im Weg ist */
-              var dy = (pval - (val || 0)) * el.parentNode.clientHeight;
-              if (dy > -6 && dy < lab.offsetHeight + 6) lab.style.marginBottom = Math.round(dy + 8) + 'px';
-            }
-          }
-        });
-        Array.prototype.forEach.call(document.querySelectorAll('.grp-n'), function (el) {
-          var r = rows[v + '|' + el.getAttribute('data-key')];
-          el.textContent = r && r.n ? 'n = ' + r.n : '';
-        });
-      }
-      if (from < 0 && animate && VIZ.motion) {
-        Array.prototype.forEach.call(document.querySelectorAll('.bar'), function (el) { el.style.height = '0%'; });
-        document.querySelector('.charts').offsetHeight; /* Reflow, damit die Übergänge starten */
-        VIZ.later(apply, 120);
-      } else apply();
-    }
-  };
-  function chart(metric, title, modes, cats, E) {
-    var plot = h('div', { class: 'plot' });
-    [0, 0.25, 0.5, 0.75, 1].forEach(function (g) {
-      plot.appendChild(h('div', { class: 'grid', style: { bottom: g * 100 + '%' } }, h('span', { text: VIZ.num(g, 2) })));
-    });
-    var groups = h('div', { class: 'groups' });
-    cats.forEach(function (c) {
-      var bars = h('div', { class: 'bars' });
-      modes.forEach(function (m) {
-        bars.appendChild(h('div', { class: 'slot' },
-          h('div', { class: 'bar m-' + m, 'data-key': m + '|' + c, 'data-metric': metric, style: { height: '0%' } },
-            h('span', { class: 'bar-val' })),
-          h('div', { class: 'ghost m-' + m, 'data-key': m + '|' + c })));
-      });
-      groups.appendChild(h('div', { class: 'grp' + (c === 'all' ? ' grp-all' : '') }, bars,
-        h('div', { class: 'grp-label' }, h('span', { text: VIZ.CATEGORY[c] || c }), h('span', { class: 'grp-n', 'data-key': modes[0] + '|' + c }))));
-    });
-    plot.appendChild(groups);
-    return h('div', { class: 'chart' }, h('h2', { text: title }), plot);
-  }
-
 
   /* ===================== 7 Messung: jede Frage ein Punkt ===================== */
   /* Recall pro Frage und Modus aus den echten Ranglisten: Anteil der erwarteten Dokumente in den Top k.
@@ -286,8 +182,6 @@ function plainAnswer(md) {
     id: 'messung', usesData: true, nav: 'Messung', title: 'Messung: ein Punkt pro Frage',
     lead: function (ctx) { return 'Voller Punkt: Das erwartete Dokument steht in den Top ' + ctx.k + '. Halber Punkt: nur eines von zwei erwarteten Dokumenten. Kreuz: nicht gefunden.'; },
     beats: 4,
-    help: [['d', 'Messung: Detail-Diagramme (Recall und MRR pro Kategorie) ein/aus']],
-    keys: { d: function () { VIZ.scenes[VIZ.state.scene] = VIZ.defs.score; VIZ.render(0, true); } },
     /* Tipp vor der ersten Variante, die bei gleichem Chunking nur das Embedding-Modell wechselt */
     guess: function (ctx) {
       if (!dotData(ctx)) return null;
@@ -338,8 +232,7 @@ function plainAnswer(md) {
       stage.appendChild(grid);
       stage.appendChild(h('div', { class: 'dm-legend' },
         h('span', {}, h('i', { class: 'dot full' }), 'gefunden'), h('span', {}, h('i', { class: 'dot half' }), 'eines von zwei Dokumenten'),
-        h('span', {}, h('i', { class: 'dot none' }), 'nicht gefunden'), h('span', {}, h('i', { class: 'dot full showcase' }), 'Frage aus den Szenen ' + VIZ.questionScenes()),
-        h('span', { class: 'toolbar-hint detail' }, h('kbd', { text: 'd' }), ' Detail-Diagramme')));
+        h('span', {}, h('i', { class: 'dot none' }), 'nicht gefunden'), h('span', {}, h('i', { class: 'dot full showcase' }), 'Frage aus den Szenen ' + VIZ.questionScenes())));
       stage.appendChild(h('p', { class: 'dm-caption', id: 'dm-caption' }));
       /* Varianten: drei Karten statt dreissig Balken */
       var vs = variants(ctx);

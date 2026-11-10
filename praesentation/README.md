@@ -18,7 +18,7 @@ Ausgelegt für 1920×1080. `f` schaltet Vollbild.
 | B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause |
 | C MCP | MCP · Übung 06 |
 | R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit |
-| D Skalieren | Skalieren (dazu die Live-Demo im Terminal des Facilitators) |
+| D Skalieren | Skalieren · Demo (Ankündigung der Live-Demo im Terminal des Facilitators) · Ablauf (Animation nach der Demo) |
 | ■ Schluss | Rückblick |
 
 Die Reihenfolge steht in `index.html` (`VIZ.SECTIONS`).
@@ -36,7 +36,6 @@ Die Reihenfolge steht in `index.html` (`VIZ.SECTIONS`).
 | `q` | Abschnitt Suche: Frage wählen |
 | `g` | Schätzfragen aus/ein |
 | `t` | Chunking: feste Länge ↔ Überschriften |
-| `d` / `v` | Messung: Detail-Diagramme / nächste Variante |
 | `r` | Animation der Szene wiederholen |
 | `f` | Vollbild |
 | `?` | Hilfe |
@@ -64,7 +63,7 @@ Wer ein Übungsblatt ändert, passt die Folie an und lässt die Prüfung laufen 
 |-------|--------|
 | `index.html` | Gerüst, Reihenfolge der Abschnitte und Szenen |
 | `viz.js`, `style.css` | Motor (Navigation, Tastatur, Schätzfragen, Bausteine) und Gestaltung |
-| `scenes-konzepte.js`, `konzepte.css` | Konzept-Szenen: Überblick, Kontext, Leitplanken, MCP, Skalieren, Rückblick |
+| `scenes-konzepte.js`, `konzepte.css` | Konzept-Szenen: Überblick, Kontext, Leitplanken, MCP, Skalieren, Demo, Ablauf, Rückblick |
 | `scenes-uebungen.js`, `uebungen-daten.js` | Übungsfolien, Titelfolie mit Ablauf, Pause |
 | `scenes-retrieval.js`, `scenes-results.js` | Abschnitt Suche |
 | `data.js` | Daten des Suchexperiments, erzeugt mit `cd rag && uv run export-viz` (nicht von Hand bearbeiten) |

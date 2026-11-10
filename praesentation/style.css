@@ -604,3 +604,23 @@ kbd { border-width: 1px; background: var(--card); }
 .ov-sec { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .ov-sec h3 { margin-top: 0; color: var(--accent-deep); }
 .ov-item { grid-template-columns: minmax(0, 1fr) auto; font-size: .8rem; padding: .3rem .5rem; }
+
+/* ---------- Vektorsuche: Kosinus-Formel und Anwendung ---------- */
+.cosbox { border: 1.5px solid var(--sem); border-radius: var(--r); background: var(--sem-bg); padding: .4rem .8rem; display: flex; flex-direction: column; gap: .35rem; font-size: .8rem; }
+.cos-row { display: flex; align-items: center; gap: .8rem; }
+.cos-label { flex: 0 0 5.4rem; font-size: .62rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--sem); }
+.cos-formula { display: flex; align-items: center; gap: .45rem; flex-wrap: nowrap; white-space: nowrap; min-width: 0; }
+.frac { display: inline-flex; flex-direction: column; align-items: center; font: .78rem var(--mono); line-height: 1.25; }
+.frac span:first-child { border-bottom: 1.5px solid var(--ink); padding: 0 .4rem .08rem; }
+.frac span:last-child { padding-top: .08rem; }
+.cos-key { font-size: .68rem; color: var(--ink-2); margin-left: .5rem; }
+.cos-result { font: 600 1.35rem var(--serif); color: var(--sem); }
+.cos-row.applied .cos-key { font-weight: 700; color: var(--sem); }
+.nb-cos { font: 700 15px var(--sans); fill: var(--sem); text-anchor: middle; paint-order: stroke; stroke: var(--card); stroke-width: 5px; stroke-linejoin: round; }
+.nb-cos.top { font-size: 21px; }
+.nb-line { transition: opacity .4s, stroke-width .4s; }
+.map.formula-on .nb-line { opacity: .35; }
+.map.formula-on .nb-line.top { opacity: 1; stroke-width: 6; }
+.map.formula-on .nb-cos:not(.top) { opacity: .55; }
+.cos-key { margin-left: .3rem; }
+.cosbox .frac { font-size: .74rem; }

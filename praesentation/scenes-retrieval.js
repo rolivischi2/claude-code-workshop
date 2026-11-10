@@ -430,7 +430,7 @@
   VIZ.defs.vector = {
     id: 'vector', usesData: true, nav: 'Vektorsuche', usesQuestion: true, title: 'Vektorsuche: die nächsten Nachbarn',
     lead: 'Dieselbe Tabelle als Karte. Jede Zeile ist ein Punkt. Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die Suche liefert die Punkte, die der Frage am nächsten sind.',
-    beats: 4,
+    beats: 5,
     guess: function (ctx) {
       return hitGuess(ctx, ctx.q && (ctx.q.vector || []), 2, 'Findet die Vektorsuche das richtige Dokument in den Top {k}?');
     },
@@ -461,11 +461,31 @@
       stage.appendChild(h('div', { class: 'two-col map-col' }, mapBox, col));
       this.drawMap(mapBox, ctx, q);
     },
+    /* Formel der Kosinus-Ähnlichkeit, darunter angewendet auf den besten Treffer.
+       Die Produkte stammen aus den ersten exportierten Werten beider Vektoren, das Ergebnis aus der echten Suche. */
+    formula: function (ctx, q) {
+      var top = (q.vector || [])[0], c = top ? ctx.chunk(top.chunk) : null;
+      var dims = ctx.data.meta.dims || 384, total = (ctx.data.meta.corpus || {}).chunks;
+      var box = at(h('div', { class: 'cosbox' }), 4, 'up');
+      box.appendChild(h('div', { class: 'cos-row' }, h('span', { class: 'cos-label', text: 'Formel' }),
+        h('span', { class: 'cos-formula' }, h('b', { text: 'Kosinus-Ähnlichkeit' }), ' = ',
+          h('span', { class: 'frac' }, h('span', { text: 'f₁·c₁ + f₂·c₂ + … + f' + subscript(dims) + '·c' + subscript(dims) }), h('span', { text: '|f| · |c|' })),
+          h('span', { class: 'cos-key', text: 'f = Zahlen der Frage, c = Zahlen eines Chunks' }))));
+      if (!top) return box;
+      var fv = q.query_v, cv = c && c.v, num = function (x) { return (x < 0 ? '−' : '') + Math.abs(x).toFixed(2); };
+      var terms = fv && cv ? [0, 1].map(function (i) { return '(' + num(fv[i]) + ' · ' + num(cv[i]) + ')'; }).join(' + ') + ' + … ' : 'f · c ';
+      box.appendChild(h('div', { class: 'cos-row applied' }, h('span', { class: 'cos-label', text: 'Angewendet' }),
+        h('span', { class: 'cos-formula' }, 'Frage und Zeile ' + top.chunk + ': ',
+          h('span', { class: 'frac' }, h('span', { text: terms }), h('span', { text: '|f| · |c|' })), ' = ',
+          h('b', { class: 'cos-result', text: VIZ.num(top.score, 2) }),
+          h('span', { class: 'cos-key', text: 'höchster Wert' + (total ? ' von ' + VIZ.num(total) : '') + ' → Rang 1' }))));
+      return box;
+    },
     drawMap: function (box, ctx, q) {
       var plot = h('div', { class: 'map-plot' });
       var caption = h('p', { class: 'map-caption', text: 'Jeder Punkt hat 384 Zahlen. Die Karte reduziert sie auf 2, die Abstände stimmen darum nur ungefähr. Die Nachbarn stammen aus der echten Rangliste.' });
       var legend = h('div', { class: 'legend' });
-      box.appendChild(plot); box.appendChild(caption); box.appendChild(legend);
+      box.appendChild(plot); box.appendChild(this.formula(ctx, q)); box.appendChild(caption); box.appendChild(legend);
       this._map = null;
       var W = Math.max(300, plot.clientWidth), H = Math.max(200, plot.clientHeight);
       var pts = ctx.data.chunks.filter(function (c) { return typeof c.x === 'number' && typeof c.y === 'number'; });
@@ -505,11 +525,13 @@
       svg.appendChild(gx);
       var lines = [], star = null;
       if (qxy) {
-        var glines = s('g', {}), gnb = s('g', {});
+        var glines = s('g', {}), gnb = s('g', {}), glabels = s('g', {});
         nb.forEach(function (x, i) {
-          var ln = at(s('line', { class: 'nb-line', pathLength: 1 }), 2, 'draw', i * 120);
-          lines.push({ el: ln, x: x.c.x, y: x.c.y });
+          var ln = at(s('line', { class: 'nb-line' + (i === 0 ? ' top' : ''), pathLength: 1 }), 2, 'draw', i * 120);
+          var lab = at(s('text', { class: 'nb-cos' + (i === 0 ? ' top' : ''), text: VIZ.num(x.r.score, 2) }), 4, 'fade', i * 90);
+          lines.push({ el: ln, x: x.c.x, y: x.c.y, label: lab });
           glines.appendChild(ln);
+          glabels.appendChild(lab);
           var g = at(s('g', { class: 'nb ' + (x.r.hit ? 'hit' : 'miss') }), 2, 'fade', 250 + i * 120);
           g.appendChild(s('circle', { cx: 0, cy: 0, r: 15, class: 'nb-pulse', style: { 'animation-delay': (i * 0.15) + 's' } }));
           g.appendChild(s('circle', { cx: 0, cy: 0, r: 13, class: 'nb-dot' }));
@@ -518,6 +540,7 @@
         });
         svg.appendChild(glines);
         svg.appendChild(gnb);
+        svg.appendChild(glabels);
         var inner = s('g', { class: 'query-fly' },
           s('polygon', { points: starPts(0, 0, 17, 7.5), class: 'q-star' }),
           s('text', { x: 22, y: 6, class: 'q-label', text: est ? 'Frage (Position geschätzt)' : 'Frage' }));
@@ -545,6 +568,10 @@
         M.lines.forEach(function (l) {
           l.el.setAttribute('x1', qx.toFixed(1)); l.el.setAttribute('y1', qy.toFixed(1));
           l.el.setAttribute('x2', X(l.x).toFixed(1)); l.el.setAttribute('y2', Y(l.y).toFixed(1));
+          if (l.label) { /* Kosinus-Wert auf der Linie, näher beim Nachbarn */
+            l.label.setAttribute('x', (qx + (X(l.x) - qx) * 0.62).toFixed(1));
+            l.label.setAttribute('y', (qy + (Y(l.y) - qy) * 0.62 - 7).toFixed(1));
+          }
         });
         M.qpx = [qx, qy];
       }
@@ -580,9 +607,10 @@
         VIZ.later(function () { self.zoomTo(target, true); }, b * 650);
       } else this.zoomTo(target, animate);
       var m = document.querySelector('.map');
-      if (m) m.classList.toggle('pulsing', b === 2 && VIZ.motion);
+      if (m) { m.classList.toggle('pulsing', b === 2 && VIZ.motion); m.classList.toggle('formula-on', b === 4); }
     }
   };
+  function subscript(n) { return String(n).replace(/\d/g, function (d) { return '₀₁₂₃₄₅₆₇₈₉'[+d]; }); }
   function avg(a) { return a.reduce(function (x, y) { return x + y; }, 0) / a.length; }
   function shape(lang, x, y, r) {
     if (lang === 'fr') return s('rect', { x: x - r * .85, y: y - r * .85, width: r * 1.7, height: r * 1.7, class: 'pt pt-fr' });

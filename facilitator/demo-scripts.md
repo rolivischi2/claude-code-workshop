@@ -42,7 +42,7 @@ Das ausformulierte Skript mit Sätzen pro Schritt, häufigen Fragen und Glossar 
 | 10–11½ | 5 Vektorsuche | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
 | 11½–13½ | 6 Hybrid | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
 | 13½–16½ | 7 Agent | **Schätzfrage:** Wie viele Turns? Aufgezeichnete Läufe: 3–4 Turns, 21–36k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
-| 16½–19 | 8 Messung | Jede Frage ein Punkt: Reihe BM25, Reihe Vektor, Reihe Hybrid. **Schätzfrage** zum grösseren Modell, dann drei Karten mit den Varianten. `d` zeigt die Detail-Diagramme für Nachfragen | siehe unten |
+| 16½–19 | 8 Messung | Jede Frage ein Punkt: Reihe BM25, Reihe Vektor, Reihe Hybrid. **Schätzfrage** zum grösseren Modell, dann drei Karten mit den Varianten. | siehe unten |
 | 19–20 | 9 Fazit | vier Kernaussagen | |
 
 ### Gemessene Zahlen (Recall@5, in Klammern MRR, 25 Fragen, k=5)
@@ -92,8 +92,10 @@ und `--mode vector` im Terminal, dann `uv run eval`.
 git clone --branch solution/final . ../demo-d
 ```
 
-**Nur der Facilitator.** Zuerst die Szene «Skalieren» der Präsentation zeigen, dann auf das eigene
-Terminal wechseln (Bildschirm teilen). Die Teilnehmenden schauen zu.
+**Nur der Facilitator.** Zuerst die Folie «Skalieren» zeigen, dann die Folie «Demo» (kündigt die Demo an).
+Dann auf das eigene Terminal wechseln (Bildschirm teilen). Die Teilnehmenden schauen zu. Nach der Demo
+zurück zur Präsentation: Die Folie «Ablauf» zeigt als Animation, wie die Hauptsession den Subagent
+gestartet hat und wie die beiden Worktree-Branches wieder zusammenkommen.
 
 ### Teil 1 – Reviewer-Subagent (3')
 

@@ -200,3 +200,31 @@
 .pause .clock-time { font-size: 9rem; }
 .pause .clock-hint { font-size: .8rem; }
 .pause .tidbit { max-width: 46rem; font-size: 1rem; }
+
+/* ---------- Demo D: Ankündigung und Ablauf ---------- */
+.stage-demolive { justify-content: center; gap: 1.6rem; }
+.dl { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6rem; }
+.dl-card { background: var(--card); border: 1.5px solid var(--rule); border-top: .35rem solid var(--accent); border-radius: var(--r); padding: 1.3rem 1.5rem; display: flex; flex-direction: column; gap: .8rem; }
+.dl-nr { font-size: .8rem; font-weight: 700; color: var(--accent-deep); text-transform: uppercase; letter-spacing: .06em; }
+.dl-card > b { font: 700 1.9rem var(--serif, Georgia, serif); line-height: 1.15; }
+.dl-card ol { margin: 0; padding-left: 1.4rem; display: flex; flex-direction: column; gap: .6rem; font-size: 1.1rem; }
+.dl-card li code { font: 700 1.05rem var(--mono); background: var(--wash); border-radius: .25em; padding: .1em .45em; margin-right: .7rem; white-space: nowrap; }
+.dl-watch { border-top: 1.5px solid var(--rule); padding-top: .8rem; font-size: 1.05rem; }
+.stage-demoablauf { gap: .6rem; }
+.fl { width: 100%; flex: 1 1 auto; min-height: 0; }
+.fl text { fill: var(--ink); font-family: inherit; }
+.fl-part { font-size: 17px; font-weight: 700; fill: var(--accent-deep) !important; text-transform: uppercase; letter-spacing: .06em; }
+.fl-lane { font-size: 25px; font-weight: 700; }
+.fl-sub { font-size: 17px; fill: var(--ink-3) !important; }
+.fl-tag { font-size: 19px; font-weight: 700; }
+.fl-tool { font: 15px var(--mono); fill: var(--ink-2) !important; }
+.fl-code { font: 700 20px var(--mono); }
+.fl-line { fill: none; stroke-width: 6; stroke-linecap: round; stroke-dasharray: 1; }
+.fl-line.wait { stroke-dasharray: none; stroke-dasharray: 2 12; stroke-width: 4; opacity: .55; }
+.fl-rule { stroke: var(--rule); stroke-width: 1.5; fill: none; }
+.fl-dot { stroke: var(--paper); stroke-width: 3; transform-box: fill-box; transform-origin: center; }
+.fl .c-main { stroke: var(--ink); } .fl circle.c-main { fill: var(--ink); stroke: var(--paper); }
+.fl .c-sub, .fl .c-a { stroke: var(--accent-deep); } .fl circle.c-sub, .fl circle.c-a { fill: var(--accent-deep); stroke: var(--paper); }
+.fl .c-b { stroke: var(--sem); } .fl circle.c-b { fill: var(--sem); stroke: var(--paper); }
+.fl text.c-sub, .fl text.c-a { fill: var(--accent-deep); stroke: none; }
+.fl text.c-b { fill: var(--sem); stroke: none; }

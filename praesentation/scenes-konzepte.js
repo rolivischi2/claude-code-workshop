@@ -251,4 +251,107 @@
       document.getElementById('sx-back').classList.toggle('hid', b < 2);
     }
   };
+  /* ===================== 5b Demo D: Ankündigung ===================== */
+  VIZ.defs.demolive = {
+    id: 'demolive', nav: 'Demo', title: 'Demo: Subagent und Worktrees',
+    lead: 'Jetzt live in meinem Terminal. Ihr schaut zu.',
+    beats: 1,
+    render: function (stage) {
+      function part(n, title, lines, watch) {
+        return at(h('div', { class: 'dl-card' },
+          h('span', { class: 'dl-nr', text: 'Teil ' + n }), h('b', { text: title }),
+          h('ol', {}, lines.map(function (l) { return h('li', {}, l[0] ? h('code', { text: l[0] }) : null, h('span', { text: l[1] })); })),
+          h('p', { class: 'dl-watch' }, h('b', { text: 'Achtet auf: ' }), watch)), 0, 'up', 150 + n * 150);
+      }
+      stage.appendChild(h('div', { class: 'dl' },
+        part(1, 'Reviewer-Subagent', [
+          ['/context', 'Belegung vorher'],
+          [null, 'Auftrag: Der Subagent «reviewer» prüft den Diff seit start/03'],
+          ['/context', 'Belegung nachher']
+        ], 'Wie stark wächst der Kontext der Hauptsession?'),
+        part(2, 'Zwei Sessions in Worktrees', [
+          ['claude -w office-search', 'Session 1: Suche nach Zollstellen'],
+          ['claude -w declaration-csv', 'Session 2: CSV-Export'],
+          ['git worktree list', 'zeigt beide Verzeichnisse']
+        ], 'Wo liegen die Dateien der beiden Sessions?')));
+      stage.appendChild(at(ui.note('Nach der Demo zeigt die nächste Folie den Ablauf nochmals als Bild.'), 0, 'fade', 700));
+    }
+  };
+
+  /* ===================== 5c Demo D: Ablauf als Bild ===================== */
+  VIZ.defs.demoablauf = {
+    id: 'demoablauf', nav: 'Ablauf', title: 'Ablauf der Demo',
+    lead: 'Was im Terminal passiert ist: zuerst der Subagent, dann die Worktrees.',
+    beats: 5,
+    render: function (stage) {
+      var s = VIZ.s;
+      function txt(x, y, cls, t, anchor) { return s('text', { x: x, y: y, class: cls, 'text-anchor': anchor || 'start', text: t }); }
+      function line(x1, x2, y, cls) { return s('path', { d: 'M' + x1 + ' ' + y + ' H' + x2, class: 'fl-line ' + cls, pathLength: 1 }); }
+      function curve(x1, y1, x2, y2, cls) {
+        var m = (x1 + x2) / 2;
+        return s('path', { d: 'M' + x1 + ' ' + y1 + ' C' + m + ' ' + y1 + ',' + m + ' ' + y2 + ',' + x2 + ' ' + y2, class: 'fl-line ' + cls, pathLength: 1 });
+      }
+      function dot(x, y, cls, r) { return s('circle', { cx: x, cy: y, r: r || 11, class: 'fl-dot ' + cls }); }
+      var g = s('svg', { class: 'fl', viewBox: '0 0 1600 620', preserveAspectRatio: 'xMidYMid meet' });
+      function add(el, beat, enter, delay) { g.appendChild(at(el, beat, enter, delay)); }
+
+      /* Teil 1: Subagent */
+      add(txt(0, 26, 'fl-part', 'Teil 1 · Subagent'), 0, 'fade');
+      add(txt(0, 92, 'fl-lane', 'Hauptsession'), 0, 'fade');
+      add(txt(0, 116, 'fl-sub', 'euer Modell, euer Kontext'), 0, 'fade');
+      add(line(360, 520, 95, 'c-main'), 0, 'draw', 100);
+      add(dot(520, 95, 'c-main'), 0, 'pop', 600);
+      add(txt(520, 60, 'fl-tag', 'Auftrag: «Review den Diff seit start/03»', 'middle'), 0, 'fade', 700);
+
+      add(txt(0, 212, 'fl-lane', 'Subagent «reviewer»'), 1, 'fade');
+      add(txt(0, 236, 'fl-sub', 'Haiku, eigenes Kontextfenster'), 1, 'fade');
+      add(curve(520, 95, 640, 215, 'c-sub'), 1, 'draw', 0);
+      add(line(640, 1140, 215, 'c-sub'), 1, 'draw', 500);
+      add(line(520, 1260, 95, 'c-main wait'), 1, 'fade', 300);
+      add(txt(890, 82, 'fl-sub', 'wartet, liest selbst nichts', 'middle'), 1, 'fade', 600);
+      ['git diff', 'Read', 'Grep', 'Read', 'Read'].forEach(function (t, i) {
+        var x = 710 + i * 90;
+        add(dot(x, 215, 'c-sub', 8), 1, 'pop', 900 + i * 260);
+        add(txt(x, 250, 'fl-tool', t, 'middle'), 1, 'fade', 900 + i * 260);
+      });
+      add(txt(1580, 250, 'fl-sub', 'Tool-Aufrufe schematisch', 'end'), 1, 'fade', 2200);
+
+      add(curve(1140, 215, 1260, 95, 'c-sub'), 2, 'draw', 0);
+      add(dot(1260, 95, 'c-sub'), 2, 'pop', 550);
+      add(txt(1260, 60, 'fl-tag c-sub', 'zurück kommt nur der Bericht', 'middle'), 2, 'fade', 600);
+      add(line(1260, 1580, 95, 'c-main'), 2, 'draw', 800);
+      add(txt(1580, 200, 'fl-sub', 'Der Diff bleibt im Fenster des Subagents.', 'end'), 2, 'fade', 900);
+
+      /* Teil 2: Worktrees */
+      add(s('path', { d: 'M0 300 H1600', class: 'fl-rule' }), 3, 'fade');
+      add(txt(0, 340, 'fl-part', 'Teil 2 · Worktrees'), 3, 'fade');
+      add(txt(0, 486, 'fl-lane', 'euer Branch'), 3, 'fade');
+      add(txt(0, 510, 'fl-sub', 'Stand beim Start der Sessions'), 3, 'fade');
+      add(line(360, 1580, 480, 'c-main'), 3, 'draw', 0);
+      add(dot(440, 480, 'c-main'), 3, 'pop', 300);
+      add(txt(0, 398, 'fl-code', 'claude -w office-search'), 3, 'fade', 500);
+      add(txt(0, 422, 'fl-sub', 'Branch worktree-office-search'), 3, 'fade', 500);
+      add(txt(0, 558, 'fl-code', 'claude -w declaration-csv'), 3, 'fade', 500);
+      add(txt(0, 582, 'fl-sub', 'Branch worktree-declaration-csv'), 3, 'fade', 500);
+      add(curve(440, 480, 560, 400, 'c-a'), 3, 'draw', 500);
+      add(curve(440, 480, 560, 560, 'c-b'), 3, 'draw', 500);
+      add(line(560, 1080, 400, 'c-a'), 3, 'draw', 1000);
+      add(line(560, 1220, 560, 'c-b'), 3, 'draw', 1000);
+      [[660, 400, 'c-a'], [740, 560, 'c-b'], [840, 400, 'c-a'], [920, 560, 'c-b'], [1000, 400, 'c-a'], [1100, 560, 'c-b']].forEach(function (c, i) {
+        add(dot(c[0], c[1], c[2], 9), 3, 'pop', 1500 + i * 280);
+      });
+      add(txt(820, 372, 'fl-sub', 'Commits von Session 1', 'middle'), 3, 'fade', 1700);
+      add(txt(920, 596, 'fl-sub', 'Commits von Session 2, gleichzeitig', 'middle'), 3, 'fade', 1900);
+
+      add(curve(1080, 400, 1200, 480, 'c-a'), 4, 'draw', 0);
+      add(dot(1200, 480, 'c-a'), 4, 'pop', 550);
+      add(txt(1580, 392, 'fl-code c-a', 'git merge worktree-office-search', 'end'), 4, 'fade', 600);
+      add(curve(1220, 560, 1340, 480, 'c-b'), 4, 'draw', 900);
+      add(dot(1340, 480, 'c-b'), 4, 'pop', 1450);
+      add(txt(1580, 600, 'fl-code c-b', 'git merge worktree-declaration-csv', 'end'), 4, 'fade', 1500);
+
+      stage.appendChild(g);
+      stage.appendChild(at(ui.note('Jede Session hat in einem eigenen Verzeichnis auf einem eigenen Branch gearbeitet. Zusammengeführt wird mit Git: git merge oder ein Pull Request pro Branch.'), 4, 'fade', 1800));
+    }
+  };
 })();

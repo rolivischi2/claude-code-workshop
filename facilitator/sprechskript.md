@@ -25,7 +25,7 @@ Die Szenennummern in den Überschriften unten zählen innerhalb von Teil 1 (Konz
 kurz vorlesen, was das Ziel ist, dann `z` für die Uhr. Die Folie bleibt während der Übung stehen.
 
 **Tasten:** `→` nächster Schritt · `←` zurück · Shift+`→` nächster Abschnitt · Zahl = Szene im Abschnitt · `o` Übersicht · `f` Vollbild · `r` Animation nochmals ·
-`g` Schätzfragen aus/ein · `?` Hilfe. Im Abschnitt Suche zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Messung: Detail-Diagramme).
+`g` Schätzfragen aus/ein · `?` Hilfe. Im Abschnitt Suche zusätzlich `q` Frage wählen, `t` (Chunking).
 
 **Schätzfrage:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` zeigt die Antwort,
 `→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch gelegen hat, sondern gleich die Erklärung zeigen.
@@ -145,8 +145,9 @@ rechts **nicht** «Beispieldaten» stehen.
 
 **Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
 
-**Form:** Reine Live-Demo. Du zeigst zuerst die Szene (rund 2 Minuten), wechselst dann auf dein Terminal
-und teilst den Bildschirm. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
+**Form:** Reine Live-Demo, drei Folien. «Skalieren» erklärt das Konzept (rund 2 Minuten). «Demo» kündigt die
+Demo an und bleibt stehen, bis du auf dein Terminal wechselst und den Bildschirm teilst. «Ablauf» zeigt nach der
+Demo als Animation, was passiert ist. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -154,7 +155,23 @@ und teilst den Bildschirm. Die Teilnehmenden machen hier nichts selbst. Ablauf i
 | `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geht der Auftrag an einen Subagent. Er hat ein eigenes Kontextfenster und liest alles, was er braucht.» |
 | `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Der Reviewer läuft auf Haiku, also günstiger. Ich zeige das gleich live mit `/context` vorher und nachher.» |
 | `→` | Repo fächert sich in zwei Worktrees auf | «Zweiter Teil: zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» |
-| `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» → **Jetzt ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. |
+| `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» |
+
+**Folie «Demo»** (ein Schritt)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| `→` | Zwei Karten: Teil 1 Reviewer-Subagent, Teil 2 zwei Sessions in Worktrees, je mit «Achtet auf» | «Jetzt zeige ich das live. Achtet in Teil 1 auf `/context` vorher und nachher, in Teil 2 darauf, wo die Dateien liegen.» → **Ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. Danach zurück zur Präsentation. |
+
+**Folie «Ablauf»** (nach der Demo, fünf Schritte)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| `→` | Linie «Hauptsession» mit dem Auftrag | «Nochmals als Bild. Die Hauptsession hat den Auftrag bekommen.» |
+| `→` | Abzweigung zum Subagent, fünf Tool-Aufrufe erscheinen nacheinander | «Sie hat ihn an den Reviewer abgegeben. Er hat den Diff und die Dateien in seinem eigenen Fenster gelesen. Die Hauptsession hat gewartet.» |
+| `→` | Linie zurück nach oben, «nur der Bericht» | «Zurückgekommen ist nur der Bericht. Darum ist `/context` kaum gewachsen.» |
+| `→` | Zwei Branches zweigen ab, Commits erscheinen abwechselnd | «Teil 2: Beide Sessions sind vom selben Stand abgezweigt, jede in ein eigenes Verzeichnis und auf einen eigenen Branch. Sie haben gleichzeitig gearbeitet.» |
+| `→` | Beide Branches laufen zurück, `git merge …` | «Das Zusammenführen habe ich nicht gezeigt, weil die Sessions noch laufen. Es ist normales Git: `git merge` oder ein Pull Request pro Branch.» |
 
 **Häufige Fragen**
 
@@ -276,7 +293,8 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | (Start) | Karte: jeder Punkt ein Chunk | «Dieselbe Tabelle, jetzt als Karte. Jede Zeile ist ein Punkt, und Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die 384 Zahlen sind dafür auf zwei zusammengedrückt, die Abstände stimmen also nur ungefähr.» |
 | `→` | die Frage fliegt als Stern ein | «Die Frage wird mit demselben Modell zu einem Punkt.» |
 | `→` | **Schätzfrage**, dann Linien zu den nächsten Nachbarn, Ergebnisliste | Abstimmen, auflösen. «Gesucht sind die nächsten Nachbarn.» |
-| `→` | Nahaufnahme, grünes Urteil | «Rang 1. Dieselbe Frage, an der BM25 gescheitert ist. Das Modell weiss, dass Pfund und GBP dasselbe meinen.» |
+| `→` | Ausschnitt um die Frage, grünes Ergebnis | «Rang 1. Dieselbe Frage, an der BM25 gescheitert ist. Das Modell weiss, dass Pfund und GBP dasselbe meinen.» |
+| `→` | Formel der Kosinus-Ähnlichkeit, darunter angewendet auf Zeile 112. Auf jeder Linie steht ihr Wert, die Linie zu Rang 1 ist dick | «Warum Rang 1? Für jede Zeile der Tabelle wird diese Formel gerechnet: die Zahlen der Frage mal die Zahlen des Chunks, aufsummiert, geteilt durch die Längen. Für Zeile 112 ergibt das 0.61. Das ist der höchste Wert aller 1206 Zeilen. Die anderen Linien zeigen 0.53, 0.50, 0.48.» |
 | `q` → **E1**, dann `→` bis zum Urteil | NT044: Vektor verfehlt | «Und jetzt die Gegenprobe. Was bedeutet die Meldung NT044? Für die Stichwortsuche ist das ein Geschenk. Die Vektorsuche findet den Code nicht einmal in den Top 10. Ziffern tragen kaum Bedeutung, NT044 und NT045 liegen fast aufeinander.» |
 | `q` → **C3**, dann `→` bis zum Urteil | italienisches Dokument auf Rang 1 | «Dritte Frage, auf Deutsch gestellt. Die Antwort steht nur im italienischen Dokument. BM25 hat keine Chance, das mehrsprachige Modell springt über die Sprachgrenze.» |
 
@@ -326,7 +344,6 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | `→` | **Schätzfrage:** anderes Embedding-Modell, Sprachwechsel | Abstimmen. Antwort zeigen: «Schlechter. Von 0.83 auf 0.50.» |
 | `→` | drei Karten: Varianten im Vergleich | «Gilt das immer? Links mit dem einfachen Chunking, in der Mitte unsere Variante, rechts mit einem deutlich grösseren Modell. Rechts bringt Hybrid nichts mehr: 0.86 wie Vektor allein. Und das grosse Modell ist beim Sprachwechsel schlechter. Grösser ist nicht einfach besser. Am eigenen Korpus messen.» |
 
-`d` zeigt die Detail-Diagramme (Recall und MRR pro Kategorie, `v` wechselt die Variante), falls jemand nachfragt. `d` führt zurück.
 
 **Fragen**
 
