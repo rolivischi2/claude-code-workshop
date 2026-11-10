@@ -92,12 +92,12 @@ das Wissen in 267 Seiten Zolldokumentation steht?»
 
 ### D – Skalieren (2:15–2:22)
 
-Siehe demo-scripts.md, Demo D. Szene 5 «Skalieren» auf dem Beamer. Den Reviewer-Subagent starten alle
-selbst ([exercises/demo-d-reviewer](../exercises/demo-d-reviewer/README.md), 3'), die Worktrees nur zeigen.
+Siehe demo-scripts.md, Demo D. Zuerst die Szene «Skalieren», dann die Live-Demo im eigenen Terminal
+(Bildschirm teilen). Die Teilnehmenden schauen zu, sie machen hier nichts selbst.
 
 ### Abschluss (2:22–2:30)
 
-- Szene 6 «Rückblick»: die Landkarte vom Anfang mit allen Teilen, dazu die Schlussfrage.
+- Szene «Rückblick»: der Überblick vom Anfang mit allen Teilen.
 - Modell- und Aufwandswahl: `/model`, `/effort`, günstige Subagents (Haiku).
 - Erste Teamregeln sammeln: Review-Pflicht, Umgang mit Kunden- und Projektdaten,
   gemeinsame `CLAUDE.md` und `.claude/settings.json` im Repo.

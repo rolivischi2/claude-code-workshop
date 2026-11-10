@@ -50,12 +50,11 @@
   };
   VIZ.defs.rueckblick = {
     id: 'rueckblick', nav: 'Rückblick', title: 'Rückblick: alle Teile im Einsatz',
-    lead: 'Jedes dieser Teile habt ihr heute selbst benutzt.',
-    beats: 2,
+    lead: 'Alle Teile der Harness und die Übung oder Demo, in der sie heute vorkamen.',
+    beats: 1,
     render: function (stage) {
       stage.classList.add('recap');
       karte(stage, true);
-      stage.appendChild(at(h('p', { class: 'recap-q', text: 'Welches Teil setzt ihr am Montag als Erstes ein?' }), 1, 'up'));
     },
     step: function (b, animate, from) { if (b === 0 && animate && from < 0) VIZ.later(runLoop, 900); }
   };
@@ -224,11 +223,6 @@
     id: 'skalieren', nav: 'Skalieren', title: 'Skalieren: Arbeit abgeben und parallel arbeiten',
     lead: 'Ein Subagent hält euren Kontext klein. Worktrees trennen die Dateien paralleler Sessions.',
     beats: 5,
-    guess: function () {
-      return { before: 2, question: 'Der Subagent liest den ganzen Diff. Um wie viel wächst der Kontext der Hauptsession?',
-        options: ['Um den ganzen Diff', 'Nur um seine Zusammenfassung'], correct: 1,
-        reveal: 'Der Subagent hat ein eigenes Kontextfenster. In die Hauptsession kommt nur sein Bericht.' };
-    },
     render: function (stage) {
       function bar(id, label, sub) {
         return h('div', { class: 'sx-row' }, h('div', { class: 'sx-label' }, h('b', { text: label }), h('span', { text: sub })),

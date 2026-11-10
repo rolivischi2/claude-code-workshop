@@ -59,7 +59,7 @@
   function uebung(u) {
     VIZ.defs[u.id] = {
       id: u.id, nav: u.nav, minutes: u.minutes,
-      title: (u.nr === 'D' ? 'Demo D zum Mitmachen · ' : 'Übung ' + u.nr + ' · ') + u.title,
+      title: 'Übung ' + u.nr + ' · ' + u.title,
       lead: u.ziel.replace(/[`*]/g, ''),
       beats: 3,
       help: [['z / x', 'Übungsfolien: Uhr starten oder pausieren / zurücksetzen']],
@@ -97,7 +97,7 @@
   /* ---------- Titelfolie mit Ablauf ---------- */
   VIZ.defs.titel = {
     id: 'titel', nav: 'Ablauf', title: 'Claude Code Workshop',
-    lead: 'Agentic Engineering in der Praxis. Ein Nachmittag, sieben Übungen, zwei Demos.',
+    lead: 'Agentic Engineering in der Praxis. Ein Nachmittag, sieben Übungen, zwei Demos am Beamer.',
     beats: 1,
     render: function (stage) {
       var rows = window.ABLAUF || [];

@@ -92,14 +92,10 @@ und `--mode vector` im Terminal, dann `uv run eval`.
 git clone --branch solution/final . ../demo-d
 ```
 
-Auf dem Beamer läuft dazu Szene 5 «Skalieren» aus `praesentation/` (Schätzfrage: Wie stark
-wächst der Hauptkontext?).
+**Nur der Facilitator.** Zuerst die Szene «Skalieren» der Präsentation zeigen, dann auf das eigene
+Terminal wechseln (Bildschirm teilen). Die Teilnehmenden schauen zu.
 
-### Teil 1 – Reviewer-Subagent (3'), alle machen mit
-
-Die Teilnehmenden folgen dem Blatt [exercises/demo-d-reviewer](../exercises/demo-d-reviewer/README.md):
-Vorlage nach `.claude/agents/` kopieren, `claude` neu starten, denselben Prompt absetzen.
-Bei Zeitnot nur am Beamer zeigen.
+### Teil 1 – Reviewer-Subagent (3')
 
 1. `claude`, dann `/context` und die Zahl zeigen.
 2. Prompt:

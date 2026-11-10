@@ -31,7 +31,7 @@ Lokal: `praesentation/index.html` öffnen.
 | 1:25 | Pause | | |
 | 1:35 | **C – Browser über MCP** | Hands-on | [06](exercises/06-browser-mcp/) |
 | 1:55 | **R – Agentic Search vs. RAG** auf der NCTS-Dokumentation | Demo | |
-| 2:15 | **D – Skalieren**: Subagents und parallele Sessions | Demo zum Mitmachen | [Reviewer](exercises/demo-d-reviewer/) |
+| 2:15 | **D – Skalieren**: Subagents und parallele Sessions | Demo | |
 | 2:22 | Abschluss: Modell- und Aufwandswahl, Teamregeln, nächste Schritte | Input | |
 
 ## Was ist in diesem Repo?

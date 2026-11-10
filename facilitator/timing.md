@@ -12,7 +12,7 @@ ohne Erklärung funktionieren.
 | 1:25 | 10 | Pause (App für 06 läuft bereits, gestartet am Ende von 05) | | | |
 | 1:35 | 20 | **C – Browser über MCP** | MCP-Prinzip, Playwright-MCP, Claude prüft sich selbst | 3' Input, 1 Übung | 06 (17') |
 | 1:55 | 20 | **R – Agentic Search vs. RAG** | Visualisierung `praesentation/`, echte Zahlen auf der NCTS-Dokumentation | Demo | – |
-| 2:15 | 7 | **D – Skalieren** | Reviewer-Subagent (alle machen mit, 3'), zwei Worktree-Sessions parallel | Mitmach-Demo | [demo-d-reviewer](../exercises/demo-d-reviewer/README.md) |
+| 2:15 | 7 | **D – Skalieren** | Reviewer-Subagent, zwei Worktree-Sessions parallel. Nur der Facilitator, live am geteilten Bildschirm | Live-Demo | – |
 | 2:22 | 8 | Abschluss | Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln, nächste Schritte | Input + Diskussion | – |
 | 2:30 | | Ende | | | |
 
@@ -27,8 +27,8 @@ Die Inputs werden nicht länger. Die Szenen aus `praesentation/` ersetzen Erklä
 | 0:45 | 3 Leitplanken | allow im Projekt gegen deny beim User |
 | 1:35 | 4 MCP | – |
 | 1:55 | `praesentation/` (9 Szenen) | BM25, Vektor, Turns des Agents, grösseres Modell |
-| 2:15 | 5 Skalieren | Wie stark wächst der Hauptkontext? |
-| 2:22 | 6 Rückblick | Schlussfrage |
+| 2:15 | 5 Skalieren | – |
+| 2:22 | 6 Rückblick | – |
 
 Eine Schätzfrage kostet rund 30 Sekunden. `g` schaltet alle aus.
 
@@ -56,8 +56,7 @@ Kandidaten zum Kürzen, falls die Zeit davonläuft (in dieser Reihenfolge):
 1. 05 als 2-Minuten-Demo am Beamer statt Übung.
 2. 02: Skill aus `solution/02` übernehmen (`git checkout solution/02 -- .claude/skills`), nur den automatischen Aufruf testen.
 3. R: Schätzfragen mit `g` ausschalten und Szene 2 (Chunking) überspringen. Demo R hat mit der Szene «Vektor-DB» keine Reserve mehr.
-4. D: Reviewer-Subagent nur am Beamer zeigen.
-5. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
+4. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
 
 Zeit übrig? Im Abschluss die Frage «Welche MCP-Server würdet ihr im Projekt anbinden, und welche
 davon sehen fremde Inhalte?» (Lethal Trifecta: private Daten, fremde Inhalte, Weg nach aussen).

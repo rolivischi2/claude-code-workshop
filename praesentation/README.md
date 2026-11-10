@@ -18,7 +18,7 @@ Ausgelegt für 1920×1080. `f` schaltet Vollbild.
 | B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause |
 | C MCP | MCP · Übung 06 |
 | R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit |
-| D Skalieren | Skalieren · Demo D mitmachen |
+| D Skalieren | Skalieren (dazu die Live-Demo im Terminal des Facilitators) |
 | ■ Schluss | Rückblick |
 
 Die Reihenfolge steht in `index.html` (`VIZ.SECTIONS`).

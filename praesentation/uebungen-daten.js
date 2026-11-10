@@ -191,24 +191,6 @@ window.UEBUNGEN = [
     ],
     fertig: { text: 'e2e-Tests grün, inklusive des neuen Tests für die 409-Meldung.', cmd: '(cd app/frontend && npm run e2e)' },
     tipp: 'Browser-Snapshots sind gross. Genaue Anweisungen sparen Klick-Runden.'
-  },
-  {
-    id: 'demod', nav: 'Demo D mitmachen', nr: 'D', title: 'Reviewer-Subagent', block: 'D', minutes: 3,
-    sheet: 'exercises/demo-d-reviewer/README.md',
-    ziel: 'Sehen, dass ein Subagent viel liest und euren Kontext trotzdem kaum belastet.',
-    aufgabe: ['Einen vorbereiteten Subagent «reviewer» (Modell Haiku) auf euren eigenen Diff ansetzen.'],
-    schritte: [
-      'Vorlage kopieren (Befehl rechts).',
-      '`claude` neu starten, dann `/context`: Zahl merken.',
-      'Prompt absetzen.',
-      'Wieder `/context`: Um wie viel ist euer Kontext gewachsen?'
-    ],
-    prompts: [
-      { label: 'Vorlage kopieren', text: 'mkdir -p .claude/agents && cp exercises/demo-d-reviewer/vorlage/reviewer.md .claude/agents/', kind: 'cmd' },
-      { label: 'Prompt', text: 'Nutze den reviewer-Subagent, um die Änderungen seit start/03 unter app/backend/src zu reviewen\n(git diff start/03 -- app/backend/src). Fasse sein Ergebnis in 5 Zeilen zusammen.' }
-    ],
-    fertig: { text: 'Der Subagent liefert Befunde mit Datei und Zeile und ein Urteil. Euer Kontext ist nur um den Bericht gewachsen.' },
-    tipp: 'Lesen und Suchen an einen günstigen Subagent abgeben: Das schont Kontext und Kontingent.'
   }
 ];
 
@@ -220,6 +202,6 @@ window.ABLAUF = [
   { zeit: '1:25', block: 'Pause', inhalt: '10 Minuten', praxis: '' },
   { zeit: '1:35', block: 'C · MCP', inhalt: 'Claude prüft sich selbst im Browser', praxis: 'Übung 06' },
   { zeit: '1:55', block: 'R · Suche', inhalt: 'Suche des Agenten vs. RAG, gemessen auf Zolldokumentation', praxis: 'Demo' },
-  { zeit: '2:15', block: 'D · Skalieren', inhalt: 'Subagents und parallele Sessions', praxis: 'Demo zum Mitmachen' },
+  { zeit: '2:15', block: 'D · Skalieren', inhalt: 'Subagents und parallele Sessions', praxis: 'Live-Demo' },
   { zeit: '2:22', block: 'Schluss', inhalt: 'Rückblick, Modellwahl, Teamregeln', praxis: '' }
 ];

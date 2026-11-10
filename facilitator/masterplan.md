@@ -52,7 +52,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | 1:25 | 10 | Pause (App für 06 läuft schon: letzter Schritt von 05) | | |
 | 1:35 | 20 | **C – Browser über MCP** | 3' Input, Hands-on | 06 (17') |
 | 1:55 | 20 | **R – Agentic Search vs. RAG** auf der NCTS-Doku | Demo | `praesentation/` |
-| 2:15 | 7 | **D – Skalieren**: Subagent (alle machen mit) + zwei Worktree-Sessions | Mitmach-Demo | `exercises/demo-d-reviewer`, `solution/final` |
+| 2:15 | 7 | **D – Skalieren**: Subagent + zwei Worktree-Sessions, nur der Facilitator am geteilten Bildschirm | Live-Demo | `solution/final` |
 | 2:22 | 8 | Abschluss: Szene «Rückblick», `/model`, `/effort`, Teamregeln, nächste Schritte | Input + Diskussion | |
 
 Kürzungsreserve in dieser Reihenfolge: 05 als Demo → 02 Skill aus `solution/02` übernehmen →
@@ -194,7 +194,7 @@ Kurze Erklärkästen («tidbits») stehen dort, wo ein Begriff zum ersten Mal vo
 
 Klon auf `solution/final`, zwei Terminals.
 
-1. **Reviewer-Subagent (3'), alle machen mit** (Blatt `exercises/demo-d-reviewer`): `/context` → Reviewer auf `git diff start/03 -- app/backend/src` → `/context`:
+1. **Reviewer-Subagent (3'):** `/context` → Reviewer auf `git diff start/03 -- app/backend/src` → `/context`:
    Hauptkontext kaum gewachsen, Subagent läuft auf Haiku.
 2. **Worktrees (4'):** `claude -w office-search` und `claude -w declaration-csv` parallel,
    drittes Terminal `git worktree list`. Nicht abwarten.
@@ -206,7 +206,7 @@ README.md, SETUP.md          für Teilnehmende
 .claude/README.md            was in den Übungen in .claude/ entsteht
 .devcontainer/               Variante B
 app/backend/, app/frontend/  Übungs-App
-exercises/00–06/             Übungsblätter (+ Vorlage in 04), demo-d-reviewer/ (Mitmach-Teil von Demo D)
+exercises/00–06/             Übungsblätter (+ Vorlage in 04)
 scripts/                     setup, check-setup, reset-exercise (.sh/.ps1), verify-all.sh
 facilitator/                 dieses Dokument + Detaildokumente (siehe oben), sprechskript.md
 praesentation/               die Präsentation für den ganzen Nachmittag (statische Seite, auf Vercel gehostet)
@@ -223,7 +223,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 | 03: «Ankunft melden» | 03: «Abgabenbetrag korrigieren» | Ankunft ist beim Umbau der App bereits entstanden. Das neue Feature muss die Sicherheitsprüfung wiederverwenden und führt so direkt zum Off-by-one |
 | 02: `GET /api/offices/{code}/declarations?status=OPEN` | 02: `GET /api/guarantees/{grn}/balance`, 01: `GET /api/guarantees/{grn}` | passt zum Mapper-Vergleich in 01 und zur Prüfung in 03 |
 | 6 Szenen in der Visualisierung | 9 Szenen (+ Corpus, + Vector DB, + Takeaways) | Bild für den Einstieg, die Vektor-Datenbank als Tabelle vor der Karte, Kernaussagen als eigene Schlussfolie |
-| Inputs nur gesprochen, Demos R und D nur zum Zuschauen | Konzept-Szenen, Schätzfragen, D zum Mitmachen | Review vom 2026-11-10: 35 Minuten am Stück ohne Aktivität des Publikums |
+| Inputs nur gesprochen | Konzept-Szenen und Schätzfragen in Demo R | Review vom 2026-11-10. Demo D bleibt eine reine Live-Demo des Facilitators (Entscheid Roland, nach kurzem Versuch als Mitmach-Teil) |
 | Korpus mit Serie «Dokumentation NCTS für Zollbeteiligte» | aktuelle BAZG-Dokumente | Die Serie ist online nicht mehr verfügbar |
 
 ## 12. Stand und offene Punkte (2026-11-10)
@@ -235,8 +235,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 - [x] RAG-Pipeline gelaufen, Zahlen in [demo-scripts.md](demo-scripts.md) eingetragen
 - [x] Review-Seite für die RAG-Fragen veröffentlicht (privates claude.ai-Artifact von Roland)
 
-- [x] Review vom 2026-11-10 (Branch `workshop-visuals`): Konzept-Szenen, Korpus-Szene, Schätzfragen, Demo D zum
-      Mitmachen, Korrekturen an den Blättern (04 löscht nicht mehr `target`, 00 ohne `check-setup`, App-Start vor der Pause)
+- [x] Review vom 2026-11-10 (Branch `workshop-visuals`): Konzept-Szenen, Korpus-Szene, Schätzfragen, Korrekturen an den Blättern (04 löscht nicht mehr `target`, 00 ohne `check-setup`, App-Start vor der Pause)
 
 - [x] 2026-11-10: beide Decks zu **einer** Präsentation vereint (`praesentation/`), eine Folie pro Übung mit Uhr,
       Folien deutsch und vereinfacht, BM25 und Vektor-Datenbank Schritt für Schritt, Messung als Punkte
@@ -246,7 +245,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 
 **Offen (Roland)**
 
-- [ ] Präsentation ganz durchgehen, Texte anpassen (Schlussfrage, Kernaussage 3 zum Chunking, Übungsfolien)
+- [ ] Präsentation ganz durchgehen, Texte anpassen (Kernaussage 3 zum Chunking, Übungsfolien)
 - [ ] Szene «Kontext»: schematische Breiten durch die `/context`-Werte aus dem Dry-Run ersetzen
 
 - [ ] RAG-Fragen auf der Review-Seite prüfen (noch keine Urteile erfasst). Danach: `questions.yaml`

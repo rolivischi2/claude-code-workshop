@@ -15,7 +15,7 @@ Prompts und Prüfung. Dort startet `z` die Uhr.
 | B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause | 0:45 |
 | C MCP | MCP · Übung 06 | 1:35 |
 | R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit | 1:55 |
-| D Skalieren | Skalieren · Demo D mitmachen | 2:15 |
+| D Skalieren | Skalieren, danach Live-Demo im eigenen Terminal | 2:15 |
 | ■ Schluss | Rückblick | 2:22 |
 
 Die Szenennummern in den Überschriften unten zählen innerhalb von Teil 1 (Konzept-Szenen) und Teil 2
@@ -145,14 +145,16 @@ rechts **nicht** «Beispieldaten» stehen.
 
 **Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
 
+**Form:** Reine Live-Demo. Du zeigst zuerst die Szene (rund 2 Minuten), wechselst dann auf dein Terminal
+und teilst den Bildschirm. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
+
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Balken «Hauptsession», wenig belegt | «Das ist eure Session. Jetzt soll jemand einen grossen Diff reviewen. Wenn die Hauptsession das selbst liest, ist der Diff danach für immer in eurem Kontext.» |
-| `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geben wir den Auftrag an einen Subagent. Der hat ein eigenes Kontextfenster und liest alles, was er braucht.» → **Jetzt machen alle mit:** Blatt `exercises/demo-d-reviewer`, drei Minuten. `/context` vorher notieren. |
-| `→` | **Schätzfrage:** Wie stark wächst der Hauptkontext? | Abstimmen, während die Subagents laufen. Auflösen. |
-| `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Schaut in euer `/context`: Der Unterschied ist klein. Und der Reviewer läuft auf Haiku, also günstiger. Lesen und Suchen delegieren ist die einfachste Art, Kontext und Kontingent zu schonen.» |
-| `→` | Repo fächert sich in zwei Worktrees auf | Am Beamer: zwei Terminals, `claude -w office-search` und `claude -w declaration-csv`. «Zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» Drittes Terminal: `git worktree list`. |
-| `→` | Merksatz | «Keine gegenseitigen Edits. Und das Zusammenführen ist normales Git: Pull Request, Review, Merge.» Nicht abwarten, bis die Sessions fertig sind. |
+| (Start) | Balken «Hauptsession», wenig belegt | «Das ist eine Session. Jetzt soll jemand einen grossen Diff reviewen. Liest die Hauptsession ihn selbst, steht der ganze Diff danach in ihrem Kontext.» |
+| `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geht der Auftrag an einen Subagent. Er hat ein eigenes Kontextfenster und liest alles, was er braucht.» |
+| `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Der Reviewer läuft auf Haiku, also günstiger. Ich zeige das gleich live mit `/context` vorher und nachher.» |
+| `→` | Repo fächert sich in zwei Worktrees auf | «Zweiter Teil: zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» |
+| `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» → **Jetzt ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. |
 
 **Häufige Fragen**
 
@@ -170,7 +172,8 @@ rechts **nicht** «Beispieldaten» stehen.
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | Landkarte, alle Teile grün, Schleife läuft | «Das ist die Karte vom Anfang. Der Unterschied: Jedes Teil habt ihr heute selbst in der Hand gehabt. Kontext mit CLAUDE.md und Skills. Steuerung mit Plan Mode, Permissions, Hooks und Rewind. Erweitern mit MCP. Und skalieren mit Subagents und Worktrees.» |
-| `→` | Schlussfrage | Frage stellen, drei bis vier Antworten sammeln. Dann: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`), Links im README. |
+
+Danach ohne Folienwechsel: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`), Links im README.
 
 **Häufige Fragen im Abschluss**
 
