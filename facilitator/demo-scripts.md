@@ -13,13 +13,13 @@ Vor jeder Demo: Terminal- bzw. Browser-Schrift gross, Benachrichtigungen aus.
 cd rag
 uv run fetch && uv run convert      # BAZG-PDFs laden und nach Markdown wandeln (rag/.cache/)
 uv run index --all && uv run eval   # alle Varianten indexieren und messen
-uv run export-viz                   # schreibt rag/viz/data.js (nicht committet: enthält BAZG-Textauszüge)
+uv run export-viz                   # schreibt praesentation/data.js (nicht committet: enthält BAZG-Textauszüge)
 ```
 
 `uv run record-agent` nur, wenn die Agent-Läufe neu aufgenommen werden sollen (kostet echte
 Nutzung, 4 kurze Läufe mit Sonnet). Die aufgenommenen Läufe liegen in `rag/.cache/agent-runs.json`.
 
-Dann `rag/viz/index.html` im Browser öffnen (funktioniert offline über `file://`).
+Dann `praesentation/index.html` im Browser öffnen (funktioniert offline über `file://`).
 Erscheint oben das Badge «Beispieldaten», fehlt `data.js`: `uv run export-viz` erneut.
 
 **Steuerung:** ←/→ Szene bzw. Animationsschritt, 1–9 springen, `q` Fragenauswahl, `r` Animation wiederholen.
@@ -92,7 +92,7 @@ und `--mode vector` im Terminal, dann `uv run eval`.
 git clone --branch solution/final . ../demo-d
 ```
 
-Auf dem Beamer läuft dazu Szene 5 «Skalieren» aus `facilitator/konzepte/` (Schätzfrage: Wie stark
+Auf dem Beamer läuft dazu Szene 5 «Skalieren» aus `praesentation/` (Schätzfrage: Wie stark
 wächst der Hauptkontext?).
 
 ### Teil 1 – Reviewer-Subagent (3'), alle machen mit

@@ -1,75 +1,80 @@
-# Visualisierung: Agentische Suche vs. RAG
+# Präsentation: Claude Code Workshop
 
-Eine statische Präsentationsseite für den Block «Agentische Suche vs. RAG». Sie erzählt das
-Experiment in neun Szenen und läuft offline direkt aus dem Dateisystem: kein Build, kein
+Eine statische Seite für den ganzen Nachmittag: Konzepte, eine Folie pro Übung, die Demo
+«Suche des Agenten vs. RAG» und der Rückblick, in der Reihenfolge des Ablaufs. Kein Build, kein
 Server, keine CDN, nur Systemschriften.
 
-| Szene | Inhalt |
-|-------|--------|
-| 1 Korpus | Jedes Dokument als Kachel (Breite nach Seitenzahl, Muster nach Sprache), dann die zwei Wege: Index bauen oder selbst suchen |
-| 2 Chunking | Ein Abschnitt wird geschnitten: feste Länge (Schnitte mitten im Wort, Überlappung) gegen Überschriftenpfad |
-| 3 BM25 | Drei Schritte mit echten Werten: Frage zerlegen (Füllwörter nach der Stoppwortliste in `store.py` durchgestrichen), Seltenheit je Suchbegriff (Anzahl Chunks im ganzen Index und Gewicht), Rangliste mit Scores. Dazu ein Kasten «Was ist BM25?» |
-| 4 Vektor-DB | Text → Embedding-Modell → Zahlen. Die Datenbank als Tabelle (eine Zeile pro Chunk mit den ersten 16 Werten des Embeddings), die Frage als weitere Zeile, Kosinus-Ähnlichkeit pro Zeile, Zeilen sortieren sich |
-| 5 Vektorsuche | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
-| 6 Hybrid | Beide Ranglisten, die Karten wandern in die RRF-Reihenfolge, jede mit ihren `1/(k+Rang)`-Anteilen |
-| 7 Agent | Aufgezeichneter Claude-Code-Lauf (Grep, Glob, Read) als Zeitleiste mit Turns und Kontext-Tokens |
-| 8 Messung | Jede Frage ein Punkt pro Suchverfahren (voll, halb, verfehlt), dann die Varianten als drei Karten. `d` zeigt die Detail-Diagramme mit Recall@k und MRR pro Kategorie |
-| 9 Fazit | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
+- **Lokal:** `index.html` öffnen (Doppelklick genügt, `file://` funktioniert, auch offline).
+- **Gehostet:** Vercel liefert genau diesen Ordner aus (`vercel.json` im Repo-Root).
 
-## Öffnen
+Ausgelegt für 1920×1080. `f` schaltet Vollbild.
 
-`index.html` im Browser öffnen (Doppelklick genügt, `file://` funktioniert). Für den Beamer
-auf 1920×1080 ausgelegt, funktioniert auch auf 1280×800. Mit `f` in den Vollbildmodus.
+## Aufbau
 
-Die Seite lädt zuerst `data.js` (erzeugt von der Pipeline mit `uv run export-viz`). Fehlt die
-Datei, lädt sie `data.sample.js` und zeigt unten rechts den Hinweis **Beispieldaten**. Die
-Beispieldaten sind erfunden und dienen nur der Entwicklung der Seite.
+| Abschnitt | Szenen |
+|-----------|--------|
+| ▶ Start | Ablauf · Überblick · Übung 00 |
+| A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 |
+| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause |
+| C MCP | MCP · Übung 06 |
+| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit |
+| D Skalieren | Skalieren · Demo D mitmachen |
+| ■ Schluss | Rückblick |
 
-Hinweis: Fehlt `data.js`, meldet der Browser in der Konsole einmal `ERR_FILE_NOT_FOUND`. Das ist
-erwartet und harmlos.
+Die Reihenfolge steht in `index.html` (`VIZ.SECTIONS`).
 
 ## Bedienung
 
 | Taste | Wirkung |
 |-------|---------|
-| `→`, Leertaste, Bild↓ | nächster Animationsschritt, danach nächste Szene (Presenter-Klicker funktionieren) |
+| `→`, Leertaste, Bild↓ | nächster Schritt, danach nächste Szene (Presenter-Klicker funktionieren) |
 | `←`, Bild↑ | Schritt zurück |
-| Shift + `←` / `→` | ganze Szene zurück oder vor |
-| `1` … `9` | direkt zur Szene |
-| `q` | Frage wählen (Showcase-Fragen zuerst, dann alle nach Kategorie) |
-| `r` | Animation der aktuellen Szene nochmals abspielen |
-| `f` | Vollbild ein/aus |
+| Shift + `→` / `←` | nächster / vorheriger Abschnitt |
+| `1` … `9` | Szene im aktuellen Abschnitt |
+| `o` | Übersicht aller Szenen |
+| `z` / `x` | Übungsfolien und Pause: Uhr starten oder pausieren / zurücksetzen |
+| `q` | Abschnitt Suche: Frage wählen |
 | `g` | Schätzfragen aus/ein |
-| `t` | Szene 2: feste Länge ↔ Überschriften |
-| `d` | Szene 8: Detail-Diagramme ein/aus |
-| `v` | Szene 8, Detail: nächste Variante |
+| `t` | Chunking: feste Länge ↔ Überschriften |
+| `d` / `v` | Messung: Detail-Diagramme / nächste Variante |
+| `r` | Animation der Szene wiederholen |
+| `f` | Vollbild |
 | `?` | Hilfe |
 
-Die aktuelle Szene und Frage stehen in der Adresse (`#s=3&q=q01`), ein Neuladen springt
-also an dieselbe Stelle. `prefers-reduced-motion` wird respektiert: dann gibt es keine
-Bewegung, nur Zustandswechsel.
+Die aktuelle Szene steht in der Adresse (`#s=bm25&q=S2`). Ein Link führt also direkt zu einer Folie.
+`prefers-reduced-motion` wird respektiert.
 
-## Schätzfragen
+**Schätzfragen:** Vor einem Schritt erscheint eine Frage ans Publikum (Handzeichen). `→` zeigt die
+Antwort, nochmals `→` fährt weiter. Im Abschnitt Suche wird die Antwort aus `data.js` berechnet.
 
-In den Szenen 3, 5, 7 und 8 erscheint vor der Auflösung eine Frage ans Publikum (Handzeichen):
-`→` zeigt die Frage, `→` löst auf, `→` fährt weiter. Die richtige Antwort wird **aus den Daten
-berechnet** (Rang des ersten Treffers, Turns des Agents, Recall der Varianten) und stimmt darum
-auch nach einem neuen `uv run export-viz`. Eine Szene definiert dafür `guess(ctx)` und liefert
-`{ before, question, options, correct, reveal }`. `g` schaltet alle Runden aus.
+## Übungsfolien
 
-Der Motor (`viz.js`, `style.css`) wird auch von `facilitator/konzepte/` geladen.
+Der Inhalt steht in `uebungen-daten.js`: Ziel, Aufgabe, Schritte, Prompts, Prüfung, Token-Tipp. Quelle ist
+das jeweilige Blatt unter `exercises/`. Prompts, Vorlagen und Prüfbefehle müssen wörtlich übereinstimmen:
+
+```bash
+node scripts/check-slides.mjs
+```
+
+Wer ein Übungsblatt ändert, passt die Folie an und lässt die Prüfung laufen (`verify-all.sh` tut das auch).
 
 ## Dateien
 
 | Datei | Inhalt |
 |-------|--------|
-| `index.html` | Gerüst, lädt Daten und Skripte |
-| `viz.js` | Zustand, Navigation, Tastatur, Fragenauswahl, Kernaussagen |
-| `scenes-retrieval.js` | Szenen 1–6 |
-| `scenes-results.js` | Szenen 7–9 |
-| `style.css` | Gestaltung |
-| `data.js` | echte Daten aus der Pipeline (nicht von Hand bearbeiten) |
-| `data.sample.js` | Beispieldaten im gleichen Format |
+| `index.html` | Gerüst, Reihenfolge der Abschnitte und Szenen |
+| `viz.js`, `style.css` | Motor (Navigation, Tastatur, Schätzfragen, Bausteine) und Gestaltung |
+| `scenes-konzepte.js`, `konzepte.css` | Konzept-Szenen: Überblick, Kontext, Leitplanken, MCP, Skalieren, Rückblick |
+| `scenes-uebungen.js`, `uebungen-daten.js` | Übungsfolien, Titelfolie mit Ablauf, Pause |
+| `scenes-retrieval.js`, `scenes-results.js` | Abschnitt Suche |
+| `data.js` | Daten des Suchexperiments, erzeugt mit `cd rag && uv run export-viz` (nicht von Hand bearbeiten) |
+| `data.sample.js` | erfundene Beispieldaten, werden geladen, wenn `data.js` fehlt (Badge «Beispieldaten») |
+
+`data.js` enthält kurze Textauszüge aus öffentlichen Publikationen des BAZG. Die Quellen stehen in
+`rag/sources.yaml`.
+
+Aussagen der Konzept-Szenen zu Reihenfolgen und Verhalten sind gegen die Doku von Claude Code geprüft
+(Stand 2026-11-10). Bei einem Update von Claude Code kurz gegenprüfen.
 
 ## Datenvertrag (`window.DATA`)
 

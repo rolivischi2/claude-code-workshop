@@ -588,3 +588,19 @@ kbd { border-width: 1px; background: var(--card); }
 .is-stop .tok-word { font-size: .78rem; padding: .05em .45em; margin-top: .12rem; }
 
 .rest-key { margin-left: .5rem; color: var(--hit); font-weight: 700; }
+
+/* ---------- Abschnitte oben, Szenen des Abschnitts darunter ---------- */
+.top { flex-wrap: nowrap; }
+.field { min-width: 0; padding-right: .9rem; }
+.subnav { display: flex; gap: .35rem; margin-top: .45rem; min-height: 1.5rem; flex-wrap: nowrap; overflow: hidden; }
+.sub { border: 1.5px solid var(--rule); background: var(--card); border-radius: 2rem; padding: .1rem .7rem .1rem .3rem; font-size: .72rem; font-weight: 600; white-space: nowrap; display: inline-flex; align-items: center; gap: .35rem; color: var(--ink-2); }
+.sub-no { display: inline-flex; align-items: center; justify-content: center; width: 1.15rem; height: 1.15rem; border-radius: 50%; background: var(--wash); font-size: .62rem; font-weight: 700; }
+.sub.done { background: var(--wash); }
+.sub.active { border-color: var(--accent-deep); color: var(--accent-deep); background: var(--accent-bg); }
+.sub.active .sub-no { background: var(--accent-deep); color: #fff; }
+.head { margin-top: .7rem; }
+.overview { width: min(84rem, 96vw); }
+.ov-list { flex-direction: row; gap: 1.2rem; padding-top: .6rem; }
+.ov-sec { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.ov-sec h3 { margin-top: 0; color: var(--accent-deep); }
+.ov-item { grid-template-columns: minmax(0, 1fr) auto; font-size: .8rem; padding: .3rem .5rem; }

@@ -1,5 +1,5 @@
 /* Konzept-Szenen für die Input-Teile des Nachmittags (Einstieg, A, B, C, D, Abschluss).
- * Läuft auf dem Motor aus rag/viz/viz.js. Keine Daten, alles Schema.
+ * Läuft auf dem Motor in viz.js. Keine Daten, alles Schema.
  * Aussagen zu Reihenfolgen und Verhalten sind gegen code.claude.com/docs geprüft (Stand 2026-11-10):
  * permissions, hooks, checkpointing, context-window, skills, sub-agents, worktrees, mcp. */
 'use strict';

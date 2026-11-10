@@ -1,7 +1,7 @@
 # RAG-Experiment: Agentic Search vs. Retrieval (BAZG-Transitdokumente)
 
 > Demo für die Moderation. Teilnehmende führen sie nicht selbst aus; gezeigt wird die
-> Visualisierung in `viz/` mit den hier gemessenen Daten.
+> Visualisierung im Abschnitt «Suche» der Präsentation (`../praesentation/`) mit den hier gemessenen Daten.
 
 ## Worum es geht
 
@@ -134,15 +134,20 @@ uv run eval --details          # welche Fragen daneben lagen
 uv run search "Fakturen in britischen Pfund" --mode bm25     # lexikalisch: kein Treffer
 uv run search "Fakturen in britischen Pfund" --mode vector   # semantisch: Treffer
 uv run record-agent            # echte Claude-Code-Läufe für die Showcase-Fragen (kostet Nutzung)
-uv run export-viz              # rag/viz/data.js für die Visualisierung
+uv run export-viz              # praesentation/data.js für die Visualisierung
 ```
 
-Danach `viz/index.html` im Browser öffnen (funktioniert offline über `file://`).
+Danach `../praesentation/index.html` im Browser öffnen (funktioniert offline über `file://`), Abschnitt «Suche».
 
 ## Urheberrecht und was nicht ins Repo gehört
 
-Die PDFs, das daraus erzeugte Markdown, die Indizes und `viz/data.js` enthalten Texte des BAZG.
-Sie werden lokal erzeugt und sind per `.gitignore` ausgeschlossen (`rag/.cache/`, `rag/.data/`,
-`rag/viz/data.js`). Im Repo liegen nur die Quellenliste mit Links und Prüfsummen, die Fragen und
-der Code. Ändert das BAZG ein PDF, meldet `uv run fetch` eine abweichende Prüfsumme;
+Die PDFs, das daraus erzeugte Markdown und die Indizes enthalten Texte des BAZG. Sie werden lokal
+erzeugt und sind per `.gitignore` ausgeschlossen (`rag/.cache/`, `rag/.data/`). Im Repo liegen die
+Quellenliste mit Links und Prüfsummen, die Fragen, der Code und `praesentation/data.js`.
+
+**`praesentation/data.js` ist seit dem 2026-11-10 bewusst im Repo** (Entscheid Roland), damit die
+gehostete Präsentation die echten Daten zeigt. Die Datei enthält kurze Auszüge (je rund 400 Zeichen)
+aus den öffentlichen BAZG-Publikationen, die in `sources.yaml` verlinkt sind.
+
+Ändert das BAZG ein PDF, meldet `uv run fetch` eine abweichende Prüfsumme;
 `uv run fetch --update-hashes` übernimmt die neue Fassung (Fragen danach neu prüfen).

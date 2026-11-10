@@ -1,6 +1,7 @@
-/* Agentische Suche vs. RAG – Präsentations-Visualisierung.
- * Kern: Zustand, Navigation, Tastatur, Fragenauswahl, gemeinsame Bausteine.
- * Die Szenen stehen in scenes-retrieval.js (1–4) und scenes-results.js (5–7).
+/* Claude Code Workshop – die Präsentation für den ganzen Nachmittag.
+ * Kern: Zustand, Navigation (Abschnitte und Szenen), Tastatur, Fragenauswahl, gemeinsame Bausteine.
+ * Szenen: scenes-konzepte.js, scenes-uebungen.js, scenes-retrieval.js, scenes-results.js.
+ * Reihenfolge und Abschnitte legt VIZ.SECTIONS in index.html fest.
  * Klassische Skripte (keine ES-Module), damit die Seite auch per file:// läuft.
  */
 'use strict';
@@ -23,7 +24,8 @@ VIZ.CATEGORY = {
 };
 VIZ.MODE = { bm25: 'BM25', vector: 'Vektor', hybrid: 'Hybrid' };
 VIZ.LANG = { de: 'Deutsch', fr: 'Französisch', it: 'Italienisch', en: 'Englisch' };
-VIZ.ORDER = ['korpus', 'chunking', 'bm25', 'vecdb', 'vector', 'hybrid', 'agent', 'messung', 'fazit'];
+/* Abschnitte: [{ id, label, scenes: [Szenen-IDs] }]. Wird in index.html gesetzt. */
+VIZ.SECTIONS = VIZ.SECTIONS || [{ id: 'r', label: 'Suche', scenes: ['korpus', 'chunking', 'bm25', 'vecdb', 'vector', 'hybrid', 'agent', 'messung', 'fazit'] }];
 VIZ.defs = VIZ.defs || {};
 
 /* ---------- kleine Helfer ---------- */
@@ -213,13 +215,22 @@ VIZ.boot = function (data, isSample) {
   ctx.rrfK = D.meta.rrf_k || 60;
   ctx.chunk = function (id) { return ctx.chunks[id] || null; };
 
-  VIZ.scenes = VIZ.ORDER.map(function (id) { return VIZ.defs[id]; }).filter(Boolean);
+  VIZ.scenes = [];
+  VIZ.SECTIONS.forEach(function (sec, si) {
+    sec.first = VIZ.scenes.length;
+    sec.scenes.forEach(function (id) {
+      var d = VIZ.defs[id];
+      if (!d) return;
+      d.section = si;
+      VIZ.scenes.push(d);
+    });
+    sec.count = VIZ.scenes.length - sec.first;
+  });
 
   var showcase = D.questions.filter(function (q) { return q.showcase; });
   S.qid = (showcase[0] || D.questions[0] || {}).id || null;
   VIZ.readHash();
 
-  document.getElementById('sample').hidden = !ctx.sample;
   VIZ.renderMeta();
   VIZ.buildFields();
   VIZ.renderFoot();
@@ -236,7 +247,7 @@ VIZ.boot = function (data, isSample) {
 VIZ.fail = function (msg) {
   var st = document.getElementById('stage');
   st.innerHTML = '';
-  st.appendChild(VIZ.ui.empty('Keine Daten', msg + ' Siehe README.md in rag/viz.'));
+  st.appendChild(VIZ.ui.empty('Keine Daten', msg + ' Siehe praesentation/README.md.'));
 };
 
 VIZ.question = function () {
@@ -245,39 +256,58 @@ VIZ.question = function () {
 };
 
 VIZ.readHash = function () {
-  var m = /s=(\d+)/.exec(location.hash), q = /q=([^&]+)/.exec(location.hash);
-  if (m) S.scene = Math.max(0, Math.min(VIZ.scenes.length - 1, +m[1] - 1));
+  var m = /s=([\w-]+)/.exec(location.hash), q = /q=([^&]+)/.exec(location.hash);
+  if (m) {
+    var idx = VIZ.scenes.findIndex(function (x) { return x.id === m[1]; });
+    if (idx < 0 && /^\d+$/.test(m[1])) idx = +m[1] - 1;
+    if (idx >= 0) S.scene = Math.min(VIZ.scenes.length - 1, idx);
+  }
   if (q) {
     var id = decodeURIComponent(q[1]);
     if (VIZ.data.questions.some(function (x) { return x.id === id; })) S.qid = id;
   }
 };
 VIZ.writeHash = function () {
-  try { history.replaceState(null, '', '#s=' + (S.scene + 1) + (S.qid ? '&q=' + encodeURIComponent(S.qid) : '')); } catch (e) { /* file:// ohne History */ }
+  try { history.replaceState(null, '', '#s=' + VIZ.scene().id + (S.qid && VIZ.scene().usesQuestion ? '&q=' + encodeURIComponent(S.qid) : '')); } catch (e) { /* file:// ohne History */ }
 };
 
 VIZ.renderMeta = function () {
-  var m = VIZ.data.meta, c = m.corpus || {};
-  var parts = [];
-  if (m.model) parts.push('Modell ' + String(m.model).split('/').pop());
-  if (m.chunking) parts.push('Chunking ' + (m.chunking === 'heading' ? 'nach Überschriften' : 'feste Länge'));
-  if (VIZ.data.questions.length) parts.push('k = ' + VIZ.ctx.k);
-  if (c.docs) parts.push(VIZ.num(c.docs) + ' Dokumente, ' + VIZ.num(c.chunks) + ' Chunks');
-  if (VIZ.META) parts = parts.concat(VIZ.META);
-  var el = document.getElementById('meta');
+  var el = document.getElementById('meta'), sc = VIZ.scene(), parts = [];
+  if (!el) return;
+  var isData = sc && sc.usesData;
+  if (isData) {
+    var m = VIZ.data.meta, c = m.corpus || {};
+    if (m.model) parts.push('Modell ' + String(m.model).split('/').pop());
+    if (m.chunking) parts.push('Chunking ' + (m.chunking === 'heading' ? 'nach Überschriften' : 'feste Länge'));
+    if (VIZ.data.questions.length) parts.push('k = ' + VIZ.ctx.k);
+    if (c.docs) parts.push(VIZ.num(c.docs) + ' Dokumente, ' + VIZ.num(c.chunks) + ' Chunks');
+  } else parts = (VIZ.META || []).slice();
   el.innerHTML = '';
   parts.forEach(function (p) { el.appendChild(VIZ.h('span', { text: p })); });
+  document.getElementById('sample').hidden = !(isData && VIZ.ctx.sample);
 };
 
+/* Obere Leiste: Abschnitte. Darunter die Szenen des aktiven Abschnitts. */
 VIZ.buildFields = function () {
   var nav = document.getElementById('fields');
   nav.innerHTML = '';
-  VIZ.scenes.forEach(function (sc, i) {
-    nav.appendChild(VIZ.h('button', { class: 'field', type: 'button', 'data-i': i, title: sc.title,
-      onclick: function () { VIZ.go(i); } },
-      VIZ.h('span', { class: 'field-no', text: String(i + 1) }),
-      VIZ.h('span', { class: 'field-label', text: sc.nav })));
+  VIZ.SECTIONS.forEach(function (sec, si) {
+    if (!sec.count) return;
+    nav.appendChild(VIZ.h('button', { class: 'field', type: 'button', 'data-sec': si, title: sec.label,
+      onclick: function () { VIZ.go(sec.first); } },
+      VIZ.h('span', { class: 'field-no', text: sec.key || String(si + 1) }),
+      VIZ.h('span', { class: 'field-label', text: sec.label })));
   });
+};
+VIZ.renderSubnav = function () {
+  var el = document.getElementById('subnav'), sec = VIZ.SECTIONS[VIZ.scene().section];
+  if (!el) return;
+  el.innerHTML = '';
+  for (var i = 0; i < sec.count; i++) (function (i) {
+    var sc = VIZ.scenes[sec.first + i];
+    el.appendChild(VIZ.h('button', { class: 'sub' + (sec.first + i === S.scene ? ' active' : '') + (sec.first + i < S.scene ? ' done' : ''), type: 'button',
+      onclick: function () { VIZ.go(sec.first + i); } }, VIZ.h('span', { class: 'sub-no', text: String(i + 1) }), sc.nav));
+  })(i);
 };
 
 /* ---------- Rendern und Beats ---------- */
@@ -305,11 +335,14 @@ VIZ.render = function (beat, animate, first) {
     chip.appendChild(VIZ.h('span', { class: 'qchip-text', text: ctx.q.text }));
     chip.appendChild(VIZ.h('kbd', { text: 'q' }));
   }
-  Array.prototype.forEach.call(document.querySelectorAll('.field'), function (f, i) {
-    f.classList.toggle('active', i === S.scene);
-    f.classList.toggle('done', i < S.scene);
-    f.setAttribute('aria-current', i === S.scene ? 'step' : 'false');
+  Array.prototype.forEach.call(document.querySelectorAll('.field'), function (f) {
+    var si = +f.getAttribute('data-sec');
+    f.classList.toggle('active', si === sc.section);
+    f.classList.toggle('done', si < sc.section);
+    f.setAttribute('aria-current', si === sc.section ? 'step' : 'false');
   });
+  VIZ.renderSubnav();
+  VIZ.renderMeta();
   sc.render(stage, ctx);
   var n = VIZ.beatCount();
   S.beat = Math.max(0, Math.min(n - 1, beat));
@@ -339,6 +372,7 @@ VIZ.apply = function (b, animate, from) {
   var sc = VIZ.scene();
   if (sc.step) sc.step(b, animate, from, VIZ.ctx);
   VIZ.renderBeats();
+  VIZ.renderFoot();
 };
 
 VIZ.renderBeats = function () {
@@ -370,6 +404,12 @@ VIZ.go = function (i, atEnd) {
   VIZ.render(atEnd ? 99 : 0, true);
 };
 VIZ.replay = function () { VIZ.render(S.beat, true); };
+/* Zum Anfang des nächsten (+1) oder vorherigen (-1) Abschnitts */
+VIZ.goSection = function (dir) {
+  var cur = VIZ.scene().section, sec = VIZ.SECTIONS[cur];
+  if (dir < 0 && S.scene > sec.first) { VIZ.go(sec.first); return; }
+  for (var i = cur + dir; i >= 0 && i < VIZ.SECTIONS.length; i += dir) if (VIZ.SECTIONS[i].count) { VIZ.go(VIZ.SECTIONS[i].first); return; }
+};
 
 /* ---------- Tipp-Runden: erst raten (Handzeichen), dann auflösen ----------
  * Eine Szene kann guess(ctx) definieren und eine Tipp-Runde (oder ein Array davon) liefern:
@@ -444,7 +484,7 @@ VIZ.hasGuess = function () { return VIZ.scenes.some(function (sc) { return !!sc.
 /* «3–6»: Nummern der Szenen, die mit der gewählten Frage arbeiten */
 VIZ.questionScenes = function () {
   var idx = [];
-  VIZ.scenes.forEach(function (sc, i) { if (sc.usesQuestion) idx.push(i + 1); });
+  VIZ.scenes.forEach(function (sc, i) { if (sc.usesQuestion) idx.push(i - VIZ.SECTIONS[sc.section].first + 1); });
   if (!idx.length) return '';
   return idx.length > 1 ? idx[0] + '–' + idx[idx.length - 1] : String(idx[0]);
 };
@@ -454,8 +494,8 @@ VIZ.renderFoot = function () {
   if (!el) return;
   var k = function (t) { return VIZ.h('kbd', { text: t }); };
   el.innerHTML = '';
-  VIZ._append(el, [k('←'), k('→'), ' Schritt ', k('1'), '–', k(String(VIZ.scenes.length)), ' Szene ']);
-  if (VIZ.questionScenes()) VIZ._append(el, [k('q'), ' Frage ']);
+  VIZ._append(el, [k('←'), k('→'), ' Schritt ', k('Shift'), '+', k('→'), ' Abschnitt ', k('1'), '–', k('9'), ' Szene im Abschnitt ', k('o'), ' Übersicht ']);
+  if (VIZ.scene().usesQuestion) VIZ._append(el, [k('q'), ' Frage ']);
   if (VIZ.hasGuess()) VIZ._append(el, [k('g'), ' Schätzfragen ']);
   VIZ._append(el, [k('r'), ' wiederholen ', k('f'), ' Vollbild ', k('?'), ' Hilfe']);
 };
@@ -474,13 +514,14 @@ VIZ.onKey = function (e) {
   if (VIZ._guess && !/^(Arrow|Page|Home$|End$|[1-9]$| $|f$)/.test(k)) return; /* offene Tipp-Runde: nur Navigation */
   if (sc && sc.keys && sc.keys[k]) { sc.keys[k](VIZ.ctx); e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') {
-    if (e.shiftKey && k === 'ArrowRight') VIZ.go(Math.min(VIZ.scenes.length - 1, S.scene + 1)); else VIZ.next();
+    if (e.shiftKey && k === 'ArrowRight') VIZ.goSection(1); else VIZ.next();
   } else if (k === 'ArrowLeft' || k === 'PageUp') {
-    if (e.shiftKey && k === 'ArrowLeft') VIZ.go(Math.max(0, S.scene - 1)); else VIZ.prev();
-  } else if (/^[1-9]$/.test(k) && +k <= VIZ.scenes.length) VIZ.go(+k - 1);
+    if (e.shiftKey && k === 'ArrowLeft') VIZ.goSection(-1); else VIZ.prev();
+  } else if (/^[1-9]$/.test(k)) { var sec = VIZ.SECTIONS[VIZ.scene().section]; if (+k <= sec.count) VIZ.go(sec.first + +k - 1); }
+  else if (k === 'o') VIZ.openOverview();
   else if (k === 'Home') VIZ.go(0);
   else if (k === 'End') VIZ.go(VIZ.scenes.length - 1);
-  else if (k === 'q' && VIZ.questionScenes()) VIZ.openPicker();
+  else if (k === 'q' && VIZ.scene().usesQuestion) VIZ.openPicker();
   else if (k === 'r') VIZ.replay();
   else if (k === 'f') VIZ.fullscreen();
   else if (k === '?' || k === 'h') VIZ.openHelp();
@@ -555,9 +596,10 @@ VIZ.pickerFocus = function () {
 };
 VIZ.pickerKey = function (e) {
   var p = VIZ._pick, k = e.key;
-  if (k === 'Escape' || k === 'q') VIZ.closePicker();
+  if (k === 'Escape' || k === 'q' || (k === 'o' && p.overview)) VIZ.closePicker();
   else if (k === 'ArrowDown' || k === 'ArrowRight') { p.i = Math.min(p.items.length - 1, p.i + 1); VIZ.pickerFocus(); }
   else if (k === 'ArrowUp' || k === 'ArrowLeft') { p.i = Math.max(0, p.i - 1); VIZ.pickerFocus(); }
+  else if ((k === 'Enter' || k === ' ') && p.overview) { var t = +p.items[p.i].getAttribute('data-id'); VIZ.closePicker(); VIZ.go(t); }
   else if (k === 'Enter' || k === ' ') VIZ.pick(p.items[p.i].getAttribute('data-id'));
   else return;
   e.preventDefault();
@@ -578,6 +620,33 @@ VIZ.closePicker = function () {
   ov.innerHTML = '';
 };
 
+/* ---------- Übersicht aller Szenen ---------- */
+VIZ.openOverview = function () {
+  var ov = document.getElementById('picker');
+  ov.innerHTML = '';
+  var box = VIZ.h('div', { class: 'picker overview', role: 'dialog', 'aria-label': 'Übersicht' });
+  box.appendChild(VIZ.h('div', { class: 'picker-head' }, VIZ.h('h2', { text: 'Übersicht' }),
+    VIZ.h('span', { class: 'picker-hint' }, VIZ.h('kbd', { text: '↑' }), VIZ.h('kbd', { text: '↓' }), ' wählen ', VIZ.h('kbd', { text: 'Enter' }), ' öffnen ', VIZ.h('kbd', { text: 'Esc' }), ' schliessen')));
+  var list = VIZ.h('div', { class: 'picker-list ov-list' }), items = [];
+  VIZ.SECTIONS.forEach(function (sec) {
+    if (!sec.count) return;
+    var col = VIZ.h('div', { class: 'ov-sec' }, VIZ.h('h3', { text: (sec.key ? sec.key + ' · ' : '') + sec.label }));
+    for (var i = 0; i < sec.count; i++) (function (idx) {
+      var sc = VIZ.scenes[idx];
+      var it = VIZ.h('button', { class: 'pick ov-item' + (idx === S.scene ? ' current' : ''), type: 'button', 'data-id': String(idx),
+        onclick: function () { VIZ.closePicker(); VIZ.go(idx); } }, VIZ.h('span', { class: 'pick-text', text: sc.nav }), VIZ.h('span', { class: 'pick-id', text: sc.minutes ? sc.minutes + ' Min' : '' }));
+      items.push(it); col.appendChild(it);
+    })(sec.first + i);
+    list.appendChild(col);
+  });
+  box.appendChild(list);
+  ov.appendChild(box);
+  ov.onclick = function (e) { if (e.target === ov) VIZ.closePicker(); };
+  ov.hidden = false;
+  VIZ._pick = { items: items, i: S.scene, overview: true };
+  VIZ.pickerFocus();
+};
+
 /* ---------- Hilfe ---------- */
 VIZ.openHelp = function () {
   var ov = document.getElementById('help');
@@ -585,12 +654,13 @@ VIZ.openHelp = function () {
   var rows = [
     ['→  Leertaste  Bild↓', 'nächster Schritt, danach nächste Szene'],
     ['←  Bild↑', 'Schritt zurück'],
-    ['Shift + ← →', 'ganze Szene vor oder zurück'],
-    ['1 … ' + VIZ.scenes.length, 'direkt zur Szene'],
+    ['Shift + ← →', 'zum nächsten oder vorherigen Abschnitt'],
+    ['1 … 9', 'Szene im aktuellen Abschnitt'],
+    ['o', 'Übersicht aller Szenen'],
     ['r', 'Animation der Szene wiederholen'],
     ['f', 'Vollbild ein/aus']
   ];
-  if (VIZ.questionScenes()) rows.splice(4, 0, ['q', 'Frage wählen (Szenen ' + VIZ.questionScenes() + ')']);
+  if (VIZ.questionScenes()) rows.splice(5, 0, ['q', 'Frage wählen (Abschnitt Suche, Szenen ' + VIZ.questionScenes() + ')']);
   if (VIZ.hasGuess()) rows.push(['g', 'Schätzfragen aus/ein']);
   VIZ.scenes.forEach(function (sc) { (sc.help || []).forEach(function (r) { rows.push(r); }); });
   rows.push(['?', 'diese Hilfe']);

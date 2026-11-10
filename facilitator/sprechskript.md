@@ -4,18 +4,33 @@ Zum Proben. Für jede Szene: Ziel, Zeit, dann pro Tastendruck **was erscheint** 
 der Übergang und die Fragen, die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage,
 keine Texte zum Ablesen. Am Schluss steht ein Glossar mit Definitionen in einem Satz.
 
-| Deck | Datei | Wann |
-|------|-------|------|
-| Konzepte (6 Szenen) | `facilitator/konzepte/index.html` | Inputs um 0:00, 0:10, 0:45, 1:35, 2:15, 2:22 |
-| Suche des Agenten vs. RAG (9 Szenen) | `rag/viz/index.html` | Demo R, 1:55–2:15 |
+Alles läuft in **einer** Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
+Sie folgt dem Ablauf des Nachmittags. Zu jeder Übung gibt es eine eigene Folie mit Aufgabe, Schritten,
+Prompts und Prüfung. Dort startet `z` die Uhr.
 
-**Tasten in beiden Decks:** `→` nächster Schritt · `←` zurück · Zahl = Szene · `f` Vollbild · `r` Animation nochmals ·
-`g` Schätzfragen aus/ein · `?` Hilfe. Im RAG-Deck zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Messung: Detail-Diagramme).
+| Abschnitt | Szenen | Wann |
+|-----------|--------|------|
+| ▶ Start | Ablauf · Überblick · Übung 00 | 0:00 |
+| A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 | 0:10 |
+| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause | 0:45 |
+| C MCP | MCP · Übung 06 | 1:35 |
+| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit | 1:55 |
+| D Skalieren | Skalieren · Demo D mitmachen | 2:15 |
+| ■ Schluss | Rückblick | 2:22 |
+
+Die Szenennummern in den Überschriften unten zählen innerhalb von Teil 1 (Konzept-Szenen) und Teil 2
+(Abschnitt Suche). In der Präsentation springst du mit `o` (Übersicht) oder Shift+`→` zum Abschnitt.
+
+**Übungsfolien:** Beim Start einer Übung die Folie öffnen, mit `→` Aufgabe, Schritte und Prompts zeigen,
+kurz vorlesen, was das Ziel ist, dann `z` für die Uhr. Die Folie bleibt während der Übung stehen.
+
+**Tasten:** `→` nächster Schritt · `←` zurück · Shift+`→` nächster Abschnitt · Zahl = Szene im Abschnitt · `o` Übersicht · `f` Vollbild · `r` Animation nochmals ·
+`g` Schätzfragen aus/ein · `?` Hilfe. Im Abschnitt Suche zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Messung: Detail-Diagramme).
 
 **Schätzfrage:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` zeigt die Antwort,
 `→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch lag, sondern gleich die Erklärung zeigen.
 
-**Vor dem Start:** Beide Seiten in zwei Tabs offen, Vollbild, Benachrichtigungen aus. Im RAG-Deck darf unten
+**Vor dem Start:** Seite offen, Vollbild, Benachrichtigungen aus. Im Abschnitt Suche darf unten
 rechts **nicht** «Beispieldaten» stehen.
 
 ---
@@ -178,7 +193,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | **S2** | Welche Währungsangabe gilt für Fakturen in britischen Pfund? | Synonym: Das Dokument sagt «GBP» und «Währungscode». BM25 findet nichts, Vektor Rang 1 |
 | **E1** | Was bedeutet die Meldung NT044? | Bezeichner: BM25 Rang 1, Vektor nicht in den Top 10, Hybrid Rang 2 |
 | **C3** | Wer muss das Zollformular für Militärtransporte ausfüllen …? | Sprachwechsel: Antwort nur im italienischen Dokument. BM25 nichts, Vektor Rang 1 |
-| **M3** | Was ändert sich mit NCTS Phase 5 beim Layout … und bei der Tarifnummer? | Zwei Dokumente: Keine Suche bringt beide in die Top 5, der Agent findet beide |
+| **M3** | Was ändert sich mit NCTS Phase 5 beim Layout … und bei der Tarifnummer? | Zwei Dokumente: BM25 findet beide in den Top 5, Vektor und Hybrid nur eines, der Agent findet beide |
 
 ## Szene 1 · Korpus (0–1½')
 

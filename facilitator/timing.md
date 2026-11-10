@@ -11,14 +11,14 @@ ohne Erklärung funktionieren.
 | 0:45 | 40 | **B – Steuerung** | Plan Mode, Permissions, Hooks, `/rewind` | 5' Input, 3 Übungen | 03 (15'), 04 (15'), 05 (5') |
 | 1:25 | 10 | Pause (App für 06 läuft bereits, gestartet am Ende von 05) | | | |
 | 1:35 | 20 | **C – Browser über MCP** | MCP-Prinzip, Playwright-MCP, Claude prüft sich selbst | 3' Input, 1 Übung | 06 (17') |
-| 1:55 | 20 | **R – Agentic Search vs. RAG** | Visualisierung `rag/viz/`, echte Zahlen auf der NCTS-Dokumentation | Demo | – |
+| 1:55 | 20 | **R – Agentic Search vs. RAG** | Visualisierung `praesentation/`, echte Zahlen auf der NCTS-Dokumentation | Demo | – |
 | 2:15 | 7 | **D – Skalieren** | Reviewer-Subagent (alle machen mit, 3'), zwei Worktree-Sessions parallel | Mitmach-Demo | [demo-d-reviewer](../exercises/demo-d-reviewer/README.md) |
 | 2:22 | 8 | Abschluss | Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln, nächste Schritte | Input + Diskussion | – |
 | 2:30 | | Ende | | | |
 
 ## Bilder zu den Inputs
 
-Die Inputs werden nicht länger. Die Szenen aus `facilitator/konzepte/` ersetzen Erklärzeit:
+Die Inputs werden nicht länger. Die Szenen aus `praesentation/` ersetzen Erklärzeit:
 
 | Zeit | Szene | Schätzfrage (Handzeichen) |
 |------|-------|--------------------------|
@@ -26,7 +26,7 @@ Die Inputs werden nicht länger. Die Szenen aus `facilitator/konzepte/` ersetzen
 | 0:10 | 2 Kontext | Startbelegung aus Übung 00 |
 | 0:45 | 3 Leitplanken | allow im Projekt gegen deny beim User |
 | 1:35 | 4 MCP | – |
-| 1:55 | `rag/viz/` (9 Szenen) | BM25, Vektor, Turns des Agents, grösseres Modell |
+| 1:55 | `praesentation/` (9 Szenen) | BM25, Vektor, Turns des Agents, grösseres Modell |
 | 2:15 | 5 Skalieren | Wie stark wächst der Hauptkontext? |
 | 2:22 | 6 Rückblick | Schlussfrage |
 

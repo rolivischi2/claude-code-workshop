@@ -16,7 +16,7 @@ function plainAnswer(md) {
   function perBeat(run) { return Math.max(1, Math.ceil(((run && run.steps) || []).length / 10)); }
 
   VIZ.defs.agent = {
-    id: 'agent', nav: 'Agent', usesQuestion: true, title: 'Der Agent sucht selbst',
+    id: 'agent', usesData: true, nav: 'Agent', usesQuestion: true, title: 'Der Agent sucht selbst',
     lead: 'Aufzeichnung eines echten Laufs von Claude Code mit Grep, Glob und Read auf den Korpus-Dateien. Kein Index, keine Embeddings, dafür mehrere Schritte.',
     beats: function (ctx) {
       var run = runFor(ctx);
@@ -143,7 +143,7 @@ function plainAnswer(md) {
   VIZ.variantLabel = variantLabel;
 
   VIZ.defs.score = {
-    id: 'score', nav: 'Messung', title: 'Messung im Detail',
+    id: 'score', usesData: true, nav: 'Messung', title: 'Messung im Detail',
     lead: function (ctx) {
       var k = (ctx.data.eval && ctx.data.eval.k) || ctx.k;
       return 'Recall@' + k + ': Steht das erwartete Dokument in den Top ' + k + '? MRR: Auf welchem Rang steht der erste Treffer?';
@@ -283,7 +283,7 @@ function plainAnswer(md) {
     return max > 0 ? rows.filter(function (r) { return r.loss > max - 0.005; }) : [];
   }
   VIZ.defs.messung = {
-    id: 'messung', nav: 'Messung', title: 'Messung: ein Punkt pro Frage',
+    id: 'messung', usesData: true, nav: 'Messung', title: 'Messung: ein Punkt pro Frage',
     lead: function (ctx) { return 'Voller Punkt: Das erwartete Dokument steht in den Top ' + ctx.k + '. Halber Punkt: nur eines von zwei erwarteten Dokumenten. Kreuz: nicht gefunden.'; },
     beats: 4,
     help: [['d', 'Messung: Detail-Diagramme (Recall und MRR pro Kategorie) ein/aus']],
@@ -378,7 +378,7 @@ function plainAnswer(md) {
 
   /* ===================== 8 Fazit ===================== */
   VIZ.defs.fazit = {
-    id: 'fazit', nav: 'Fazit', title: 'Fazit',
+    id: 'fazit', usesData: true, nav: 'Fazit', title: 'Fazit',
     lead: '',
     beats: function () { return VIZ.MESSAGES.length; },
     render: function (stage) {

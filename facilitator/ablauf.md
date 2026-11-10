@@ -36,9 +36,9 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 **Am Vortag**
 
-- [ ] RAG-Pipeline laufen lassen und `rag/viz/index.html` einmal komplett durchklicken (siehe demo-scripts.md, Demo R).
+- [ ] RAG-Pipeline laufen lassen und `praesentation/index.html` einmal komplett durchklicken (siehe demo-scripts.md, Demo R).
 - [ ] Demo-Klon für D: `git clone --branch solution/final . ../demo-d`, darin `scripts/setup.sh`.
-- [ ] Plan B auf USB-Stick: gepacktes Repo inkl. `node_modules`, `rag/.cache/` und `rag/viz/data.js`.
+- [ ] Plan B auf USB-Stick: gepacktes Repo inkl. `node_modules`, `rag/.cache/` und `praesentation/data.js`.
 
 **Am Morgen**
 
@@ -52,7 +52,7 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Konzeptlandkarte (`facilitator/konzepte/`, Szene 1): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
+| 0–5 | Konzeptlandkarte (`praesentation/`, Szene 1): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
 | 5–10 | Alle: `/status`, `/model sonnet`, `/usage`, `/context`. Wer rot ist: Nachbar oder Devcontainer, nicht jetzt debuggen. |
 
 ### A – Kontext und Skills (0:10–0:45)

@@ -9,7 +9,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Blöcke im Detail, Vorbereitungs-Checkliste | [ablauf.md](ablauf.md) |
 | Exakte Abläufe der Demos R und D | [demo-scripts.md](demo-scripts.md) |
 | Sprechskript zum Proben: beide Decks Schritt für Schritt, häufige Fragen, Glossar | [sprechskript.md](sprechskript.md) |
-| Animierte Schemata für die Inputs | [konzepte/README.md](konzepte/README.md) |
+| Animierte Schemata für die Inputs | [../praesentation/README.md](../praesentation/README.md) |
 | Präparierte Fehler, Seed-Daten, Rezepte | [seeded-issues.md](seeded-issues.md) |
 | Plan B für Technik, Netz, Abo | [fallback.md](fallback.md), [troubleshooting.md](troubleshooting.md) |
 | Für Teilnehmende | [README.md](../README.md), [SETUP.md](../SETUP.md), [.claude/README.md](../.claude/README.md) |
@@ -51,14 +51,14 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | 0:45 | 40 | **B – Steuerung** | 5' Input, Hands-on | 03 (15'), 04 (15'), 05 (5') |
 | 1:25 | 10 | Pause (App für 06 läuft schon: letzter Schritt von 05) | | |
 | 1:35 | 20 | **C – Browser über MCP** | 3' Input, Hands-on | 06 (17') |
-| 1:55 | 20 | **R – Agentic Search vs. RAG** auf der NCTS-Doku | Demo | `rag/viz/` |
+| 1:55 | 20 | **R – Agentic Search vs. RAG** auf der NCTS-Doku | Demo | `praesentation/` |
 | 2:15 | 7 | **D – Skalieren**: Subagent (alle machen mit) + zwei Worktree-Sessions | Mitmach-Demo | `exercises/demo-d-reviewer`, `solution/final` |
 | 2:22 | 8 | Abschluss: Szene «Rückblick», `/model`, `/effort`, Teamregeln, nächste Schritte | Input + Diskussion | |
 
 Kürzungsreserve in dieser Reihenfolge: 05 als Demo → 02 Skill aus `solution/02` übernehmen →
 R ohne Schätzfragen (`g`) und ohne Chunking-Szene → D nur am Beamer → 03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
 
-Zu jedem Input gibt es eine animierte Szene in `facilitator/konzepte/` (Überblick, Kontext, Leitplanken, MCP,
+Zu jedem Input gibt es eine animierte Szene in `praesentation/` (Überblick, Kontext, Leitplanken, MCP,
 Skalieren, Rückblick). Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
 **Schätzfragen** (erst per Handzeichen raten, dann auflösen) in den Konzept-Szenen und in Demo R.
 
@@ -170,7 +170,7 @@ disjunkt sind · das grössere Modell ist beim Sprachwechsel schlechter (0.50 st
 Korpus messen · Agentic Search beantwortet alle 4 Showcase-Fragen in 3–4 Turns (21–36k Tokens) ·
 Retrieval-Ergebnisse sind fremde Inhalte.
 
-**Visualisierung** `rag/viz/index.html` (statisch, offline über `file://`, lädt `data.js`,
+**Visualisierung** `praesentation/index.html` (statisch, offline über `file://`, lädt `data.js`,
 sonst `data.sample.js` mit Badge «Beispieldaten»):
 
 | Szene | Inhalt |
@@ -208,12 +208,13 @@ README.md, SETUP.md          für Teilnehmende
 app/backend/, app/frontend/  Übungs-App
 exercises/00–06/             Übungsblätter (+ Vorlage in 04), demo-d-reviewer/ (Mitmach-Teil von Demo D)
 scripts/                     setup, check-setup, reset-exercise (.sh/.ps1), verify-all.sh
-facilitator/                 dieses Dokument + Detaildokumente (siehe oben), konzepte/ (animierte Input-Szenen)
+facilitator/                 dieses Dokument + Detaildokumente (siehe oben), sprechskript.md
+praesentation/               die Präsentation für den ganzen Nachmittag (statische Seite, auf Vercel gehostet)
 rag/                         sources.yaml · indexer/ (fetch, pdf, chunking, store, search, embeddings)
-                             eval/ (questions.yaml, evaluate, record_agent, export_viz) · mcp_server/ · viz/
+                             eval/ (questions.yaml, evaluate, record_agent, export_viz) · mcp_server/
 ```
 
-Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `rag/viz/data.js` (BAZG-Textauszüge), `.env.local`, `.claude/settings.local.json`.
+Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` (BAZG-Textauszüge), `.env.local`, `.claude/settings.local.json`.
 
 ## 11. Abweichungen vom ursprünglichen Plan
 

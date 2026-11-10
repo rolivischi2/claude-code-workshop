@@ -27,6 +27,9 @@ fi
 [ ${#REFS[@]} -gt 0 ] || { echo "No start/* or solution/* refs found."; exit 1; }
 [ -d app/frontend/node_modules ] || { echo "Run scripts/setup.sh first (node_modules missing)."; exit 1; }
 
+# Exercise slides of the presentation must quote the exercise sheets verbatim (working copy only).
+if [ -f scripts/check-slides.mjs ]; then node scripts/check-slides.mjs || exit 1; fi
+
 WORK="$(mktemp -d "${TMPDIR:-/tmp}/verify-all.XXXXXX")"
 trap 'git worktree prune; rm -rf "$WORK"' EXIT
 MAIN_LOCK="$(git hash-object app/frontend/package-lock.json)"

@@ -50,7 +50,7 @@
 
   /* ===================== 1 Korpus ===================== */
   VIZ.defs.korpus = {
-    id: 'korpus', nav: 'Korpus', title: 'Der Korpus: echte Zolldokumentation',
+    id: 'korpus', usesData: true, nav: 'Korpus', title: 'Der Korpus: echte Zolldokumentation',
     lead: 'Eine Kachel pro Dokument. Je breiter, desto mehr Seiten. Jede Frage dieses Experiments lässt sich daraus beantworten.',
     beats: 3,
     render: function (stage, ctx) {
@@ -94,7 +94,7 @@
 
   /* ===================== 2 Chunking ===================== */
   VIZ.defs.chunking = {
-    id: 'chunking', nav: 'Chunking', title: 'Chunking: den Text zerlegen',
+    id: 'chunking', usesData: true, nav: 'Chunking', title: 'Chunking: den Text zerlegen',
     lead: 'Ein Abschnitt aus dem Korpus, zwei Schnittarten. Die Suche liefert immer ganze Chunks zurück, nie einzelne Sätze.',
     beats: 3,
     render: function (stage, ctx) {
@@ -267,7 +267,7 @@
      3 Chunks bewerten (Rangliste mit Scores aus SQLite FTS5). */
   function idfWeight(df, N) { return Math.log(1 + (N - df + 0.5) / (df + 0.5)); }
   VIZ.defs.bm25 = {
-    id: 'bm25', nav: 'BM25', usesQuestion: true, title: 'BM25: die Stichwortsuche',
+    id: 'bm25', usesData: true, nav: 'BM25', usesQuestion: true, title: 'BM25: die Stichwortsuche',
     lead: 'BM25 sucht die Wörter der Frage wörtlich in den Chunks. Seltene Wörter zählen mehr als häufige. Die Bedeutung der Wörter spielt keine Rolle.',
     beats: 4,
     guess: function (ctx) {
@@ -355,7 +355,7 @@
     return '[' + v.slice(0, n).map(function (x) { return (x >= 0 ? ' ' : '') + x.toFixed(2); }).join(', ') + ', …]';
   }
   VIZ.defs.vecdb = {
-    id: 'vecdb', nav: 'Vektor-DB', usesQuestion: true, title: 'Vektor-Datenbank: Text als Zahlen gespeichert',
+    id: 'vecdb', usesData: true, nav: 'Vektor-DB', usesQuestion: true, title: 'Vektor-Datenbank: Text als Zahlen gespeichert',
     lead: function (ctx) {
       return 'Ein Embedding-Modell berechnet aus einem Text eine Liste von ' + (ctx.data.meta.dims || 384) + ' Zahlen. Texte mit ähnlicher Bedeutung erhalten ähnliche Zahlen. Die Datenbank speichert pro Chunk eine solche Liste.';
     },
@@ -428,7 +428,7 @@
 
   /* ===================== 5 Vektor ===================== */
   VIZ.defs.vector = {
-    id: 'vector', nav: 'Vektorsuche', usesQuestion: true, title: 'Vektorsuche: die nächsten Nachbarn',
+    id: 'vector', usesData: true, nav: 'Vektorsuche', usesQuestion: true, title: 'Vektorsuche: die nächsten Nachbarn',
     lead: 'Dieselbe Tabelle als Karte. Jede Zeile ist ein Punkt. Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die Suche liefert die Punkte, die der Frage am nächsten sind.',
     beats: 4,
     guess: function (ctx) {
@@ -601,7 +601,7 @@
 
   /* ===================== 4 Hybrid / RRF ===================== */
   VIZ.defs.hybrid = {
-    id: 'hybrid', nav: 'Hybrid', usesQuestion: true, title: 'Hybrid: zwei Ranglisten zusammenführen',
+    id: 'hybrid', usesData: true, nav: 'Hybrid', usesQuestion: true, title: 'Hybrid: zwei Ranglisten zusammenführen',
     lead: function (ctx) { return 'Reciprocal Rank Fusion (RRF) wertet nur die Ränge aus. Ein Chunk erhält aus jeder Liste 1/(' + ctx.rrfK + ' + Rang). Die Scores selbst zählen nicht. So lassen sich zwei verschiedene Verfahren kombinieren.'; },
     beats: 3,
     render: function (stage, ctx) {

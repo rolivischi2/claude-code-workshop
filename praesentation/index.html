@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="de-CH">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Claude Code Workshop</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="konzepte.css">
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top-wrap">
+    <div class="top">
+      <nav class="fields" id="fields" aria-label="Abschnitte"></nav>
+      <button class="qchip" id="qchip" type="button" title="Frage wählen (q)"></button>
+    </div>
+    <nav class="subnav" id="subnav" aria-label="Szenen des Abschnitts"></nav>
+  </header>
+  <section class="head" id="head">
+    <h1 id="title"></h1>
+    <p class="lead" id="lead"></p>
+    <div class="beats" id="beats" aria-hidden="true"></div>
+  </section>
+  <main class="stage" id="stage"></main>
+  <footer class="foot">
+    <span class="keys" id="keys"></span>
+    <span class="meta" id="meta"></span>
+    <span class="badge-sample" id="sample" hidden>Beispieldaten</span>
+  </footer>
+</div>
+<div class="overlay" id="picker" hidden></div>
+<div class="overlay" id="help" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<!-- Daten des Suchexperiments: data.js (uv run export-viz). Fehlt sie, wird data.sample.js geladen. -->
+<script src="data.js"></script>
+<script src="viz.js"></script>
+<script src="uebungen-daten.js"></script>
+<script src="scenes-konzepte.js"></script>
+<script src="scenes-uebungen.js"></script>
+<script src="scenes-retrieval.js"></script>
+<script src="scenes-results.js"></script>
+<script>
+  (function () {
+    /* Der ganze Nachmittag in der Reihenfolge des Ablaufs. */
+    VIZ.SECTIONS = [
+      { id: 'start', key: '▶', label: 'Start', scenes: ['titel', 'karte', 'ue00'] },
+      { id: 'a', key: 'A', label: 'Kontext', scenes: ['kontext', 'ue01a', 'ue01b', 'ue02'] },
+      { id: 'b', key: 'B', label: 'Steuerung', scenes: ['leitplanken', 'ue03', 'ue04a', 'ue04b', 'ue05', 'pause'] },
+      { id: 'c', key: 'C', label: 'MCP', scenes: ['mcp', 'ue06'] },
+      { id: 'r', key: 'R', label: 'Suche', scenes: ['korpus', 'chunking', 'bm25', 'vecdb', 'vector', 'hybrid', 'agent', 'messung', 'fazit'] },
+      { id: 'd', key: 'D', label: 'Skalieren', scenes: ['skalieren', 'demod'] },
+      { id: 'ende', key: '■', label: 'Schluss', scenes: ['rueckblick'] }
+    ];
+    VIZ.META = ['Claude Code Workshop'];
+    if (window.DATA) { VIZ.boot(window.DATA, false); return; }
+    var s = document.createElement('script');
+    s.src = 'data.sample.js';
+    s.onload = function () { VIZ.boot(window.DATA, true); };
+    s.onerror = function () { VIZ.boot({}, false); };
+    document.head.appendChild(s);
+  })();
+</script>
+</body>
+</html>
