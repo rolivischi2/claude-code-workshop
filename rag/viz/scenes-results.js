@@ -126,7 +126,7 @@ function plainAnswer(md) {
   }
   function vsRow(label, a, b) { return h('tr', {}, h('th', { text: label }), h('td', { text: a }), h('td', { text: b })); }
 
-  /* ===================== 6 Messung ===================== */
+  /* ===================== 7 Messung, Detail (Taste d) ===================== */
   function variants(ctx) {
     var E = ctx.data.eval;
     if (!E || !E.rows || !E.rows.length) return [];
@@ -149,31 +149,14 @@ function plainAnswer(md) {
       return 'Recall@' + k + ': Ist das erwartete Dokument unter den Top ' + k + '? MRR: Wie weit oben steht der erste Treffer?';
     },
     beats: function (ctx) { return Math.max(1, variants(ctx).length); },
-    help: [['v', 'Messung: nächste Variante']],
-    /* Tipp vor der ersten Variante, die bei gleichem Chunking nur das Embedding-Modell wechselt */
-    guess: function (ctx) {
-      var vs = variants(ctx), E = ctx.data.eval, cat = 'cross-lingual';
-      function rec(v) {
-        var r = E.rows.filter(function (x) { return x.variant === v && x.mode === 'vector' && x.category === cat; })[0];
-        return r ? r.recall : null;
-      }
-      for (var i = 1; i < vs.length; i++) {
-        var a = String(vs[i - 1]).split('+'), b = String(vs[i]).split('+');
-        var ra = rec(vs[i - 1]), rb = rec(vs[i]);
-        if (a[0] !== b[0] || a[1] === b[1] || ra === null || rb === null) continue;
-        var d = rb - ra;
-        return { before: i, question: 'Anderes Embedding-Modell: «' + b[1] + '» statt «' + a[1] + '». Wie schneidet die Vektorsuche bei Fragen in einer anderen Sprache ab?',
-          options: ['Besser', 'Gleich', 'Schlechter'], correct: Math.abs(d) < 0.005 ? 1 : d > 0 ? 0 : 2,
-          reveal: 'Recall@' + (E.k || ctx.k) + ' Vektor, ' + VIZ.CATEGORY[cat] + ': ' + VIZ.num(ra, 2) + ' → ' + VIZ.num(rb, 2) + '.' };
-      }
-      return null;
-    },
+    help: [['v', 'Messung, Detail: nächste Variante']],
     keys: {
       v: function (ctx) {
         var n = VIZ.beatCount(), f = VIZ.state.beat;
         VIZ.state.beat = (f + 1) % n;
         VIZ.apply(VIZ.state.beat, true, f);
-      }
+      },
+      d: function () { VIZ.scenes[VIZ.state.scene] = VIZ.defs.messung; VIZ.render(99, true); }
     },
     render: function (stage, ctx) {
       var E = ctx.data.eval, vs = variants(ctx);
@@ -189,7 +172,7 @@ function plainAnswer(md) {
             var f = VIZ.state.beat; if (f === i) return; VIZ.state.beat = i; VIZ.apply(i, true, f);
           } }, variantLabel(v), v === ctx.data.meta.variant ? h('span', { class: 'seg-note', text: 'Szenen ' + VIZ.questionScenes() }) : null);
         })),
-        h('span', { class: 'toolbar-hint' }, h('kbd', { text: 'v' }), ' Variante'),
+        h('span', { class: 'toolbar-hint' }, h('kbd', { text: 'v' }), ' Variante ', h('kbd', { text: 'd' }), ' zurück zur Übersicht'),
         h('div', { class: 'legend modes' }, modes.map(function (m) {
           return h('span', {}, h('i', { class: 'sw m-' + m }), VIZ.MODE[m] || m);
         }), h('span', { class: 'ghost-legend' }, h('i', { class: 'sw ghost' }), 'vorherige Variante')));
@@ -262,7 +245,138 @@ function plainAnswer(md) {
     return h('div', { class: 'chart' }, h('h2', { text: title }), plot);
   }
 
-  /* ===================== 7 Fazit ===================== */
+
+  /* ===================== 7 Messung: jede Frage ein Punkt ===================== */
+  /* Recall pro Frage und Modus aus den echten Ranglisten: Anteil der erwarteten Dokumente in den Top k.
+     Ergibt gemittelt dieselben Zahlen wie eval.rows (dort stehen auch die übrigen Varianten). */
+  var DMODES = ['bm25', 'vector', 'hybrid'];
+  function qRecall(q, mode, ctx) {
+    var exp = q.expected_docs || [], found = {};
+    (q[mode] || []).slice(0, ctx.k).forEach(function (r) {
+      var c = ctx.chunk(r.chunk);
+      if (c && exp.indexOf(c.doc) >= 0) found[c.doc] = 1;
+      else if (!c && r.hit) found['?' + r.rank] = 1;
+    });
+    return exp.length ? Math.min(1, Object.keys(found).length / exp.length) : 0;
+  }
+  function dotData(ctx) {
+    var qs = ctx.data.questions || [];
+    if (!qs.length || !qs.some(function (q) { return q.bm25 || q.vector || q.hybrid; })) return null;
+    var cats = [];
+    qs.forEach(function (q) { if (cats.indexOf(q.category) < 0) cats.push(q.category); });
+    var order = ['synonym', 'cross-lingual', 'exact-identifier', 'multi-doc'];
+    cats.sort(function (a, b) { return (order.indexOf(a) + 99) % 99 - (order.indexOf(b) + 99) % 99; });
+    return { qs: qs, cats: cats };
+  }
+  function evalRow(ctx, variant, mode, cat) {
+    var E = ctx.data.eval;
+    return E && E.rows ? E.rows.filter(function (r) { return r.variant === variant && r.mode === mode && r.category === cat; })[0] || null : null;
+  }
+  /* Kategorien, in denen ein Modus am meisten Recall verliert (bei Gleichstand mehrere), aus den Punkten gerechnet */
+  function weakest(D, mode, ctx) {
+    var rows = D.cats.map(function (c) {
+      var qs = D.qs.filter(function (q) { return q.category === c; });
+      var loss = qs.reduce(function (n, q) { return n + 1 - qRecall(q, mode, ctx); }, 0) / qs.length;
+      return { cat: c, loss: loss, n: qs.length, miss: qs.filter(function (q) { return qRecall(q, mode, ctx) < 1; }).length };
+    });
+    var max = Math.max.apply(null, rows.map(function (r) { return r.loss; }));
+    return max > 0 ? rows.filter(function (r) { return r.loss > max - 0.005; }) : [];
+  }
+  VIZ.defs.messung = {
+    id: 'messung', nav: 'Messung', title: 'Messung: jede Frage ein Punkt',
+    lead: function (ctx) { return 'Voller Punkt: Das erwartete Dokument steht in den Top ' + ctx.k + '. Halb: nur eines von zwei erwarteten. Leer: verfehlt.'; },
+    beats: 4,
+    help: [['d', 'Messung: Detail-Diagramme (Recall und MRR pro Kategorie) ein/aus']],
+    keys: { d: function () { VIZ.scenes[VIZ.state.scene] = VIZ.defs.score; VIZ.render(0, true); } },
+    /* Tipp vor der ersten Variante, die bei gleichem Chunking nur das Embedding-Modell wechselt */
+    guess: function (ctx) {
+      if (!dotData(ctx)) return null;
+      var vs = variants(ctx), E = ctx.data.eval, cat = 'cross-lingual';
+      function rec(v) {
+        var r = E.rows.filter(function (x) { return x.variant === v && x.mode === 'vector' && x.category === cat; })[0];
+        return r ? r.recall : null;
+      }
+      for (var i = 1; i < vs.length; i++) {
+        var a = String(vs[i - 1]).split('+'), b = String(vs[i]).split('+');
+        var ra = rec(vs[i - 1]), rb = rec(vs[i]);
+        if (a[0] !== b[0] || a[1] === b[1] || ra === null || rb === null) continue;
+        var d = rb - ra;
+        return { before: 3, question: 'Anderes Embedding-Modell: «' + b[1] + '» statt «' + a[1] + '». Wie schneidet die Vektorsuche bei Fragen in einer anderen Sprache ab?',
+          options: ['Besser', 'Gleich', 'Schlechter'], correct: Math.abs(d) < 0.005 ? 1 : d > 0 ? 0 : 2,
+          reveal: 'Recall@' + (E.k || ctx.k) + ' Vektor, ' + VIZ.CATEGORY[cat] + ': ' + VIZ.num(ra, 2) + ' → ' + VIZ.num(rb, 2) + '.' };
+      }
+      return null;
+    },
+    render: function (stage, ctx) {
+      var D = dotData(ctx), self = this;
+      this._D = D;
+      if (!D) { stage.appendChild(ui.empty('Keine Ranglisten', 'questions[].bm25/vector/hybrid fehlen in den Daten.')); return; }
+      var mainV = ctx.data.meta.variant || (variants(ctx)[1] || variants(ctx)[0]);
+      var grid = h('div', { class: 'dm' });
+      grid.appendChild(h('div', {}));
+      grid.appendChild(h('div', { class: 'dm-cats' }, D.cats.map(function (c) {
+        var n = D.qs.filter(function (q) { return q.category === c; }).length;
+        return h('div', { class: 'dm-cat', style: { width: (n * 2.4 - 0.4) + 'rem' } }, VIZ.CATEGORY[c] || c, h('span', { text: n + ' Fragen' }));
+      })));
+      grid.appendChild(h('div', {}));
+      var sub = { bm25: 'gleiche Wörter', vector: 'ähnliche Bedeutung', hybrid: 'beide, per RRF' };
+      DMODES.forEach(function (m, mi) {
+        var i = 0, sum = 0;
+        var row = h('div', { class: 'dm-row mc-' + m }, D.cats.map(function (c) {
+          return h('div', { class: 'dm-grp' }, D.qs.filter(function (q) { return q.category === c; }).map(function (q) {
+            var r = qRecall(q, m, ctx);
+            sum += r;
+            return at(h('span', { class: 'dot ' + (r >= 1 ? 'full' : r > 0 ? 'half' : 'none') + (q.showcase ? ' showcase' : ''), title: q.id + ': ' + q.text }), mi, 'pop', (i++) * 45);
+          }));
+        }));
+        var ev = evalRow(ctx, mainV, m, 'all');
+        var val = ev ? ev.recall : sum / D.qs.length;
+        grid.appendChild(at(h('div', { class: 'dm-mode' }, VIZ.MODE[m] || m, h('span', { text: sub[m] })), mi, 'left'));
+        grid.appendChild(row);
+        grid.appendChild(at(h('div', { class: 'dm-score mc-' + m }, h('b', { text: VIZ.num(val, 2) }), h('span', { text: 'Recall@' + ctx.k + ' über ' + D.qs.length + ' Fragen' })), mi, 'up', i * 45 + 200));
+      });
+      stage.appendChild(grid);
+      stage.appendChild(h('div', { class: 'dm-legend' },
+        h('span', {}, h('i', { class: 'dot full' }), 'gefunden'), h('span', {}, h('i', { class: 'dot half' }), 'eines von zwei Dokumenten'),
+        h('span', {}, h('i', { class: 'dot none' }), 'verfehlt'), h('span', {}, h('i', { class: 'dot full showcase' }), 'Frage aus den Szenen ' + VIZ.questionScenes()),
+        h('span', { class: 'toolbar-hint detail' }, h('kbd', { text: 'd' }), ' Detail-Diagramme')));
+      stage.appendChild(h('p', { class: 'dm-caption', id: 'dm-caption' }));
+      /* Varianten: drei Karten statt dreissig Balken */
+      var vs = variants(ctx);
+      if (vs.length) stage.appendChild(at(h('div', { class: 'vcards' }, vs.map(function (v, vi) {
+        var prevSame = vi > 0 && String(vs[vi - 1]).split('+')[0] === String(v).split('+')[0] ? vs[vi - 1] : null;
+        var x = evalRow(ctx, v, 'vector', 'cross-lingual'), px = prevSame ? evalRow(ctx, prevSame, 'vector', 'cross-lingual') : null;
+        return h('div', { class: 'vcard' + (v === mainV ? ' main' : '') },
+          h('h3', {}, VIZ.variantLabel(v), v === mainV ? h('span', { text: 'oben gezeigt' }) : null),
+          DMODES.map(function (m, i) {
+            var r = evalRow(ctx, v, m, 'all'), val = r ? r.recall : null;
+            return h('div', { class: 'vbar mc-' + m }, VIZ.MODE[m], h('i', {}, at(h('b', { style: { width: (val || 0) * 100 + '%' } }), 3, 'grow', 200 + vi * 150 + i * 80)),
+              h('em', { text: val === null ? '–' : VIZ.num(val, 2) }));
+          }),
+          x ? h('p', { class: 'vcard-x' }, 'Vektor, ' + VIZ.CATEGORY['cross-lingual'] + ': ',
+            h('b', { class: px ? (x.recall < px.recall - 0.005 ? 'down' : x.recall > px.recall + 0.005 ? 'up' : '') : '', text: VIZ.num(x.recall, 2) }),
+            px ? ' (vorher ' + VIZ.num(px.recall, 2) + ')' : '') : null);
+      })), 3, 'up'));
+    },
+    step: function (b, animate, from, ctx) {
+      var D = this._D, c = document.getElementById('dm-caption');
+      if (!D || !c) return;
+      var text;
+      if (b <= 1) {
+        var m = DMODES[b], w = weakest(D, m, ctx);
+        text = w.length ? VIZ.MODE[m] + ' hat ' + (w.length > 1 ? 'seine Lücken' : 'seinen blinden Fleck') + ' bei ' + w.map(function (r) {
+          return '«' + (VIZ.CATEGORY[r.cat] || r.cat) + '» (' + r.miss + ' von ' + r.n + ')';
+        }).join(' und ') + '.' : VIZ.MODE[m] + ' findet alles.';
+      } else if (b === 2) {
+        var miss = D.qs.filter(function (q) { return qRecall(q, 'hybrid', ctx) < 1; }).length;
+        text = 'Die Lücken liegen an verschiedenen Stellen. Zusammen bleiben ' + miss + ' von ' + D.qs.length + ' Fragen nicht voll getroffen.';
+      } else text = 'Gilt das immer? Dieselbe Messung mit anderem Chunking und anderem Embedding-Modell.';
+      c.textContent = text;
+      if (animate) VIZ.anim(c, VIZ.ENTER.up);
+    }
+  };
+
+  /* ===================== 8 Fazit ===================== */
   VIZ.defs.fazit = {
     id: 'fazit', nav: 'Fazit', title: 'Was bleibt',
     lead: '',

@@ -1,5 +1,6 @@
 /* Konzept-Szenen: nur was rag/viz/style.css nicht schon mitbringt.
-   Farben hier: dunkel = immer geladen, grau = Verlauf, orange = Tool-Ergebnisse, blau = erst bei Bedarf. */
+   Farben hier: Tinte = immer geladen, grau = Verlauf, Ocker = Tool-Ergebnisse, Blau = erst bei Bedarf.
+   Terrakotta markiert, was gerade aktiv ist. */
 
 .ex-tag { display: inline-block; background: var(--ink); color: var(--paper); font-size: .62rem; font-weight: 700; padding: .05rem .4rem; white-space: nowrap; }
 .schema { font-size: .62rem; font-weight: 700; border: 1.5px dashed var(--ink-3); color: var(--ink-3); padding: .05rem .4rem; }
@@ -125,3 +126,33 @@
 .lp-out { max-width: none; padding: 1.1rem 1.4rem; }
 .lp-out .verdict-big { font-size: 1.7rem; }
 .lp-out .verdict-line { font-size: 1.25rem; }
+
+/* ================= Thema ================= */
+.ex-tag { background: var(--accent-deep); border-radius: 2rem; padding: .08rem .55rem; }
+.band, .kchip, .lnode, .loop-core, .gate, .mbox, .floop, .fstep, .wt-repo, .wt-tree, .cx-bar, .lp-call code { border-radius: var(--r); }
+.band { border-width: 1.5px; background: var(--wash); border-color: var(--rule); }
+.band-steer { border-bottom: .3rem solid var(--accent); }
+.band-ctx { border-top: .3rem solid var(--accent); }
+.band-ext { background: transparent; border-style: dashed; border-color: var(--ink-3); }
+.band-label { font-family: var(--serif); font-size: .95rem; }
+.kchip, .lnode, .gate, .mbox, .fstep, .wt-repo, .wt-tree { background: var(--card); border-width: 2px; }
+.kchip.plain { border-width: 1.5px; }
+.loop-core { border-width: 2px; background: var(--accent-bg); border-color: var(--accent-deep); }
+.loop-back { border-top-color: var(--accent-deep); color: var(--accent-deep); }
+.lnode b, .mbox b, .wt-repo b, .sx-label b { font-family: var(--serif); font-weight: 600; }
+.lnode.glow, .fstep.glow { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.recap .kchip:not(.plain) { background: var(--hit-bg); border-color: var(--hit); }
+.recap-q, .cx-caption { font-family: var(--serif); font-weight: 600; }
+.cx-bar { border-width: 2px; background: var(--card); }
+.cx-turn-bar { background: var(--accent); border-radius: 1rem; }
+.gate.wait { background: var(--accent-deep); border-color: var(--accent-deep); }
+.mbox-main { background: var(--sem-bg); border-color: var(--sem); }
+.mbox-ghost { background: transparent; border-width: 1.5px; }
+.floop { border-width: 1.5px; border-color: var(--rule); background: var(--wash); }
+.rewind { border-top-width: 2px; }
+.rewind-head b { color: var(--accent-deep); }
+.mfacts p { border-top: .25rem solid var(--accent); }
+.wt-fan { border-left-color: var(--accent); }
+.wt, .rewind { border-top-color: var(--rule); }
+.lp-out.warn { border-color: var(--accent-deep); background: var(--accent-bg); }
+.lp-out.warn .verdict-big { color: var(--accent-deep); }

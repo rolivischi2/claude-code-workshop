@@ -8,6 +8,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Zeitplan, Aufwand pro Übung, Kürzungsreserve | [timing.md](timing.md) |
 | Blöcke im Detail, Vorbereitungs-Checkliste | [ablauf.md](ablauf.md) |
 | Exakte Abläufe der Demos R und D | [demo-scripts.md](demo-scripts.md) |
+| Sprechskript zum Proben: beide Decks Schritt für Schritt, häufige Fragen, Glossar | [sprechskript.md](sprechskript.md) |
 | Animierte Schemata für die Inputs | [konzepte/README.md](konzepte/README.md) |
 | Präparierte Fehler, Seed-Daten, Rezepte | [seeded-issues.md](seeded-issues.md) |
 | Plan B für Technik, Netz, Abo | [fallback.md](fallback.md), [troubleshooting.md](troubleshooting.md) |
@@ -179,7 +180,7 @@ sonst `data.sample.js` mit Badge «Beispieldaten»):
 | 4 Vektor | 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
 | 5 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
 | 6 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
-| 7 Messung | Recall/MRR pro Kategorie, Variante wechseln (`v`) |
+| 7 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
 | 8 Fazit | vier Kernaussagen |
 
 Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`8`, `q` Frage, `g` Tipp-Runden aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.

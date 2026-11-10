@@ -28,6 +28,8 @@ Erscheint oben das Badge «Beispieldaten», fehlt `data.js`: `uv run export-viz`
 (Handzeichen). `→` löst auf, nochmals `→` fährt weiter. Die richtige Antwort wird aus `data.js`
 berechnet. Bei Zeitnot schaltet `g` alle Tipp-Runden aus (rund 30 Sekunden pro Runde).
 
+Das ausformulierte Skript mit Sätzen pro Schritt, häufigen Fragen und Glossar steht in [sprechskript.md](sprechskript.md).
+
 ### Ablauf
 
 | Min | Szene | Was zeigen | Satz |
@@ -39,7 +41,7 @@ berechnet. Bei Zeitnot schaltet `g` alle Tipp-Runden aus (rund 30 Sekunden pro R
 | 10–12 | 4 Vektor | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
 | 12–14 | 5 Hybrid | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
 | 14–17 | 6 Agent | **Tipp-Runde:** Wie viele Turns? Aufgezeichnete Läufe: 3–4 Turns, 21–36k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
-| 17–19 | 7 Messung | Variante wechseln. **Tipp-Runde** vor e5-large: besser oder schlechter beim Sprachwechsel? | siehe unten |
+| 17–19 | 7 Messung | Jede Frage ein Punkt: Reihe BM25, Reihe Vektor, Reihe Hybrid. **Tipp-Runde** zum grösseren Modell, dann drei Karten mit den Varianten. `d` zeigt die Detail-Diagramme für Nachfragen | siehe unten |
 | 19–20 | 8 Fazit | vier Kernaussagen | |
 
 ### Gemessene Zahlen (Recall@5, in Klammern MRR, 25 Fragen, k=5)

@@ -12,7 +12,7 @@ Server, keine CDN, nur Systemschriften.
 | 4 Vektor | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
 | 5 Hybrid | Beide Ranglisten, die Karten wandern in die RRF-Reihenfolge, jede mit ihren `1/(k+Rang)`-Anteilen |
 | 6 Agent | Aufgezeichneter Claude-Code-Lauf (Grep, Glob, Read) als Zeitleiste mit Turns und Kontext-Tokens |
-| 7 Messung | Recall@k und MRR pro Kategorie und Modus, umschaltbar zwischen den gemessenen Varianten |
+| 7 Messung | Jede Frage ein Punkt pro Suchverfahren (voll, halb, verfehlt), dann die Varianten als drei Karten. `d` zeigt die Detail-Diagramme mit Recall@k und MRR pro Kategorie |
 | 8 Fazit | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
 
 ## Öffnen
@@ -40,7 +40,8 @@ erwartet und harmlos.
 | `f` | Vollbild ein/aus |
 | `g` | Tipp-Runden aus/ein |
 | `t` | Szene 2: feste Länge ↔ Überschriften |
-| `v` | Szene 7: nächste Variante |
+| `d` | Szene 7: Detail-Diagramme ein/aus |
+| `v` | Szene 7, Detail: nächste Variante |
 | `?` | Hilfe |
 
 Die aktuelle Szene und Frage stehen in der Adresse (`#s=3&q=q01`), ein Neuladen springt

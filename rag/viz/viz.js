@@ -23,7 +23,7 @@ VIZ.CATEGORY = {
 };
 VIZ.MODE = { bm25: 'BM25', vector: 'Vektor', hybrid: 'Hybrid' };
 VIZ.LANG = { de: 'Deutsch', fr: 'Französisch', it: 'Italienisch', en: 'Englisch' };
-VIZ.ORDER = ['korpus', 'chunking', 'bm25', 'vector', 'hybrid', 'agent', 'score', 'fazit'];
+VIZ.ORDER = ['korpus', 'chunking', 'bm25', 'vector', 'hybrid', 'agent', 'messung', 'fazit'];
 VIZ.defs = VIZ.defs || {};
 
 /* ---------- kleine Helfer ---------- */

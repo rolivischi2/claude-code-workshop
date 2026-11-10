@@ -1,24 +1,33 @@
 /* Agentische Suche vs. RAG – Präsentations-Visualisierung
-   Ein helles Grundbild (Beamer waschen dunkle Grautöne aus).
-   Drei Bedeutungsfarben: lexikalisch (orange), semantisch (blau), Treffer/daneben (grün/rot).
-   Hybrid ist schwarz. Alles andere bleibt neutral. */
+   Ein helles, warmes Grundbild (Beamer waschen dunkle Grautöne aus).
+   Bedeutungsfarben: lexikalisch (Ocker), semantisch (Blau), Treffer/daneben (Grün/Rot).
+   Hybrid ist Tinte. Terrakotta ist der Akzent des Rahmens. */
 
 :root {
-  --paper: #ffffff;
-  --ink: #000000;
-  --ink-2: #353b42;
-  --ink-3: #5c646d;
-  --rule: #b4bcc5;
-  --wash: #eceff3;
-  --lex: #c2410c;
-  --lex-bg: #ffe0c2;
-  --sem: #1d4ed8;
-  --sem-bg: #dae5ff;
-  --hit: #0b7a38;
-  --hit-bg: #d5f1de;
-  --miss: #c8102e;
-  --miss-bg: #fde0e4;
+  /* Warmes Papier, dunkle Tinte, Terrakotta als Akzent: angelehnt an die Farbwelt von Claude.
+     Bedeutungsfarben der Daten: lexikalisch = Ocker, semantisch = Blau, Treffer = Grün, daneben = Rot.
+     Der Akzent gehört dem Rahmen (aktive Szene, Schritte, Tipp-Runden), nie den Daten. */
+  --paper: #faf9f5;
+  --card: #ffffff;
+  --ink: #141413;
+  --ink-2: #3d3d3a;
+  --ink-3: #6b6a63;
+  --rule: #b0aea5;
+  --wash: #efede3;
+  --accent: #d97757;
+  --accent-deep: #bd5d3a;
+  --accent-bg: #f7e3d9;
+  --lex: #a06d12;
+  --lex-bg: #f5e6c3;
+  --sem: #2c6bb0;
+  --sem-bg: #dce8f6;
+  --hit: #4a7a34;
+  --hit-bg: #e2edd6;
+  --miss: #b3243b;
+  --miss-bg: #f8dfe2;
+  --r: .45rem;
   --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   color-scheme: light;
 }
@@ -374,7 +383,7 @@ mark.lex { background: var(--lex-bg); color: inherit; box-shadow: inset 0 -3px 0
 .kroad b { font-size: 1.05rem; }
 
 /* ---------- Tipp-Runden ---------- */
-.guess-layer { position: fixed; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .86); }
+.guess-layer { position: fixed; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(250, 249, 245, .9); }
 .guess-layer[hidden] { display: none; }
 .guess { width: min(58rem, 90vw); background: var(--paper); border: 4px solid var(--ink); padding: 1.4rem 1.7rem 1.1rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: .6rem .6rem 0 var(--ink); }
 .guess-tag { align-self: flex-start; background: var(--ink); color: var(--paper); font-size: .75rem; font-weight: 700; padding: .15rem .6rem; }
@@ -420,3 +429,87 @@ mark.lex { background: var(--lex-bg); color: inherit; box-shadow: inset 0 -3px 0
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition: none !important; animation: none !important; }
 }
+
+/* ================= Thema: warm, rund, mit Terrakotta-Akzent ================= */
+.head h1, .question-text, .guess-q, .messages p, .kroads-q, .kfact-num, .counter-val, .verdict-big { font-family: var(--serif); font-weight: 600; letter-spacing: -.01em; }
+.head h1 { font-size: 2.3rem; }
+.head h1::after { content: ""; display: block; width: 3.2rem; height: .28rem; background: var(--accent); border-radius: 1rem; margin-top: .45rem; }
+.lead { margin-top: .5rem; }
+
+.fields { border-radius: var(--r); }
+.field { border-width: 1.5px; margin-left: -1.5px; background: var(--card); transition: background .25s, color .25s; }
+.field:first-child { border-radius: var(--r) 0 0 var(--r); }
+.field:last-child { border-radius: 0 var(--r) var(--r) 0; }
+.field.done { background: var(--wash); }
+.field.active { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.field-no { opacity: .7; }
+.beat { border-color: var(--accent-deep); border-width: 1.5px; }
+.beat.on { background: var(--accent); }
+.qchip { border-width: 1.5px; border-radius: 2rem; background: var(--card); padding: .3rem .9rem; }
+kbd { border-width: 1px; background: var(--card); }
+.cat { border-width: 1.5px; border-radius: 2rem; padding: 0 .7em; background: var(--card); }
+
+.rcard, .verdict, .answer, .counters, .ccard, .map-plot, .note, .kroad, .ktile, .picker, .pick.inline, .empty { border-radius: var(--r); }
+.rcard, .ccard, .counters, .answer, .kroad, .ktile, .map-plot { background: var(--card); }
+.rcard { border-width: 1.5px 1.5px 1.5px 7px; }
+.verdict, .answer { border-width: 2px; }
+.kroad { border-width: 2px; }
+.kroad-rag { border-color: var(--accent-deep); }
+.ktile { border-width: 1.5px; }
+.kl-de { background: var(--card); }
+.kl-fr { background: repeating-linear-gradient(135deg, var(--accent-bg) 0 .5rem, var(--card) .5rem 1rem); }
+.kl-it { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.term { border-radius: 2rem; border-width: 1.5px; }
+.messages li { border-top: 0; padding: 0 0 0 1.2rem; border-left: .35rem solid var(--accent); }
+.messages p { font-size: 2rem; }
+.spark-bar { background: var(--accent); border-radius: .2rem .2rem 0 0; }
+.badge-sample { background: var(--accent-deep); border-radius: 2rem; }
+.toast { border-radius: 2rem; }
+.picker { border-width: 2px; }
+
+.guess { border-width: 2px; border-radius: .9rem; box-shadow: 0 1.2rem 3rem rgba(20, 20, 19, .18), 0 0 0 .5rem var(--accent-bg); }
+.guess-tag { background: var(--accent-deep); border-radius: 2rem; padding: .2rem .8rem; }
+.guess-opt { border-width: 2px; border-radius: var(--r); background: var(--card); }
+.guess-letter { border-width: 2px; background: var(--accent-bg); border-color: var(--accent-deep); color: var(--accent-deep); }
+.guess-opt.right .guess-letter { background: var(--hit); border-color: var(--hit); color: #fff; }
+
+/* ---------- 7 Messung: jede Frage ein Punkt ---------- */
+.stage-messung { gap: 1.1rem; justify-content: center; }
+.dm { display: grid; grid-template-columns: 8.5rem minmax(0, 1fr) 9.5rem; row-gap: .9rem; column-gap: 1.4rem; align-items: center; }
+.dm-cats { grid-column: 2; display: flex; gap: 1.5rem; }
+.dm-cat { display: flex; flex-direction: column; font-size: .78rem; font-weight: 700; line-height: 1.2; border-bottom: 2px solid var(--rule); padding-bottom: .3rem; }
+.dm-cat span { font-weight: 400; color: var(--ink-3); font-size: .68rem; }
+.dm-mode { font-size: 1.35rem; font-weight: 700; display: flex; flex-direction: column; line-height: 1.1; }
+.dm-mode span { font-size: .68rem; font-weight: 400; color: var(--ink-3); margin-top: .2rem; }
+.dm-row { display: flex; gap: 1.5rem; }
+.dm-grp { display: flex; gap: .4rem; }
+.dot { width: 2rem; height: 2rem; border-radius: 50%; border: 3px solid var(--mc); position: relative; overflow: hidden; background: var(--card); flex: 0 0 auto; }
+.dot.full { background: var(--mc); }
+.dot.half::before { content: ""; position: absolute; inset: 0 50% 0 0; background: var(--mc); }
+.dot.none { border-color: var(--miss); border-style: dashed; background: var(--miss-bg); }
+.dot.none::after { content: "✗"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: var(--miss); font-weight: 700; font-size: 1.1rem; }
+.dot.showcase { box-shadow: 0 0 0 3px var(--paper), 0 0 0 5px var(--ink); }
+.mc-bm25 { --mc: var(--lex); }
+.mc-vector { --mc: var(--sem); }
+.mc-hybrid { --mc: var(--ink); }
+.dm-score { display: flex; flex-direction: column; align-items: flex-end; line-height: 1; }
+.dm-score b { font: 600 2.9rem/1 var(--serif); color: var(--mc); }
+.dm-score span { font-size: .6rem; white-space: nowrap; color: var(--ink-3); margin-top: .25rem; }
+.dm-legend { display: flex; gap: 1.6rem; font-size: .74rem; color: var(--ink-2); align-items: center; }
+.dm-legend .dot { width: 1.1rem; height: 1.1rem; border-width: 2px; --mc: var(--ink-2); }
+.dm-legend .dot.none::after { font-size: .55rem; }
+.dm-legend > span { display: inline-flex; align-items: center; gap: .4rem; }
+.dm-caption { font: 600 1.5rem/1.25 var(--serif); min-height: 3.8rem; max-width: 70rem; }
+.vcards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; }
+.vcard { border: 2px solid var(--rule); border-radius: var(--r); background: var(--card); padding: .7rem .9rem; display: flex; flex-direction: column; gap: .4rem; }
+.vcard.main { border-color: var(--accent-deep); box-shadow: 0 0 0 .3rem var(--accent-bg); }
+.vcard h3 { font-size: .95rem; display: flex; justify-content: space-between; align-items: baseline; gap: .6rem; }
+.vcard h3 span { font-size: .62rem; font-weight: 700; color: var(--accent-deep); white-space: nowrap; }
+.vbar { display: grid; grid-template-columns: 3.6rem minmax(0, 1fr) 2.6rem; align-items: center; gap: .6rem; font-size: .78rem; font-weight: 700; }
+.vbar i { display: block; height: .9rem; background: var(--wash); border-radius: 1rem; overflow: hidden; }
+.vbar i b { display: block; height: 100%; background: var(--mc); border-radius: 1rem; transform-origin: left center; }
+.vbar em { font-style: normal; text-align: right; }
+.vcard-x { font-size: .7rem; color: var(--ink-2); border-top: 1px solid var(--rule); padding-top: .35rem; }
+.vcard-x b.down { color: var(--miss); }
+.vcard-x b.up { color: var(--hit); }
+.toolbar-hint.detail { margin-left: auto; font-size: .68rem; color: var(--ink-3); }

@@ -21,6 +21,8 @@ Ausgelegt für 1920×1080, `f` schaltet Vollbild.
 `→` löst auf, nochmals `→` fährt weiter. `g` schaltet alle Tipp-Runden aus oder wieder ein
 (Zeitreserve: rund 30 Sekunden pro Runde).
 
+Das Sprechskript zu jeder Szene steht in [../sprechskript.md](../sprechskript.md).
+
 ## Anpassen
 
 - Alles steht in `scenes-konzepte.js`. Eine Szene ist ein Objekt mit `render`, `beats` und optional `step` und `guess`.
