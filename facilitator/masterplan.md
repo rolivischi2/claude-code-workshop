@@ -40,6 +40,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | RAG-Fragen | Entwurf von Claude, fachliche Prüfung durch Roland über eine Review-Seite |
 | Setup | ohne Python/uv: nur Git, JDK 21, Node, Claude Code. Devcontainer als Plan B |
 | Grundsätze | Ehrliches RAG-Ergebnis (nicht nachtunen, nachdem gemessen wurde) · Hooks als Node-`.mjs` in Exec-Form · Doku Deutsch, Schweizer Schreibweise (kein ß) |
+| Sprache der Folien (2026-11-10) | **Englisch** für beide Decks (`rag/viz/`, `facilitator/konzepte/`). Gesprochen wird deutsch, Übungsblätter und Sprechskript bleiben deutsch. Die Fragen des RAG-Experiments bleiben deutsch (deutscher Korpus) |
 
 ## 3. Ablauf (150')
 
@@ -174,18 +175,20 @@ sonst `data.sample.js` mit Badge «Beispieldaten»):
 
 | Szene | Inhalt |
 |-------|--------|
-| 1 Korpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
+| 1 Corpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
 | 2 Chunking | feste Länge vs. Überschriftenpfad (`t`) |
 | 3 BM25 | Suchbegriffe leuchten auf, blinder Fleck bei Synonymen und Sprachen |
-| 4 Vektor | 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
-| 5 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
-| 6 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
-| 7 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
-| 8 Fazit | vier Kernaussagen |
+| 4 Vector DB | Text → Embedding-Modell → 384 Zahlen; die Datenbank als Tabelle, Ähnlichkeit zur Frage pro Zeile (echte Werte) |
+| 5 Vector | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
+| 6 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
+| 7 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
+| 8 Results | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
+| 9 Takeaways | vier Kernaussagen |
 
-Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`8`, `q` Frage, `g` Tipp-Runden aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
+Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`9`, `q` Frage, `g` Tipp-Runden aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
 
-Tipp-Runden in den Szenen 3, 4, 6 und 7. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
+Tipp-Runden in den Szenen 3, 5, 7 und 8. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
+Kurze Erklärkästen («tidbits») stehen dort, wo ein Begriff zum ersten Mal vorkommt.
 
 ## 9. Demo D – Skalieren (7')
 
@@ -218,7 +221,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `rag/viz/data.js` (BAZG-
 |------|-----------|-------|
 | 03: «Ankunft melden» | 03: «Abgabenbetrag korrigieren» | Ankunft ist beim Umbau der App bereits entstanden. Das neue Feature muss die Sicherheitsprüfung wiederverwenden und führt so direkt zum Off-by-one |
 | 02: `GET /api/offices/{code}/declarations?status=OPEN` | 02: `GET /api/guarantees/{grn}/balance`, 01: `GET /api/guarantees/{grn}` | passt zum Mapper-Vergleich in 01 und zur Prüfung in 03 |
-| 6 Szenen in der Visualisierung | 8 Szenen (+ Korpus, + Fazit) | Bild für den Einstieg, Kernaussagen als eigene Schlussfolie |
+| 6 Szenen in der Visualisierung | 9 Szenen (+ Corpus, + Vector DB, + Takeaways) | Bild für den Einstieg, die Vektor-Datenbank als Tabelle vor der Karte, Kernaussagen als eigene Schlussfolie |
 | Inputs nur gesprochen, Demos R und D nur zum Zuschauen | Konzept-Szenen, Tipp-Runden, D zum Mitmachen | Review vom 2026-11-10: 35 Minuten am Stück ohne Aktivität des Publikums |
 | Korpus mit Serie «Dokumentation NCTS für Zollbeteiligte» | aktuelle BAZG-Dokumente | Die Serie ist online nicht mehr verfügbar |
 

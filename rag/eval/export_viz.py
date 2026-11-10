@@ -31,6 +31,7 @@ from indexer.search import CANDIDATES_PER_K, RRF_K, reciprocal_rank_fusion
 OUTPUT = RAG_ROOT / "viz" / "data.js"
 AGENT_RUNS = CACHE_DIR / "agent-runs.json"
 TOP = 10  # ranking depth shown per mode
+VECTOR_HEAD = 16  # how many of the embedding numbers are exported for display
 K = 5  # recall@k used by the eval
 BACKGROUND_SAMPLE = 300  # random extra chunks for the map background
 SEED = 42
@@ -173,7 +174,8 @@ def main() -> None:
     def hit(cid: int, q: dict) -> bool:
         return all_chunks[cid][0] in q["expected"]
 
-    out_questions, referenced = [], set()
+    out_questions, referenced, in_vector_list = [], set(), set()
+    row_of = {cid: i for i, cid in enumerate(ids)}
     for q, qv, r in zip(questions, query_vectors, ranked):
         lexical_rank = {cid: i for i, cid in enumerate(r["lexical"], start=1)}
         semantic_rank = {cid: i for i, cid in enumerate(r["semantic"], start=1)}
@@ -191,11 +193,13 @@ def main() -> None:
                    "from": {"bm25": lexical_rank.get(cid), "vector": semantic_rank.get(cid)}}
                   for rank, (cid, score) in enumerate(r["hybrid"], start=1)]
         referenced |= {e["chunk"] for e in bm25 + vector + hybrid}
+        in_vector_list |= {e["chunk"] for e in vector}
         out_questions.append({
             "id": q["id"], "category": q["category"], "text": q["question"],
-            "expected_docs": q["expected"], "showcase": bool(q["showcase"]), "note": q["note"],
+            "expected_docs": q["expected"], "showcase": bool(q["showcase"]), "note": q["note_en"] or q["note"],
             "query_terms": r["terms"],
             "query_xy": [round(float(c), 4) for c in project(qv)],
+            "query_v": [round(float(c), 3) for c in qv[:VECTOR_HEAD]],
             "bm25": bm25, "vector": vector, "hybrid": hybrid,
         })
 
@@ -207,6 +211,8 @@ def main() -> None:
         chunks.append({"id": cid, "doc": doc_id, "heading": heading, "lang": lang,
                        "text": display_text(text, heading, docs[doc_id].title),
                        "x": round(float(xy[cid][0]), 4), "y": round(float(xy[cid][1]), 4)})
+        if cid in in_vector_list:  # first numbers of the stored embedding, for the "vector database" scene
+            chunks[-1]["v"] = [round(float(c), 3) for c in vectors[row_of[cid]][:VECTOR_HEAD]]
 
     langs = Counter(c[2] for c in all_chunks.values())
     data = {
@@ -217,9 +223,10 @@ def main() -> None:
             "chunking": v.chunking,
             "k": K,
             "rrf_k": RRF_K,
+            "dims": int(vectors.shape[1]),
             "corpus": {"docs": len(docs), "chunks": len(ids), "langs": dict(sorted(langs.items()))},
-            "note": "Rankings, Karte und Chunks stammen aus der Hauptvariante; eval enthält alle "
-                    "gemessenen Varianten. Karte = 2D-PCA der Embeddings, Abstände nur ungefähr.",
+            "note": "Rankings, map and chunks come from the main variant; eval holds all measured "
+                    "variants. Map = 2D PCA of the embeddings, distances are approximate.",
         },
         "docs": [{"id": d.id, "title": d.title, "lang": d.lang, "url": d.url, "pages": d.pages}
                  for d in docs.values()],

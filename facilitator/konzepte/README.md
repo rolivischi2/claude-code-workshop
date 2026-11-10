@@ -2,16 +2,16 @@
 
 Animierte Schemata für die kurzen Inputs zwischen den Übungen. Gleicher Motor und gleiche Tasten
 wie `rag/viz/`: statisch, offline, kein Build. `index.html` im Browser öffnen (Doppelklick genügt).
-Ausgelegt für 1920×1080, `f` schaltet Vollbild.
+Ausgelegt für 1920×1080, `f` schaltet Vollbild. Die Folien sind **englisch** beschriftet, gesprochen wird deutsch.
 
 | Szene | Wann | Inhalt | Tipp-Runde |
 |-------|------|--------|-----------|
-| 1 Landkarte | 0:00 Einstieg | Agentic Loop, dann Kontext, Steuerung, Erweitern: wo jede Übung sitzt | – |
-| 2 Kontext | 0:10 Block A | Kontextfenster füllt sich, jeder Turn sendet alles, `/compact`, Skill-Text erst bei Bedarf | Startbelegung aus Übung 00 |
-| 3 Leitplanken | 0:45 Block B | Vier Tool-Aufrufe laufen durch Hook, deny, ask, allow. Danach `/rewind` | allow im Projekt gegen deny beim User |
+| 1 Map | 0:00 Einstieg | Agentic Loop, dann Kontext, Steuerung, Erweitern: wo jede Übung sitzt | – |
+| 2 Context | 0:10 Block A | Kontextfenster füllt sich, jeder Turn sendet alles, `/compact`, Skill-Text erst bei Bedarf | Startbelegung aus Übung 00 |
+| 3 Guardrails | 0:45 Block B | Vier Tool-Aufrufe laufen durch Hook, deny, ask, allow. Danach `/rewind` | allow im Projekt gegen deny beim User |
 | 4 MCP | 1:35 Block C | Ein Stecker für viele Werkzeuge, Feedback-Loop | – |
-| 5 Skalieren | 2:15 Demo D | Subagent mit eigenem Kontext, zwei Worktrees | Wie stark wächst der Hauptkontext? |
-| 6 Rückblick | 2:22 Abschluss | Landkarte mit allen Teilen, Schlussfrage | – |
+| 5 Scale | 2:15 Demo D | Subagent mit eigenem Kontext, zwei Worktrees | Wie stark wächst der Hauptkontext? |
+| 6 Recap | 2:22 Abschluss | Landkarte mit allen Teilen, Schlussfrage | – |
 
 ## Bedienung
 

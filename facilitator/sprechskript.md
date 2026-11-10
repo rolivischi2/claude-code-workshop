@@ -2,37 +2,38 @@
 
 Zum Proben. Für jede Szene: Ziel, Zeit, dann pro Tastendruck **was erscheint** und **was du sagst**,
 der Übergang und die Fragen, die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage,
-keine Texte zum Ablesen. Am Schluss steht ein Glossar mit Definitionen in einem Satz.
+keine Texte zum Ablesen. **Die Folien sind englisch beschriftet, gesprochen wird deutsch.** Wo das Skript
+ein Element der Folie nennt, steht die englische Beschriftung in Anführungszeichen. Am Schluss steht ein Glossar mit Definitionen in einem Satz.
 
 | Deck | Datei | Wann |
 |------|-------|------|
-| Konzepte (6 Szenen) | `facilitator/konzepte/index.html` | Inputs um 0:00, 0:10, 0:45, 1:35, 2:15, 2:22 |
-| Agentic Search vs. RAG (8 Szenen) | `rag/viz/index.html` | Demo R, 1:55–2:15 |
+| Concepts (6 Szenen) | `facilitator/konzepte/index.html` | Inputs um 0:00, 0:10, 0:45, 1:35, 2:15, 2:22 |
+| Agentic search vs. RAG (9 Szenen) | `rag/viz/index.html` | Demo R, 1:55–2:15 |
 
 **Tasten in beiden Decks:** `→` nächster Schritt · `←` zurück · Zahl = Szene · `f` Vollbild · `r` Animation nochmals ·
-`g` Tipp-Runden aus/ein · `?` Hilfe. Im RAG-Deck zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Messung: Details).
+`g` Tipp-Runden aus/ein · `?` Hilfe. Im RAG-Deck zusätzlich `q` Frage wählen, `t` (Chunking), `d` (Results: Detail-Diagramme).
 
 **Tipp-Runde:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` löst auf,
 `→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch lag, sondern gleich die Erklärung zeigen.
 
 **Vor dem Start:** Beide Seiten in zwei Tabs offen, Vollbild, Benachrichtigungen aus. Im RAG-Deck darf unten
-rechts **nicht** «Beispieldaten» stehen.
+rechts **nicht** «Sample data» stehen.
 
 ---
 
 # Teil 1 – Konzepte
 
-## Szene 1 · Landkarte (0:00, 5 Minuten)
+## Szene 1 · «Map» (0:00, 5 Minuten)
 
 **Ziel:** Alle haben dasselbe Bild im Kopf: ein Modell in einer Schleife. Jede Übung bekommt einen Platz.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Prompt → Modell → Tool-Aufruf → Ergebnis | «Ihr kennt Agentic Engineering. Heute schauen wir, wie Claude Code das konkret baut. Der Kern ist klein: Ihr gebt einen Prompt. Das Modell entscheidet, was der nächste Schritt ist. Meistens ist das ein Tool-Aufruf: eine Datei lesen, etwas editieren, einen Befehl ausführen.» |
-| `→` | Schleife leuchtet reihum auf, «Antwort» erscheint | «Das Ergebnis geht zurück ans Modell, und es entscheidet wieder. Das wiederholt sich, bis das Modell findet, es sei fertig. Das ist der Agentic Loop. Wichtig: Das Modell *schlägt vor*, die Harness *führt aus*. Alles, was wir heute steuern, hängt an diesem Unterschied.» |
-| `→` | Band «Kontext» | «Das Modell sieht nur, was im Kontext steht: den System-Prompt, eure CLAUDE.md, die Beschreibungen der Skills, den Verlauf und alles, was Tools zurückgeben. Block A dreht sich darum: Übung 01 und 02.» |
-| `→` | Band «Steuerung» | «Autonomie braucht Leitplanken. Plan Mode, Permissions, Hooks und Rewind sitzen *um* die Schleife herum. Das ist Block B, Übungen 03 bis 05.» |
-| `→` | Band «Erweitern und skalieren» | «Und am Schluss machen wir die Schleife grösser: neue Werkzeuge über MCP, Wissen ausserhalb des Repos, mehrere Agenten gleichzeitig. Diese Karte seht ihr am Ende nochmals.» |
+| (Start) | Prompt → Model → Tool call → Result | «Ihr kennt Agentic Engineering. Heute schauen wir, wie Claude Code das konkret baut. Der Kern ist klein: Ihr gebt einen Prompt. Das Modell entscheidet, was der nächste Schritt ist. Meistens ist das ein Tool-Aufruf: eine Datei lesen, etwas editieren, einen Befehl ausführen.» |
+| `→` | Schleife leuchtet reihum auf, «Answer» erscheint | «Das Ergebnis geht zurück ans Modell, und es entscheidet wieder. Das wiederholt sich, bis das Modell findet, es sei fertig. Das ist der Agentic Loop. Wichtig: Das Modell *schlägt vor*, die Harness *führt aus*. Alles, was wir heute steuern, hängt an diesem Unterschied.» |
+| `→` | Band «Context» | «Das Modell sieht nur, was im Kontext steht: den System-Prompt, eure CLAUDE.md, die Beschreibungen der Skills, den Verlauf und alles, was Tools zurückgeben. Block A dreht sich darum: Übung 01 und 02.» |
+| `→` | Band «Control» | «Autonomie braucht Leitplanken. Plan Mode, Permissions, Hooks und Rewind sitzen *um* die Schleife herum. Das ist Block B, Übungen 03 bis 05.» |
+| `→` | Band «Extend and scale» | «Und am Schluss machen wir die Schleife grösser: neue Werkzeuge über MCP, Wissen ausserhalb des Repos, mehrere Agenten gleichzeitig. Diese Karte seht ihr am Ende nochmals.» |
 
 **Übergang:** «Bevor wir loslegen: Übung 00. Vier Slash-Commands, fünf Minuten. Notiert euch die Zahl aus `/context`, die brauchen wir gleich.»
 
@@ -45,19 +46,19 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-## Szene 2 · Kontext ist ein Budget (0:10, 5 Minuten)
+## Szene 2 · «Context» (0:10, 5 Minuten)
 
 **Ziel:** Kontext kostet in jedem Turn. Darum lohnt sich, was erst bei Bedarf geladen wird.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | leerer Balken «Kontextfenster» | «Dieser Balken ist das Arbeitsgedächtnis des Modells. Was nicht drin ist, weiss es nicht. Was drin ist, bezahlt ihr.» |
-| `→` | **Tipp-Runde:** «Wie voll war euer Kontext in Übung 00?» | Abstimmen lassen. Auflösen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. |
+| (Start) | leerer Balken «Context window» | «Dieser Balken ist das Arbeitsgedächtnis des Modells. Was nicht drin ist, weiss es nicht. Was drin ist, bezahlt ihr.» |
+| `→` | **Tipp-Runde:** «How full was your context in exercise 00 …?» | Abstimmen lassen. Auflösen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. |
 | `→` | dunkle Segmente: System-Prompt, CLAUDE.md, Beschreibungen | «Das ist belegt, bevor ihr ein Wort tippt: System-Prompt und Werkzeuge, eure CLAUDE.md, die Beschreibungen der Skills, die Namen der MCP-Tools. Das Bild ist ein Schema, eure echte Zahl ist die aus `/context`.» |
 | `→` | Turn 1: kleines graues, grosses ockerfarbenes Segment | «Erster Turn. Euer Prompt ist winzig. Gross ist, was Claude dafür *liest*: Dateien, Suchergebnisse, Testausgaben. Tool-Ergebnisse sind fast immer der grösste Posten.» |
-| `→` | Balken wächst, darunter «Turn 1/2/3 sendet» | «Und jetzt der Punkt, den viele unterschätzen: Jeder Turn schickt *alles Bisherige* wieder mit. Der Prompt-Cache macht den unveränderten Anfang billiger, aber nicht kleiner. Darum der Token-Tipp auf den Blättern: Kritik in einem Prompt sammeln statt in fünf.» |
-| `→` | Verlauf schrumpft zu «Zusammenfassung» | «`/compact` ersetzt den Verlauf durch eine Zusammenfassung. `/clear` leert ihn ganz. Faustregel: Neue Aufgabe, neuer Kontext.» |
-| `→` | blaues Segment «Skill-Text» schiebt sich hinein | «Und das ist die Idee hinter Skills: Progressive Disclosure. Immer geladen ist nur die Beschreibung, ein, zwei Sätze. Der eigentliche Text kommt erst, wenn die Aufgabe dazu passt. Dann bleibt er im Kontext. In Übung 02 baut ihr genau das.» |
+| `→` | Balken wächst, darunter «Turn 1/2/3 sends» | «Und jetzt der Punkt, den viele unterschätzen: Jeder Turn schickt *alles Bisherige* wieder mit. Der Prompt-Cache macht den unveränderten Anfang billiger, aber nicht kleiner. Darum der Token-Tipp auf den Blättern: Kritik in einem Prompt sammeln statt in fünf.» |
+| `→` | Verlauf schrumpft zu «Summary» | «`/compact` ersetzt den Verlauf durch eine Zusammenfassung. `/clear` leert ihn ganz. Faustregel: Neue Aufgabe, neuer Kontext.» |
+| `→` | blaues Segment «Skill body» schiebt sich hinein | «Und das ist die Idee hinter Skills: Progressive Disclosure. Immer geladen ist nur die Beschreibung, ein, zwei Sätze. Der eigentliche Text kommt erst, wenn die Aufgabe dazu passt. Dann bleibt er im Kontext. In Übung 02 baut ihr genau das.» |
 
 **Übergang:** «Übung 01: dasselbe Feature einmal ohne und einmal mit CLAUDE.md. Achtet darauf, was sich am Ergebnis ändert, nicht nur an der Zahl.»
 
@@ -73,7 +74,7 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-## Szene 3 · Leitplanken (0:45, 5 Minuten)
+## Szene 3 · «Guardrails» (0:45, 5 Minuten)
 
 **Ziel:** Jeder Tool-Aufruf läuft durch dieselben Tore. Eine Regel ist eine Garantie, eine Anweisung in der CLAUDE.md nur eine Bitte.
 
@@ -102,7 +103,7 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-## Szene 4 · MCP (1:35, 3 Minuten)
+## Szene 4 · «MCP» (1:35, 3 Minuten)
 
 **Ziel:** MCP ist ein Stecker, kein Produkt. Und: Ein Agent, der sein Ergebnis sieht, braucht weniger Kontrolle.
 
@@ -110,8 +111,8 @@ rechts **nicht** «Beispieldaten» stehen.
 |-------|--------------|----------|
 | (Start) | links Claude Code, rechts Browser mit der App | «Bis jetzt hat Claude Dateien gelesen und Befehle ausgeführt. Eure App im Browser sieht es nicht.» |
 | `→` | MCP-Stecker, Playwright-Server, gestrichelt weitere Server | «MCP, das Model Context Protocol, ist ein offener Standard: eine Steckdose für Werkzeuge. Claude Code kennt nur das Protokoll. Dahinter kann ein Browser hängen, ein Ticket-System, eine Datenbank. In Übung 06 ist es Playwright, lokal gestartet, eingetragen in `.mcp.json`, damit das ganze Team denselben Server hat.» |
-| `→` | Feedback-Loop leuchtet reihum | «Das eigentlich Neue ist aber das hier. Claude ändert Code, schaut im Browser nach, sieht den Fehler selbst, korrigiert und sichert das Ergebnis mit einem Test. Ein Agent, der seine Arbeit prüfen kann, braucht weniger Kontrolle durch euch.» |
-| `→` | zwei Merksätze: Kontext, Vertrauen | «Zwei Dinge zum Mitnehmen. Erstens Kontext: Beim Start laden nur die Namen der Tools, die Beschreibungen erst bei Bedarf. Zweitens Vertrauen: Was ein Server zurückgibt, ist fremder Inhalt. Eine Webseite kann Text enthalten, der wie eine Anweisung aussieht.» |
+| `→` | «Feedback loop» leuchtet reihum | «Das eigentlich Neue ist aber das hier. Claude ändert Code, schaut im Browser nach, sieht den Fehler selbst, korrigiert und sichert das Ergebnis mit einem Test. Ein Agent, der seine Arbeit prüfen kann, braucht weniger Kontrolle durch euch.» |
+| `→` | zwei Merksätze: «Context», «Trust» | «Zwei Dinge zum Mitnehmen. Erstens Kontext: Beim Start laden nur die Namen der Tools, die Beschreibungen erst bei Bedarf. Zweitens Vertrauen: Was ein Server zurückgibt, ist fremder Inhalt. Eine Webseite kann Text enthalten, der wie eine Anweisung aussieht.» |
 
 **Übergang:** «Übung 06. Die App läuft bei euch seit vor der Pause. Der Fehler: Das Formular schluckt eine Ablehnung des Backends.»
 
@@ -126,16 +127,16 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-## Szene 5 · Skalieren (2:15, Demo D, 7 Minuten)
+## Szene 5 · «Scale» (2:15, Demo D, 7 Minuten)
 
 **Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Balken «Hauptsession», wenig belegt | «Das ist eure Session. Jetzt soll jemand einen grossen Diff reviewen. Wenn die Hauptsession das selbst liest, ist der Diff danach für immer in eurem Kontext.» |
+| (Start) | Balken «Main session», wenig belegt | «Das ist eure Session. Jetzt soll jemand einen grossen Diff reviewen. Wenn die Hauptsession das selbst liest, ist der Diff danach für immer in eurem Kontext.» |
 | `→` | Auftrag geht nach unten, Subagent-Balken füllt sich stark | «Stattdessen geben wir den Auftrag an einen Subagent. Der hat ein eigenes Kontextfenster und liest alles, was er braucht.» → **Jetzt machen alle mit:** Blatt `exercises/demo-d-reviewer`, drei Minuten. `/context` vorher notieren. |
 | `→` | **Tipp-Runde:** Wie stark wächst der Hauptkontext? | Abstimmen, während die Subagents laufen. Auflösen. |
-| `→` | blaues Segment «Bericht» in der Hauptsession | «Zurück kommt nur der Bericht. Schaut in euer `/context`: Der Unterschied ist klein. Und der Reviewer läuft auf Haiku, also günstiger. Lesen und Suchen delegieren ist die einfachste Art, Kontext und Kontingent zu schonen.» |
+| `→` | blaues Segment «Report» in der Hauptsession | «Zurück kommt nur der Bericht. Schaut in euer `/context`: Der Unterschied ist klein. Und der Reviewer läuft auf Haiku, also günstiger. Lesen und Suchen delegieren ist die einfachste Art, Kontext und Kontingent zu schonen.» |
 | `→` | Repo fächert sich in zwei Worktrees auf | Am Beamer: zwei Terminals, `claude -w office-search` und `claude -w declaration-csv`. «Zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» Drittes Terminal: `git worktree list`. |
 | `→` | Merksatz | «Keine gegenseitigen Edits. Und das Zusammenführen ist normales Git: Pull Request, Review, Merge.» Nicht abwarten, bis die Sessions fertig sind. |
 
@@ -150,7 +151,7 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-## Szene 6 · Rückblick (2:22, 8 Minuten)
+## Szene 6 · «Recap» (2:22, 8 Minuten)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -180,17 +181,17 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 | **C3** | Wer muss das Zollformular für Militärtransporte ausfüllen …? | Sprachwechsel: Antwort nur im italienischen Dokument. BM25 nichts, Vektor Rang 1 |
 | **M3** | Was ändert sich mit NCTS Phase 5 beim Layout … und bei der Tarifnummer? | Zwei Dokumente: Keine Suche bringt beide in die Top 5, der Agent findet beide |
 
-## Szene 1 · Korpus (0–2')
+## Szene 1 · «Corpus» (0–1½')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | 16 Kacheln, «16 Dokumente», «267 Seiten» | «Bis jetzt hat Claude im Code gesucht. Was, wenn das Wissen woanders steht? Das hier ist echte Dokumentation des BAZG zum Transitverfahren: 16 Dokumente, 267 Seiten. Dieselbe Domäne wie eure Übungs-App.» |
-| `→` | deutsche Kacheln verblassen, «3 Sprachen» | «Und sie ist mehrsprachig. Zwei Dokumente gibt es nur auf Französisch, eines nur auf Italienisch. Das wird gleich wichtig.» |
-| `→` | «Chunks im Index», zwei Wege | «Wie findet ein Agent darin die richtige Stelle? Zwei Wege. Entweder wir bauen vorher einen Index und schlagen bei jeder Frage nach: Das ist RAG. Oder der Agent sucht selbst, mit Grep und Read, so wie im Code. Wir schauen uns beide an und messen.» |
+| (Start) | 16 Kacheln, «16 documents», «267 pages» | «Bis jetzt hat Claude im Code gesucht. Was, wenn das Wissen woanders steht? Das hier ist echte Dokumentation des BAZG zum Transitverfahren: 16 Dokumente, 267 Seiten. Dieselbe Domäne wie eure Übungs-App.» |
+| `→` | deutsche Kacheln verblassen, «3 languages» | «Und sie ist mehrsprachig. Zwei Dokumente gibt es nur auf Französisch, eines nur auf Italienisch. Das wird gleich wichtig.» |
+| `→` | «chunks in the index», zwei Wege: «Build an index first», «Let the agent search» | «Wie findet ein Agent darin die richtige Stelle? Zwei Wege. Entweder wir bauen vorher einen Index und schlagen bei jeder Frage nach: Das ist RAG. Oder der Agent sucht selbst, mit Grep und Read, so wie im Code. Wir schauen uns beide an und messen.» |
 
 **Fragen:** *Warum nicht einfach alles in den Kontext?* 267 Seiten bei jedem Turn mitzuschicken ist teuer und macht Antworten ungenauer. · *Sind die Dokumente im Repo?* Nein, sie werden von der BAZG-Seite geladen, die Liste steht in `rag/sources.yaml`.
 
-## Szene 2 · Chunking (2–4')
+## Szene 2 · «Chunking» (1½–3')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -202,7 +203,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Wie gross soll ein Chunk sein?* Gross genug für einen vollständigen Gedanken, klein genug, dass fünf davon in den Kontext passen. · *Wozu Überlappung?* Damit ein Satz an der Schnittkante in mindestens einem Chunk ganz bleibt. · *Bringt das besseres Chunking etwas?* Hier ein bis zwei Fragen von 25. Das ist im Rauschen. Sag das so.
 
-## Szene 3 · BM25 (4–7'), Frage S2
+## Szene 3 · «BM25» (3–5½'), Frage S2
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -213,11 +214,33 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Wofür steht BM25?* «Best Matching 25», eine Bewertungsformel aus den Neunzigern, Standard in Suchmaschinen wie Elasticsearch. Hier über SQLite FTS5. · *Kann man Synonyme nicht einfach hinterlegen?* Ja, aber die Liste muss jemand pflegen, pro Fachgebiet und Sprache. · *Was passiert mit Füllwörtern?* Eine Stoppwortliste entfernt sie vor der Abfrage.
 
-## Szene 4 · Vektorsuche (7–12'), Fragen S2, E1, C3
+## Szene 4 · «Vector DB» (5½–7½'), Frage S2
+
+**Ziel:** Bevor die Karte kommt, sehen alle, was eigentlich gespeichert und verglichen wird: Zahlen pro Chunk.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Karte: jeder Punkt ein Chunk | «Zweite Suche. Ein Embedding-Modell macht aus jedem Chunk einen Punkt in einem Raum, in dem Nähe Ähnlichkeit der Bedeutung heisst. Die Karte ist eine Projektion auf zwei Dimensionen, in Wahrheit sind es 384.» |
+| (Start) | Textstück → «Embedding model» → Zahlenstreifen | «Bevor wir suchen, müssen wir verstehen, was im Index liegt. Ein Embedding-Modell macht aus einem Text eine feste Liste von 384 Zahlen. Ähnliche Bedeutung ergibt ähnliche Zahlen. Das ist ein kleines, eigenes Modell, es läuft hier auf dem Laptop. Mit Claude hat es nichts zu tun.» |
+| `→` | Tabelle: eine Zeile pro Chunk, mit Zahlenstreifen | «Und das ist schon die ganze Vektor-Datenbank: eine Tabelle. Pro Chunk eine Zeile, mit dem Text und seinen 384 Zahlen. Die Streifen zeigen die ersten sechzehn davon. Bei uns sind es 1206 Zeilen in einer einzigen SQLite-Datei.» |
+| `→` | blaue Zeile «the question» | «Die Frage geht durch dasselbe Modell und wird ebenfalls zu 384 Zahlen.» |
+| `→` | Spalte «similarity to the question» füllt sich, Zeilen sortieren sich | «Suchen heisst jetzt: die Zahlen der Frage mit jeder Zeile vergleichen und nach Ähnlichkeit sortieren. Die obersten Zeilen sind die ‹nächsten Nachbarn›. Kein einziges Wort wurde verglichen.» |
+| `→` | drei Merkkästen | «Darum findet ‹Pfund› das Dokument mit ‹GBP›. Und darum geht ein Code wie NT044 verloren. Eine spezielle Datenbank braucht es erst bei Millionen von Zeilen: Dann hilft ein Index, der nicht jede Zeile prüfen muss.» |
+
+**Übergang:** «Eine Tabelle mit 384 Spalten kann niemand lesen. Darum zeichnen wir sie jetzt als Karte.»
+
+**Fragen**
+
+- *Was ist eine Vektor-Datenbank?* Eine Datenbank, die zu jedem Eintrag einen Zahlenvektor speichert und schnell die ähnlichsten Vektoren zu einer Anfrage findet.
+- *Brauche ich dafür ein eigenes Produkt?* Bei einigen tausend Chunks nicht. SQLite mit sqlite-vec oder Postgres mit pgvector reichen. Eigene Vektor-Datenbanken lohnen sich bei sehr grossen Beständen.
+- *Was heisst «nearest neighbour»?* Die Einträge, deren Vektor dem der Frage am ähnlichsten ist. Bei grossen Beständen wird das näherungsweise gesucht (ANN, approximate nearest neighbour).
+- *Was bedeuten die einzelnen Zahlen?* Einzeln nichts Lesbares. Erst das Muster aller 384 Zahlen zusammen beschreibt die Bedeutung.
+- *Woher kommen die Zahlen auf der Folie?* Es sind die echten ersten 16 Werte aus dem Index, die Ähnlichkeiten sind die echten Kosinus-Werte der Suche.
+
+## Szene 5 · «Vector» (7½–11½'), Fragen S2, E1, C3
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Karte: jeder Punkt ein Chunk | «Dieselbe Tabelle, jetzt als Karte. Jede Zeile ist ein Punkt, und Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die 384 Zahlen sind dafür auf zwei zusammengedrückt, die Abstände stimmen also nur ungefähr.» |
 | `→` | die Frage fliegt als Stern ein | «Die Frage wird mit demselben Modell zu einem Punkt.» |
 | `→` | **Tipp-Runde**, dann Linien zu den nächsten Nachbarn, Ergebnisliste | Abstimmen, auflösen. «Gesucht sind die nächsten Nachbarn.» |
 | `→` | Nahaufnahme, grünes Urteil | «Rang 1. Dieselbe Frage, an der BM25 gescheitert ist. Das Modell weiss, dass Pfund und GBP dasselbe meinen.» |
@@ -235,7 +258,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Wo werden die Vektoren gespeichert?* In derselben SQLite-Datei, mit der Erweiterung sqlite-vec. Eine eigene Vektor-Datenbank braucht es bei dieser Grösse nicht.
 - *Hat das etwas mit dem Sprachmodell zu tun?* Nein. Embedding-Modelle sind eigene, viel kleinere Modelle. Claude kommt in diesem Teil gar nicht vor.
 
-## Szene 5 · Hybrid (12–14'), Fragen S2, dann E1
+## Szene 6 · «Hybrid» (11½–13½'), Fragen S2, dann E1
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -247,7 +270,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Warum 60?* Der Wert aus der Originalarbeit zu RRF von 2009. Er dämpft den Vorsprung der obersten Ränge und ist kaum empfindlich. · *Warum nicht die Scores addieren?* BM25-Scores und Kosinus-Werte haben verschiedene Skalen und sind nicht vergleichbar. · *Geht das besser?* Ja, etwa mit einem Reranker, der die Kandidaten nochmals bewertet. Das kostet Zeit und ein weiteres Modell.
 
-## Szene 6 · Agent (14–17'), Frage C3 oder M3
+## Szene 7 · «Agent» (13½–16½'), Frage C3 oder M3
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -260,7 +283,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 
 **Fragen:** *Skaliert das?* Bei 16 Dateien mühelos. Bei Tausenden liefert Grep zu viele Treffer, Turns und Kontext steigen. Dort beginnt der Bereich von RAG. · *Kann man beides verbinden?* Ja: Der Index wird ein Werkzeug des Agenten, zum Beispiel über MCP. Im Repo liegt dafür `rag/mcp_server/`. · *Warum zählen Tokens bei Grep?* Jedes Suchergebnis landet im Kontext und wird in den folgenden Turns wieder mitgeschickt.
 
-## Szene 7 · Messung (17–19')
+## Szene 8 · «Results» (16½–19')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -281,7 +304,7 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 - *Warum ist BM25 bei Synonymen so gut (0.86)?* Gezählt wird auf Dokumentebene, und das grosse Dokument R-14-01 trifft fast immer irgendwo. Die Zahl ist geschönt, sag das offen.
 - *Warum ist das grosse Modell schlechter?* Das wissen wir nicht sicher. Gemessen ist: Es verfehlt mehr Fragen, deren Antwort in einem anderssprachigen Dokument steht. Genau darum misst man.
 
-## Szene 8 · Fazit (19–20')
+## Szene 9 · «Takeaways» (19–20')
 
 Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
@@ -292,7 +315,7 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 **Ein Satz zum Schluss (Vertrauensgrenze):** «Was eine Suche zurückgibt, ist fremder Inhalt und landet im Kontext des Agenten, auch eine versteckte Anweisung. Darum gelten die Permissions aus Übung 04 auch hier.»
 
-**Übergang zu Demo D:** «Der Agent hat gerade viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Konzepte, Szene 5.
+**Übergang zu Demo D:** «Der Agent hat gerade viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Concepts, Szene 5 «Scale».
 
 **Fragen**
 
@@ -339,6 +362,8 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 | Vektorsuche | Suche nach den Chunks, deren Embedding dem der Frage am nächsten liegt |
 | Kosinus-Distanz | Mass für die Nähe zweier Vektoren über ihren Winkel |
 | PCA | Verfahren, das viele Dimensionen auf wenige abbildet, hier für die 2D-Karte |
+| Vektor-Datenbank | Tabelle mit einem Embedding pro Eintrag, die schnell die ähnlichsten Einträge zu einer Anfrage findet |
+| Nächste Nachbarn | Die Einträge, deren Vektor dem der Frage am ähnlichsten ist |
 | Hybrid-Suche | Kombination von Stichwort- und Vektorsuche |
 | RRF | Reciprocal Rank Fusion: Ranglisten mischen über `1/(k+Rang)`, hier k = 60 |
 | Recall@k | Anteil der erwarteten Dokumente unter den ersten k Ergebnissen |
