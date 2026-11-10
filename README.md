@@ -18,6 +18,9 @@ Am Ende des Nachmittags könnt ihr:
 - einschätzen, wann eingebaute Suche reicht und wann Retrieval (RAG) etwas bringt,
 - grob einordnen, wofür Subagents und parallele Sessions gut sind.
 
+**Präsentation des Nachmittags** (alle Folien, auch zu jeder Übung): https://claude-code-workshop-black.vercel.app
+Lokal: `praesentation/index.html` öffnen.
+
 ## Ablauf
 
 | Zeit | Block | Format | Übungen |

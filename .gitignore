@@ -34,3 +34,4 @@ rag/.cache/
 # Personal Claude Code settings (team settings in .claude/settings.json are committed)
 .claude/settings.local.json
 CLAUDE.local.md
+.vercel

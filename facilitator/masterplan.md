@@ -233,15 +233,20 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 - [x] Umbau in drei Commits auf `main` (a94999a, 3ecd27e, 4aae562), Kette neu aufgebaut, Archiv-Tags gesetzt
 - [x] `scripts/verify-all.sh --e2e`: alle 15 Referenzen grün
 - [x] RAG-Pipeline gelaufen, Zahlen in [demo-scripts.md](demo-scripts.md) eingetragen
-- [x] Review-Seite für die RAG-Fragen veröffentlicht: https://claude.ai/artifact/QWR44kzcnrqiKga1WAGvJp
+- [x] Review-Seite für die RAG-Fragen veröffentlicht (privates claude.ai-Artifact von Roland)
 
 - [x] Review vom 2026-11-10 (Branch `workshop-visuals`): Konzept-Szenen, Korpus-Szene, Schätzfragen, Demo D zum
       Mitmachen, Korrekturen an den Blättern (04 löscht nicht mehr `target`, 00 ohne `check-setup`, App-Start vor der Pause)
 
+- [x] 2026-11-10: beide Decks zu **einer** Präsentation vereint (`praesentation/`), eine Folie pro Übung mit Uhr,
+      Folien deutsch und vereinfacht, BM25 und Vektor-Datenbank Schritt für Schritt, Messung als Punkte
+- [x] Git-Kette auf den neuen `main` nachgezogen, `verify-all.sh --e2e` auf allen 15 Referenzen grün
+- [x] Repo öffentlich auf GitHub: https://github.com/rolivischi2/claude-code-workshop
+- [x] Präsentation gehostet: https://claude-code-workshop-black.vercel.app (Vercel, liefert nur `praesentation/` aus)
+
 **Offen (Roland)**
 
-- [ ] Konzept-Szenen und Schätzfragen ansehen, Texte anpassen (Schlussfrage, Kernaussage 3 zum Chunking)
-- [ ] Danach: Git-Kette auf den neuen `main` nachziehen (`solution/*` rebasen, `start/NN` versetzen), `verify-all.sh --e2e`
+- [ ] Präsentation ganz durchgehen, Texte anpassen (Schlussfrage, Kernaussage 3 zum Chunking, Übungsfolien)
 - [ ] Szene «Kontext»: schematische Breiten durch die `/context`-Werte aus dem Dry-Run ersetzen
 
 - [ ] RAG-Fragen auf der Review-Seite prüfen (noch keine Urteile erfasst). Danach: `questions.yaml`
