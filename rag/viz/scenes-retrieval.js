@@ -1,4 +1,4 @@
-/* Scenes 1–6: corpus, chunking, BM25, vector database, vector search, hybrid (RRF). On-screen text is English. */
+/* Szenen 1–6: Korpus, Chunking, BM25, Vektor-Datenbank, Vektorsuche, Hybrid (RRF). */
 'use strict';
 (function () {
   var h = VIZ.h, s = VIZ.s, ui = VIZ.ui, at = VIZ.at;
@@ -6,7 +6,7 @@
 
   /* Ergebnis-Karte für BM25 und Vektor */
   function resultCard(r, ctx, o) {
-    var c = ctx.chunk(r.chunk) || { doc: '?', heading: '', text: '(chunk not in the data)' };
+    var c = ctx.chunk(r.chunk) || { doc: '?', heading: '', text: '(Chunk fehlt in den Daten)' };
     var w = o.max > 0 ? Math.max(4, Math.round(100 * r.score / o.max)) : 0;
     var text = ui.snippet(c.text, o.terms, o.len || 150);
     return h('div', { class: 'rcard ' + (r.hit ? 'is-hit' : 'is-miss') + ' rc-' + o.mode },
@@ -25,8 +25,8 @@
   function restRow(list, k, label) {
     var rest = (list || []).slice(k);
     if (!rest.length) return null;
-    return h('div', { class: 'rest' }, h('span', { class: 'rest-label', text: label || ('Rank ' + (k + 1) + '–' + (k + rest.length)) }),
-      rest.map(function (r) { return h('span', { class: 'rest-dot ' + (r.hit ? 'hit' : 'miss'), title: 'Rank ' + r.rank, text: r.rank }); }));
+    return h('div', { class: 'rest' }, h('span', { class: 'rest-label', text: label || ('Rang ' + (k + 1) + '–' + (k + rest.length)) }),
+      rest.map(function (r) { return h('span', { class: 'rest-dot ' + (r.hit ? 'hit' : 'miss'), title: 'Rang ' + r.rank, text: r.rank }); }));
   }
 
   function verdictBox(cls, big, lines) {
@@ -35,7 +35,7 @@
   }
 
   function noQuestion(stage) {
-    stage.appendChild(ui.empty('No questions', 'The data has no questions (questions is empty).'));
+    stage.appendChild(ui.empty('Keine Fragen', 'Die Daten enthalten keine Fragen (questions ist leer).'));
   }
 
   /* Tipp-Runde «Findet diese Suche das richtige Dokument?» – Antwort aus der echten Rangliste */
@@ -43,43 +43,43 @@
     var q = ctx.q;
     if (!q || !list) return null;
     var k = ctx.k, fh = ui.firstHit(list), ok = !!(fh && fh <= k);
-    return { before: before, question: question.replace('{k}', k), options: ['Yes, in the top ' + k, 'No'], correct: ok ? 0 : 1,
-      reveal: ok ? 'First hit at rank ' + fh + '.' : fh ? 'First hit only at rank ' + fh + '.' : 'No hit in the top ' + Math.max(list.length, 10) + '.' };
+    return { before: before, question: question.replace('{k}', k), options: ['Ja, in den Top ' + k, 'Nein'], correct: ok ? 0 : 1,
+      reveal: ok ? 'Erster Treffer auf Rang ' + fh + '.' : fh ? 'Erster Treffer erst auf Rang ' + fh + '.' : 'Kein Treffer in den Top ' + Math.max(list.length, 10) + '.' };
   }
 
   /* ===================== 1 Korpus ===================== */
   VIZ.defs.korpus = {
-    id: 'korpus', nav: 'Corpus', title: 'The corpus: real customs documentation',
-    lead: 'Each tile is one document: the wider, the more pages. The answer to every question in this experiment is in here.',
+    id: 'korpus', nav: 'Korpus', title: 'Der Korpus: echte Zolldokumentation',
+    lead: 'Eine Kachel pro Dokument. Je breiter, desto mehr Seiten. Jede Frage dieses Experiments lässt sich daraus beantworten.',
     beats: 3,
     render: function (stage, ctx) {
       var docs = (ctx.data.docs || []).slice().sort(function (a, b) { return (b.pages || 0) - (a.pages || 0); });
-      if (!docs.length) { stage.appendChild(ui.empty('No documents', 'docs is missing in the data.')); return; }
+      if (!docs.length) { stage.appendChild(ui.empty('Keine Dokumente', 'docs fehlt in den Daten.')); return; }
       var pages = docs.reduce(function (n, d) { return n + (d.pages || 0); }, 0);
       var langs = {};
       docs.forEach(function (d) { var l = langs[d.lang] = langs[d.lang] || { docs: 0, pages: 0 }; l.docs++; l.pages += d.pages || 0; });
       var chunks = (ctx.data.meta.corpus || {}).chunks;
       stage.appendChild(h('div', { class: 'kfacts' },
-        fact(VIZ.num(docs.length), 'documents', 0, 0),
-        pages ? fact(VIZ.num(pages), 'pages', 0, 150) : null,
-        fact(String(Object.keys(langs).length), 'languages', 1, 0),
-        chunks ? fact(VIZ.num(chunks), 'chunks in the index', 2, 0) : null));
+        fact(VIZ.num(docs.length), 'Dokumente', 0, 0),
+        pages ? fact(VIZ.num(pages), 'Seiten', 0, 150) : null,
+        fact(String(Object.keys(langs).length), 'Sprachen', 1, 0),
+        chunks ? fact(VIZ.num(chunks), 'Chunks im Index', 2, 0) : null));
       var wall = h('div', { class: 'kwall' });
       docs.forEach(function (d, i) {
         var w = Math.max(1, d.pages || 1);
         wall.appendChild(at(h('div', { class: 'ktile kl-' + d.lang, title: d.title, style: { 'flex-grow': w, 'flex-basis': (w * 0.36) + '%' } },
           h('span', { class: 'ktile-title', text: d.title }),
-          h('span', { class: 'ktile-meta', text: (d.pages ? VIZ.num(d.pages) + ' p. · ' : '') + (VIZ.LANG[d.lang] || d.lang) })), 0, 'pop', i * 60));
+          h('span', { class: 'ktile-meta', text: (d.pages ? VIZ.num(d.pages) + ' S. · ' : '') + (VIZ.LANG[d.lang] || d.lang) })), 0, 'pop', i * 60));
       });
       stage.appendChild(wall);
       stage.appendChild(at(h('div', { class: 'legend klegend' }, Object.keys(langs).sort(function (a, b) { return langs[b].pages - langs[a].pages; }).map(function (l) {
-        return h('span', {}, h('i', { class: 'sw kl-' + l }), (VIZ.LANG[l] || l) + ': ' + langs[l].docs + (langs[l].docs === 1 ? ' document' : ' documents') +
-          (pages ? ', ' + VIZ.num(langs[l].pages) + ' pages' : ''));
+        return h('span', {}, h('i', { class: 'sw kl-' + l }), (VIZ.LANG[l] || l) + ': ' + langs[l].docs + (langs[l].docs === 1 ? ' Dokument' : ' Dokumente') +
+          (pages ? ', ' + VIZ.num(langs[l].pages) + ' Seiten' : ''));
       })), 1, 'fade'));
       stage.appendChild(at(h('div', { class: 'kroads' },
-        h('p', { class: 'kroads-q', text: 'How does an agent find the right passage in here?' }),
-        h('div', { class: 'kroad kroad-rag' }, h('b', { text: 'Build an index first' }), h('span', { text: 'RAG = Retrieval-Augmented Generation: split, index, look up the best passages for each question and hand them to the model' })),
-        h('div', { class: 'kroad' }, h('b', { text: 'Let the agent search' }), h('span', { text: 'Agentic search: Grep, Glob, Read over several rounds, no index, deciding anew after every result' }))), 2, 'up'));
+        h('p', { class: 'kroads-q', text: 'Wie findet ein Agent darin die richtige Stelle?' }),
+        h('div', { class: 'kroad kroad-rag' }, h('b', { text: 'Weg 1: RAG' }), h('span', { text: 'Retrieval-Augmented Generation. Dokumente vorab zerlegen und indexieren. Pro Frage die besten Stellen suchen und dem Modell mitgeben.' })),
+        h('div', { class: 'kroad' }, h('b', { text: 'Weg 2: Der Agent sucht selbst' }), h('span', { text: 'Kein Index. Der Agent sucht mit Grep, Glob und Read in mehreren Schritten und entscheidet nach jedem Ergebnis neu.' }))), 2, 'up'));
     },
     step: function (b) {
       Array.prototype.forEach.call(document.querySelectorAll('.ktile'), function (el) {
@@ -93,27 +93,27 @@
 
   /* ===================== 2 Chunking ===================== */
   VIZ.defs.chunking = {
-    id: 'chunking', nav: 'Chunking', title: 'Chunking: where to cut',
-    lead: 'One section from the corpus, two ways to cut it. A search always returns whole chunks, never single sentences.',
+    id: 'chunking', nav: 'Chunking', title: 'Chunking: den Text zerlegen',
+    lead: 'Ein Abschnitt aus dem Korpus, zwei Schnittarten. Die Suche liefert immer ganze Chunks zurück, nie einzelne Sätze.',
     beats: 3,
     render: function (stage, ctx) {
       var demo = ctx.data.chunkingDemo;
-      if (!demo || !demo.text) { stage.appendChild(ui.empty('No sample section', 'chunkingDemo is missing in the data.')); this._demo = null; return; }
+      if (!demo || !demo.text) { stage.appendChild(ui.empty('Kein Beispielabschnitt', 'chunkingDemo fehlt in den Daten.')); this._demo = null; return; }
       this._demo = demo;
       var fx = demo.fixed || [], hd = demo.heading || [];
       var size = median(fx.map(function (c) { return c.end - c.start; }));
       var ov = median(fx.slice(1).map(function (c, i) { return fx[i].end - c.start; }));
-      this._fixedLabel = 'Fixed length' + (size ? ' (' + VIZ.num(size) + ' chars' + (ov > 0 ? ', ' + VIZ.num(ov) + ' overlap' : '') + ')' : '');
+      this._fixedLabel = 'Feste Länge' + (size ? ' (' + VIZ.num(size) + ' Zeichen' + (ov > 0 ? ', ' + VIZ.num(ov) + ' überlappend' : '') + ')' : '');
       var self = this;
       var bar = h('div', { class: 'toolbar' },
-        h('div', { class: 'seg', role: 'group', 'aria-label': 'Chunking method' },
+        h('div', { class: 'seg', role: 'group', 'aria-label': 'Schnittart' },
           h('button', { type: 'button', class: 'seg-btn', 'data-mode': 'fixed', onclick: function () { self.setBeat(1); } }, this._fixedLabel),
-          h('button', { type: 'button', class: 'seg-btn', 'data-mode': 'heading', onclick: function () { self.setBeat(2); } }, 'Along the headings')),
-        h('span', { class: 'toolbar-hint' }, h('kbd', { text: 't' }), ' switch'),
+          h('button', { type: 'button', class: 'seg-btn', 'data-mode': 'heading', onclick: function () { self.setBeat(2); } }, 'Nach Überschriften')),
+        h('span', { class: 'toolbar-hint' }, h('kbd', { text: 't' }), ' wechseln'),
         h('div', { class: 'stats', id: 'ch-stats' }));
       var doc = ctx.docs[demo.doc];
       var page = h('div', { class: 'page' },
-        h('div', { class: 'page-src', text: 'Source: ' + (doc ? doc.title : demo.doc) + ', ' + VIZ.num(demo.text.length) + ' chars' }),
+        h('div', { class: 'page-src', text: 'Quelle: ' + (doc ? doc.title : demo.doc) + ', ' + VIZ.num(demo.text.length) + ' Zeichen' }),
         h('div', { class: 'page-text', id: 'ch-text' }));
       stage.appendChild(bar);
       stage.appendChild(h('div', { class: 'ch-grid' }, page, h('div', { class: 'chunklist', id: 'ch-list' })));
@@ -124,7 +124,7 @@
       VIZ.state.beat = b;
       VIZ.apply(b, true, f);
     },
-    help: [['t', 'Chunking: fixed length ↔ headings']],
+    help: [['t', 'Chunking: feste Länge ↔ Überschriften']],
     keys: {
       t: function () { var d = VIZ.defs.chunking; d.setBeat(VIZ.state.beat === 1 ? 2 : 1); }
     },
@@ -160,7 +160,7 @@
         if (cuts[a]) {
           var bad = WORD.test(text[a - 1] || '') && WORD.test(text[a] || '');
           if (bad) midword++;
-          var cut = h('span', { class: 'cut' + (bad ? ' bad' : ''), title: bad ? 'Cut in the middle of a word' : 'Cut' });
+          var cut = h('span', { class: 'cut' + (bad ? ' bad' : ''), title: bad ? 'Schnitt mitten im Wort' : 'Schnitt' });
           el.appendChild(cut);
           anims.push([cut, a, 'cut']);
         }
@@ -188,13 +188,13 @@
       /* Kennzahlen */
       var st = document.getElementById('ch-stats');
       st.innerHTML = '';
-      if (mode === 'raw') st.appendChild(h('span', {}, h('b', { text: '1' }), ' section'));
+      if (mode === 'raw') st.appendChild(h('span', {}, h('b', { text: '1' }), ' Abschnitt'));
       else {
-        st.appendChild(h('span', {}, h('b', { text: chunks.length }), ' chunks'));
-        st.appendChild(h('span', { class: midword ? 'bad' : 'good' }, h('b', { text: midword }), ' cuts in the middle of a word'));
+        st.appendChild(h('span', {}, h('b', { text: chunks.length }), ' Chunks'));
+        st.appendChild(h('span', { class: midword ? 'bad' : 'good' }, h('b', { text: midword }), ' Schnitte mitten im Wort'));
         var ovc = chunks.filter(function (c, i) { return i > 0 && chunks[i - 1].end > c.start; }).length;
-        if (ovc) st.appendChild(h('span', {}, h('b', { text: ovc }), ' overlaps'));
-        if (mode === 'heading') st.appendChild(h('span', { class: 'good' }, 'heading path kept as context'));
+        if (ovc) st.appendChild(h('span', {}, h('b', { text: ovc }), ' Überlappungen'));
+        if (mode === 'heading') st.appendChild(h('span', { class: 'good' }, 'Überschriften stehen im Chunk'));
       }
 
       /* Karten */
@@ -202,8 +202,8 @@
       list.innerHTML = '';
       if (mode === 'raw') {
         list.appendChild(h('div', { class: 'ch-intro' },
-          h('p', { text: 'Not cut yet.' }),
-          h('p', { class: 'muted', text: 'A chunk is the unit that gets indexed and returned. An embedding model only takes a short piece at a time, and BM25 scores whole chunks. So the text has to be cut into pieces.' })));
+          h('p', { text: 'Noch nicht zerlegt.' }),
+          h('p', { class: 'muted', text: 'Ein Chunk ist die Einheit, die indexiert und zurückgegeben wird. Ein Embedding-Modell verarbeitet nur kurze Texte, und BM25 bewertet ganze Chunks. Darum wird jedes Dokument zerlegt.' })));
         return;
       }
       var max = 7;
@@ -211,13 +211,13 @@
         var card;
         if (mode === 'fixed') {
           card = h('div', { class: 'ccard' },
-            h('div', { class: 'ccard-top' }, h('span', { class: 'pill', text: i + 1 }), h('span', { class: 'muted', text: VIZ.num(c.end - c.start) + ' chars' })),
-            h('p', { class: 'ccard-frag' }, h('span', { class: 'muted', text: 'Start ' }), fragStart(text, c.start)),
-            h('p', { class: 'ccard-frag' }, h('span', { class: 'muted', text: 'End ' }), fragEnd(text, c.end)));
+            h('div', { class: 'ccard-top' }, h('span', { class: 'pill', text: i + 1 }), h('span', { class: 'muted', text: VIZ.num(c.end - c.start) + ' Zeichen' })),
+            h('p', { class: 'ccard-frag' }, h('span', { class: 'muted', text: 'Anfang ' }), fragStart(text, c.start)),
+            h('p', { class: 'ccard-frag' }, h('span', { class: 'muted', text: 'Ende ' }), fragEnd(text, c.end)));
         } else {
           card = h('div', { class: 'ccard' },
-            h('div', { class: 'ccard-top' }, h('span', { class: 'pill', text: i + 1 }), h('span', { class: 'muted', text: VIZ.num(c.end - c.start) + ' chars' })),
-            h('p', { class: 'ccard-head', text: ui.headingPath(c.heading) || '(no heading)' }));
+            h('div', { class: 'ccard-top' }, h('span', { class: 'pill', text: i + 1 }), h('span', { class: 'muted', text: VIZ.num(c.end - c.start) + ' Zeichen' })),
+            h('p', { class: 'ccard-head', text: ui.headingPath(c.heading) || '(ohne Überschrift)' }));
         }
         list.appendChild(card);
         if (animate) VIZ.anim(card, VIZ.ENTER.right, { delay: 250 + i * 110 });
@@ -225,7 +225,7 @@
       var shown = Math.min(max, chunks.length);
       var more = h('p', { class: 'muted more' });
       list.appendChild(more);
-      function moreText() { var r = chunks.length - shown; more.textContent = r > 1 ? '+ ' + r + ' more chunks' : r === 1 ? '+ 1 more chunk' : ''; }
+      function moreText() { var r = chunks.length - shown; more.textContent = r > 1 ? '+ ' + r + ' weitere Chunks' : r === 1 ? '+ 1 weiterer Chunk' : ''; }
       moreText();
       while (shown > 2 && list.scrollHeight > list.clientHeight + 1) {
         list.removeChild(list.querySelectorAll('.ccard')[shown - 1]);
@@ -261,56 +261,74 @@
   }
 
   /* ===================== 3 BM25 ===================== */
+  /* Zeigt die drei Schritte der Stichwortsuche mit echten Werten:
+     1 Frage zerlegen (query_terms), 2 Seltenheit je Suchbegriff (term_df = Anzahl Chunks im ganzen Index),
+     3 Chunks bewerten (Rangliste mit Scores aus SQLite FTS5). */
+  function idfWeight(df, N) { return Math.log(1 + (N - df + 0.5) / (df + 0.5)); }
   VIZ.defs.bm25 = {
-    id: 'bm25', nav: 'BM25', usesQuestion: true, title: 'BM25: counting matching words',
-    lead: 'Keyword search checks which search terms appear literally in a chunk and how rare they are in the corpus.',
-    beats: 3,
+    id: 'bm25', nav: 'BM25', usesQuestion: true, title: 'BM25: die Stichwortsuche',
+    lead: 'BM25 sucht die Wörter der Frage wörtlich in den Chunks. Seltene Wörter zählen mehr als häufige. Die Bedeutung der Wörter spielt keine Rolle.',
+    beats: 4,
     guess: function (ctx) {
-      return hitGuess(ctx, ctx.q && (ctx.q.bm25 || []), 1, 'Does keyword search (BM25) find the right document in the top {k}?');
+      return hitGuess(ctx, ctx.q && (ctx.q.bm25 || []), 2, 'Findet BM25 das richtige Dokument in den Top {k}?');
     },
     render: function (stage, ctx) {
       var q = ctx.q;
       if (!q) { noQuestion(stage); return; }
-      var list = q.bm25 || [], k = ctx.k;
-      var counts = {};
-      (q.query_terms || []).forEach(function (t) { counts[t] = 0; });
-      list.forEach(function (r) { (r.matched || []).forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
-      var terms = h('div', { class: 'terms' }, h('span', { class: 'terms-label', text: 'Search terms BM25 looks for' }),
-        (q.query_terms || []).map(function (t, i) {
-          return at(h('span', { class: 'term', 'data-term': t, 'data-count': counts[t] || 0 }, t,
-            h('span', { class: 'term-count', text: (counts[t] || 0) + '×' })), 0, 'pop', 250 + i * 140);
-        }));
-      stage.appendChild(ui.question(q, terms));
+      var list = q.bm25 || [], k = ctx.k, terms = q.query_terms || [];
+      var N = (ctx.data.meta.corpus || {}).chunks || 0, df = q.term_df || null;
+      var inTop = {};
+      list.forEach(function (r) { (r.matched || []).forEach(function (t) { inTop[t] = (inTop[t] || 0) + 1; }); });
+      function count(t) { return df ? (df[t] || 0) : (inTop[t] || 0); }
+      var wmax = N ? idfWeight(1, N) : 1;
 
+      /* 1 Frage zerlegen */
+      var seen = {}, words = (q.text.toLowerCase().match(/[\p{L}\p{N}]+/gu) || []).filter(function (w) { if (seen[w]) return false; seen[w] = 1; return true; });
+      var tokens = h('div', { class: 'tok' });
+      words.forEach(function (w, i) {
+        var isTerm = terms.indexOf(w) >= 0, n = count(w);
+        var col = h('div', { class: 'tok-col' + (isTerm ? ' is-term' : ' is-stop') + (isTerm && !n ? ' is-zero' : ''), 'data-count': n },
+          at(h('span', { class: 'tok-word', text: w }), 0, 'pop', 150 + i * 70));
+        if (isTerm) {
+          col.appendChild(at(h('span', { class: 'tok-df', text: df ? (n ? 'in ' + VIZ.num(n) + ' Chunks' : 'in keinem Chunk') : (n ? n + '× in den Top 10' : 'kein Treffer') }), 1, 'up', i * 70));
+          if (df && N) col.appendChild(at(h('span', { class: 'tok-w', title: 'Gewicht' }, h('b', { style: { width: (n ? Math.max(6, 100 * idfWeight(n, N) / wmax) : 0) + '%' } })), 1, 'grow', 150 + i * 70));
+        }
+        tokens.appendChild(col);
+      });
+      stage.appendChild(ui.question(q));
+      stage.appendChild(h('div', { class: 'bm-steps' },
+        h('div', { class: 'bm-step' }, h('b', { text: '1 Frage zerlegen' }), h('span', { text: 'Kleinschreibung, Füllwörter (durchgestrichen) entfernen. Übrig bleiben die Suchbegriffe.' })),
+        at(h('div', { class: 'bm-step' }, h('b', { text: '2 Seltenheit bestimmen' }),
+          h('span', { text: df && N ? 'In wie vielen der ' + VIZ.num(N) + ' Chunks kommt der Begriff vor? Je seltener, desto höher sein Gewicht (Balken).' : 'Je seltener ein Begriff im Korpus, desto höher sein Gewicht.' })), 1, 'fade'),
+        at(h('div', { class: 'bm-step' }, h('b', { text: '3 Chunks bewerten' }),
+          h('span', { text: 'Score = Summe über alle Suchbegriffe: Gewicht × Häufigkeit im Chunk. Wiederholungen zählen immer weniger, lange Chunks werden abgewertet.' })), 2, 'fade')));
+      stage.appendChild(tokens);
+
+      /* 3 Rangliste */
       var col = h('div', { class: 'results' });
-      if (!list.length) col.appendChild(at(ui.note('BM25 returns no chunk at all: none of the search terms appears literally in the corpus.', 'miss'), 1));
+      if (!list.length) col.appendChild(at(ui.note('BM25 liefert keinen einzigen Chunk. Kein Suchbegriff kommt wörtlich im Korpus vor.', 'miss'), 2));
       var max = list.length ? list[0].score : 1;
       list.slice(0, k).forEach(function (r, i) {
-        col.appendChild(at(resultCard(r, ctx, { mode: 'lex', max: max, terms: q.query_terms, digits: 2 }), 1, 'right', i * 110));
+        col.appendChild(at(resultCard(r, ctx, { mode: 'lex', max: max, terms: terms, digits: 2 }), 2, 'right', i * 110));
       });
       var rest = restRow(list, k);
-      if (rest) col.appendChild(at(rest, 1, 'fade', k * 110));
+      if (rest) col.appendChild(at(rest, 2, 'fade', k * 110));
 
       var fh = ui.firstHit(list);
-      var zero = (q.query_terms || []).filter(function (t) { return !counts[t]; });
-      var big = fh && fh <= k ? 'Hit at rank ' + fh : fh ? 'First hit only at rank ' + fh : 'No hit in the top ' + Math.max(list.length, 10);
+      var zero = terms.filter(function (t) { return !count(t); });
+      var big = fh && fh <= k ? 'Treffer auf Rang ' + fh : fh ? 'Erster Treffer erst auf Rang ' + fh : 'Kein Treffer in den Top ' + Math.max(list.length, 10);
       var lines = [];
-      if (zero.length) lines.push('“' + zero.join('”, “') + '” ' + (zero.length > 1 ? 'appear' : 'appears') + ' in none of the chunks found.');
+      if (zero.length) lines.push('«' + zero.join('», «') + '» ' + (zero.length > 1 ? 'kommen' : 'kommt') + (df ? ' im ganzen Korpus nicht vor.' : ' in keinem gefundenen Chunk vor.'));
       if (q.note) lines.push(q.note);
-      if (!(fh && fh <= k)) lines.push('BM25 compares character strings, not meaning: synonyms and other languages stay invisible.');
-      else if (q.category === 'exact-identifier') lines.push('Rare, exact strings are where BM25 is strong.');
+      if (!(fh && fh <= k)) lines.push('BM25 vergleicht Zeichenfolgen. Synonyme und andere Sprachen findet es nicht.');
+      else if (q.category === 'exact-identifier') lines.push('Seltene, exakte Zeichenfolgen sind die Stärke von BM25.');
       var side = h('div', { class: 'side' },
-        at(h('div', { class: 'explain' },
-          h('p', {}, 'The score rises when a term appears ', h('b', { text: 'often in the chunk' }), ' and ', h('b', { text: 'rarely in the corpus' }), '.'),
-          h('p', { class: 'muted', text: 'A word that does not appear literally contributes nothing. BM25 is the standard formula behind classic search engines.' })), 1, 'fade', 300),
-        at(verdictBox(fh && fh <= k ? 'hit' : 'miss', big, lines), 2, 'up'));
+        at(verdictBox(fh && fh <= k ? 'hit' : 'miss', big, lines), 3, 'up'),
+        at(ui.tidbit('Was ist BM25?', '«Best Matching 25»: die Standardformel klassischer Volltextsuche (Lucene, Elasticsearch). Hier rechnet SQLite FTS5. Kein Modell, kein Training.'), 3, 'up', 200));
       stage.appendChild(h('div', { class: 'two-col' }, col, side));
     },
     step: function (b) {
-      Array.prototype.forEach.call(document.querySelectorAll('.term'), function (t) {
-        t.classList.toggle('zero', b >= 2 && t.getAttribute('data-count') === '0');
-        t.classList.toggle('counted', b >= 1);
-      });
+      Array.prototype.forEach.call(document.querySelectorAll('.tok-col.is-zero'), function (t) { t.classList.toggle('zero', b >= 1); });
     }
   };
 
@@ -321,7 +339,7 @@
   var VROWS = 7;
   function strip(v, cls) {
     var el = h('span', { class: 'vstrip ' + (cls || '') });
-    if (!v || !v.length) { el.appendChild(h('span', { class: 'vstrip-none', text: 'numbers not in this data file' })); return el; }
+    if (!v || !v.length) { el.appendChild(h('span', { class: 'vstrip-none', text: 'Zahlen fehlen in dieser Datendatei' })); return el; }
     var max = Math.max.apply(null, v.map(Math.abs)) || 1;
     v.forEach(function (x) {
       var a = Math.min(1, Math.abs(x) / max);
@@ -335,9 +353,9 @@
     return '[' + v.slice(0, n).map(function (x) { return (x >= 0 ? ' ' : '') + x.toFixed(2); }).join(', ') + ', …]';
   }
   VIZ.defs.vecdb = {
-    id: 'vecdb', nav: 'Vector DB', usesQuestion: true, title: 'A vector database: text stored as numbers',
+    id: 'vecdb', nav: 'Vektor-DB', usesQuestion: true, title: 'Vektor-Datenbank: Text als Zahlen gespeichert',
     lead: function (ctx) {
-      return 'An embedding model turns any text into a fixed list of ' + (ctx.data.meta.dims || 384) + ' numbers. Similar meaning gives similar numbers. The database stores one such list per chunk.';
+      return 'Ein Embedding-Modell berechnet aus einem Text eine Liste von ' + (ctx.data.meta.dims || 384) + ' Zahlen. Texte mit ähnlicher Bedeutung erhalten ähnliche Zahlen. Die Datenbank speichert pro Chunk eine solche Liste.';
     },
     beats: 5,
     render: function (stage, ctx) {
@@ -345,28 +363,28 @@
       if (!q) { noQuestion(stage); return; }
       var dims = ctx.data.meta.dims || 384, k = ctx.k;
       var list = (q.vector || []).slice(0, VROWS).filter(function (r) { return ctx.chunk(r.chunk); });
-      if (!list.length) { stage.appendChild(ui.question(q)); stage.appendChild(ui.note('No vector results for this question.', 'miss')); this._ok = false; return; }
+      if (!list.length) { stage.appendChild(ui.question(q)); stage.appendChild(ui.note('Keine Vektor-Ergebnisse für diese Frage.', 'miss')); this._ok = false; return; }
       this._ok = true;
       var first = ctx.chunk(list[0].chunk), total = (ctx.data.meta.corpus || {}).chunks;
-      var model = String(ctx.data.meta.model || 'embedding model').split('/').pop();
+      var model = String(ctx.data.meta.model || 'Embedding-Modell').split('/').pop();
 
       /* 1 text -> model -> numbers */
       stage.appendChild(h('div', { class: 'emb' },
-        at(h('div', { class: 'emb-text' }, h('span', { class: 'emb-label', text: 'A chunk of text' }), h('p', { text: ui.snippet(first.text, null, 120) })), 0, 'left'),
+        at(h('div', { class: 'emb-text' }, h('span', { class: 'emb-label', text: 'Ein Chunk' }), h('p', { text: ui.snippet(first.text, null, 120) })), 0, 'left'),
         at(h('span', { class: 'emb-arrow', text: '→' }), 0, 'fade', 250),
-        at(h('div', { class: 'emb-model' }, h('b', { text: 'Embedding model' }), h('span', { text: model }), h('span', { class: 'emb-fine', text: 'small, runs on this laptop, not Claude' })), 0, 'pop', 350),
+        at(h('div', { class: 'emb-model' }, h('b', { text: 'Embedding-Modell' }), h('span', { text: model }), h('span', { class: 'emb-fine', text: 'klein, läuft lokal, ist nicht Claude' })), 0, 'pop', 350),
         at(h('span', { class: 'emb-arrow', text: '→' }), 0, 'fade', 600),
-        at(h('div', { class: 'emb-vec' }, h('span', { class: 'emb-label', text: VIZ.num(dims) + ' numbers = its “embedding” or “vector”' }),
+        at(h('div', { class: 'emb-vec' }, h('span', { class: 'emb-label', text: VIZ.num(dims) + ' Zahlen = das Embedding (der Vektor) dieses Chunks' }),
           strip(first.v), h('code', { text: numbers(first.v, 6) })), 0, 'right', 700)));
 
       /* 2 the table */
       var rows = list.slice().sort(function (a, b) { return a.chunk - b.chunk; });
       var maxScore = Math.max.apply(null, list.map(function (r) { return r.score; })) || 1;
       var table = h('div', { class: 'vt', id: 'vt' });
-      table.appendChild(h('div', { class: 'vt-row vt-head' }, h('span', { text: 'row' }), h('span', { text: 'document' }), h('span', { text: 'chunk text' }),
-        h('span', { text: 'embedding (' + VIZ.num(dims) + ' numbers)' }), at(h('span', { text: 'similarity to the question' }), 3, 'fade')));
-      table.appendChild(at(h('div', { class: 'vt-row vt-query' }, h('span', { text: '?' }), h('span', { text: 'the question' }),
-        h('span', { class: 'vt-text', text: q.text }), strip(q.query_v, 'q'), h('span', { class: 'vt-sim', text: 'same model, same ' + VIZ.num(dims) + ' numbers' })), 2, 'up'));
+      table.appendChild(h('div', { class: 'vt-row vt-head' }, h('span', { text: 'Zeile' }), h('span', { text: 'Dokument' }), h('span', { text: 'Text des Chunks' }),
+        h('span', { text: 'Embedding (' + VIZ.num(dims) + ' Zahlen)' }), at(h('span', { text: 'Ähnlichkeit zur Frage' }), 3, 'fade')));
+      table.appendChild(at(h('div', { class: 'vt-row vt-query' }, h('span', { text: '?' }), h('span', { text: 'die Frage' }),
+        h('span', { class: 'vt-text', text: q.text }), strip(q.query_v, 'q'), h('span', { class: 'vt-sim', text: 'gleiches Modell, ebenfalls ' + VIZ.num(dims) + ' Zahlen' })), 2, 'up'));
       var body = h('div', { class: 'vt-body', id: 'vt-body' });
       rows.forEach(function (r, i) {
         var c = ctx.chunk(r.chunk);
@@ -379,15 +397,15 @@
             h('em', { text: VIZ.num(r.score, 2) }), h('span', { class: 'vt-rank', text: r.rank <= k ? '#' + r.rank : '' }), r.hit ? ui.mark(true) : h('span', { class: 'mark-gap' }))), 1, 'up', i * 70));
       });
       table.appendChild(body);
-      table.appendChild(at(h('div', { class: 'vt-foot', text: '… ' + (total ? VIZ.num(total) + ' rows in total' : 'one row per chunk') +
-        ' · here the “database” is a single SQLite file with the sqlite-vec extension' }), 1, 'fade', rows.length * 70));
+      table.appendChild(at(h('div', { class: 'vt-foot', text: '… insgesamt ' + (total ? VIZ.num(total) + ' Zeilen' : 'eine Zeile pro Chunk') +
+        ' · hier ist die Datenbank eine SQLite-Datei mit der Erweiterung sqlite-vec' }), 1, 'fade', rows.length * 70));
       stage.appendChild(table);
 
       /* 3 short notes */
       stage.appendChild(h('div', { class: 'tidbits' },
-        at(ui.tidbit('How is “similar” measured?', 'Cosine similarity: the angle between two lists of numbers. 1 = same direction, 0 = unrelated.'), 3, 'up'),
-        at(ui.tidbit('Why a special database?', 'Comparing a question with millions of rows one by one is slow. Vector databases add an index that finds the nearest rows without checking them all.'), 4, 'up'),
-        at(ui.tidbit('No words are compared', 'Only the numbers. That is why “Pfund” can find “GBP”, and why a code like NT044 gets lost.'), 4, 'up', 150)));
+        at(ui.tidbit('Wie wird Ähnlichkeit gemessen?', 'Mit der Kosinus-Ähnlichkeit: dem Winkel zwischen zwei Vektoren. 1 = gleiche Richtung, 0 = kein Zusammenhang.'), 3, 'up'),
+        at(ui.tidbit('Wozu eine eigene Datenbank?', 'Bei Millionen Zeilen ist der Vergleich mit jeder einzelnen Zeile zu langsam. Eine Vektor-Datenbank hat einen Index, der die ähnlichsten Zeilen findet, ohne alle zu prüfen.'), 4, 'up'),
+        at(ui.tidbit('Wörter werden nicht verglichen', 'Nur die Zahlen. Darum findet «Pfund» den Text mit «GBP». Und darum geht ein Code wie NT044 unter.'), 4, 'up', 150)));
     },
     step: function (b, animate, from) {
       if (!this._ok) return;
@@ -408,11 +426,11 @@
 
   /* ===================== 5 Vektor ===================== */
   VIZ.defs.vector = {
-    id: 'vector', nav: 'Vector', usesQuestion: true, title: 'Vector search: nearest neighbours',
-    lead: 'The same table as a map: every row is a dot, and rows with similar numbers sit close together. The search returns the dots nearest to the question.',
+    id: 'vector', nav: 'Vektorsuche', usesQuestion: true, title: 'Vektorsuche: die nächsten Nachbarn',
+    lead: 'Dieselbe Tabelle als Karte. Jede Zeile ist ein Punkt. Zeilen mit ähnlichen Zahlen liegen nah beieinander. Die Suche liefert die Punkte, die der Frage am nächsten sind.',
     beats: 4,
     guess: function (ctx) {
-      return hitGuess(ctx, ctx.q && (ctx.q.vector || []), 2, 'And vector search: right document in the top {k}?');
+      return hitGuess(ctx, ctx.q && (ctx.q.vector || []), 2, 'Findet die Vektorsuche das richtige Dokument in den Top {k}?');
     },
     render: function (stage, ctx) {
       var q = ctx.q;
@@ -422,7 +440,7 @@
       var list = q.vector || [], k = ctx.k;
       var col = h('div', { class: 'results' });
       var max = list.length ? list[0].score : 1;
-      if (!list.length) col.appendChild(at(ui.note('No vector results for this question.', 'miss'), 2));
+      if (!list.length) col.appendChild(at(ui.note('Keine Vektor-Ergebnisse für diese Frage.', 'miss'), 2));
       list.slice(0, k).forEach(function (r, i) {
         col.appendChild(at(resultCard(r, ctx, { mode: 'sem', max: max, digits: 2, len: 120 }), 2, 'right', 300 + i * 120));
       });
@@ -432,23 +450,23 @@
       var lines = [];
       if (q.note) lines.push(q.note);
       if (!(fh && fh <= k)) lines.push(q.category === 'exact-identifier'
-        ? 'Codes like IE015 and IE051 land almost on top of each other: digits carry hardly any meaning.'
-        : 'The nearest neighbours are similar, but not the passage we need.');
-      else if (q.category === 'cross-lingual' || q.category === 'synonym') lines.push('Meaning instead of matching words: this is where the model is strong.');
+        ? 'Codes wie IE015 und IE051 erhalten fast dieselben Zahlen. Ziffern tragen kaum Bedeutung.'
+        : 'Die nächsten Nachbarn sind inhaltlich ähnlich, aber nicht die gesuchte Stelle.');
+      else if (q.category === 'cross-lingual' || q.category === 'synonym') lines.push('Verglichen wird die Bedeutung, nicht der Wortlaut. Das ist die Stärke des Modells.');
       col.appendChild(at(verdictBox(fh && fh <= k ? 'hit' : 'miss',
-        fh && fh <= k ? 'Hit at rank ' + fh : fh ? 'First hit only at rank ' + fh : 'No hit in the top ' + Math.max(list.length, 10), lines), 3, 'up'));
+        fh && fh <= k ? 'Treffer auf Rang ' + fh : fh ? 'Erster Treffer erst auf Rang ' + fh : 'Kein Treffer in den Top ' + Math.max(list.length, 10), lines), 3, 'up'));
       stage.appendChild(h('div', { class: 'two-col map-col' }, mapBox, col));
       this.drawMap(mapBox, ctx, q);
     },
     drawMap: function (box, ctx, q) {
       var plot = h('div', { class: 'map-plot' });
-      var caption = h('p', { class: 'map-caption', text: 'Each dot has 384 numbers; this map squeezes them into 2, so distances are approximate. The neighbours shown come from the real ranking.' });
+      var caption = h('p', { class: 'map-caption', text: 'Jeder Punkt hat 384 Zahlen. Die Karte reduziert sie auf 2, die Abstände stimmen darum nur ungefähr. Die Nachbarn stammen aus der echten Rangliste.' });
       var legend = h('div', { class: 'legend' });
       box.appendChild(plot); box.appendChild(caption); box.appendChild(legend);
       this._map = null;
       var W = Math.max(300, plot.clientWidth), H = Math.max(200, plot.clientHeight);
       var pts = ctx.data.chunks.filter(function (c) { return typeof c.x === 'number' && typeof c.y === 'number'; });
-      if (!pts.length) { plot.appendChild(ui.note('No coordinates (x, y) in the chunks.')); return; }
+      if (!pts.length) { plot.appendChild(ui.note('Keine Koordinaten (x, y) in den Chunks.')); return; }
       var k = ctx.k;
       var nb = (q.vector || []).slice(0, k).map(function (r) { return { r: r, c: ctx.chunk(r.chunk) }; })
         .filter(function (x) { return x.c && typeof x.c.x === 'number'; });
@@ -469,7 +487,7 @@
       }
       var expected = {};
       (q.expected_docs || []).forEach(function (d) { expected[d] = 1; });
-      var svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, class: 'map-svg', role: 'img', 'aria-label': 'Map of the chunks' });
+      var svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, class: 'map-svg', role: 'img', 'aria-label': 'Karte der Chunks' });
       var gp = at(s('g', { class: 'pts' }), 0, 'fade');
       var gx = at(s('g', { class: 'exp' }), 3, 'fade');
       var items = [], langs = {};
@@ -499,18 +517,18 @@
         svg.appendChild(gnb);
         var inner = s('g', { class: 'query-fly' },
           s('polygon', { points: starPts(0, 0, 17, 7.5), class: 'q-star' }),
-          s('text', { x: 22, y: 6, class: 'q-label', text: est ? 'Question (position estimated)' : 'Question' }));
+          s('text', { x: 22, y: 6, class: 'q-label', text: est ? 'Frage (Position geschätzt)' : 'Frage' }));
         star = at(s('g', { class: 'query' }, inner), 1, 'none');
         svg.appendChild(place(star, qxy[0], qxy[1]));
         this._q = { el: inner, item: items[items.length - 1] };
       }
       plot.appendChild(svg);
-      if (zoom) plot.appendChild(at(h('span', { class: 'zoom-badge', text: 'Close-up around the question' }), 3, 'fade', 300));
+      if (zoom) plot.appendChild(at(h('span', { class: 'zoom-badge', text: 'Ausschnitt um die Frage' }), 3, 'fade', 300));
       Object.keys(langs).forEach(function (l) {
         var sv = s('svg', { viewBox: '0 0 20 20', width: 18, height: 18 }); sv.appendChild(shape(l, 10, 10, 6));
         legend.appendChild(h('span', {}, sv, VIZ.LANG[l] || l));
       });
-      legend.appendChild(at(h('span', {}, h('i', { class: 'lg-ring' }), 'expected document'), 3, 'fade'));
+      legend.appendChild(at(h('span', {}, h('i', { class: 'lg-ring' }), 'erwartetes Dokument'), 3, 'fade'));
       this._map = { W: W, H: H, full: full, zoom: zoom, items: items, lines: lines, qxy: qxy, cur: null };
       this.layout(full);
     },
@@ -580,8 +598,8 @@
 
   /* ===================== 4 Hybrid / RRF ===================== */
   VIZ.defs.hybrid = {
-    id: 'hybrid', nav: 'Hybrid', usesQuestion: true, title: 'Hybrid: two rankings, one fusion',
-    lead: function (ctx) { return 'Reciprocal Rank Fusion only looks at ranks: each chunk gets 1/(' + ctx.rrfK + ' + rank) from every list it appears in. Scores are ignored, so two very different methods can be mixed.'; },
+    id: 'hybrid', nav: 'Hybrid', usesQuestion: true, title: 'Hybrid: zwei Ranglisten zusammenführen',
+    lead: function (ctx) { return 'Reciprocal Rank Fusion (RRF) wertet nur die Ränge aus. Ein Chunk erhält aus jeder Liste 1/(' + ctx.rrfK + ' + Rang). Die Scores selbst zählen nicht. So lassen sich zwei verschiedene Verfahren kombinieren.'; },
     beats: 3,
     render: function (stage, ctx) {
       var q = ctx.q;
@@ -590,8 +608,8 @@
       var k = ctx.k, K = ctx.rrfK;
       function side(mode, list, enter) {
         var c = h('div', { class: 'hcol hcol-' + mode });
-        c.appendChild(h('h2', { class: 'hcol-head', text: mode === 'lex' ? 'BM25' : 'Vector' }));
-        if (!list || !list.length) c.appendChild(at(ui.note('No hits'), 0, enter));
+        c.appendChild(h('h2', { class: 'hcol-head', text: mode === 'lex' ? 'BM25' : 'Vektor' }));
+        if (!list || !list.length) c.appendChild(at(ui.note('Keine Treffer'), 0, enter));
         (list || []).slice(0, 10).forEach(function (r, i) {
           var ch = ctx.chunk(r.chunk);
           c.appendChild(at(h('div', { class: 'hrow ' + (r.hit ? 'is-hit' : 'is-miss'), 'data-chunk': r.chunk },
@@ -605,7 +623,7 @@
       mid.appendChild(h('h2', { class: 'hcol-head', text: 'Fusion (RRF)' }));
       var hy = q.hybrid;
       if (!hy || !hy.length) {
-        mid.appendChild(at(ui.note('There is no hybrid result for this question in the data.'), 1));
+        mid.appendChild(at(ui.note('Für diese Frage fehlt das Hybrid-Ergebnis in den Daten.'), 1));
       } else {
         hy.slice(0, k).forEach(function (r, i) {
           var ch = ctx.chunk(r.chunk), f = r.from || {};
@@ -625,9 +643,9 @@
       var bh = ui.firstHit(q.bm25), vh = ui.firstHit(q.vector), hh = ui.firstHit(hy);
       var v = fusionVerdict(bh, vh, hh, k);
       var score = h('div', { class: 'cmp' },
-        cmpItem('lex', 'BM25', bh, k), cmpItem('sem', 'Vector', vh, k), cmpItem('fuse', 'Hybrid', hh, k));
+        cmpItem('lex', 'BM25', bh, k), cmpItem('sem', 'Vektor', vh, k), cmpItem('fuse', 'Hybrid', hh, k));
       stage.appendChild(h('div', { class: 'hgrid' }, side('lex', q.bm25, 'left'), mid, side('sem', q.vector, 'right')));
-      stage.appendChild(at(h('div', { class: 'verdict wide ' + v.cls }, h('span', { class: 'cmp-label', text: 'First hit' }), score,
+      stage.appendChild(at(h('div', { class: 'verdict wide ' + v.cls }, h('span', { class: 'cmp-label', text: 'Erster Treffer' }), score,
         h('p', { class: 'verdict-big', text: v.text })), 2, 'up'));
     },
     step: function (b, animate, from) {
@@ -653,21 +671,21 @@
     }
   };
   function contrib(mode, rank, K) {
-    if (!rank) return h('span', { class: 'cpart none c-' + mode, text: mode === 'lex' ? 'not in BM25' : 'not in vector' });
+    if (!rank) return h('span', { class: 'cpart none c-' + mode, text: mode === 'lex' ? 'nicht in BM25' : 'nicht in Vektor' });
     return h('span', { class: 'cpart c-' + mode, title: VIZ.num(1 / (K + rank), 4) }, '1/(' + K + '+' + rank + ')');
   }
   function cmpItem(mode, label, r, k) {
     return h('div', { class: 'cmp-item c-' + mode }, h('span', { class: 'cmp-mode', text: label }),
-      h('b', { class: 'cmp-rank ' + (r && r <= k ? 'hit' : 'miss'), text: r ? 'rank ' + r : '–' }));
+      h('b', { class: 'cmp-rank ' + (r && r <= k ? 'hit' : 'miss'), text: r ? 'Rang ' + r : '–' }));
   }
   function fusionVerdict(bh, vh, hh, k) {
     var cand = [bh, vh].filter(function (x) { return x; });
     var best = cand.length ? Math.min.apply(null, cand) : null;
-    var weak = bh === best ? 'vector' : 'BM25';
-    if (!hh && !best) return { cls: 'miss', text: 'Neither of the two finds the expected document. Fusion cannot rescue anything.' };
-    if (!hh) return { cls: 'miss', text: 'Fusion drops the hit out of the top 10.' };
-    if (!best || hh < best) return { cls: 'hit', text: 'Fusion helps: the hit climbs to rank ' + hh + '.' };
-    if (hh === best) return { cls: hh <= k ? 'hit' : 'miss', text: 'Fusion keeps the best rank (' + hh + '); it does not get better.' };
-    return { cls: hh <= k ? 'warn' : 'miss', text: 'Fusion hurts: noise from ' + weak + ' pushes the hit from rank ' + best + ' to rank ' + hh + (hh > k ? ', out of the top ' + k + '.' : '.') };
+    var weak = bh === best ? 'Vektor' : 'BM25';
+    if (!hh && !best) return { cls: 'miss', text: 'Keine der beiden Suchen findet das erwartete Dokument. Daran ändert die Fusion nichts.' };
+    if (!hh) return { cls: 'miss', text: 'Nach der Fusion steht der Treffer nicht mehr in den Top 10.' };
+    if (!best || hh < best) return { cls: 'hit', text: 'Die Fusion hilft: Der Treffer steigt auf Rang ' + hh + '.' };
+    if (hh === best) return { cls: hh <= k ? 'hit' : 'miss', text: 'Die Fusion hält den besten Rang (' + hh + '). Besser wird er nicht.' };
+    return { cls: hh <= k ? 'warn' : 'miss', text: 'Die Fusion schadet: Falsche Treffer aus ' + weak + ' verdrängen den richtigen von Rang ' + best + ' auf Rang ' + hh + (hh > k ? ', aus den Top ' + k + '.' : '.') };
   }
 })();

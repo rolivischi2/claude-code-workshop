@@ -413,7 +413,7 @@ mark.lex { background: var(--lex-bg); color: inherit; box-shadow: inset 0 -3px 0
 .pick-text { font-weight: 600; }
 .pick-id { font-size: .65rem; color: var(--ink-3); }
 .pick-note { grid-column: 2 / -1; font-size: .7rem; color: var(--ink-3); }
-.pick.current .pick-id::after { content: " current"; font-weight: 700; color: var(--ink); }
+.pick.current .pick-id::after { content: " aktuell"; font-weight: 700; color: var(--ink); }
 .pick.sel, .pick:hover { background: var(--wash); border-left-color: var(--ink); }
 .pick.inline { grid-template-columns: 10.5rem minmax(0, 1fr); border: 2px solid var(--rule); width: 100%; margin-top: .3rem; }
 .help table { border-collapse: collapse; margin: .6rem 1.1rem 1.1rem; font-size: .88rem; }
@@ -564,3 +564,25 @@ kbd { border-width: 1px; background: var(--card); }
 .top { min-width: 0; }
 .qchip { flex: 0 1 auto; max-width: none; }
 .klegend .sw.kl-fr { background: repeating-linear-gradient(135deg, var(--accent) 0 .18rem, var(--card) .18rem .36rem); }
+
+/* ---------- 3 BM25: Schritte und Suchbegriffe ---------- */
+.stage-bm25 { gap: .7rem; }
+.bm-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.bm-step { border-top: .22rem solid var(--lex); padding-top: .35rem; display: flex; flex-direction: column; gap: .15rem; font-size: .76rem; line-height: 1.35; color: var(--ink-2); }
+.bm-step b { font-size: .9rem; color: var(--ink); }
+.tok { display: flex; flex-wrap: wrap; gap: .5rem .6rem; align-items: flex-start; min-height: 4.6rem; }
+.tok-col { display: flex; flex-direction: column; align-items: stretch; gap: .2rem; min-width: 4.2rem; }
+.tok-word { align-self: flex-start; font-size: .95rem; font-weight: 700; padding: .05em .6em; border-radius: 2rem; border: 1.5px solid var(--lex); color: var(--lex); background: var(--lex-bg); }
+.is-stop .tok-word { border-color: var(--rule); color: var(--ink-3); background: transparent; text-decoration: line-through; font-weight: 400; }
+.tok-df { font-size: .66rem; color: var(--ink-2); white-space: nowrap; }
+.tok-w { display: block; height: .45rem; background: var(--wash); border-radius: 1rem; overflow: hidden; }
+.tok-w b { display: block; height: 100%; background: var(--lex); border-radius: 1rem; transform-origin: left center; }
+.tok-col.zero .tok-word { color: var(--miss); background: var(--miss-bg); border-color: var(--miss); }
+.tok-col.zero .tok-df { color: var(--miss); font-weight: 700; }
+.stage-bm25 .question-text { font-size: 1.25rem; }
+.stage-bm25 .rc-text { -webkit-line-clamp: 1; }
+.stage-bm25 .rcard { padding: .3rem .7rem; }
+.tok { gap: .4rem .45rem; }
+.tok-col { min-width: 0; }
+.tok-col.is-term { min-width: 5.4rem; }
+.is-stop .tok-word { font-size: .78rem; padding: .05em .45em; margin-top: .12rem; }

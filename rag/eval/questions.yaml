@@ -12,7 +12,6 @@
 #   multi-doc        - die Antwort braucht mehrere Dokumente
 # showcase: true     - Fragen für die Live-Erzählung mit der Visualisierung (eine pro Kategorie)
 # note               - Hinweis für den Moderator
-# note_en            - derselbe Hinweis auf Englisch; erscheint auf den (englischen) Folien
 questions:
   # --- synonym --------------------------------------------------------------
   - id: S1
@@ -28,7 +27,6 @@ questions:
     expected: [info-brexit-ncts-de]
     showcase: true
     note: Dokument sagt «Rechnungen in GBP» und «Währungscode», kein Wort der Frage kommt vor. BM25 liefert null Treffer, die Vektorsuche trifft auf Rang 1.
-    note_en: The document says “Rechnungen in GBP” and “Währungscode”; not a single word of the question appears in it. BM25 returns nothing, vector search hits at rank 1.
     # info-brexit-ncts-de, Abschnitt 4 "Währungscode für Rechnungen in GBP": Währungscode 5 (andere).
   - id: S3
     category: synonym
@@ -80,7 +78,6 @@ questions:
     expected: [r-14-04-nato-302-it]
     showcase: true
     note: Antwort steht nur im italienischen R-14-04 («modulo NATO 302»), die Frage nennt weder NATO noch 302. BM25 chancenlos, MiniLM trifft; das grosse e5-Modell verfehlt diese Frage.
-    note_en: The answer exists only in the Italian R-14-04 (“modulo NATO 302”); the question mentions neither NATO nor 302. BM25 has no chance, MiniLM hits; the large e5 model misses this one.
     # r-14-04-nato-302-it, Ziffer 4 "Validità": vollständig ausgefüllt, gestempelt und unterzeichnet
     # von den Militärbehörden des Versandlandes; der Anmelder unterschreibt die Gestellungsverpflichtung.
   - id: C4
@@ -107,7 +104,6 @@ questions:
     expected: [r-14-01-anhang-11-2-1-datenaustausch-de]
     showcase: true
     note: Reiner Meldungscode. BM25 trifft die Tabellenzeile «NT044 | Inventarisierungsergebnis» direkt, die Vektorsuche (MiniLM) kennt den Code nicht und landet beim Suchverfahren im gVV.
-    note_en: A bare message code. BM25 hits the table row “NT044 | Inventarisierungsergebnis” directly; vector search (MiniLM) does not know the code and lands on the enquiry procedure in the gVV.
     # r-14-01-anhang-11-2-1-datenaustausch-de, Tabellenzeile "NT044 | Inventarisierungsergebnis".
   - id: E2
     category: exact-identifier
@@ -162,7 +158,6 @@ questions:
     expected: [vbd-info-de, info-durchfuhr-reminder-de]
     showcase: true
     note: Antwort verteilt auf zwei kurze Infoblätter (VBD-Layout, Tarifnummer). Kein Retrieval-Modus bringt beide in die Top 5; Claude Code mit Grep/Read fand beide mit 3 Tool-Aufrufen.
-    note_en: The answer is spread over two short info sheets (VBD layout, tariff number). No retrieval mode gets both into the top 5; Claude Code with Grep/Read found both in 3 tool calls.
     # vbd-info-de: neues Layout ab 02.12.2024, Liste der Positionen; info-durchfuhr-reminder-de:
     # 6-stellige Tarifnummer je Warenposition Pflicht.
   - id: M4

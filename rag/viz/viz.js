@@ -6,23 +6,23 @@
 'use strict';
 var VIZ = window.VIZ = window.VIZ || {};
 
-/* Key messages for the closing slide. Edit here. */
+/* Kernaussagen für die Schlussfolie. Hier anpassen. */
 VIZ.MESSAGES = [
-  'Every retriever has a blind spot, exactly where the other one is strong.',
-  'Hybrid is not a free win. Measure on your own corpus.',
-  'Chunking changes what can be found. Here the difference is within the noise of 25 questions.',
-  'For code in a repo, agentic search is almost always enough. RAG pays off for large, multilingual knowledge bases outside the repo.'
+  'Jede Suche hat eine Schwäche. Sie liegt dort, wo die andere stark ist.',
+  'Hybrid hilft nicht automatisch. Am eigenen Korpus messen.',
+  'Chunking beeinflusst, was gefunden wird. Bei 25 Fragen ist der Unterschied hier nicht belastbar.',
+  'Für Code im Repo genügt die Suche des Agenten fast immer. RAG lohnt sich bei grossen, mehrsprachigen Beständen ausserhalb des Repos.'
 ];
 
 VIZ.CATEGORY = {
   'synonym': 'Synonym',
-  'cross-lingual': 'Other language',
-  'exact-identifier': 'Exact identifier',
-  'multi-doc': 'Several documents',
-  'all': 'All'
+  'cross-lingual': 'Andere Sprache',
+  'exact-identifier': 'Code oder Kennung',
+  'multi-doc': 'Mehrere Dokumente',
+  'all': 'Alle'
 };
-VIZ.MODE = { bm25: 'BM25', vector: 'Vector', hybrid: 'Hybrid' };
-VIZ.LANG = { de: 'German', fr: 'French', it: 'Italian', en: 'English' };
+VIZ.MODE = { bm25: 'BM25', vector: 'Vektor', hybrid: 'Hybrid' };
+VIZ.LANG = { de: 'Deutsch', fr: 'Französisch', it: 'Italienisch', en: 'Englisch' };
 VIZ.ORDER = ['korpus', 'chunking', 'bm25', 'vecdb', 'vector', 'hybrid', 'agent', 'messung', 'fazit'];
 VIZ.defs = VIZ.defs || {};
 
@@ -62,12 +62,12 @@ VIZ._append = function (el, c) {
 
 VIZ.num = function (x, digits) {
   if (x === null || x === undefined || isNaN(x)) return '–';
-  return Number(x).toLocaleString('en-US', { minimumFractionDigits: digits || 0, maximumFractionDigits: digits || 0 });
+  return Number(x).toLocaleString('de-CH', { minimumFractionDigits: digits || 0, maximumFractionDigits: digits || 0 });
 };
 VIZ.kchars = function (n) {
   if (n === null || n === undefined) return '–';
-  if (n < 1000) return VIZ.num(n) + ' chars';
-  return VIZ.num(n / 1000, 1) + 'k chars';
+  if (n < 1000) return VIZ.num(n) + ' Zeichen';
+  return VIZ.num(n / 1000, 1) + 'k Zeichen';
 };
 
 /* Web-Animations mit Rücksicht auf prefers-reduced-motion */
@@ -106,10 +106,10 @@ VIZ.ui = {
     return VIZ.h('span', { class: 'cat cat-' + cat, text: VIZ.CATEGORY[cat] || cat });
   },
   question: function (q, extra) {
-    if (!q) return VIZ.h('div', { class: 'question' }, 'No question selected.');
+    if (!q) return VIZ.h('div', { class: 'question' }, 'Keine Frage gewählt.');
     return VIZ.h('div', { class: 'question' },
       VIZ.h('div', { class: 'question-meta' }, VIZ.ui.catTag(q.category),
-        VIZ.h('span', { class: 'expected' }, 'Expected: ', (q.expected_docs || []).map(VIZ.ui.docShort).join(', '))),
+        VIZ.h('span', { class: 'expected' }, 'Erwartet: ', (q.expected_docs || []).map(VIZ.ui.docShort).join(', '))),
       VIZ.h('p', { class: 'question-text', text: '«' + q.text + '»' }),
       extra || null);
   },
@@ -118,7 +118,7 @@ VIZ.ui = {
     return d ? d.title : id;
   },
   mark: function (hit) {
-    return VIZ.h('span', { class: 'mark ' + (hit ? 'hit' : 'miss'), title: hit ? 'Chunk from the expected document' : 'Chunk from another document' },
+    return VIZ.h('span', { class: 'mark ' + (hit ? 'hit' : 'miss'), title: hit ? 'Chunk aus dem erwarteten Dokument' : 'Chunk aus einem anderen Dokument' },
       hit ? '✓' : '✗');
   },
   firstHit: function (list) {
@@ -127,8 +127,8 @@ VIZ.ui = {
     return null;
   },
   rankText: function (r, k) {
-    if (r === null || r === undefined) return 'not in the top ' + (k || 10);
-    return 'rank ' + r;
+    if (r === null || r === undefined) return 'nicht in den Top ' + (k || 10);
+    return 'Rang ' + r;
   },
   /* short explanatory note: a term or a "good to know" in two lines */
   tidbit: function (title, text) {
@@ -197,7 +197,7 @@ var S = VIZ.state = { scene: 0, beat: 0, qid: null };
 VIZ.ctx = { timers: [], docs: {}, chunks: {}, store: {} };
 
 VIZ.boot = function (data, isSample) {
-  if (!data || typeof data !== 'object') { VIZ.fail('window.DATA is missing or empty.'); return; }
+  if (!data || typeof data !== 'object') { VIZ.fail('window.DATA fehlt oder ist leer.'); return; }
   var D = VIZ.data = data;
   D.meta = D.meta || {};
   D.docs = D.docs || [];
@@ -236,7 +236,7 @@ VIZ.boot = function (data, isSample) {
 VIZ.fail = function (msg) {
   var st = document.getElementById('stage');
   st.innerHTML = '';
-  st.appendChild(VIZ.ui.empty('No data', msg + ' See README.md in rag/viz.'));
+  st.appendChild(VIZ.ui.empty('Keine Daten', msg + ' Siehe README.md in rag/viz.'));
 };
 
 VIZ.question = function () {
@@ -259,10 +259,10 @@ VIZ.writeHash = function () {
 VIZ.renderMeta = function () {
   var m = VIZ.data.meta, c = m.corpus || {};
   var parts = [];
-  if (m.model) parts.push('Model ' + String(m.model).split('/').pop());
-  if (m.chunking) parts.push('Chunking ' + (m.chunking === 'heading' ? 'by headings' : 'fixed length'));
+  if (m.model) parts.push('Modell ' + String(m.model).split('/').pop());
+  if (m.chunking) parts.push('Chunking ' + (m.chunking === 'heading' ? 'nach Überschriften' : 'feste Länge'));
   if (VIZ.data.questions.length) parts.push('k = ' + VIZ.ctx.k);
-  if (c.docs) parts.push(VIZ.num(c.docs) + ' documents, ' + VIZ.num(c.chunks) + ' chunks');
+  if (c.docs) parts.push(VIZ.num(c.docs) + ' Dokumente, ' + VIZ.num(c.chunks) + ' Chunks');
   if (VIZ.META) parts = parts.concat(VIZ.META);
   var el = document.getElementById('meta');
   el.innerHTML = '';
@@ -403,12 +403,12 @@ VIZ.showGuess = function (g) {
     return VIZ.h('li', { class: 'guess-opt', 'data-i': i },
       VIZ.h('span', { class: 'guess-letter', text: String.fromCharCode(65 + i) }), VIZ.h('span', { class: 'guess-text', text: o }));
   });
-  var card = VIZ.h('div', { class: 'guess', role: 'dialog', 'aria-label': 'Guess round' },
-    VIZ.h('div', { class: 'guess-tag', text: 'Your guess · show of hands' }),
+  var card = VIZ.h('div', { class: 'guess', role: 'dialog', 'aria-label': 'Schätzfrage' },
+    VIZ.h('div', { class: 'guess-tag', text: 'Schätzfrage · Handzeichen' }),
     VIZ.h('p', { class: 'guess-q', text: g.question }),
     VIZ.h('ol', { class: 'guess-opts' }, opts),
     VIZ.h('p', { class: 'guess-reveal hid', text: g.reveal || '' }),
-    VIZ.h('p', { class: 'guess-hint' }, VIZ.h('kbd', { text: '→' }), ' reveal ', VIZ.h('kbd', { text: 'g' }), ' guess rounds off'));
+    VIZ.h('p', { class: 'guess-hint' }, VIZ.h('kbd', { text: '→' }), ' Antwort zeigen ', VIZ.h('kbd', { text: 'g' }), ' Schätzfragen aus'));
   layer.appendChild(card);
   layer.hidden = false;
   VIZ._guess = { g: g, key: VIZ.guessKey(g), revealed: false };
@@ -428,7 +428,7 @@ VIZ.revealGuess = function () {
   var r = layer.querySelector('.guess-reveal');
   if (st.g.reveal) { r.classList.remove('hid'); VIZ.anim(r, VIZ.ENTER.up, { delay: 200 }); }
   layer.querySelector('.guess-hint').innerHTML = '';
-  layer.querySelector('.guess-hint').appendChild(VIZ.h('span', {}, VIZ.h('kbd', { text: '→' }), ' continue'));
+  layer.querySelector('.guess-hint').appendChild(VIZ.h('span', {}, VIZ.h('kbd', { text: '→' }), ' weiter'));
 };
 VIZ.closeGuess = function () {
   var layer = document.getElementById('guess');
@@ -438,7 +438,7 @@ VIZ.closeGuess = function () {
 VIZ.toggleGuess = function () {
   VIZ.guessOn = !VIZ.guessOn;
   if (VIZ.guessOn) VIZ._guessed = {}; else VIZ.closeGuess();
-  VIZ.toast(VIZ.guessOn ? 'Guess rounds on' : 'Guess rounds off');
+  VIZ.toast(VIZ.guessOn ? 'Schätzfragen ein' : 'Schätzfragen aus');
 };
 VIZ.hasGuess = function () { return VIZ.scenes.some(function (sc) { return !!sc.guess; }); };
 /* «3–6»: Nummern der Szenen, die mit der gewählten Frage arbeiten */
@@ -454,10 +454,10 @@ VIZ.renderFoot = function () {
   if (!el) return;
   var k = function (t) { return VIZ.h('kbd', { text: t }); };
   el.innerHTML = '';
-  VIZ._append(el, [k('←'), k('→'), ' step ', k('1'), '–', k(String(VIZ.scenes.length)), ' scene ']);
-  if (VIZ.questionScenes()) VIZ._append(el, [k('q'), ' question ']);
-  if (VIZ.hasGuess()) VIZ._append(el, [k('g'), ' guess rounds ']);
-  VIZ._append(el, [k('r'), ' replay ', k('f'), ' fullscreen ', k('?'), ' help']);
+  VIZ._append(el, [k('←'), k('→'), ' Schritt ', k('1'), '–', k(String(VIZ.scenes.length)), ' Szene ']);
+  if (VIZ.questionScenes()) VIZ._append(el, [k('q'), ' Frage ']);
+  if (VIZ.hasGuess()) VIZ._append(el, [k('g'), ' Schätzfragen ']);
+  VIZ._append(el, [k('r'), ' wiederholen ', k('f'), ' Vollbild ', k('?'), ' Hilfe']);
 };
 
 /* ---------- Tastatur ---------- */
@@ -492,9 +492,9 @@ VIZ.fullscreen = function () {
   var d = document;
   if (d.fullscreenElement) { d.exitFullscreen && d.exitFullscreen(); return; }
   var p = d.documentElement.requestFullscreen ? d.documentElement.requestFullscreen() : null;
-  if (p && p.then) p.then(function () { VIZ.toast('Fullscreen: f or Esc to leave'); })
-    .catch(function () { VIZ.toast('Fullscreen via the browser: Ctrl+Cmd+F (Mac) or F11'); });
-  else VIZ.toast('Fullscreen via the browser: Ctrl+Cmd+F (Mac) or F11');
+  if (p && p.then) p.then(function () { VIZ.toast('Vollbild: mit f oder Esc beenden'); })
+    .catch(function () { VIZ.toast('Vollbild über den Browser: Ctrl+Cmd+F (Mac) oder F11'); });
+  else VIZ.toast('Vollbild über den Browser: Ctrl+Cmd+F (Mac) oder F11');
 };
 
 VIZ.toast = function (msg) {
@@ -508,13 +508,13 @@ VIZ.toast = function (msg) {
 /* ---------- Fragenauswahl ---------- */
 VIZ.openPicker = function () {
   var D = VIZ.data, ov = document.getElementById('picker');
-  if (!D.questions.length) { VIZ.toast('No questions in the data'); return; }
+  if (!D.questions.length) { VIZ.toast('Keine Fragen in den Daten'); return; }
   ov.innerHTML = '';
-  var box = VIZ.h('div', { class: 'picker', role: 'dialog', 'aria-label': 'Pick a question' });
+  var box = VIZ.h('div', { class: 'picker', role: 'dialog', 'aria-label': 'Frage wählen' });
   box.appendChild(VIZ.h('div', { class: 'picker-head' },
-    VIZ.h('h2', { text: 'Pick a question' }),
-    VIZ.h('span', { class: 'picker-hint' }, VIZ.h('kbd', { text: '↑' }), VIZ.h('kbd', { text: '↓' }), ' move ',
-      VIZ.h('kbd', { text: 'Enter' }), ' select ', VIZ.h('kbd', { text: 'Esc' }), ' close')));
+    VIZ.h('h2', { text: 'Frage wählen' }),
+    VIZ.h('span', { class: 'picker-hint' }, VIZ.h('kbd', { text: '↑' }), VIZ.h('kbd', { text: '↓' }), ' wählen ',
+      VIZ.h('kbd', { text: 'Enter' }), ' übernehmen ', VIZ.h('kbd', { text: 'Esc' }), ' schliessen')));
   var list = VIZ.h('div', { class: 'picker-list' });
   var items = [];
   function add(q) {
@@ -529,7 +529,7 @@ VIZ.openPicker = function () {
   }
   var show = D.questions.filter(function (q) { return q.showcase; });
   if (show.length) {
-    list.appendChild(VIZ.h('h3', { text: 'For the presentation' }));
+    list.appendChild(VIZ.h('h3', { text: 'Für die Präsentation' }));
     show.forEach(add);
   }
   var cats = ['synonym', 'cross-lingual', 'exact-identifier', 'multi-doc'];
@@ -583,18 +583,18 @@ VIZ.openHelp = function () {
   var ov = document.getElementById('help');
   ov.innerHTML = '';
   var rows = [
-    ['→  Space  PgDn', 'next step, then next scene'],
-    ['←  PgUp', 'step back'],
-    ['Shift + ← →', 'whole scene forward or back'],
-    ['1 … ' + VIZ.scenes.length, 'jump to scene'],
-    ['r', 'replay the animation of this scene'],
-    ['f', 'fullscreen on/off']
+    ['→  Leertaste  Bild↓', 'nächster Schritt, danach nächste Szene'],
+    ['←  Bild↑', 'Schritt zurück'],
+    ['Shift + ← →', 'ganze Szene vor oder zurück'],
+    ['1 … ' + VIZ.scenes.length, 'direkt zur Szene'],
+    ['r', 'Animation der Szene wiederholen'],
+    ['f', 'Vollbild ein/aus']
   ];
-  if (VIZ.questionScenes()) rows.splice(4, 0, ['q', 'pick a question (scenes ' + VIZ.questionScenes() + ')']);
-  if (VIZ.hasGuess()) rows.push(['g', 'guess rounds off/on (guess first, then reveal)']);
+  if (VIZ.questionScenes()) rows.splice(4, 0, ['q', 'Frage wählen (Szenen ' + VIZ.questionScenes() + ')']);
+  if (VIZ.hasGuess()) rows.push(['g', 'Schätzfragen aus/ein']);
   VIZ.scenes.forEach(function (sc) { (sc.help || []).forEach(function (r) { rows.push(r); }); });
-  rows.push(['?', 'this help']);
-  var box = VIZ.h('div', { class: 'picker help' }, VIZ.h('div', { class: 'picker-head' }, VIZ.h('h2', { text: 'Keyboard' })),
+  rows.push(['?', 'diese Hilfe']);
+  var box = VIZ.h('div', { class: 'picker help' }, VIZ.h('div', { class: 'picker-head' }, VIZ.h('h2', { text: 'Tastatur' })),
     VIZ.h('table', {}, rows.map(function (r) {
       return VIZ.h('tr', {}, VIZ.h('th', { text: r[0] }), VIZ.h('td', { text: r[1] }));
     })));

@@ -1,20 +1,20 @@
 # Visualisierung: Agentische Suche vs. RAG
 
 Eine statische Präsentationsseite für den Block «Agentische Suche vs. RAG». Sie erzählt das
-Experiment in neun Szenen. Die Folien sind **englisch** beschriftet (Fragen und Korpus bleiben deutsch) und läuft offline direkt aus dem Dateisystem: kein Build, kein
+Experiment in neun Szenen und läuft offline direkt aus dem Dateisystem: kein Build, kein
 Server, keine CDN, nur Systemschriften.
 
 | Szene | Inhalt |
 |-------|--------|
-| 1 Corpus | Jedes Dokument als Kachel (Breite nach Seitenzahl, Muster nach Sprache), dann die zwei Wege: Index bauen oder selbst suchen |
+| 1 Korpus | Jedes Dokument als Kachel (Breite nach Seitenzahl, Muster nach Sprache), dann die zwei Wege: Index bauen oder selbst suchen |
 | 2 Chunking | Ein Abschnitt wird geschnitten: feste Länge (Schnitte mitten im Wort, Überlappung) gegen Überschriftenpfad |
-| 3 BM25 | Die Suchbegriffe, die BM25 abfragt (nach der Stoppwortliste in `store.py`), leuchten in den Chunks auf, Rangliste mit Scores, blinder Fleck bei Synonymen und anderen Sprachen |
-| 4 Vector DB | Text → Embedding-Modell → Zahlen. Die Datenbank als Tabelle (eine Zeile pro Chunk mit den ersten 16 Werten des Embeddings), die Frage als weitere Zeile, Kosinus-Ähnlichkeit pro Zeile, Zeilen sortieren sich |
-| 5 Vector | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
+| 3 BM25 | Drei Schritte mit echten Werten: Frage zerlegen (Füllwörter nach der Stoppwortliste in `store.py` durchgestrichen), Seltenheit je Suchbegriff (Anzahl Chunks im ganzen Index und Gewicht), Rangliste mit Scores. Dazu ein Kasten «Was ist BM25?» |
+| 4 Vektor-DB | Text → Embedding-Modell → Zahlen. Die Datenbank als Tabelle (eine Zeile pro Chunk mit den ersten 16 Werten des Embeddings), die Frage als weitere Zeile, Kosinus-Ähnlichkeit pro Zeile, Zeilen sortieren sich |
+| 5 Vektorsuche | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
 | 6 Hybrid | Beide Ranglisten, die Karten wandern in die RRF-Reihenfolge, jede mit ihren `1/(k+Rang)`-Anteilen |
 | 7 Agent | Aufgezeichneter Claude-Code-Lauf (Grep, Glob, Read) als Zeitleiste mit Turns und Kontext-Tokens |
-| 8 Results | Jede Frage ein Punkt pro Suchverfahren (voll, halb, verfehlt), dann die Varianten als drei Karten. `d` zeigt die Detail-Diagramme mit Recall@k und MRR pro Kategorie |
-| 9 Takeaways | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
+| 8 Messung | Jede Frage ein Punkt pro Suchverfahren (voll, halb, verfehlt), dann die Varianten als drei Karten. `d` zeigt die Detail-Diagramme mit Recall@k und MRR pro Kategorie |
+| 9 Fazit | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
 
 ## Öffnen
 
@@ -39,7 +39,7 @@ erwartet und harmlos.
 | `q` | Frage wählen (Showcase-Fragen zuerst, dann alle nach Kategorie) |
 | `r` | Animation der aktuellen Szene nochmals abspielen |
 | `f` | Vollbild ein/aus |
-| `g` | Tipp-Runden aus/ein |
+| `g` | Schätzfragen aus/ein |
 | `t` | Szene 2: feste Länge ↔ Überschriften |
 | `d` | Szene 8: Detail-Diagramme ein/aus |
 | `v` | Szene 8, Detail: nächste Variante |
@@ -49,7 +49,7 @@ Die aktuelle Szene und Frage stehen in der Adresse (`#s=3&q=q01`), ein Neuladen 
 also an dieselbe Stelle. `prefers-reduced-motion` wird respektiert: dann gibt es keine
 Bewegung, nur Zustandswechsel.
 
-## Tipp-Runden
+## Schätzfragen
 
 In den Szenen 3, 5, 7 und 8 erscheint vor der Auflösung eine Frage ans Publikum (Handzeichen):
 `→` zeigt die Frage, `→` löst auf, `→` fährt weiter. Die richtige Antwort wird **aus den Daten
@@ -86,7 +86,7 @@ window.DATA = {
     chunking: "heading",          // "heading" | "fixed"
     k: 5,                         // Top-k für Recall@k
     rrf_k: 60,
-    dims: 384,                    // Länge eines Embeddings (Szene «Vector DB»)
+    dims: 384,                    // Länge eines Embeddings (Szene «Vektor-DB»)
     corpus: { docs: 14, chunks: 1830, langs: { de: 1200, fr: 400, it: 230 } }
   },
 
@@ -115,10 +115,11 @@ window.DATA = {
     text: "Wie hoch muss die Kaution für ein Versandverfahren sein?",
     expected_docs: ["r-14-01-de"],
     showcase: true,               // die 3–4 Fragen für die Live-Erzählung
-    note: "Dokument sagt 'Sicherheit', nie 'Kaution'",   // einzeiliger Hinweis; die Pipeline nimmt note_en aus questions.yaml, sonst note
+    note: "Dokument sagt 'Sicherheit', nie 'Kaution'",   // einzeiliger Hinweis (Deutsch)
     query_terms: ["hoch", "kaution", "versandverfahren"],  // FTS-Begriffe nach Stoppwörtern
+    term_df: { kaution: 0, hinterlegen: 4 },   // in wie vielen Chunks des ganzen Index jeder Suchbegriff vorkommt (Szene BM25)
     query_xy: [0.10, -0.40],      // Frage mit derselben PCA projiziert
-    query_v: [-0.01, -0.01, …],   // erste 16 Werte des Embeddings der Frage (Szene «Vector DB»)
+    query_v: [-0.01, -0.01, …],   // erste 16 Werte des Embeddings der Frage (Szene «Vektor-DB»)
     bm25:   [ { rank: 1, chunk: 17, score: 7.31, hit: true,  matched: ["versandverfahren"] } ],  // Top 10
     vector: [ { rank: 1, chunk: 17, score: 0.71, hit: true } ],                                  // Top 10
     hybrid: [ { rank: 1, chunk: 17, score: 0.0325, hit: true, from: { bm25: 3, vector: 1 } } ]   // Top 10; null wenn nicht vorhanden

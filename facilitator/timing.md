@@ -20,9 +20,9 @@ ohne Erklärung funktionieren.
 
 Die Inputs werden nicht länger. Die Szenen aus `facilitator/konzepte/` ersetzen Erklärzeit:
 
-| Zeit | Szene | Tipp-Runde (Handzeichen) |
+| Zeit | Szene | Schätzfrage (Handzeichen) |
 |------|-------|--------------------------|
-| 0:00 | 1 Landkarte | – |
+| 0:00 | 1 Überblick | – |
 | 0:10 | 2 Kontext | Startbelegung aus Übung 00 |
 | 0:45 | 3 Leitplanken | allow im Projekt gegen deny beim User |
 | 1:35 | 4 MCP | – |
@@ -30,7 +30,7 @@ Die Inputs werden nicht länger. Die Szenen aus `facilitator/konzepte/` ersetzen
 | 2:15 | 5 Skalieren | Wie stark wächst der Hauptkontext? |
 | 2:22 | 6 Rückblick | Schlussfrage |
 
-Eine Tipp-Runde kostet rund 30 Sekunden. `g` schaltet alle aus. Beide Decks sind englisch beschriftet.
+Eine Schätzfrage kostet rund 30 Sekunden. `g` schaltet alle aus.
 
 ## Pro Übung: Aufwand
 
@@ -55,7 +55,7 @@ Kandidaten zum Kürzen, falls die Zeit davonläuft (in dieser Reihenfolge):
 
 1. 05 als 2-Minuten-Demo am Beamer statt Übung.
 2. 02: Skill aus `solution/02` übernehmen (`git checkout solution/02 -- .claude/skills`), nur den automatischen Aufruf testen.
-3. R: Tipp-Runden mit `g` ausschalten und Szene 2 (Chunking) überspringen. Demo R hat mit der Szene «Vector DB» keine Reserve mehr.
+3. R: Schätzfragen mit `g` ausschalten und Szene 2 (Chunking) überspringen. Demo R hat mit der Szene «Vektor-DB» keine Reserve mehr.
 4. D: Reviewer-Subagent nur am Beamer zeigen.
 5. 03: Plan nur kritisieren und als Spec ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
 

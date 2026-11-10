@@ -40,13 +40,13 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | RAG-Fragen | Entwurf von Claude, fachliche Prüfung durch Roland über eine Review-Seite |
 | Setup | ohne Python/uv: nur Git, JDK 21, Node, Claude Code. Devcontainer als Plan B |
 | Grundsätze | Ehrliches RAG-Ergebnis (nicht nachtunen, nachdem gemessen wurde) · Hooks als Node-`.mjs` in Exec-Form · Doku Deutsch, Schweizer Schreibweise (kein ß) |
-| Sprache der Folien (2026-11-10) | **Englisch** für beide Decks (`rag/viz/`, `facilitator/konzepte/`). Gesprochen wird deutsch, Übungsblätter und Sprechskript bleiben deutsch. Die Fragen des RAG-Experiments bleiben deutsch (deutscher Korpus) |
+| Sprache der Folien (2026-11-10) | **Deutsch**, einfach und direkt: kurze Sätze, Fachbegriffe wie unter Entwicklern üblich (Chunk, Embedding, Tool-Aufruf), keine wörtlich übersetzten englischen Wendungen. Englische Folien wurden kurz versucht und verworfen |
 
 ## 3. Ablauf (150')
 
 | Zeit | Min | Block | Format | Übung / Demo |
 |------|-----|-------|--------|--------------|
-| 0:00 | 10 | Einstieg: Anatomie der Harness (Szene «Landkarte»), `/model sonnet` | Input + Slash-Commands | 00 (5') |
+| 0:00 | 10 | Einstieg: Anatomie der Harness (Szene «Überblick»), `/model sonnet` | Input + Slash-Commands | 00 (5') |
 | 0:10 | 35 | **A – Kontext und Skills** | 5' Input, Hands-on | 01 (15'), 02 (15') |
 | 0:45 | 40 | **B – Steuerung** | 5' Input, Hands-on | 03 (15'), 04 (15'), 05 (5') |
 | 1:25 | 10 | Pause (App für 06 läuft schon: letzter Schritt von 05) | | |
@@ -56,11 +56,11 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | 2:22 | 8 | Abschluss: Szene «Rückblick», `/model`, `/effort`, Teamregeln, nächste Schritte | Input + Diskussion | |
 
 Kürzungsreserve in dieser Reihenfolge: 05 als Demo → 02 Skill aus `solution/02` übernehmen →
-R ohne Tipp-Runden (`g`) und ohne Chunking-Szene → D nur am Beamer → 03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
+R ohne Schätzfragen (`g`) und ohne Chunking-Szene → D nur am Beamer → 03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
 
-Zu jedem Input gibt es eine animierte Szene in `facilitator/konzepte/` (Landkarte, Kontext, Leitplanken, MCP,
+Zu jedem Input gibt es eine animierte Szene in `facilitator/konzepte/` (Überblick, Kontext, Leitplanken, MCP,
 Skalieren, Rückblick). Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
-**Tipp-Runden** (erst per Handzeichen raten, dann auflösen) in den Konzept-Szenen und in Demo R.
+**Schätzfragen** (erst per Handzeichen raten, dann auflösen) in den Konzept-Szenen und in Demo R.
 
 ## 4. Übungen (Hands-on, `exercises/`)
 
@@ -175,19 +175,19 @@ sonst `data.sample.js` mit Badge «Beispieldaten»):
 
 | Szene | Inhalt |
 |-------|--------|
-| 1 Corpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
+| 1 Korpus | 16 Dokumente als Kacheln (Seiten, Sprachen), dann die zwei Wege: Index oder selbst suchen |
 | 2 Chunking | feste Länge vs. Überschriftenpfad (`t`) |
-| 3 BM25 | Suchbegriffe leuchten auf, blinder Fleck bei Synonymen und Sprachen |
-| 4 Vector DB | Text → Embedding-Modell → 384 Zahlen; die Datenbank als Tabelle, Ähnlichkeit zur Frage pro Zeile (echte Werte) |
-| 5 Vector | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
+| 3 BM25 | drei Schritte mit echten Werten: Frage zerlegen (Füllwörter weg), Seltenheit je Suchbegriff (in wie vielen Chunks, Gewicht), Chunks bewerten (Rangliste) |
+| 4 Vektor-DB | Text → Embedding-Modell → 384 Zahlen; die Datenbank als Tabelle, Ähnlichkeit zur Frage pro Zeile (echte Werte) |
+| 5 Vektorsuche | dieselbe Tabelle als 2D-Karte (PCA), Frage fliegt ein, Top-k-Nachbarn |
 | 6 Hybrid | RRF mit `1/(k+Rang)`-Anteilen |
 | 7 Agent | aufgezeichneter Lauf als Zeitleiste (Turns, Tokens) |
-| 8 Results | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
-| 9 Takeaways | vier Kernaussagen |
+| 8 Messung | jede Frage ein Punkt pro Suchverfahren, dann Varianten als Karten. Detail-Diagramme mit `d` |
+| 9 Fazit | vier Kernaussagen |
 
-Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`9`, `q` Frage, `g` Tipp-Runden aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
+Tasten: ←/→ Schritt, Shift+←/→ Szene, `1`–`9`, `q` Frage, `g` Schätzfragen aus/ein, `r` wiederholen, `f` Vollbild, `?` Hilfe.
 
-Tipp-Runden in den Szenen 3, 5, 7 und 8. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
+Schätzfragen in den Szenen 3, 5, 7 und 8. Die Auflösung wird aus `data.js` berechnet, nicht fest eingetragen.
 Kurze Erklärkästen («tidbits») stehen dort, wo ein Begriff zum ersten Mal vorkommt.
 
 ## 9. Demo D – Skalieren (7')
@@ -222,7 +222,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `rag/viz/data.js` (BAZG-
 | 03: «Ankunft melden» | 03: «Abgabenbetrag korrigieren» | Ankunft ist beim Umbau der App bereits entstanden. Das neue Feature muss die Sicherheitsprüfung wiederverwenden und führt so direkt zum Off-by-one |
 | 02: `GET /api/offices/{code}/declarations?status=OPEN` | 02: `GET /api/guarantees/{grn}/balance`, 01: `GET /api/guarantees/{grn}` | passt zum Mapper-Vergleich in 01 und zur Prüfung in 03 |
 | 6 Szenen in der Visualisierung | 9 Szenen (+ Corpus, + Vector DB, + Takeaways) | Bild für den Einstieg, die Vektor-Datenbank als Tabelle vor der Karte, Kernaussagen als eigene Schlussfolie |
-| Inputs nur gesprochen, Demos R und D nur zum Zuschauen | Konzept-Szenen, Tipp-Runden, D zum Mitmachen | Review vom 2026-11-10: 35 Minuten am Stück ohne Aktivität des Publikums |
+| Inputs nur gesprochen, Demos R und D nur zum Zuschauen | Konzept-Szenen, Schätzfragen, D zum Mitmachen | Review vom 2026-11-10: 35 Minuten am Stück ohne Aktivität des Publikums |
 | Korpus mit Serie «Dokumentation NCTS für Zollbeteiligte» | aktuelle BAZG-Dokumente | Die Serie ist online nicht mehr verfügbar |
 
 ## 12. Stand und offene Punkte (2026-11-10)
@@ -234,12 +234,12 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `rag/viz/data.js` (BAZG-
 - [x] RAG-Pipeline gelaufen, Zahlen in [demo-scripts.md](demo-scripts.md) eingetragen
 - [x] Review-Seite für die RAG-Fragen veröffentlicht: https://claude.ai/artifact/QWR44kzcnrqiKga1WAGvJp
 
-- [x] Review vom 2026-11-10 (Branch `workshop-visuals`): Konzept-Szenen, Korpus-Szene, Tipp-Runden, Demo D zum
+- [x] Review vom 2026-11-10 (Branch `workshop-visuals`): Konzept-Szenen, Korpus-Szene, Schätzfragen, Demo D zum
       Mitmachen, Korrekturen an den Blättern (04 löscht nicht mehr `target`, 00 ohne `check-setup`, App-Start vor der Pause)
 
 **Offen (Roland)**
 
-- [ ] Konzept-Szenen und Tipp-Runden ansehen, Texte anpassen (Schlussfrage, Kernaussage 3 zum Chunking)
+- [ ] Konzept-Szenen und Schätzfragen ansehen, Texte anpassen (Schlussfrage, Kernaussage 3 zum Chunking)
 - [ ] Danach: Git-Kette auf den neuen `main` nachziehen (`solution/*` rebasen, `start/NN` versetzen), `verify-all.sh --e2e`
 - [ ] Szene «Kontext»: schematische Breiten durch die `/context`-Werte aus dem Dry-Run ersetzen
 

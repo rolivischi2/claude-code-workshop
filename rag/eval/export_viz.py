@@ -87,6 +87,11 @@ def rankings(conn, question: str, query_vector) -> dict:
             "lexical": lexical, "semantic": semantic}
 
 
+def term_df(conn, term: str) -> int:
+    """Number of chunks in the whole index that contain the term (document frequency for BM25)."""
+    return conn.execute("SELECT count(*) FROM chunks_fts WHERE chunks_fts MATCH ?", (f'"{term}"',)).fetchone()[0]
+
+
 def chunking_demo(docs: dict[str, Document]) -> dict:
     doc = docs[DEMO_DOC]
     start = doc.body.index(DEMO_HEADING)
@@ -174,6 +179,7 @@ def main() -> None:
     def hit(cid: int, q: dict) -> bool:
         return all_chunks[cid][0] in q["expected"]
 
+    conn_terms = store.connect(v.db_path)
     out_questions, referenced, in_vector_list = [], set(), set()
     row_of = {cid: i for i, cid in enumerate(ids)}
     for q, qv, r in zip(questions, query_vectors, ranked):
@@ -196,8 +202,9 @@ def main() -> None:
         in_vector_list |= {e["chunk"] for e in vector}
         out_questions.append({
             "id": q["id"], "category": q["category"], "text": q["question"],
-            "expected_docs": q["expected"], "showcase": bool(q["showcase"]), "note": q["note_en"] or q["note"],
+            "expected_docs": q["expected"], "showcase": bool(q["showcase"]), "note": q["note"],
             "query_terms": r["terms"],
+            "term_df": {t: term_df(conn_terms, t) for t in r["terms"]},
             "query_xy": [round(float(c), 4) for c in project(qv)],
             "query_v": [round(float(c), 3) for c in qv[:VECTOR_HEAD]],
             "bm25": bm25, "vector": vector, "hybrid": hybrid,
@@ -225,8 +232,8 @@ def main() -> None:
             "rrf_k": RRF_K,
             "dims": int(vectors.shape[1]),
             "corpus": {"docs": len(docs), "chunks": len(ids), "langs": dict(sorted(langs.items()))},
-            "note": "Rankings, map and chunks come from the main variant; eval holds all measured "
-                    "variants. Map = 2D PCA of the embeddings, distances are approximate.",
+            "note": "Rankings, Karte und Chunks stammen aus der Hauptvariante; eval enthält alle "
+                    "gemessenen Varianten. Karte = 2D-PCA der Embeddings, Abstände nur ungefähr.",
         },
         "docs": [{"id": d.id, "title": d.title, "lang": d.lang, "url": d.url, "pages": d.pages}
                  for d in docs.values()],
