@@ -35,6 +35,8 @@ def load_questions(path: Path = QUESTIONS) -> list[dict]:
             raise ValueError(f"{q['id']}: unknown category {q['category']!r}")
         q.setdefault("showcase", False)
         q.setdefault("note", "")
+        q.setdefault("note_bm25", "")
+        q.setdefault("note_vector", "")
     return questions
 
 

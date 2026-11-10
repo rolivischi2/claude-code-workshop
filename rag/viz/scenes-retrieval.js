@@ -25,8 +25,9 @@
   function restRow(list, k, label) {
     var rest = (list || []).slice(k);
     if (!rest.length) return null;
-    return h('div', { class: 'rest' }, h('span', { class: 'rest-label', text: label || ('Rang ' + (k + 1) + '–' + (k + rest.length)) }),
-      rest.map(function (r) { return h('span', { class: 'rest-dot ' + (r.hit ? 'hit' : 'miss'), title: 'Rang ' + r.rank, text: r.rank }); }));
+    return h('div', { class: 'rest' }, h('span', { class: 'rest-label', text: label || ('Weitere Ergebnisse, Rang ' + (k + 1) + '–' + (k + rest.length)) }),
+      rest.map(function (r) { return h('span', { class: 'rest-dot ' + (r.hit ? 'hit' : 'miss'), title: 'Rang ' + r.rank, text: r.rank }); }),
+      rest.some(function (r) { return r.hit; }) ? h('span', { class: 'rest-key', text: 'grün = Chunk aus dem erwarteten Dokument' }) : null);
   }
 
   function verdictBox(cls, big, lines) {
@@ -319,12 +320,13 @@
       var big = fh && fh <= k ? 'Treffer auf Rang ' + fh : fh ? 'Erster Treffer erst auf Rang ' + fh : 'Kein Treffer in den Top ' + Math.max(list.length, 10);
       var lines = [];
       if (zero.length) lines.push('«' + zero.join('», «') + '» ' + (zero.length > 1 ? 'kommen' : 'kommt') + (df ? ' im ganzen Korpus nicht vor.' : ' in keinem gefundenen Chunk vor.'));
-      if (q.note) lines.push(q.note);
+      var nb = q.note_bm25 !== undefined ? q.note_bm25 : q.note;
+      if (nb) lines.push(nb);
       if (!(fh && fh <= k)) lines.push('BM25 vergleicht Zeichenfolgen. Synonyme und andere Sprachen findet es nicht.');
       else if (q.category === 'exact-identifier') lines.push('Seltene, exakte Zeichenfolgen sind die Stärke von BM25.');
       var side = h('div', { class: 'side' },
         at(verdictBox(fh && fh <= k ? 'hit' : 'miss', big, lines), 3, 'up'),
-        at(ui.tidbit('Was ist BM25?', '«Best Matching 25»: die Standardformel klassischer Volltextsuche (Lucene, Elasticsearch). Hier rechnet SQLite FTS5. Kein Modell, kein Training.'), 3, 'up', 200));
+        at(ui.tidbit('Was ist BM25?', 'Eine feste Rechenformel («Best Matching 25»), kein KI-Modell. Sie zählt nur Wörter. Jede klassische Volltextsuche nutzt sie, zum Beispiel Elasticsearch. In diesem Experiment führt die Volltextsuche von SQLite die Berechnung aus.'), 3, 'up', 200));
       stage.appendChild(h('div', { class: 'two-col' }, col, side));
     },
     step: function (b) {
@@ -448,7 +450,8 @@
       if (rest) col.appendChild(at(rest, 2, 'fade', 300 + k * 120));
       var fh = ui.firstHit(list);
       var lines = [];
-      if (q.note) lines.push(q.note);
+      var nv = q.note_vector !== undefined ? q.note_vector : q.note;
+      if (nv) lines.push(nv);
       if (!(fh && fh <= k)) lines.push(q.category === 'exact-identifier'
         ? 'Codes wie IE015 und IE051 erhalten fast dieselben Zahlen. Ziffern tragen kaum Bedeutung.'
         : 'Die nächsten Nachbarn sind inhaltlich ähnlich, aber nicht die gesuchte Stelle.');

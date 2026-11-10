@@ -203,6 +203,7 @@ def main() -> None:
         out_questions.append({
             "id": q["id"], "category": q["category"], "text": q["question"],
             "expected_docs": q["expected"], "showcase": bool(q["showcase"]), "note": q["note"],
+            "note_bm25": q["note_bm25"], "note_vector": q["note_vector"],
             "query_terms": r["terms"],
             "term_df": {t: term_df(conn_terms, t) for t in r["terms"]},
             "query_xy": [round(float(c), 4) for c in project(qv)],

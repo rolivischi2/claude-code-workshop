@@ -586,3 +586,5 @@ kbd { border-width: 1px; background: var(--card); }
 .tok-col { min-width: 0; }
 .tok-col.is-term { min-width: 5.4rem; }
 .is-stop .tok-word { font-size: .78rem; padding: .05em .45em; margin-top: .12rem; }
+
+.rest-key { margin-left: .5rem; color: var(--hit); font-weight: 700; }

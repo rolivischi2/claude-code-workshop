@@ -115,7 +115,8 @@ window.DATA = {
     text: "Wie hoch muss die Kaution für ein Versandverfahren sein?",
     expected_docs: ["r-14-01-de"],
     showcase: true,               // die 3–4 Fragen für die Live-Erzählung
-    note: "Dokument sagt 'Sicherheit', nie 'Kaution'",   // einzeiliger Hinweis (Deutsch)
+    note: "Dokument sagt 'Sicherheit', nie 'Kaution'",   // einzeiliger Hinweis (Deutsch); erscheint in der Fragenauswahl
+    note_bm25: "…", note_vector: "…",                 // Erklärung auf der Folie der jeweiligen Suche
     query_terms: ["hoch", "kaution", "versandverfahren"],  // FTS-Begriffe nach Stoppwörtern
     term_df: { kaution: 0, hinterlegen: 4 },   // in wie vielen Chunks des ganzen Index jeder Suchbegriff vorkommt (Szene BM25)
     query_xy: [0.10, -0.40],      // Frage mit derselben PCA projiziert
