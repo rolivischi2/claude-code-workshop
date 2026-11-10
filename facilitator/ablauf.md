@@ -69,7 +69,7 @@ Botschaft: Die CLAUDE.md macht den Unterschied in den Details, die nicht im Code
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Input mit Szene 3 «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien), Rewind (Netz). |
+| 0–5 | Input mit Szene 3 «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien). Rewind (Netz) hat eine eigene Folie direkt vor Übung 05. |
 | 5–20 | Übung 03. Nach der Plan-Kritik kurz fragen: «Wer hat den Fehler bei genau 500 Franken gefunden?» |
 | 20–35 | Übung 04 |
 | 35–40 | Übung 05 (bei Zeitnot als Demo am Beamer) |

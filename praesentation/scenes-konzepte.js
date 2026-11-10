@@ -140,7 +140,7 @@
   VIZ.defs.leitplanken = {
     id: 'leitplanken', nav: 'Leitplanken', title: 'Autonomie braucht Leitplanken',
     lead: 'Jeder Tool-Aufruf wird in dieser Reihenfolge geprüft. Eine Anweisung in der CLAUDE.md kann das Modell übersehen, eine Regel nicht.',
-    beats: 6,
+    beats: 5,
     guess: function () {
       return { before: 2, question: 'Das Projekt hat eine allow-Regel, eure User-Settings haben eine deny-Regel für denselben Aufruf. Welche gilt?',
         options: ['allow, weil das Projekt Vorrang hat', 'deny'], correct: 1,
@@ -153,27 +153,12 @@
           at(h('div', { class: 'gate', id: 'g-' + g.id, 'data-i': i }, h('b', { text: g.label }), h('span', { text: g.sub })), 0, 'up', i * 90)];
       })));
       stage.appendChild(h('div', { class: 'verdict lp-out', id: 'lp-out' }, h('p', { class: 'verdict-big', id: 'lp-big' }), h('p', { class: 'verdict-line', id: 'lp-line' })));
-      var cps = ['Prompt 1', 'Prompt 2', 'Prompt 3', 'Prompt 4', 'jetzt'];
-      stage.appendChild(at(h('div', { class: 'rewind' },
-        h('div', { class: 'rewind-head' }, h('b', { text: '/rewind' }), h('span', { text: 'Vor jedem Prompt legt Claude Code einen Checkpoint an. Zurücksetzen lassen sich Code, Konversation oder beides.' })),
-        h('div', { class: 'rewind-line' }, cps.map(function (c, i) { return h('div', { class: 'cp', 'data-i': i }, h('i'), h('span', { text: c })); })),
-        h('p', { class: 'muted small', text: 'Erfasst werden Änderungen über Edit und Write. Dateien, die nur per Bash oder von aussen geändert worden sind, bleiben unverändert. Für dauerhafte Stände: Git.' })), 5, 'up'));
     },
     step: function (b, animate) {
       var c = CALLS[b] || null, out = document.getElementById('lp-out');
-      document.getElementById('lp-call').classList.toggle('hid', !c && b < 5);
-      document.getElementById('lp-call').classList.toggle('faded', b >= 5);
+      document.getElementById('lp-call').classList.toggle('hid', !c);
       out.classList.toggle('hid', !c);
       each('.gate', function (g) { g.classList.remove('pass', 'stop', 'wait', 'skip'); });
-      if (b >= 5) {
-        var cp = document.querySelectorAll('.cp');
-        each('.cp', function (el) { el.classList.remove('undone', 'target'); });
-        VIZ.later(function () {
-          [4, 3].forEach(function (i, n) { VIZ.later(function () { cp[i].classList.add('undone'); }, n * 450); });
-          VIZ.later(function () { cp[2].classList.add('target'); }, 900);
-        }, animate ? 700 : 0);
-        return;
-      }
       if (!c) return;
       document.getElementById('lp-code').textContent = c.call;
       out.className = 'verdict lp-out ' + (c.kind === 'ask' ? 'warn' : c.kind) + (animate && VIZ.motion ? ' hid' : '');
@@ -186,6 +171,46 @@
         }, Math.min(i, end + 1) * gap);
       })(i);
       VIZ.later(function () { out.classList.remove('hid'); VIZ.anim(out, VIZ.ENTER.up); }, (end + 1) * gap);
+    }
+  };
+
+  /* ===================== 3b Rewind ===================== */
+  var RW_PROMPTS = [
+    ['Prompt 1', 'Endpoint angelegt'], ['Prompt 2', 'Tests ergänzt'],
+    ['Prompt 3', 'Validierung ergänzt'], ['Prompt 4', 'Service umgebaut']
+  ];
+  VIZ.defs.rewind = {
+    id: 'rewind', nav: 'Rewind', title: 'Rewind: zurück zu einem früheren Stand',
+    lead: 'Vor jedem Prompt legt Claude Code einen Checkpoint an. Mit /rewind geht ihr zu einem davon zurück.',
+    beats: 5,
+    render: function (stage) {
+      var row = h('div', { class: 'rw-line' });
+      RW_PROMPTS.forEach(function (pr, i) {
+        row.appendChild(at(h('div', { class: 'rw-cp', id: 'rw-cp' + i }, h('i'), h('span', { text: 'Checkpoint ' + (i + 1) })), 0, 'pop', i * 220));
+        row.appendChild(at(h('div', { class: 'rw-card', id: 'rw-card' + i }, h('b', { text: pr[0] }), h('span', { text: pr[1] }),
+          i === 3 ? h('em', { id: 'rw-bad', class: 'hid', text: 'Tests rot' }) : null), 0, 'up', 110 + i * 220));
+      });
+      row.appendChild(at(h('div', { class: 'rw-now' }, h('i'), h('span', { text: 'jetzt' })), 0, 'pop', 900));
+      stage.appendChild(row);
+      stage.appendChild(h('p', { class: 'rw-caption', id: 'rw-caption' }));
+      function opt(label, text, d) { return at(h('div', { class: 'rw-opt' }, h('code', { text: label }), h('span', { text: text })), 3, 'up', d); }
+      stage.appendChild(h('div', { class: 'rw-opts' },
+        opt('Restore code and conversation', 'Dateien und Verlauf sind wieder auf dem Stand des Checkpoints.', 0),
+        opt('Restore conversation', 'Nur der Verlauf geht zurück. Die Dateien bleiben, wie sie sind.', 150),
+        opt('Restore code', 'Nur die Dateien gehen zurück. Der Verlauf bleibt.', 300)));
+      stage.appendChild(at(ui.note('Erfasst werden Änderungen über Edit und Write. Dateien, die nur per Bash oder von aussen geändert worden sind, bleiben unverändert. Für dauerhafte Stände: Git.'), 4, 'fade'));
+    },
+    step: function (b) {
+      document.getElementById('rw-bad').classList.toggle('hid', b < 1);
+      document.getElementById('rw-card3').classList.toggle('bad', b === 1);
+      document.getElementById('rw-card3').classList.toggle('undone', b >= 2);
+      document.getElementById('rw-cp3').classList.toggle('target', b >= 2);
+      document.getElementById('rw-caption').textContent = [
+        'Jeder Punkt ist ein Checkpoint: der Stand der Dateien und des Verlaufs vor dem Prompt.',
+        'Prompt 4 ist schiefgegangen.',
+        '/rewind (oder Esc Esc bei leerem Prompt), dann Checkpoint 4 wählen: der Stand vor Prompt 4.',
+        'Danach fragt Claude Code, was zurückgesetzt wird:',
+        'Danach fragt Claude Code, was zurückgesetzt wird:'][b];
     }
   };
 

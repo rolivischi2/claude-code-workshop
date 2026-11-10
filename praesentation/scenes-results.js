@@ -17,7 +17,7 @@ function plainAnswer(md) {
 
   VIZ.defs.agent = {
     id: 'agent', usesData: true, nav: 'Agent', usesQuestion: true, title: 'Der Agent sucht selbst',
-    lead: 'Aufzeichnung eines echten Laufs von Claude Code mit Grep, Glob und Read auf den Korpus-Dateien. Kein Index, keine Embeddings, dafür mehrere Schritte.',
+    lead: 'Aufzeichnung eines echten Laufs von Claude Code mit Grep, Glob und Read auf den Korpus-Dateien. Kein Index, keine Embeddings, dafür mehrere Turns. Ein Turn ist eine Antwort des Modells: ein Tool-Aufruf oder am Schluss der Text.',
     beats: function (ctx) {
       var run = runFor(ctx);
       if (!run) return 1;
@@ -50,24 +50,29 @@ function plainAnswer(md) {
         return;
       }
       var steps = run.steps || [], per = perBeat(run), last = 1 + Math.ceil(steps.length / per);
-      var maxChars = Math.max.apply(null, steps.map(function (st) { return st.result_chars || 0; }).concat([1]));
-      var tl = h('ol', { class: 'timeline' });
+      /* Weg: Frage → ein Punkt pro Turn → Antwort. Der letzte Turn ist die Antwort ohne Tool-Aufruf. */
+      var nTurns = run.turns || steps.length + 1, nodes = steps.length + 2;
+      var inset = 50 / nodes;
+      var tl = h('div', { class: 'jr' },
+        h('div', { class: 'jr-track', style: { left: inset + '%', right: inset + '%' } }),
+        h('div', { class: 'jr-fill', id: 'jr-fill', style: { left: inset + '%' } }));
+      tl.appendChild(at(h('div', { class: 'jr-node start' }, h('span', { class: 'jr-dot', text: '?' }),
+        h('div', { class: 'jr-card' }, h('div', { class: 'jr-head' }, 'Start'), h('p', { class: 'jr-what', text: 'Die Frage als Prompt. Dazu die Markdown-Dateien des Korpus und die Tools Grep, Glob, Read.' }))), 0, 'up'));
       steps.forEach(function (st, i) {
-        var w = Math.round(100 * (st.result_chars || 0) / maxChars);
-        tl.appendChild(at(h('li', { class: 'tstep', 'data-i': i },
-          h('span', { class: 'tstep-n', text: st.n || i + 1 }),
-          h('span', { class: 'tool tool-' + String(st.tool || '').toLowerCase(), text: st.tool || '?' }),
-          h('code', { class: 'tstep-in', text: st.input || '', title: st.input || '' }),
-          h('span', { class: 'tstep-res' },
-            h('span', { class: 'res-bar' }, h('span', { style: { width: w + '%' } })),
-            h('span', { class: 'res-num' + (st.result_chars ? '' : ' empty-res'), text: st.result_chars ? VIZ.kchars(st.result_chars) : 'leer' }))),
-          1 + Math.floor(i / per), 'left'));
+        var d = describe(st);
+        tl.appendChild(at(h('div', { class: 'jr-node' }, h('span', { class: 'jr-dot', text: i + 1 }),
+          h('div', { class: 'jr-card' },
+            h('div', { class: 'jr-head' }, 'Turn ' + (i + 1), h('span', { class: 'tool', text: st.tool || '?' })),
+            h('p', { class: 'jr-what' }, d.what), d.code ? h('code', { text: d.code }) : null,
+            h('p', { class: 'jr-res', text: '→ ' + (st.result_chars ? VIZ.kchars(st.result_chars) + ' zurück in den Kontext' : 'kein Ergebnis') }))),
+          1 + Math.floor(i / per), 'up'));
       });
+      tl.appendChild(at(h('div', { class: 'jr-node end ' + (run.found_expected ? 'hit' : 'miss') }, h('span', { class: 'jr-dot', text: nTurns }),
+        h('div', { class: 'jr-card' }, h('div', { class: 'jr-head' }, 'Turn ' + nTurns),
+          h('p', { class: 'jr-what', text: 'Kein Tool-Aufruf mehr. Claude schreibt die Antwort mit Quellenangabe.' }),
+          h('p', { class: 'jr-res', text: run.found_expected ? '→ erwartetes Dokument gefunden' : '→ erwartetes Dokument nicht gefunden' }))), last, 'up'));
       var counters = h('div', { class: 'counters' },
-        counter('Turns', 'c-turns'), counter('Kontext (Tokens)', 'c-ctx'),
-        h('div', { class: 'spark', id: 'spark' }, steps.map(function (st, i) {
-          return h('span', { class: 'spark-bar', 'data-i': i, style: { height: '0%' } });
-        })));
+        counter('Turns', 'c-turns'), counter('Kontext (Tokens)', 'c-ctx'));
       var answer = at(h('div', { class: 'answer ' + (run.found_expected ? 'hit' : 'miss') },
         h('p', { class: 'verdict-big' }, ui.mark(run.found_expected), run.found_expected ? ' Erwartetes Dokument gefunden' : ' Erwartetes Dokument nicht gefunden'),
         run.answer ? h('blockquote', { text: plainAnswer(run.answer) }) : null,
@@ -84,8 +89,9 @@ function plainAnswer(md) {
           h('tr', {}, h('th', { text: 'Ergebnis' }),
             h('td', {}, ui.mark(!!(ragRank && ragRank <= k)), ' ', ragRank ? 'Rang ' + ragRank + (hy ? ' (Hybrid)' : ' (Vektor)') : 'nicht in den Top 10'),
             h('td', {}, ui.mark(!!run.found_expected), run.found_expected ? ' gefunden' : ' nicht gefunden')))), last, 'up', 250);
+      stage.appendChild(tl);
       stage.appendChild(h('div', { class: 'agent-grid' },
-        h('div', { class: 'agent-left' }, tl, cmp),
+        h('div', { class: 'agent-left' }, cmp),
         h('div', { class: 'agent-right' }, counters, answer)));
       this._vals = { turns: 0, ctx: 0 };
     },
@@ -105,11 +111,30 @@ function plainAnswer(md) {
       Array.prototype.forEach.call(document.querySelectorAll('.spark-bar'), function (el, i) {
         el.style.height = i < shown ? Math.max(3, Math.round(100 * (steps[i].context_tokens || 0) / maxCtx)) + '%' : '0%';
       });
-      Array.prototype.forEach.call(document.querySelectorAll('.tstep'), function (el, i) {
-        el.classList.toggle('current', b < last && i === shown - 1);
-      });
+      var nodes = steps.length + 2, reached = b >= last ? nodes - 1 : shown;
+      var fill = document.getElementById('jr-fill');
+      if (fill) fill.style.width = (reached / (nodes - 1)) * (100 - 100 / nodes) + '%';
     }
   };
+  /* Tool-Aufruf in einem Satz: was gesucht oder gelesen wird, und wo */
+  function describe(st) {
+    var p = {};
+    String(st.input || '').split(/\s{2,}/).forEach(function (kv) {
+      var m = /^([\w-]+):\s*(.*)$/.exec(kv);
+      if (m) p[m[1]] = m[2];
+    });
+    var where = p.path || p.file_path, tool = String(st.tool || '');
+    if (tool === 'Read') {
+      var from = +p.offset || 1, n = +p.limit;
+      return { what: 'Liest ' + (n ? 'die Zeilen ' + from + ' bis ' + (from + n - 1) : 'die Datei') + ':', code: where || '' };
+    }
+    if (tool === 'Grep') {
+      var scope = where ? 'in ' + where : 'in allen ' + (p.glob || 'Dateien');
+      return { what: 'Sucht ' + scope + (p.output_mode === 'count' ? ' und zählt die Treffer:' : ' nach:'), code: p.pattern || '' };
+    }
+    if (tool === 'Glob') return { what: 'Listet Dateien auf:', code: p.pattern || '' };
+    return { what: '', code: st.input || '' };
+  }
   function counter(label, id) {
     return h('div', { class: 'counter', id: id }, h('span', { class: 'counter-val', text: '0' }), h('span', { class: 'counter-label', text: label }));
   }
@@ -141,6 +166,43 @@ function plainAnswer(md) {
     }).join(' + ');
   }
   VIZ.variantLabel = variantLabel;
+
+  /* ===================== 7b Der Test ===================== */
+  var CAT_DESC = {
+    'synonym': 'Die Frage benutzt andere Wörter als das Dokument. Beispiel: «Pfund» in der Frage, «GBP» im Text.',
+    'cross-lingual': 'Die Frage ist deutsch. Die Antwort steht nur in einem französischen oder italienischen Dokument.',
+    'exact-identifier': 'Die Frage enthält einen Code oder eine Kennung, die genau so im Dokument steht.',
+    'multi-doc': 'Die Antwort ist auf zwei Dokumente verteilt. Erwartet sind beide. Wird nur eines gefunden, gibt das einen halben Punkt.'
+  };
+  VIZ.defs.test = {
+    id: 'test', usesData: true, nav: 'Test', title: 'Der Test: 25 Fragen in vier Gruppen',
+    lead: 'Vier Beispielfragen beweisen nichts. Darum ein fester Satz von Fragen, bei denen die richtige Antwort bekannt ist.',
+    beats: 3,
+    render: function (stage, ctx) {
+      var qs = ctx.data.questions || [], k = ctx.k, cats = [];
+      qs.forEach(function (q) { if (cats.indexOf(q.category) < 0) cats.push(q.category); });
+      var steps = [
+        [qs.length + ' Fragen', 'Geschrieben vor der ersten Messung. Danach nicht mehr geändert.'],
+        ['Erwartetes Dokument', 'Zu jeder Frage ist festgelegt, in welchem Dokument die Antwort steht.'],
+        ['Suche liefert die Top ' + k, 'Steht ein Chunk aus dem erwarteten Dokument darin, ist die Frage gefunden.'],
+        ['Recall@' + k, 'Anteil der gefundenen Fragen. Eine Frage entspricht ' + VIZ.num(1 / (qs.length || 1), 2) + '.']
+      ];
+      stage.appendChild(h('div', { class: 'tsteps' }, steps.map(function (s, i) {
+        return [i ? at(h('span', { class: 'tarrow', text: '→' }), 0, 'fade', i * 200) : null,
+          at(h('div', { class: 'tstep' }, h('b', { text: s[0] }), h('span', { text: s[1] })), 0, 'up', i * 200)];
+      })));
+      stage.appendChild(h('div', { class: 'tcats' }, cats.map(function (c, i) {
+        var inCat = qs.filter(function (q) { return q.category === c; });
+        var ex = inCat.filter(function (q) { return q.showcase; })[0];
+        return at(h('div', { class: 'tcat' },
+          h('div', { class: 'tcat-head' }, h('b', { text: VIZ.CATEGORY[c] || c }), h('span', { text: inCat.length + ' Fragen' })),
+          h('p', { class: 'tcat-desc', text: CAT_DESC[c] || '' }),
+          ex ? h('div', { class: 'tcat-ex' }, h('span', { class: 'tcat-exlabel' }, h('i', { class: 'dot full showcase' }), 'Beispielfrage'),
+            h('p', { text: '«' + ex.text + '»' })) : null), 1, 'up', i * 160);
+      })));
+      stage.appendChild(at(ui.note('Jede Gruppe prüft eine andere Schwäche einer Suche. Auf der nächsten Folie ist jede Frage ein Punkt, nach diesen Gruppen sortiert. Die vier Beispielfragen sind dort umrandet, jede in ihrer Gruppe. Auf den Folien BM25 bis Hybrid lassen sie sich mit q wählen.'), 2, 'fade'));
+    }
+  };
 
   /* ===================== 7 Messung: jede Frage ein Punkt ===================== */
   /* Recall pro Frage und Modus aus den echten Ranglisten: Anteil der erwarteten Dokumente in den Top k.
@@ -232,7 +294,7 @@ function plainAnswer(md) {
       stage.appendChild(grid);
       stage.appendChild(h('div', { class: 'dm-legend' },
         h('span', {}, h('i', { class: 'dot full' }), 'gefunden'), h('span', {}, h('i', { class: 'dot half' }), 'eines von zwei Dokumenten'),
-        h('span', {}, h('i', { class: 'dot none' }), 'nicht gefunden'), h('span', {}, h('i', { class: 'dot full showcase' }), 'Frage aus den Szenen ' + VIZ.questionScenes())));
+        h('span', {}, h('i', { class: 'dot none' }), 'nicht gefunden'), h('span', {}, h('i', { class: 'dot full showcase' }), 'Beispielfrage der Gruppe (siehe Folie Test)')));
       stage.appendChild(h('p', { class: 'dm-caption', id: 'dm-caption' }));
       /* Varianten: drei Karten statt dreissig Balken */
       var vs = variants(ctx);

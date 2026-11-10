@@ -513,13 +513,14 @@
       var svg = s('svg', { viewBox: '0 0 ' + W + ' ' + H, width: W, height: H, class: 'map-svg', role: 'img', 'aria-label': 'Karte der Chunks' });
       var gp = at(s('g', { class: 'pts' }), 0, 'fade');
       var gx = at(s('g', { class: 'exp' }), 3, 'fade');
-      var items = [], langs = {};
+      var items = [], langs = {}, nExp = 0;
+      var ranked = (qxy ? nb : []).map(function (x) { return x.c; });
       function place(el, x, y) { items.push({ el: el, x: x, y: y }); return el; }
       pts.forEach(function (c) {
         var lang = c.lang || (ctx.docs[c.doc] || {}).lang || 'de';
         langs[lang] = 1;
         gp.appendChild(place(s('g', {}, shape(lang, 0, 0, 5)), c.x, c.y));
-        if (expected[c.doc]) gx.appendChild(place(s('g', {}, s('circle', { cx: 0, cy: 0, r: 11, class: 'ring' })), c.x, c.y));
+        if (expected[c.doc]) { nExp++; gx.appendChild(place(s('g', {}, s('circle', { cx: 0, cy: 0, r: ranked.indexOf(c) >= 0 ? 19 : 11, class: 'ring' })), c.x, c.y)); }
       });
       svg.appendChild(gp);
       svg.appendChild(gx);
@@ -554,7 +555,9 @@
         var sv = s('svg', { viewBox: '0 0 20 20', width: 18, height: 18 }); sv.appendChild(shape(l, 10, 10, 6));
         legend.appendChild(h('span', {}, sv, VIZ.LANG[l] || l));
       });
-      legend.appendChild(at(h('span', {}, h('i', { class: 'lg-ring' }), 'erwartetes Dokument'), 3, 'fade'));
+      legend.appendChild(at(h('span', {}, h('i', { class: 'lg-rank' }, '1'), 'Rang in der Suche'), 2, 'fade'));
+      legend.appendChild(at(h('span', {}, h('i', { class: 'lg-ring' }), 'Chunk aus dem erwarteten Dokument (' + nExp + ' Chunks)'), 3, 'fade'));
+      box.insertBefore(at(h('p', { class: 'map-caption map-how', text: 'Ein Dokument besteht aus vielen Chunks, jeder ist ein Punkt. Die Suche liefert Chunks. Die Frage ist gefunden, wenn ein Chunk des erwarteten Dokuments in den Top ' + ctx.k + ' steht.' }), 3, 'fade'), legend);
       this._map = { W: W, H: H, full: full, zoom: zoom, items: items, lines: lines, qxy: qxy, cur: null };
       this.layout(full);
     },

@@ -12,10 +12,10 @@ Prompts und Prüfung. Dort startet `z` die Uhr.
 |-----------|--------|------|
 | ▶ Start | Ablauf · Überblick · Übung 00 | 0:00 |
 | A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 | 0:10 |
-| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Übung 05 · Pause | 0:45 |
+| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Rewind · Übung 05 · Pause | 0:45 |
 | C MCP | MCP · Übung 06 | 1:35 |
-| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Messung · Fazit | 1:55 |
-| D Skalieren | Skalieren, danach Live-Demo im eigenen Terminal | 2:15 |
+| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Test · Messung · Fazit | 1:55 |
+| D Skalieren | Skalieren · Demo · (Live-Demo im eigenen Terminal) · Ablauf | 2:15 |
 | ■ Schluss | Rückblick | 2:22 |
 
 Die Szenennummern in den Überschriften unten zählen innerhalb von Teil 1 (Konzept-Szenen) und Teil 2
@@ -100,7 +100,6 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | `Read .env` bleibt rot bei deny stehen | «Darum ist deny die verlässlichste Regel, die ihr habt. In Übung 04 sperrt ihr damit `.env` und `git push`.» |
 | `→` | `Edit src/generated/…` bleibt beim Hook stehen | «Für alles, was sich nicht als Muster schreiben lässt, gibt es Hooks: ein Skript von euch. Endet es mit Exit-Code 2, ist der Aufruf blockiert, und die Begründung geht zurück an Claude. Die Regeln werden dann gar nicht mehr gefragt.» |
 | `→` | `rm -r scratch/wegwerf` hält bei ask | «Und ask heisst: Claude hält an und fragt euch. Für alles, was selten und heikel ist.» |
-| `→` | `/rewind`-Zeitleiste, Marker springt zurück | «Die letzte Leitplanke ist ein Netz. Vor jedem Prompt legt Claude Code einen Checkpoint an. Mit `/rewind` geht ihr zurück: Code, Konversation oder beides. Mit einem solchen Netz könnt ihr mutiger experimentieren.» |
 
 **Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen.»
 
@@ -114,6 +113,16 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
 - *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
 - *Warum Hooks als Node-Skript?* Dieselbe Konfiguration läuft auf macOS und Windows, weil keine Shell dazwischen ist.
+
+**Folie «Rewind»** (direkt vor Übung 05, rund 1 Minute, fünf Schritte)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Zeitleiste: vier Prompts, vor jedem ein Checkpoint | «Die letzte Leitplanke ist ein Netz. Vor jedem Prompt legt Claude Code einen Checkpoint an: den Stand der Dateien und des Verlaufs.» |
+| `→` | Prompt 4 wird rot, «Tests rot» | «Prompt 4 ist schiefgegangen.» |
+| `→` | Checkpoint 4 wird grün, Prompt 4 ist durchgestrichen | «Mit `/rewind` oder zweimal Esc wählt ihr den Checkpoint vor Prompt 4.» |
+| `→` | drei Karten mit den Menüpunkten | «Dann fragt Claude Code, was zurückgeht: Code und Verlauf, nur der Verlauf oder nur der Code. In der Übung nehmt ihr den ersten Punkt.» |
+| `→` | Hinweis zu den Grenzen | «Erfasst wird nur, was über Edit und Write geändert worden ist. Was ein Bash-Befehl geändert hat, bleibt. Darum ersetzt Rewind Git nicht.» → Übung 05. |
 
 ---
 
@@ -327,18 +336,26 @@ dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und
 |-------|--------------|----------|
 | (Start) | die Frage | «Jetzt der andere Weg. Kein Index, keine Embeddings. Claude Code bekommt dieselben Markdown-Dateien und drei Werkzeuge: Grep, Glob, Read. Das ist eine Aufzeichnung eines echten Laufs.» |
 | `→` | **Schätzfrage:** Wie viele Turns? | Abstimmen, auflösen. |
-| `→` … | Zeitleiste füllt sich, Zähler für Turns und Kontext | Bei C3: «Schaut auf das Suchmuster: Militär, militaire, militare. Claude übersetzt den Suchbegriff selbst, ohne dass es jemand verlangt hat.» |
-| letzter `→` | Antwort, Vergleichstabelle RAG gegen Agent | «Gefunden, mit Quelle. Der Preis sind Turns und Tokens pro Frage. Dafür gibt es nichts zu bauen und nichts aktuell zu halten.» |
+| `→` … | Linie läuft von der Frage zum nächsten Punkt. Jeder Punkt ist ein Turn mit einer Karte: Tool, Suchmuster oder Datei, Grösse des Ergebnisses. Zähler für Turns und Kontext | Bei C3: «Schaut auf das Suchmuster: Militär, militaire, militare. Claude übersetzt den Suchbegriff selbst, ohne dass es jemand verlangt hat.» |
+| letzter `→` | grüner letzter Punkt: Turn ohne Tool-Aufruf, die Antwort. Darunter Antworttext und Vergleichstabelle RAG gegen Agent | «Gefunden, mit Quelle. Der Preis sind Turns und Tokens pro Frage. Dafür gibt es nichts zu bauen und nichts aktuell zu halten.» |
 
 **Zahlen im Kopf:** alle 4 Fragen richtig · S2 3 Turns, rund 22'000 Tokens · C3 4 Turns, 31'000 · E1 3 Turns, 22'000 · M3 4 Turns, 36'000 · je 5 bis 10 Sekunden.
 
 **Fragen:** *Skaliert das?* Bei 16 Dateien mühelos. Bei Tausenden liefert Grep zu viele Treffer, Turns und Kontext steigen. Dort beginnt der Bereich von RAG. · *Kann man beides verbinden?* Ja: Der Index wird ein Werkzeug des Agenten, zum Beispiel über MCP. Im Repo liegt dafür `rag/mcp_server/`. · *Warum zählen Tokens bei Grep?* Jedes Suchergebnis landet im Kontext und wird in den folgenden Turns wieder mitgeschickt.
 
+## Folie «Test» (vor der Messung, rund 1 Minute)
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | vier Kästen: 25 Fragen → erwartetes Dokument → Top 5 → Recall@5 | «Vier Fragen sind Anekdoten. Darum ein Test: 25 Fragen, vor der ersten Messung geschrieben. Zu jeder Frage steht fest, in welchem Dokument die Antwort ist. Die Suche liefert fünf Ergebnisse. Ist das Dokument dabei, ist die Frage gefunden.» |
+| `→` | vier Karten: Synonym, Andere Sprache, Code oder Kennung, Mehrere Dokumente, je mit einer Beispielfrage | «Die Fragen sind in vier Gruppen geteilt. Jede Gruppe prüft eine andere Schwäche. Pro Gruppe steht eine Beispielfrage. Die Pfund-Frage kennt ihr.» (Hast du vorher mit `q` auch NT044, Militärtransporte oder das Versandbegleitdokument gezeigt, darauf verweisen.) |
+| `→` | Hinweis | «Auf der nächsten Folie ist jede Frage ein Punkt. Die vier Beispielfragen sind umrandet, jede in ihrer Gruppe.» |
+
 ## Szene 8 · Messung (16½–19')
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Reihe BM25: 25 Punkte, nach Kategorie gruppiert, 0.76 | «Vier Fragen sind Anekdoten. Darum 25 Fragen, vor der ersten Messung geschrieben. Jede Frage ist ein Punkt. Voll heisst: Das richtige Dokument steht in den Top 5. Schaut, wo BM25 die Lücken hat: bei den Fragen in einer anderen Sprache.» |
+| (Start) | Reihe BM25: 25 Punkte, nach Kategorie gruppiert, 0.76 | «Jede Frage ist ein Punkt, sortiert nach den vier Gruppen. Voll heisst: Das richtige Dokument steht in den Top 5. Schaut, wo BM25 die Lücken hat: bei den Fragen in einer anderen Sprache.» |
 | `→` | Reihe Vektor, 0.76 | «Die Vektorsuche: gleiche Quote, 0.76. Aber die Lücken sind an anderen Stellen: bei den Bezeichnern und bei den Synonymen.» |
 | `→` | Reihe Hybrid, 0.92 | «Und zusammen: 0.92. Hybrid gewinnt hier klar, weil die Fehler fast nicht überlappen. Die halben Punkte sind Fragen mit zwei erwarteten Dokumenten, von denen nur eines gefunden worden ist.» |
 | `→` | **Schätzfrage:** anderes Embedding-Modell, Sprachwechsel | Abstimmen. Antwort zeigen: «Schlechter. Von 0.83 auf 0.50.» |
