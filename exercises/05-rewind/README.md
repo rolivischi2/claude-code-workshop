@@ -9,7 +9,7 @@ Mit `/rewind` zu einem früheren Stand zurückspringen, mit Git vergleichen und 
 ## Konzept
 
 Mutig experimentieren geht nur mit einem Netz, das Fehler auffängt. Claude Code legt vor
-jedem Edit einen Checkpoint an. `/rewind` (oder zweimal Esc) setzt Code, Konversation oder
+jedem Prompt einen Checkpoint an. `/rewind` (oder zweimal Esc) setzt Code, Konversation oder
 beides zurück. Sessions lassen sich fortsetzen und verzweigen. Für alles Dauerhafte gibt es Git.
 
 ## Aufgabe
@@ -22,6 +22,11 @@ Voraussetzung: dieselbe Session wie in Übung 04 (auch nach `claude -c`).
 4. Im Terminal vergleichen: `git status` und `git diff --stat`. Welche Dateien sind zurückgesetzt?
 5. Wieder nach vorne: `git restore .` holt den committeten Stand zurück.
 6. Kontrolle: `git status` ist sauber, `ls .claude/hooks` zeigt beide Skripte.
+7. **Vor der Pause** die App für Übung 06 starten, in zwei weiteren Terminals. Sie läuft während der Pause hoch:
+   ```bash
+   cd app/backend && ./mvnw -q spring-boot:run       # Windows: mvnw.cmd -q spring-boot:run
+   cd app/frontend && npm start                       # http://localhost:4200
+   ```
 
 ## Vorgeschlagene Prompts
 
@@ -38,8 +43,9 @@ git status --short       # leer
 <details>
 <summary>Hinweise</summary>
 
-- Checkpoints erfassen nur Änderungen über Claudes Datei-Werkzeuge (Edit/Write). **Nicht**
-  erfasst werden Änderungen per Bash, von Subagents oder von aussen.
+- Checkpoints erfassen Änderungen über Claudes Datei-Werkzeuge (Edit/Write). **Nicht** erfasst sind
+  Dateien, die nur per Bash, von einem Subagent oder von aussen geändert wurden. Hat Claude eine Datei
+  aber einmal selbst editiert, nimmt der Rewind auch spätere Bash-Änderungen an ihr zurück.
 - Spannende Frage: Der Hook aus Übung 04 hat `FristFormatter.java` per Maven umformatiert,
   also **nicht** über Edit. Was zeigt `git diff` nach dem Rewind für diese Datei?
 - Und `format-edited-file.mjs`? Das habt ihr mit `cp` kopiert, nicht Claude mit Write. Was macht der Rewind damit?

@@ -20,7 +20,7 @@ viel mit Opus gearbeitet hat, kann trotzdem blockiert sein.
    `/model haiku` und `/effort low`. Für die meisten Übungen reicht das.
 3. **Lösung übernehmen und verstehen:**
    ```bash
-   scripts/reset-exercise.sh NN+1      # Stand nach Übung NN, inkl. Referenzlösung
+   scripts/reset-exercise.sh NN+1      # Stand nach Übung NN, inkl. Referenzlösung (nach 06: git switch solution/06)
    git diff start/NN solution/NN       # was die Lösung ändert
    ```
    Die Diffs der Lösungen sind klein und eignen sich gut zum Lesen.
@@ -29,7 +29,7 @@ viel mit Opus gearbeitet hat, kann trotzdem blockiert sein.
 5. **Usage Credits:** Wer selbst zahlen will, kann unter `/usage-credits` zusätzliche
    Nutzung kaufen. Bitte **nicht** im Workshop empfehlen, nur erwähnen, falls jemand fragt.
 
-## Für Facilitators
+## Für den Facilitator
 
 - Der Facilitator braucht ein Konto mit höherem Limit, um die Demos R und D am Beamer sicher zu zeigen.
   Die RAG-Demo selbst braucht **kein** Modell: Sie spielt vorberechnete Daten ab.

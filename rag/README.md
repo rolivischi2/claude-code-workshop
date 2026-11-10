@@ -102,7 +102,7 @@ Die Fragen wurden vor der ersten Messung geschrieben und danach nicht mehr angep
    Vektor von 0.70 auf 0.76 und Hybrid von 0.86 auf 0.92, also je eine bis zwei Fragen.
 5. **Die agentische Suche war bei diesem Korpus mühelos.** Claude Code (Sonnet, nur Grep/Glob/Read)
    hat alle vier Showcase-Fragen richtig beantwortet und die erwarteten Dateien zitiert, mit 2–3
-   Tool-Aufrufen, 3–4 Turns, 22 000–36 000 Input-Tokens (inkl. Cache) und 5–10 Sekunden. Es
+   Tool-Aufrufen, 3–4 Turns, 21 000–36 000 Input-Tokens (inkl. Cache) und 5–10 Sekunden. Es
    übersetzt Suchbegriffe selbst (`Militär|militaire|militare`, `pfund|GBP|livre`) und braucht
    keinen Index. Bei 16 Dateien ist das leicht; bei Tausenden Dokumenten steigen Turns und Kontext.
 

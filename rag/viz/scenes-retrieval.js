@@ -1,4 +1,4 @@
-/* Szenen 1–4: Chunking, BM25, Vektor, Hybrid (RRF). */
+/* Szenen 1–5: Korpus, Chunking, BM25, Vektor, Hybrid (RRF). */
 'use strict';
 (function () {
   var h = VIZ.h, s = VIZ.s, ui = VIZ.ui, at = VIZ.at;
@@ -38,7 +38,60 @@
     stage.appendChild(ui.empty('Keine Fragen', 'Die Daten enthalten keine Fragen (questions ist leer).'));
   }
 
-  /* ===================== 1 Chunking ===================== */
+  /* Tipp-Runde «Findet diese Suche das richtige Dokument?» – Antwort aus der echten Rangliste */
+  function hitGuess(ctx, list, before, question) {
+    var q = ctx.q;
+    if (!q || !list) return null;
+    var k = ctx.k, fh = ui.firstHit(list), ok = !!(fh && fh <= k);
+    return { before: before, question: question.replace('{k}', k), options: ['Ja, in den Top ' + k, 'Nein'], correct: ok ? 0 : 1,
+      reveal: ok ? 'Erster Treffer auf Rang ' + fh + '.' : fh ? 'Erster Treffer erst auf Rang ' + fh + '.' : 'Kein Treffer in den Top ' + Math.max(list.length, 10) + '.' };
+  }
+
+  /* ===================== 1 Korpus ===================== */
+  VIZ.defs.korpus = {
+    id: 'korpus', nav: 'Korpus', title: 'Der Korpus: echte Zolldokumentation',
+    lead: 'Jede Kachel ist ein Dokument: je breiter, desto mehr Seiten. Darin steht die Antwort auf jede Frage dieses Experiments.',
+    beats: 3,
+    render: function (stage, ctx) {
+      var docs = (ctx.data.docs || []).slice().sort(function (a, b) { return (b.pages || 0) - (a.pages || 0); });
+      if (!docs.length) { stage.appendChild(ui.empty('Keine Dokumente', 'docs fehlt in den Daten.')); return; }
+      var pages = docs.reduce(function (n, d) { return n + (d.pages || 0); }, 0);
+      var langs = {};
+      docs.forEach(function (d) { var l = langs[d.lang] = langs[d.lang] || { docs: 0, pages: 0 }; l.docs++; l.pages += d.pages || 0; });
+      var chunks = (ctx.data.meta.corpus || {}).chunks;
+      stage.appendChild(h('div', { class: 'kfacts' },
+        fact(VIZ.num(docs.length), 'Dokumente', 0, 0),
+        pages ? fact(VIZ.num(pages), 'Seiten', 0, 150) : null,
+        fact(String(Object.keys(langs).length), 'Sprachen', 1, 0),
+        chunks ? fact(VIZ.num(chunks), 'Chunks im Index', 2, 0) : null));
+      var wall = h('div', { class: 'kwall' });
+      docs.forEach(function (d, i) {
+        var w = Math.max(1, d.pages || 1);
+        wall.appendChild(at(h('div', { class: 'ktile kl-' + d.lang, title: d.title, style: { 'flex-grow': w, 'flex-basis': (w * 0.36) + '%' } },
+          h('span', { class: 'ktile-title', text: d.title }),
+          h('span', { class: 'ktile-meta', text: (d.pages ? VIZ.num(d.pages) + ' S. · ' : '') + (VIZ.LANG[d.lang] || d.lang) })), 0, 'pop', i * 60));
+      });
+      stage.appendChild(wall);
+      stage.appendChild(at(h('div', { class: 'legend klegend' }, Object.keys(langs).sort(function (a, b) { return langs[b].pages - langs[a].pages; }).map(function (l) {
+        return h('span', {}, h('i', { class: 'sw kl-' + l }), (VIZ.LANG[l] || l) + ': ' + langs[l].docs + (langs[l].docs === 1 ? ' Dokument' : ' Dokumente') +
+          (pages ? ', ' + VIZ.num(langs[l].pages) + ' Seiten' : ''));
+      })), 1, 'fade'));
+      stage.appendChild(at(h('div', { class: 'kroads' },
+        h('p', { class: 'kroads-q', text: '«Wie findet ein Agent darin die richtige Stelle?»' }),
+        h('div', { class: 'kroad kroad-rag' }, h('b', { text: 'Vorher einen Index bauen' }), h('span', { text: 'zerlegen, indexieren, bei jeder Frage nachschlagen (RAG)' })),
+        h('div', { class: 'kroad' }, h('b', { text: 'Selbst suchen' }), h('span', { text: 'Grep, Glob, Read: mehrere Runden, kein Index (agentische Suche)' }))), 2, 'up'));
+    },
+    step: function (b) {
+      Array.prototype.forEach.call(document.querySelectorAll('.ktile'), function (el) {
+        el.classList.toggle('dimmed', b >= 1 && el.classList.contains('kl-de'));
+      });
+    }
+  };
+  function fact(num, label, beat, delay) {
+    return at(h('div', { class: 'kfact' }, h('span', { class: 'kfact-num', text: num }), h('span', { class: 'kfact-label', text: label })), beat, 'up', delay);
+  }
+
+  /* ===================== 2 Chunking ===================== */
   VIZ.defs.chunking = {
     id: 'chunking', nav: 'Chunking', title: 'Chunking: wo das Messer ansetzt',
     lead: 'Ein Abschnitt aus dem Korpus, zwei Arten zu schneiden. Gefunden wird immer ein ganzer Chunk.',
@@ -71,6 +124,7 @@
       VIZ.state.beat = b;
       VIZ.apply(b, true, f);
     },
+    help: [['t', 'Chunking: feste Länge ↔ Überschriften']],
     keys: {
       t: function () { var d = VIZ.defs.chunking; d.setBeat(VIZ.state.beat === 1 ? 2 : 1); }
     },
@@ -206,11 +260,14 @@
     return h('span', { class: 'frag' }, '«… ' + seg.slice(0, seg.length - mm[0].length).replace(/^\S*\s/, ''), h('span', { class: 'broken', text: mm[0] }), '»');
   }
 
-  /* ===================== 2 BM25 ===================== */
+  /* ===================== 3 BM25 ===================== */
   VIZ.defs.bm25 = {
     id: 'bm25', nav: 'BM25', usesQuestion: true, title: 'BM25: gleiche Wörter zählen',
     lead: 'Lexikalische Suche wertet aus, welche Suchbegriffe wörtlich im Chunk stehen und wie selten sie im Korpus sind.',
     beats: 3,
+    guess: function (ctx) {
+      return hitGuess(ctx, ctx.q && (ctx.q.bm25 || []), 1, 'Findet die Stichwortsuche (BM25) das richtige Dokument in den Top {k}?');
+    },
     render: function (stage, ctx) {
       var q = ctx.q;
       if (!q) { noQuestion(stage); return; }
@@ -257,11 +314,14 @@
     }
   };
 
-  /* ===================== 3 Vektor ===================== */
+  /* ===================== 4 Vektor ===================== */
   VIZ.defs.vector = {
     id: 'vector', nav: 'Vektor', usesQuestion: true, title: 'Vektorsuche: ähnliche Bedeutung',
     lead: 'Jeder Chunk wird zu einem Punkt im Bedeutungsraum. Gesucht werden die nächsten Nachbarn der Frage.',
     beats: 4,
+    guess: function (ctx) {
+      return hitGuess(ctx, ctx.q && (ctx.q.vector || []), 2, 'Und die Vektorsuche: richtiges Dokument in den Top {k}?');
+    },
     render: function (stage, ctx) {
       var q = ctx.q;
       if (!q) { noQuestion(stage); return; }

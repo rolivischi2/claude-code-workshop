@@ -52,7 +52,7 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Konzeptlandkarte (Übung 00): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
+| 0–5 | Konzeptlandkarte (`facilitator/konzepte/`, Szene 1): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
 | 5–10 | Alle: `/status`, `/model sonnet`, `/usage`, `/context`. Wer rot ist: Nachbar oder Devcontainer, nicht jetzt debuggen. |
 
 ### A – Kontext und Skills (0:10–0:45)
@@ -69,33 +69,35 @@ Botschaft: Die CLAUDE.md macht den Unterschied in den Details, die nicht im Code
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Input: Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien), Rewind (Netz). |
+| 0–5 | Input mit Szene 3 «Leitplanken» (eine Tipp-Runde): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien), Rewind (Netz). |
 | 5–20 | Übung 03. Nach der Plan-Kritik kurz fragen: «Wer hat den Fehler bei genau 500 Franken gefunden?» |
 | 20–35 | Übung 04 |
 | 35–40 | Übung 05 (bei Zeitnot als Demo am Beamer) |
 
 ### Pause (1:25–1:35)
 
-Während der Pause: Backend und Frontend für Übung 06 bei sich starten, `/usage` prüfen.
+Backend und Frontend für Übung 06 starten die Teilnehmenden **vor** der Pause (letzter Schritt von Übung 05). Die Pause ist Pause.
 
 ### C – Browser über MCP (1:35–1:55)
 
 | Min | Was |
 |-----|-----|
-| 0–3 | Input: MCP als Standard-Steckdose. Feedback-Loop: Ein Agent, der sein Ergebnis selbst sieht, braucht weniger Kontrolle. |
+| 0–3 | Input mit Szene 4 «MCP»: MCP als Standard-Steckdose. Feedback-Loop: Ein Agent, der sein Ergebnis selbst sieht, braucht weniger Kontrolle. |
 | 3–20 | Übung 06. Wer fertig ist: `/mcp` anschauen, wie viel Kontext belegen die Tool-Definitionen? |
 
 ### R – Agentic Search vs. RAG (1:55–2:15)
 
 Siehe demo-scripts.md, Demo R. Überleitung: «Bis jetzt hat Claude im Code gesucht. Was, wenn
-das Wissen in 270 Seiten Zolldokumentation steht?»
+das Wissen in 267 Seiten Zolldokumentation steht?»
 
 ### D – Skalieren (2:15–2:22)
 
-Siehe demo-scripts.md, Demo D. Nur zeigen, nicht üben.
+Siehe demo-scripts.md, Demo D. Szene 5 «Skalieren» auf dem Beamer. Den Reviewer-Subagent starten alle
+selbst ([exercises/demo-d-reviewer](../exercises/demo-d-reviewer/README.md), 3'), die Worktrees nur zeigen.
 
 ### Abschluss (2:22–2:30)
 
+- Szene 6 «Rückblick»: die Landkarte vom Anfang mit allen Teilen, dazu die Schlussfrage.
 - Modell- und Aufwandswahl: `/model`, `/effort`, günstige Subagents (Haiku).
 - Erste Teamregeln sammeln: Review-Pflicht, Umgang mit Kunden- und Projektdaten,
   gemeinsame `CLAUDE.md` und `.claude/settings.json` im Repo.

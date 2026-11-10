@@ -24,7 +24,7 @@ Browser, dann mit einem e2e-Test. Ein Agent, der seine Arbeit verifizieren kann,
 weniger Kontrolle durch euch.
 
 1. `.mcp.json` im Repo-Root anlegen (Vorlage unten).
-2. App starten, in **zwei weiteren Terminals**:
+2. Die App läuft seit dem Ende von Übung 05. Falls nicht, in **zwei weiteren Terminals** starten:
    ```bash
    cd app/backend && ./mvnw -q spring-boot:run       # Windows: mvnw.cmd -q spring-boot:run
    cd app/frontend && npm start                       # http://localhost:4200

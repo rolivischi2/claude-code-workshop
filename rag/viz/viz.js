@@ -10,7 +10,7 @@ var VIZ = window.VIZ = window.VIZ || {};
 VIZ.MESSAGES = [
   'Jeder Retriever hat einen blinden Fleck – genau dort, wo der andere stark ist.',
   'Hybrid ist kein Automatismus. Messen am eigenen Korpus.',
-  'Chunking ist eine Stellschraube mit Wirkung.',
+  'Chunking verändert, was gefunden wird. Hier liegt der Unterschied im Rauschen von 25 Fragen.',
   'Für Code im Repo reicht agentische Suche fast immer. RAG lohnt sich für grosse, mehrsprachige Wissensbestände ausserhalb des Repos.'
 ];
 
@@ -23,7 +23,7 @@ VIZ.CATEGORY = {
 };
 VIZ.MODE = { bm25: 'BM25', vector: 'Vektor', hybrid: 'Hybrid' };
 VIZ.LANG = { de: 'Deutsch', fr: 'Französisch', it: 'Italienisch', en: 'Englisch' };
-VIZ.ORDER = ['chunking', 'bm25', 'vector', 'hybrid', 'agent', 'score', 'fazit'];
+VIZ.ORDER = ['korpus', 'chunking', 'bm25', 'vector', 'hybrid', 'agent', 'score', 'fazit'];
 VIZ.defs = VIZ.defs || {};
 
 /* ---------- kleine Helfer ---------- */
@@ -218,6 +218,7 @@ VIZ.boot = function (data, isSample) {
   document.getElementById('sample').hidden = !ctx.sample;
   VIZ.renderMeta();
   VIZ.buildFields();
+  VIZ.renderFoot();
   document.getElementById('qchip').addEventListener('click', VIZ.openPicker);
   document.addEventListener('keydown', VIZ.onKey);
   var rt;
@@ -256,8 +257,9 @@ VIZ.renderMeta = function () {
   var parts = [];
   if (m.model) parts.push('Modell ' + String(m.model).split('/').pop());
   if (m.chunking) parts.push('Chunking ' + (m.chunking === 'heading' ? 'Überschriften' : 'feste Länge'));
-  parts.push('k = ' + VIZ.ctx.k);
+  if (VIZ.data.questions.length) parts.push('k = ' + VIZ.ctx.k);
   if (c.docs) parts.push(VIZ.num(c.docs) + ' Dokumente, ' + VIZ.num(c.chunks) + ' Chunks');
+  if (VIZ.META) parts = parts.concat(VIZ.META);
   var el = document.getElementById('meta');
   el.innerHTML = '';
   parts.forEach(function (p) { el.appendChild(VIZ.h('span', { text: p })); });
@@ -285,6 +287,7 @@ VIZ.render = function (beat, animate, first) {
   var sc = VIZ.scene(), ctx = VIZ.ctx, stage = document.getElementById('stage');
   ctx.timers.forEach(clearTimeout);
   ctx.timers = [];
+  VIZ.closeGuess();
   ctx.q = VIZ.question();
   stage.innerHTML = '';
   stage.className = 'stage stage-' + sc.id;
@@ -342,10 +345,18 @@ VIZ.renderBeats = function () {
 };
 
 VIZ.next = function () {
+  if (VIZ._guess) {
+    if (!VIZ._guess.revealed) { VIZ.revealGuess(); return; }
+    VIZ.closeGuess();
+  } else if (S.beat < VIZ.beatCount() - 1) {
+    var g = VIZ.pendingGuess(S.beat + 1);
+    if (g) { VIZ.showGuess(g); return; }
+  }
   if (S.beat < VIZ.beatCount() - 1) { var f = S.beat; S.beat++; VIZ.apply(S.beat, true, f); VIZ.writeHash(); }
   else if (S.scene < VIZ.scenes.length - 1) VIZ.go(S.scene + 1);
 };
 VIZ.prev = function () {
+  if (VIZ._guess) { delete VIZ._guessed[VIZ._guess.key]; VIZ.closeGuess(); return; }
   if (S.beat > 0) { S.beat--; VIZ.apply(S.beat, false, S.beat + 1); }
   else if (S.scene > 0) { S.scene--; VIZ.render(99, false); }
 };
@@ -355,6 +366,95 @@ VIZ.go = function (i, atEnd) {
   VIZ.render(atEnd ? 99 : 0, true);
 };
 VIZ.replay = function () { VIZ.render(S.beat, true); };
+
+/* ---------- Tipp-Runden: erst raten (Handzeichen), dann auflösen ----------
+ * Eine Szene kann guess(ctx) definieren und eine Tipp-Runde (oder ein Array davon) liefern:
+ *   { before: Beat, vor dem gefragt wird, question, options: [..], correct: Index oder null, reveal: Text }
+ * Die richtige Antwort wird in der Szene aus den Daten berechnet, nie fest eingetragen.
+ * Ablauf: → zeigt die Frage, → löst auf, → fährt mit dem Beat weiter. g schaltet alle Runden aus/ein. */
+VIZ.guessOn = true;
+VIZ._guessed = {};
+VIZ._guess = null;
+VIZ.guessKey = function (g) {
+  var sc = VIZ.scene();
+  return sc.id + '|' + (sc.usesQuestion ? S.qid : '') + '|' + g.before;
+};
+VIZ.pendingGuess = function (toBeat) {
+  var sc = VIZ.scene();
+  if (!VIZ.guessOn || !sc || !sc.guess) return null;
+  var gs = sc.guess(VIZ.ctx);
+  if (!gs) return null;
+  if (!Array.isArray(gs)) gs = [gs];
+  for (var i = 0; i < gs.length; i++) {
+    var g = gs[i];
+    if (g && g.before === toBeat && g.options && g.options.length && !VIZ._guessed[VIZ.guessKey(g)]) return g;
+  }
+  return null;
+};
+VIZ.showGuess = function (g) {
+  var layer = document.getElementById('guess');
+  if (!layer) { layer = VIZ.h('div', { class: 'guess-layer', id: 'guess' }); document.body.appendChild(layer); }
+  layer.innerHTML = '';
+  var opts = g.options.map(function (o, i) {
+    return VIZ.h('li', { class: 'guess-opt', 'data-i': i },
+      VIZ.h('span', { class: 'guess-letter', text: String.fromCharCode(65 + i) }), VIZ.h('span', { class: 'guess-text', text: o }));
+  });
+  var card = VIZ.h('div', { class: 'guess', role: 'dialog', 'aria-label': 'Tipp-Runde' },
+    VIZ.h('div', { class: 'guess-tag', text: 'Euer Tipp · Handzeichen' }),
+    VIZ.h('p', { class: 'guess-q', text: g.question }),
+    VIZ.h('ol', { class: 'guess-opts' }, opts),
+    VIZ.h('p', { class: 'guess-reveal hid', text: g.reveal || '' }),
+    VIZ.h('p', { class: 'guess-hint' }, VIZ.h('kbd', { text: '→' }), ' auflösen ', VIZ.h('kbd', { text: 'g' }), ' Tipp-Runden aus'));
+  layer.appendChild(card);
+  layer.hidden = false;
+  VIZ._guess = { g: g, key: VIZ.guessKey(g), revealed: false };
+  VIZ._guessed[VIZ._guess.key] = true;
+  VIZ.anim(card, VIZ.ENTER.pop, { duration: 380 });
+};
+VIZ.revealGuess = function () {
+  var st = VIZ._guess, layer = document.getElementById('guess');
+  if (!st || !layer) return;
+  st.revealed = true;
+  var c = st.g.correct;
+  Array.prototype.forEach.call(layer.querySelectorAll('.guess-opt'), function (el, i) {
+    if (c === null || c === undefined) return;
+    el.classList.add(i === c ? 'right' : 'dim');
+    if (i === c) VIZ.anim(el, [{ transform: 'scale(1)' }, { transform: 'scale(1.06)' }, { transform: 'scale(1)' }], { duration: 520, fill: 'none' });
+  });
+  var r = layer.querySelector('.guess-reveal');
+  if (st.g.reveal) { r.classList.remove('hid'); VIZ.anim(r, VIZ.ENTER.up, { delay: 200 }); }
+  layer.querySelector('.guess-hint').innerHTML = '';
+  layer.querySelector('.guess-hint').appendChild(VIZ.h('span', {}, VIZ.h('kbd', { text: '→' }), ' weiter'));
+};
+VIZ.closeGuess = function () {
+  var layer = document.getElementById('guess');
+  if (layer) { layer.hidden = true; layer.innerHTML = ''; }
+  VIZ._guess = null;
+};
+VIZ.toggleGuess = function () {
+  VIZ.guessOn = !VIZ.guessOn;
+  if (VIZ.guessOn) VIZ._guessed = {}; else VIZ.closeGuess();
+  VIZ.toast(VIZ.guessOn ? 'Tipp-Runden ein' : 'Tipp-Runden aus');
+};
+VIZ.hasGuess = function () { return VIZ.scenes.some(function (sc) { return !!sc.guess; }); };
+/* «3–6»: Nummern der Szenen, die mit der gewählten Frage arbeiten */
+VIZ.questionScenes = function () {
+  var idx = [];
+  VIZ.scenes.forEach(function (sc, i) { if (sc.usesQuestion) idx.push(i + 1); });
+  if (!idx.length) return '';
+  return idx.length > 1 ? idx[0] + '–' + idx[idx.length - 1] : String(idx[0]);
+};
+
+VIZ.renderFoot = function () {
+  var el = document.getElementById('keys');
+  if (!el) return;
+  var k = function (t) { return VIZ.h('kbd', { text: t }); };
+  el.innerHTML = '';
+  VIZ._append(el, [k('←'), k('→'), ' Schritt ', k('1'), '–', k(String(VIZ.scenes.length)), ' Szene ']);
+  if (VIZ.questionScenes()) VIZ._append(el, [k('q'), ' Frage ']);
+  if (VIZ.hasGuess()) VIZ._append(el, [k('g'), ' Tipp-Runden ']);
+  VIZ._append(el, [k('r'), ' nochmals ', k('f'), ' Vollbild ', k('?'), ' Hilfe']);
+};
 
 /* ---------- Tastatur ---------- */
 VIZ.onKey = function (e) {
@@ -366,6 +466,8 @@ VIZ.onKey = function (e) {
     return;
   }
   var sc = VIZ.scene();
+  if (k === 'g' && VIZ.hasGuess()) { VIZ.toggleGuess(); e.preventDefault(); return; }
+  if (VIZ._guess && !/^(Arrow|Page|Home$|End$|[1-9]$| $|f$)/.test(k)) return; /* offene Tipp-Runde: nur Navigation */
   if (sc && sc.keys && sc.keys[k]) { sc.keys[k](VIZ.ctx); e.preventDefault(); return; }
   if (k === 'ArrowRight' || k === 'PageDown' || k === ' ') {
     if (e.shiftKey && k === 'ArrowRight') VIZ.go(Math.min(VIZ.scenes.length - 1, S.scene + 1)); else VIZ.next();
@@ -374,7 +476,7 @@ VIZ.onKey = function (e) {
   } else if (/^[1-9]$/.test(k) && +k <= VIZ.scenes.length) VIZ.go(+k - 1);
   else if (k === 'Home') VIZ.go(0);
   else if (k === 'End') VIZ.go(VIZ.scenes.length - 1);
-  else if (k === 'q') VIZ.openPicker();
+  else if (k === 'q' && VIZ.questionScenes()) VIZ.openPicker();
   else if (k === 'r') VIZ.replay();
   else if (k === 'f') VIZ.fullscreen();
   else if (k === '?' || k === 'h') VIZ.openHelp();
@@ -481,13 +583,13 @@ VIZ.openHelp = function () {
     ['←  Bild↑', 'Schritt zurück'],
     ['Shift + ← →', 'ganze Szene vor oder zurück'],
     ['1 … ' + VIZ.scenes.length, 'direkt zur Szene'],
-    ['q', 'Frage wählen (Szenen 2–5)'],
     ['r', 'Animation der Szene nochmals abspielen'],
-    ['f', 'Vollbild ein/aus'],
-    ['t', 'Chunking: feste Länge ↔ Überschriften'],
-    ['v', 'Messung: nächste Variante'],
-    ['?', 'diese Hilfe']
+    ['f', 'Vollbild ein/aus']
   ];
+  if (VIZ.questionScenes()) rows.splice(4, 0, ['q', 'Frage wählen (Szenen ' + VIZ.questionScenes() + ')']);
+  if (VIZ.hasGuess()) rows.push(['g', 'Tipp-Runden aus/ein (erst raten, dann auflösen)']);
+  VIZ.scenes.forEach(function (sc) { (sc.help || []).forEach(function (r) { rows.push(r); }); });
+  rows.push(['?', 'diese Hilfe']);
   var box = VIZ.h('div', { class: 'picker help' }, VIZ.h('div', { class: 'picker-head' }, VIZ.h('h2', { text: 'Tastatur' })),
     VIZ.h('table', {}, rows.map(function (r) {
       return VIZ.h('tr', {}, VIZ.h('th', { text: r[0] }), VIZ.h('td', { text: r[1] }));

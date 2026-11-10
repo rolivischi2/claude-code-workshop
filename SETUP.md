@@ -11,7 +11,7 @@ Danach läuft alles offline.
 |----------|---------|------------|--------------|
 | Git | aktuell | `git --version` | macOS: `xcode-select --install` · Windows: [Git for Windows](https://git-scm.com/download/win) (inkl. Git Bash) |
 | Java (JDK) | 21 oder neuer | `java -version` | z.B. Eclipse Temurin 21 über `brew install --cask temurin@21` bzw. `winget install EclipseAdoptium.Temurin.21.JDK` |
-| Node.js | 22.22 oder 24.15 und neuer (LTS) | `node --version` | [nodejs.org](https://nodejs.org) bzw. `brew install node` / `winget install OpenJS.NodeJS.LTS` |
+| Node.js | 22.22.3 oder 24.15 und neuer (LTS) | `node --version` | [nodejs.org](https://nodejs.org) bzw. `brew install node` / `winget install OpenJS.NodeJS.LTS` |
 | Chrome oder Edge | aktuell | – | Für Übung 06 (Playwright MCP). Edge ist auf Windows vorinstalliert. |
 | Claude Code | aktuell | `claude --version` | siehe Schritt 2 |
 
@@ -108,7 +108,7 @@ Browser im Container ohne Fenster: `"--headless"` zu den `args` des MCP-Servers 
 |---------|--------|
 | `mvnw: Permission denied` | `chmod +x app/backend/mvnw` |
 | Maven/npm hängt oder `ETIMEDOUT` | Proxy setzen (siehe oben) und Skript erneut starten |
-| `UNABLE_TO_GET_ISSUER_CERT` / `PKIX path building failed` | Firmen-Zertifikat fehlt: `NODE_EXTRA_CA_CERTS` setzen bzw. Zertifikat ins JDK importieren, Facilitators fragen |
+| `UNABLE_TO_GET_ISSUER_CERT` / `PKIX path building failed` | Firmen-Zertifikat fehlt: `NODE_EXTRA_CA_CERTS` setzen bzw. Zertifikat ins JDK importieren, Facilitator fragen |
 | Windows: `running scripts is disabled` | Mit `powershell -ExecutionPolicy Bypass -File ...` starten (wie oben) |
 | Windows: `$'\r': command not found` in Git Bash | `git config core.autocrlf input`, dann Repo neu klonen |
 | Login zeigt «API key» statt Abo | `ANTHROPIC_API_KEY` entfernen, `/logout`, `/login` |

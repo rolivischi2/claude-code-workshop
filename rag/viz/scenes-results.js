@@ -3,7 +3,7 @@ function plainAnswer(md) {
   return md.replace(/\*\*|__|`/g, '').replace(/(^|\s)[-*]\s+/g, '$1').replace(/\s+-\s*$/, '').replace(/\s{2,}/g, ' ').trim();
 }
 
-/* Szenen 5–7: Agentische Suche, Messung, Fazit. */
+/* Szenen 6–8: Agentische Suche, Messung, Fazit. */
 'use strict';
 (function () {
   var h = VIZ.h, ui = VIZ.ui, at = VIZ.at;
@@ -22,6 +22,13 @@ function plainAnswer(md) {
       var run = runFor(ctx);
       if (!run) return 1;
       return 2 + Math.ceil((run.steps || []).length / perBeat(run));
+    },
+    guess: function (ctx) {
+      var run = runFor(ctx);
+      if (!run || !run.turns) return null;
+      return { before: 1, question: 'Wie viele Runden (Turns) braucht Claude Code für diese Frage, ganz ohne Index?',
+        options: ['1–2', '3–4', '5 oder mehr'], correct: run.turns <= 2 ? 0 : run.turns <= 4 ? 1 : 2,
+        reveal: VIZ.num(run.turns) + ' Turns' + (run.input_tokens ? ', ' + VIZ.num(run.input_tokens) + ' Input-Tokens' : '') + '.' };
     },
     render: function (stage, ctx) {
       var q = ctx.q, run = runFor(ctx);
@@ -142,6 +149,25 @@ function plainAnswer(md) {
       return 'Recall@' + k + ': Ist das erwartete Dokument unter den Top ' + k + '? MRR: Wie weit oben steht der erste Treffer?';
     },
     beats: function (ctx) { return Math.max(1, variants(ctx).length); },
+    help: [['v', 'Messung: nächste Variante']],
+    /* Tipp vor der ersten Variante, die bei gleichem Chunking nur das Embedding-Modell wechselt */
+    guess: function (ctx) {
+      var vs = variants(ctx), E = ctx.data.eval, cat = 'cross-lingual';
+      function rec(v) {
+        var r = E.rows.filter(function (x) { return x.variant === v && x.mode === 'vector' && x.category === cat; })[0];
+        return r ? r.recall : null;
+      }
+      for (var i = 1; i < vs.length; i++) {
+        var a = String(vs[i - 1]).split('+'), b = String(vs[i]).split('+');
+        var ra = rec(vs[i - 1]), rb = rec(vs[i]);
+        if (a[0] !== b[0] || a[1] === b[1] || ra === null || rb === null) continue;
+        var d = rb - ra;
+        return { before: i, question: 'Anderes Embedding-Modell: «' + b[1] + '» statt «' + a[1] + '». Wie schneidet die Vektorsuche bei Fragen in einer anderen Sprache ab?',
+          options: ['Besser', 'Gleich', 'Schlechter'], correct: Math.abs(d) < 0.005 ? 1 : d > 0 ? 0 : 2,
+          reveal: 'Recall@' + (E.k || ctx.k) + ' Vektor, ' + VIZ.CATEGORY[cat] + ': ' + VIZ.num(ra, 2) + ' → ' + VIZ.num(rb, 2) + '.' };
+      }
+      return null;
+    },
     keys: {
       v: function (ctx) {
         var n = VIZ.beatCount(), f = VIZ.state.beat;
@@ -161,7 +187,7 @@ function plainAnswer(md) {
         h('div', { class: 'seg', role: 'group', 'aria-label': 'Variante' }, vs.map(function (v, i) {
           return h('button', { type: 'button', class: 'seg-btn', 'data-v': i, onclick: function () {
             var f = VIZ.state.beat; if (f === i) return; VIZ.state.beat = i; VIZ.apply(i, true, f);
-          } }, variantLabel(v), v === ctx.data.meta.variant ? h('span', { class: 'seg-note', text: 'Szenen 2–5' }) : null);
+          } }, variantLabel(v), v === ctx.data.meta.variant ? h('span', { class: 'seg-note', text: 'Szenen ' + VIZ.questionScenes() }) : null);
         })),
         h('span', { class: 'toolbar-hint' }, h('kbd', { text: 'v' }), ' Variante'),
         h('div', { class: 'legend modes' }, modes.map(function (m) {

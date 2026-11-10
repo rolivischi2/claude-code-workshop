@@ -27,7 +27,7 @@ Wer bei einer Transitanmeldung einen falschen Abgabenbetrag erfasst hat, soll ih
 
 Ablauf:
 
-1. Neue Session, mit **Shift+Tab** in den Plan Mode wechseln (Anzeige unten: «plan mode»).
+1. Neue Session, **Shift+Tab** so oft drücken, bis unten «plan mode» steht (die Taste schaltet reihum durch die Modi).
 2. Prompt 1 absetzen und den Plan lesen.
 3. Plan mit der Checkliste unten kritisieren und mit **einem** Prompt nachschärfen (Prompt 2).
 4. Plan als Spec-Datei ablegen lassen und erst dann die Umsetzung freigeben (Prompt 3).
@@ -76,6 +76,8 @@ Prüfung gefunden und mit Test behoben, umso besser.
 - Plan Mode verlassen: Beim Freigeben des Plans fragt Claude, wie es weitergehen soll
   (z.B. mit «auto-accept edits»). Wieder hinein geht es mit Shift+Tab.
 - Ein guter Plan ist überprüfbar: Dateien, Schritte, Tests. «Ich implementiere die Korrektur» ist kein Plan.
+- Aus Übung 02 gibt es bei euch bereits Code, der den offenen Betrag einer Sicherheit berechnet.
+  Name und Ort können von der Referenzlösung abweichen. Der Plan soll **euren** Code wiederverwenden.
 - Der deaktivierte Test in `DeclarationServiceTest` hat mit dem auffälligen Punkt zu tun.
 - Die Spec-Datei hilft der nächsten Session (oder Kollegin), ohne den ganzen Verlauf zu laden.
 

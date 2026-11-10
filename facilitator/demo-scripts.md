@@ -22,20 +22,25 @@ Nutzung, 4 kurze Läufe mit Sonnet). Die aufgenommenen Läufe liegen in `rag/.ca
 Dann `rag/viz/index.html` im Browser öffnen (funktioniert offline über `file://`).
 Erscheint oben das Badge «Beispieldaten», fehlt `data.js`: `uv run export-viz` erneut.
 
-**Steuerung:** ←/→ Szene bzw. Animationsschritt, 1–6 springen, `q` Fragenauswahl, `r` Animation wiederholen.
+**Steuerung:** ←/→ Szene bzw. Animationsschritt, 1–8 springen, `q` Fragenauswahl, `r` Animation wiederholen.
+
+**Tipp-Runden:** In den Szenen 3, 4, 6 und 7 erscheint vor der Auflösung eine Frage ans Publikum
+(Handzeichen). `→` löst auf, nochmals `→` fährt weiter. Die richtige Antwort wird aus `data.js`
+berechnet. Bei Zeitnot schaltet `g` alle Tipp-Runden aus (rund 30 Sekunden pro Runde).
 
 ### Ablauf
 
 | Min | Szene | Was zeigen | Satz |
 |-----|-------|------------|------|
-| 0–2 | Einstieg | Korpus: 16 BAZG-Dokumente, 267 Seiten, de/fr/it | «Echte Projektdoku. Wie findet ein Agent darin die richtige Stelle?» |
-| 2–4 | 1 Chunking | fester Schnitt vs. Überschriftenpfad | «Was ein Chunk ist, bestimmt, was gefunden werden kann.» |
-| 4–7 | 2 BM25 | **S2** «Währungsangabe … britischen Pfund»: BM25 findet **nichts** | «Das Dokument sagt GBP, nie Pfund. Lexikalische Suche ist blind für Synonyme.» |
-| 7–10 | 3 Vektor | **S2** trifft sofort. Dann **E1** «Was bedeutet NT044?»: Vektor findet den Code nicht einmal in den Top 10 | «Vektoren verstehen Bedeutung, aber nicht Bezeichner.» |
-| 10–12 | 3 Vektor | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
-| 12–14 | 4 Fusion | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
-| 14–17 | 5 Agentic | Aufgezeichnete Läufe: 3–4 Turns, 20–35k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
-| 17–20 | 6 Scoreboard | Variante wechseln: MiniLM vs. e5-large. Dann Kernbotschaften | siehe unten |
+| 0–2 | 1 Korpus | 16 BAZG-Dokumente, 267 Seiten, de/fr/it. Dann die zwei Wege: Index bauen oder selbst suchen | «Echte Projektdoku. Wie findet ein Agent darin die richtige Stelle?» |
+| 2–4 | 2 Chunking | fester Schnitt vs. Überschriftenpfad | «Was ein Chunk ist, bestimmt, was gefunden werden kann.» |
+| 4–7 | 3 BM25 | **S2** «Währungsangabe … britischen Pfund». **Tipp-Runde:** Findet BM25 es? Auflösung: **nichts** | «Das Dokument sagt GBP, nie Pfund. Lexikalische Suche ist blind für Synonyme.» |
+| 7–10 | 4 Vektor | **S2** trifft sofort (Tipp-Runde). Dann **E1** «Was bedeutet NT044?»: Vektor findet den Code nicht einmal in den Top 10 | «Vektoren verstehen Bedeutung, aber nicht Bezeichner.» |
+| 10–12 | 4 Vektor | **C3** Militärtransporte: Antwort steht nur im italienischen Dokument. BM25 verfehlt, Vektor trifft | «Mehrsprachige Embeddings überspringen die Sprachgrenze.» |
+| 12–14 | 5 Hybrid | **S2/C3**: Fusion hält den Vektor-Treffer auf Rang 1. **E1**: Fusion **schadet**, das Rauschen der Vektoren drückt den BM25-Treffer von Rang 1 auf Rang 2. **M3**: Hybrid bringt das richtige Dokument auf Rang 1 | «Fusion gleicht blinde Flecken aus, im Schnitt. Im Einzelfall kann sie einen sicheren Treffer verwässern.» |
+| 14–17 | 6 Agent | **Tipp-Runde:** Wie viele Turns? Aufgezeichnete Läufe: 3–4 Turns, 21–36k Tokens, alle 4 richtig. Claude übersetzt selbst (`Militär\|militaire\|militare`) | «Kein Index, keine Embeddings, trotzdem richtig. Der Preis sind Turns und Tokens pro Frage.» |
+| 17–19 | 7 Messung | Variante wechseln. **Tipp-Runde** vor e5-large: besser oder schlechter beim Sprachwechsel? | siehe unten |
+| 19–20 | 8 Fazit | vier Kernaussagen | |
 
 ### Gemessene Zahlen (Recall@5, in Klammern MRR, 25 Fragen, k=5)
 
@@ -84,7 +89,14 @@ und `--mode vector` im Terminal, dann `uv run eval`.
 git clone --branch solution/final . ../demo-d
 ```
 
-### Teil 1 – Reviewer-Subagent (3')
+Auf dem Beamer läuft dazu Szene 5 «Skalieren» aus `facilitator/konzepte/` (Tipp-Runde: Wie stark
+wächst der Hauptkontext?).
+
+### Teil 1 – Reviewer-Subagent (3'), alle machen mit
+
+Die Teilnehmenden folgen dem Blatt [exercises/demo-d-reviewer](../exercises/demo-d-reviewer/README.md):
+Vorlage nach `.claude/agents/` kopieren, `claude` neu starten, denselben Prompt absetzen.
+Bei Zeitnot nur am Beamer zeigen.
 
 1. `claude`, dann `/context` und die Zahl zeigen.
 2. Prompt:

@@ -1,18 +1,19 @@
 # Visualisierung: Agentische Suche vs. RAG
 
 Eine statische Präsentationsseite für den Block «Agentische Suche vs. RAG». Sie erzählt das
-Experiment in sieben Szenen und läuft offline direkt aus dem Dateisystem: kein Build, kein
+Experiment in acht Szenen und läuft offline direkt aus dem Dateisystem: kein Build, kein
 Server, keine CDN, nur Systemschriften.
 
 | Szene | Inhalt |
 |-------|--------|
-| 1 Chunking | Ein Abschnitt wird geschnitten: feste Länge (Schnitte mitten im Wort, Überlappung) gegen Überschriftenpfad |
-| 2 BM25 | Die Suchbegriffe, die BM25 abfragt (nach der Stoppwortliste in `store.py`), leuchten in den Chunks auf, Rangliste mit Scores, blinder Fleck bei Synonymen und anderen Sprachen |
-| 3 Vektor | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
-| 4 Hybrid | Beide Ranglisten, die Karten wandern in die RRF-Reihenfolge, jede mit ihren `1/(k+Rang)`-Anteilen |
-| 5 Agent | Aufgezeichneter Claude-Code-Lauf (Grep, Glob, Read) als Zeitleiste mit Turns und Kontext-Tokens |
-| 6 Messung | Recall@k und MRR pro Kategorie und Modus, umschaltbar zwischen den gemessenen Varianten |
-| 7 Fazit | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
+| 1 Korpus | Jedes Dokument als Kachel (Breite nach Seitenzahl, Muster nach Sprache), dann die zwei Wege: Index bauen oder selbst suchen |
+| 2 Chunking | Ein Abschnitt wird geschnitten: feste Länge (Schnitte mitten im Wort, Überlappung) gegen Überschriftenpfad |
+| 3 BM25 | Die Suchbegriffe, die BM25 abfragt (nach der Stoppwortliste in `store.py`), leuchten in den Chunks auf, Rangliste mit Scores, blinder Fleck bei Synonymen und anderen Sprachen |
+| 4 Vektor | 2D-Karte der Chunks, die Frage fliegt ein, die echten Top-k-Nachbarn werden verbunden, danach Nahaufnahme |
+| 5 Hybrid | Beide Ranglisten, die Karten wandern in die RRF-Reihenfolge, jede mit ihren `1/(k+Rang)`-Anteilen |
+| 6 Agent | Aufgezeichneter Claude-Code-Lauf (Grep, Glob, Read) als Zeitleiste mit Turns und Kontext-Tokens |
+| 7 Messung | Recall@k und MRR pro Kategorie und Modus, umschaltbar zwischen den gemessenen Varianten |
+| 8 Fazit | Vier Kernaussagen (editierbar in `VIZ.MESSAGES` am Anfang von `viz.js`) |
 
 ## Öffnen
 
@@ -33,17 +34,28 @@ erwartet und harmlos.
 | `→`, Leertaste, Bild↓ | nächster Animationsschritt, danach nächste Szene (Presenter-Klicker funktionieren) |
 | `←`, Bild↑ | Schritt zurück |
 | Shift + `←` / `→` | ganze Szene zurück oder vor |
-| `1` … `7` | direkt zur Szene |
+| `1` … `8` | direkt zur Szene |
 | `q` | Frage wählen (Showcase-Fragen zuerst, dann alle nach Kategorie) |
 | `r` | Animation der aktuellen Szene nochmals abspielen |
 | `f` | Vollbild ein/aus |
-| `t` | Szene 1: feste Länge ↔ Überschriften |
-| `v` | Szene 6: nächste Variante |
+| `g` | Tipp-Runden aus/ein |
+| `t` | Szene 2: feste Länge ↔ Überschriften |
+| `v` | Szene 7: nächste Variante |
 | `?` | Hilfe |
 
 Die aktuelle Szene und Frage stehen in der Adresse (`#s=3&q=q01`), ein Neuladen springt
 also an dieselbe Stelle. `prefers-reduced-motion` wird respektiert: dann gibt es keine
 Bewegung, nur Zustandswechsel.
+
+## Tipp-Runden
+
+In den Szenen 3, 4, 6 und 7 erscheint vor der Auflösung eine Frage ans Publikum (Handzeichen):
+`→` zeigt die Frage, `→` löst auf, `→` fährt weiter. Die richtige Antwort wird **aus den Daten
+berechnet** (Rang des ersten Treffers, Turns des Agents, Recall der Varianten) und stimmt darum
+auch nach einem neuen `uv run export-viz`. Eine Szene definiert dafür `guess(ctx)` und liefert
+`{ before, question, options, correct, reveal }`. `g` schaltet alle Runden aus.
+
+Der Motor (`viz.js`, `style.css`) wird auch von `facilitator/konzepte/` geladen.
 
 ## Dateien
 
@@ -51,8 +63,8 @@ Bewegung, nur Zustandswechsel.
 |-------|--------|
 | `index.html` | Gerüst, lädt Daten und Skripte |
 | `viz.js` | Zustand, Navigation, Tastatur, Fragenauswahl, Kernaussagen |
-| `scenes-retrieval.js` | Szenen 1–4 |
-| `scenes-results.js` | Szenen 5–7 |
+| `scenes-retrieval.js` | Szenen 1–5 |
+| `scenes-results.js` | Szenen 6–8 |
 | `style.css` | Gestaltung |
 | `data.js` | echte Daten aus der Pipeline (nicht von Hand bearbeiten) |
 | `data.sample.js` | Beispieldaten im gleichen Format |
@@ -66,6 +78,8 @@ Bewegung, nur Zustandswechsel.
 window.DATA = {
   meta: {
     generated: "2026-11-07T10:00:00Z",
+    variant: "heading+MiniLM",    // Variante, aus der Rankings und Karte stammen (markiert in Szene 7)
+    note: "…",                    // freier Hinweis der Pipeline, wird nicht angezeigt
     model: "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2",
     chunking: "heading",          // "heading" | "fixed"
     k: 5,                         // Top-k für Recall@k

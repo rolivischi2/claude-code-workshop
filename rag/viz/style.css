@@ -345,6 +345,48 @@ mark.lex { background: var(--lex-bg); color: inherit; box-shadow: inset 0 -3px 0
 .messages p { font-size: 2.1rem; font-weight: 600; line-height: 1.2; letter-spacing: -.015em; }
 .zoom-badge { position: absolute; top: .5rem; right: .6rem; background: var(--ink); color: var(--paper); font-size: .7rem; font-weight: 700; padding: .15rem .5rem; }
 
+/* ---------- 1 Korpus ---------- */
+.kfacts { display: flex; gap: 2.6rem; align-items: flex-end; }
+.kfact { display: flex; flex-direction: column; }
+.kfact-num { font-size: 2.6rem; font-weight: 700; line-height: 1; letter-spacing: -.02em; }
+.kfact-label { font-size: .8rem; color: var(--ink-2); font-weight: 600; margin-top: .2rem; }
+.kwall { flex: 1; min-height: 0; display: flex; flex-wrap: wrap; gap: .4rem; align-content: stretch; }
+.ktile {
+  min-width: 7.5rem; border: 2px solid var(--ink); padding: .4rem .55rem; display: flex; flex-direction: column;
+  justify-content: space-between; gap: .3rem; overflow: hidden; transition: opacity .5s;
+}
+.ktile-title { font-size: .8rem; font-weight: 700; line-height: 1.2; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.ktile-meta { font-size: .66rem; color: var(--ink-2); white-space: nowrap; }
+.ktile.dimmed { opacity: .32; }
+/* Füller: sonst zieht sich die letzte Zeile über die ganze Breite */
+.kwall::after { content: ""; flex: 400 1 0; }
+/* Sprachen bewusst ohne Orange/Blau: diese Farben bedeuten lexikalisch/semantisch */
+.kl-de { background: var(--paper); }
+.kl-fr { background: repeating-linear-gradient(135deg, var(--wash) 0 .5rem, var(--paper) .5rem 1rem); }
+.kl-it { background: var(--ink); color: var(--paper); }
+.kl-it .ktile-meta { color: var(--paper); }
+.kl-en { background: var(--wash); }
+.klegend { display: flex; gap: 1.6rem; font-size: .78rem; font-weight: 600; }
+.klegend .sw { display: inline-block; width: 1rem; height: 1rem; border: 2px solid var(--ink); margin-right: .4rem; vertical-align: -.15rem; }
+.kroads { display: grid; grid-template-columns: minmax(0, 1.3fr) 1fr 1fr; gap: 1rem; align-items: stretch; }
+.kroads-q { font-size: 1.45rem; font-weight: 600; line-height: 1.2; align-self: center; }
+.kroad { border: 3px solid var(--ink); padding: .6rem .8rem; display: flex; flex-direction: column; gap: .2rem; font-size: .82rem; }
+.kroad b { font-size: 1.05rem; }
+
+/* ---------- Tipp-Runden ---------- */
+.guess-layer { position: fixed; inset: 0; z-index: 8; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, .86); }
+.guess-layer[hidden] { display: none; }
+.guess { width: min(58rem, 90vw); background: var(--paper); border: 4px solid var(--ink); padding: 1.4rem 1.7rem 1.1rem; display: flex; flex-direction: column; gap: 1rem; box-shadow: .6rem .6rem 0 var(--ink); }
+.guess-tag { align-self: flex-start; background: var(--ink); color: var(--paper); font-size: .75rem; font-weight: 700; padding: .15rem .6rem; }
+.guess-q { font-size: 1.7rem; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.guess-opts { list-style: none; margin: 0; padding: 0; display: flex; gap: .9rem; }
+.guess-opt { flex: 1; border: 3px solid var(--ink); padding: .7rem .9rem; display: flex; align-items: center; gap: .8rem; font-size: 1.3rem; font-weight: 700; transition: opacity .4s, background .4s, border-color .4s; }
+.guess-letter { flex: 0 0 auto; width: 2.1rem; height: 2.1rem; border: 3px solid currentColor; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; }
+.guess-opt.right { border-color: var(--hit); background: var(--hit-bg); color: var(--hit); }
+.guess-opt.dim { opacity: .3; }
+.guess-reveal { font-size: 1.15rem; font-weight: 600; }
+.guess-hint { font-size: .68rem; color: var(--ink-3); }
+
 /* ---------- Overlays ---------- */
 .overlay { position: fixed; inset: 0; background: rgba(0, 0, 0, .5); display: flex; align-items: center; justify-content: center; z-index: 10; }
 .overlay[hidden] { display: none; }

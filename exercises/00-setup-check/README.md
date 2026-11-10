@@ -22,16 +22,15 @@ Kontext = System-Prompt + CLAUDE.md + Skills-Beschreibungen + Verlauf + Tool-Erg
 
 ## Aufgabe
 
-1. Setup-Skript prüfen lassen:
-   ```bash
-   scripts/check-setup.sh          # Windows: powershell -ExecutionPolicy Bypass -File scripts\check-setup.ps1
-   ```
-2. Im Repo-Root `claude` starten und nacheinander eingeben:
+`scripts/check-setup.sh` war Teil der Hausaufgabe und läuft hier **nicht** nochmals (es führt alle
+Tests aus und dauert mehrere Minuten). Windows: Die Befehle der Übungsblätter sind für **Git Bash** geschrieben.
+
+1. Im Repo-Root `claude` starten und nacheinander eingeben:
    - `/status`: Login-Methode muss euer claude.ai-Konto sein, kein API-Key.
    - `/model sonnet`: Sonnet für den ganzen Nachmittag. Der Standard ist Opus, das braucht euer Kontingent deutlich schneller auf.
    - `/usage`: euer aktueller Verbrauch im 5-Stunden-Fenster und in der Woche.
    - `/context`: Wie viel Kontext ist belegt, **bevor** ihr etwas gefragt habt? Zahl notieren.
-3. Privatsphäre-Einstellung unter
+2. Privatsphäre-Einstellung unter
    [claude.ai/settings/data-privacy-controls](https://claude.ai/settings/data-privacy-controls) bewusst prüfen.
 
 ## Vorgeschlagene Prompts
@@ -40,16 +39,13 @@ Keine. In dieser Übung tippt ihr nur Slash-Commands.
 
 ## Erfolgskriterium
 
-```bash
-scripts/check-setup.sh     # alles grün
-```
-
-…und ihr habt die Startbelegung aus `/context` notiert. Wir brauchen sie in Übung 01.
+`/status` zeigt euer claude.ai-Konto, `/model` zeigt Sonnet, und ihr habt die Startbelegung aus
+`/context` notiert. Wir brauchen sie gleich im Input zu Block A und in Übung 01.
 
 <details>
 <summary>Hinweise</summary>
 
-- Rot bei «Login»? `/logout`, dann `/login` und «Claude account with subscription» wählen.
+- Falscher Login in `/status`? `/logout`, dann `/login` und «Claude account with subscription» wählen.
 - `ANTHROPIC_API_KEY` in der Shell gesetzt? Entfernen, sonst verrechnet Claude Code über die API.
 - Fehlt Chrome/Edge (Warnung), funktioniert alles ausser Übung 06.
 

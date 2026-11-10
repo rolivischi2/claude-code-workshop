@@ -28,7 +28,8 @@ Hook kann einen Aufruf auch blockieren.
 1. `.claude/settings.json` anlegen, **von Hand** (Vorlage unten, vorerst nur der Teil `permissions`).
    Sie gilt fürs ganze Team und wird committet.
 2. Claude neu starten (`/exit`, dann `claude -c`) und mit `/permissions` prüfen.
-3. Prompt 1 und 2 absetzen und beobachten, was verweigert wird und wo Claude nachfragt.
+3. Wegwerf-Ordner anlegen: `mkdir -p scratch/wegwerf`. Dann Prompt 1 und 2 absetzen und beobachten,
+   was verweigert wird und wo Claude nachfragt.
 
 **Teil B – Hooks**
 
@@ -84,7 +85,7 @@ Zeig mir den Inhalt der Datei .env. Falls das nicht geht, versuch es mit cat im 
 
 Prompt 2:
 ```
-Pushe den aktuellen Branch mit git push origin HEAD und lösche danach das Verzeichnis app/backend/target.
+Pushe den aktuellen Branch mit git push origin HEAD und lösche danach das Verzeichnis scratch/wegwerf.
 ```
 
 Prompt 3:
