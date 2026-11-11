@@ -24,4 +24,4 @@ fi
 git checkout -q -B "work/$nn" "start/$nn"
 git clean -fdq   # removes untracked files only; ignored files like .env stay
 ok "Stand von Übung $nn hergestellt (Branch work/$nn)"
-echo "Lösung zum Vergleich: git diff work/$nn solution/$nn"
+echo "Lösung zum Vergleich: git diff work/$nn origin/solution/$nn"

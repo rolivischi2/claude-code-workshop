@@ -52,54 +52,58 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Konzeptlandkarte (`praesentation/`, Folie «Überblick»): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. |
+| 0–5 | Konzeptlandkarte (`praesentation/`, Folie «Überblick»): Modell, Tools, Kontext, Steuerung, Agentic Loop. Wo welcher Block des Nachmittags sitzt. Dann kurz die Folie «Setup»: Repo-Adresse und `reset-exercise`. |
 | 5–10 | Alle: `/status`, `/model sonnet`, `/usage`, `/context`. Wer rot ist: Nachbar oder Devcontainer, nicht jetzt debuggen. |
 
-### A – Kontext und Skills (0:10–0:45)
+### A – Kontext und Skills (0:10–0:41)
 
 | Min | Was |
 |-----|-----|
 | 0–5 | Input: Kontext ist ein Budget. Was immer geladen ist (CLAUDE.md), was bei Bedarf (Skills, MCP-Tools). |
 | 5–20 | Übung 01 |
-| 20–35 | Übung 02. Nach 10' fragen: «Bei wem wurde der Skill automatisch geladen? Wie lautet eure description?» |
+| 20–28 | Übung 02: Skill aus der Referenzlösung übernehmen, lesen, automatischen Aufruf prüfen. Zusatzaufgabe: Skill selbst bauen. |
+| 28–31 | Teamfrage: Welche Regel aus eurem Projekt müsste in die CLAUDE.md? |
 
 Botschaft: Die CLAUDE.md macht den Unterschied in den Details, die nicht im Code stehen. Skills halten den Kontext klein.
 
-### B – Steuerung (0:45–1:25)
+### B – Steuerung (0:41–1:21)
 
 | Min | Was |
 |-----|-----|
-| 0–5 | Input mit der Folie «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien). Rewind (Netz) hat eine eigene Folie direkt vor Übung 05. |
+| 0–5 | Input mit der Folie «Leitplanken» (eine Schätzfrage): Autonomie braucht Leitplanken. Plan (billig korrigieren), Permissions (Grenzen), Hooks (Garantien). Rewind (Netz) hat eine eigene Folie direkt vor der Demo. |
 | 5–20 | Übung 03. Nach der Plan-Kritik kurz fragen: «Wer hat den Fehler bei genau 500 Franken gefunden?» |
-| 20–35 | Übung 04 |
-| 35–40 | Übung 05 (bei Zeitnot als Demo am Beamer) |
+| 20–35 | Übung 04. Prompt 5 ist freiwillig. Zusatzaufgabe: Übung 05 selbst. |
+| 35–37 | Folie «Rewind», dann Demo 05 am Beamer in der eigenen, vorbereiteten Session. |
+| 37–40 | Teamfrage: Welche Datei oder welcher Befehl braucht eine Deny-Regel oder einen Hook? |
 
-### Pause (1:25–1:35)
+### Pause (1:21–1:31)
 
-Backend und Frontend für Übung 06 starten die Teilnehmenden **vor** der Pause (letzter Schritt von Übung 05). Die Pause ist Pause.
+Backend und Frontend für Übung 06 starten die Teilnehmenden **vor** der Pause. Die Befehle stehen auf der Pausenfolie. Die Pause ist Pause.
 
-### C – Browser über MCP (1:35–1:55)
+### C – Browser über MCP (1:31–1:54)
 
 | Min | Was |
 |-----|-----|
 | 0–3 | Input mit der Folie «MCP»: MCP als Standard-Steckdose. Feedback-Loop: Ein Agent, der sein Ergebnis selbst sieht, braucht weniger Kontrolle. |
-| 3–20 | Übung 06. Wer fertig ist: `/mcp` anschauen, wie viel Kontext belegen die Tool-Definitionen? |
+| 3–20 | Übung 06. Zusatzaufgabe: `/mcp` und `/context`, was von Playwright ist geladen? |
+| 20–23 | Teamfrage: Welches System würdet ihr per MCP anbinden, und sieht Claude dort fremde Inhalte? |
 
-### R – Agentic Search vs. RAG (1:55–2:15)
+### R – Agentic Search vs. RAG (1:54–2:17)
 
 Siehe demo-scripts.md, Demo R. Überleitung: «Bis jetzt hat Claude im Code gesucht. Was, wenn
-das Wissen in 267 Seiten Zolldokumentation steht?»
+das Wissen in 267 Seiten Zolldokumentation steht?» Am Schluss 3 Minuten Teamfrage:
+Wo sucht ihr heute in Dokumentation, und würde dort eine Textsuche reichen? Bei Zeitnot fällt sie zuerst weg.
 
-### D – Skalieren (2:15–2:22)
+### D – Skalieren (2:17–2:24)
 
 Siehe demo-scripts.md, Demo D. Zuerst die Folien «Skalieren» und «Demo», dann die Live-Demo im eigenen Terminal, danach die Folie «Ablauf»
 (Bildschirm teilen). Die Teilnehmenden schauen zu, sie machen hier nichts selbst.
 
-### Abschluss (2:22–2:30)
+### Abschluss (2:24–2:30)
 
 - Folie «Rückblick»: der Überblick vom Anfang mit allen Teilen.
 - Modell- und Aufwandswahl: `/model`, `/effort`, günstige Subagents (Haiku).
 - Erste Teamregeln sammeln: Review-Pflicht, Umgang mit Kunden- und Projektdaten,
   gemeinsame `CLAUDE.md` und `.claude/settings.json` im Repo.
-- Falls Zeit: «Welche MCP-Server würdet ihr anbinden, und welche davon sehen fremde Inhalte?»
+- Folie «Ausblick» (1 Minute): Remote Control, Claude Code on the web, `claude -p`, Scheduled Tasks. Keine Demo.
 - Nächste Schritte und Links aus dem README.

@@ -20,8 +20,8 @@ viel mit Opus gearbeitet hat, kann trotzdem blockiert sein.
    `/model haiku` und `/effort low`. Für die meisten Übungen reicht das.
 3. **Lösung übernehmen und verstehen:**
    ```bash
-   scripts/reset-exercise.sh NN+1      # Stand nach Übung NN, inkl. Referenzlösung (nach 06: git switch solution/06)
-   git diff start/NN solution/NN       # was die Lösung ändert
+   scripts/reset-exercise.sh NN+1      # Stand nach Übung NN, inkl. Referenzlösung (nach 06: git switch --detach origin/solution/06)
+   git diff start/NN origin/solution/NN       # was die Lösung ändert
    ```
    Die Diffs der Lösungen sind klein und eignen sich gut zum Lesen.
 4. **Übungen ohne Modell:** 05 (`/rewind` und Git) und der Permissions-Teil von 04

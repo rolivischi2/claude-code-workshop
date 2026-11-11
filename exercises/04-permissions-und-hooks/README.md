@@ -2,6 +2,9 @@
 
 **Block:** B – Steuerung · **Zeitbudget:** 15 Minuten
 
+> **Vorherige Übung nicht fertig?** `scripts/reset-exercise.sh 04` stellt den Startstand dieser Übung her.
+> Eure Änderungen werden dabei mit `git stash` gesichert, nicht gelöscht.
+
 ## Ziel
 
 Festlegen, was Claude in diesem Projekt nie, nur auf Nachfrage oder immer darf. Danach zwei
@@ -21,7 +24,7 @@ Hook kann einen Aufruf auch blockieren.
 
 ## Aufgabe
 
-**Wichtig:** In dieser Session bis Ende Übung 05 kein `/clear` (für `/rewind`).
+Wer Übung 05 (Rewind) selbst ausprobieren will: in dieser Session bis dahin kein `/clear`.
 
 **Teil A – Permissions**
 
@@ -41,7 +44,7 @@ Hook kann einen Aufruf auch blockieren.
 6. Den Schutz-Hook von Claude bauen lassen (Prompt 3).
 7. Den Teil `hooks` der Vorlage in `.claude/settings.json` ergänzen, Claude mit `/exit` und
    `claude -c` neu starten (Hooks werden beim Start geladen) und mit `/hooks` prüfen.
-8. Prompt 4 und 5 absetzen.
+8. Prompt 4 absetzen. Wer Zeit hat: Prompt 5 (optional).
 
 ```json
 {
@@ -102,7 +105,7 @@ Ergänze in app/backend/src/main/java/com/example/transit/declaration/FristForma
 ein Javadoc für die Methode format.
 ```
 
-Prompt 5:
+Prompt 5 (optional):
 ```
 Teste unseren Schutz-Hook: Versuche, in app/frontend/src/generated/api-types.ts dem OfficeDto
 ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des Hooks.
@@ -115,7 +118,7 @@ ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des
   ```bash
   cd app/backend && ./mvnw -q spotless:check     # grün
   ```
-- Bei Prompt 5 ist der Edit **blockiert** worden.
+- Optional, mit Prompt 5: Der Edit ist **blockiert** worden.
 
 <details>
 <summary>Hinweise</summary>
@@ -133,6 +136,10 @@ ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des
 - Debuggen: `claude --debug hooks` zeigt, welche Hooks mit welchem Input laufen.
 
 </details>
+
+## Zusatzaufgabe (für Schnelle)
+
+Übung 05 (Rewind) selbst durchspielen: [exercises/05-rewind](../05-rewind/). Im Workshop folgt sie sonst als Demo am Beamer.
 
 ## Token-Tipp
 

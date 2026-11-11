@@ -32,7 +32,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Thema | Entscheid |
 |-------|-----------|
 | Inhalt behalten | **A** Kontext und Skills · **B** Plan Mode, Permissions, Hooks, Rewind · **C** nur Browser über MCP · **R** RAG-Experiment als vorbereitete, animierte Demo · **D** sehr kurze Demo Subagents und Worktrees |
-| Gestrichen | Feedback-Loops (in 06 enthalten), Vertrauensgrenzen (ein Satz in R), Remote Control, Team-Plugin |
+| Gestrichen | Feedback-Loops (in 06 enthalten), Vertrauensgrenzen (ein Satz in R), Team-Plugin. Remote Control nur als Karte auf der Folie «Ausblick» |
 | Übungs-Stack | Spring Boot 3 (Java 21) + Angular bleiben |
 | Domäne der App | synthetische NCTS-Transit-App (Zollstellen, Garantien, Transitanmeldungen) |
 | Repo | an Ort und Stelle umgebaut. Tagesversion archiviert unter `archive/fullday-v1` und `archive/fullday-v1-main`, alte 33 Refs gelöscht |
@@ -46,20 +46,26 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 
 | Zeit | Min | Block | Format | Übung / Demo |
 |------|-----|-------|--------|--------------|
-| 0:00 | 10 | Einstieg: Anatomie der Harness (Szene «Überblick»), `/model sonnet` | Input + Slash-Commands | 00 (5') |
-| 0:10 | 35 | **A – Kontext und Skills** | 5' Input, Hands-on | 01 (15'), 02 (15') |
-| 0:45 | 40 | **B – Steuerung** | 5' Input, Hands-on | 03 (15'), 04 (15'), 05 (5') |
-| 1:25 | 10 | Pause (App für 06 läuft schon: letzter Schritt von 05) | | |
-| 1:35 | 20 | **C – Browser über MCP** | 3' Input, Hands-on | 06 (17') |
-| 1:55 | 20 | **R – Agentic Search vs. RAG** auf der NCTS-Doku | Demo | `praesentation/` |
-| 2:15 | 7 | **D – Skalieren**: Subagent + zwei Worktree-Sessions, nur der Facilitator am geteilten Bildschirm | Live-Demo | `solution/final` |
-| 2:22 | 8 | Abschluss: Szene «Rückblick», `/model`, `/effort`, Teamregeln, nächste Schritte | Input + Diskussion | |
+| 0:00 | 10 | Einstieg: Anatomie der Harness (Szene «Überblick»), Folie «Setup», `/model sonnet` | Input + Slash-Commands | 00 (5') |
+| 0:10 | 31 | **A – Kontext und Skills** | 5' Input, Hands-on, 3' Teamfrage | 01 (15'), 02 (8', Skill wird übernommen) |
+| 0:41 | 40 | **B – Steuerung** | 5' Input, Hands-on, 2' Demo, 3' Teamfrage | 03 (15'), 04 (15'), 05 als Demo |
+| 1:21 | 10 | Pause (App für 06 vorher starten, Befehle auf der Pausenfolie) | | |
+| 1:31 | 23 | **C – Browser über MCP** | 3' Input, Hands-on, 3' Teamfrage | 06 (17') |
+| 1:54 | 23 | **R – Agentic Search vs. RAG** auf der NCTS-Doku | 20' Demo, 3' Teamfrage | `praesentation/` |
+| 2:17 | 7 | **D – Skalieren**: Subagent + zwei Worktree-Sessions, nur der Facilitator am geteilten Bildschirm | Live-Demo | `solution/final` |
+| 2:24 | 6 | Abschluss: Szene «Rückblick», `/model`, `/effort`, Teamregeln, Szene «Ausblick» (Remote Control, Cloud) | Input | |
 
-Kürzungsreserve in dieser Reihenfolge: 05 als Demo → 02 Skill aus `solution/02` übernehmen →
-R ohne Schätzfragen (`g`) und ohne Chunking-Szene → D nur am Beamer → 03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
+Gerechnet, nicht gestoppt, ohne Reserve. Kürzungsreserve in dieser Reihenfolge: Teamfrage von R in den Abschluss →
+eine weitere Teamfrage weglassen → R ohne Schätzfragen (`g`) und ohne Chunking-Szene → D nur am Beamer →
+03 nur planen, Umsetzung per `reset-exercise.sh 04` überspringen.
 
-Zu jedem Input gibt es animierte Folien in `praesentation/` (Überblick, Kontext, Leitplanken, Rewind, MCP,
-Skalieren mit Demo und Ablauf, Rückblick). Das Sprechskript folgt den Folien mit Kürzeln wie A1 oder R8. Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
+**Nach dem Feedback zur Präsentation (2026-11-11):** Vorab-Mail mit Repo und Setup (`facilitator/vorab-mail.md`)
+und Folie «Setup»; auf jeder Übungsfolie der Befehl zum Einsteigen und eine Zusatzaufgabe für Schnelle,
+freiwillige Teile sind markiert; eine Teamfrage pro Block (A, B, C, R); Remote Control und Cloud als Folie «Ausblick».
+Die Zeit dafür kommt aus Übung 02 (Skill wird übernommen statt gebaut) und Übung 05 (Demo statt Übung).
+
+Zu jedem Input gibt es animierte Folien in `praesentation/` (Überblick, Setup, Kontext, Leitplanken, Rewind, MCP,
+Skalieren mit Demo und Ablauf, Rückblick, Ausblick). Das Sprechskript folgt den Folien mit Kürzeln wie A1 oder R8. Sie ersetzen Erklärzeit, die Inputs werden nicht länger. Publikum einbeziehen:
 **Schätzfragen** (erst per Handzeichen raten, dann auflösen) in den Konzept-Szenen und in Demo R.
 
 ## 4. Übungen (Hands-on, `exercises/`)

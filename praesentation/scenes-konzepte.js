@@ -59,6 +59,31 @@
     step: function (b, animate, from) { if (b === 0 && animate && from < 0) VIZ.later(runLoop, 900); }
   };
 
+  /* ===================== Ausblick: heute nicht behandelt ===================== */
+  /* Angaben gemäss code.claude.com/docs (remote-control, claude-code-on-the-web, headless, routines), Stand November 2026. */
+  var AUSBLICK = [
+    { main: true, name: 'Remote Control', was: 'Eine lokale Session vom Handy oder vom Browser aus weiterführen. Sie läuft weiterhin auf eurem Rechner, mit euren Dateien und Tools. Der Rechner muss eingeschaltet bleiben.',
+      wie: [['/remote-control', 'in der laufenden Session'], ['claude --remote-control', 'beim Start']] },
+    { main: true, name: 'Claude Code on the web', was: 'Eine Session läuft in einer Cloud-Umgebung von Anthropic, auch wenn der Laptop zu ist. Sie arbeitet auf einem GitHub-Repo und pusht ihr Ergebnis als Branch.',
+      wie: [['claude.ai/code', 'im Browser'], ['claude --cloud "Auftrag"', 'aus dem Terminal'], ['claude --teleport', 'holt die Session ins Terminal']] },
+    { name: 'Ohne Dialog: claude -p', was: 'Ein Prompt, eine Antwort, dann endet der Prozess. Für Skripte und CI.',
+      wie: [['claude -p "Auftrag"', 'Ausgabe auf stdout']] },
+    { name: 'Scheduled Tasks', was: 'Cloud-Sessions nach Zeitplan oder auf ein GitHub-Ereignis hin, zum Beispiel jede Nacht. Research Preview.',
+      wie: [['/schedule', 'anlegen und verwalten']] }
+  ];
+  VIZ.defs.ausblick = {
+    id: 'ausblick', nav: 'Ausblick', title: 'Ausblick: heute nicht behandelt',
+    lead: 'Vier Funktionen für später. Alle laufen mit dem claude.ai-Login, auch im Pro-Abo.',
+    beats: 1,
+    render: function (stage) {
+      stage.appendChild(h('div', { class: 'ab' }, AUSBLICK.map(function (c, i) {
+        return at(h('div', { class: 'ab-card' + (c.main ? ' is-main' : '') }, h('b', { text: c.name }), h('p', { text: c.was }),
+          c.wie.map(function (w) { return h('p', { class: 'ab-how' }, h('code', { text: w[0] }), ' ' + w[1]); })), 0, 'up', 150 + i * 150);
+      })));
+      stage.appendChild(at(ui.note('Bei Cloud-Sessions verlässt der Code euren Rechner. Vorher klären, ob das für euer Projekt erlaubt ist. Doku: code.claude.com/docs'), 0, 'fade', 900));
+    }
+  };
+
   /* ===================== 2 Kontext als Budget ===================== */
   /* Breiten in Prozent des Kontextfensters pro Beat. SCHEMA, nicht gemessen.
      Nach dem Dry-Run hier die echten Werte aus /context eintragen. */

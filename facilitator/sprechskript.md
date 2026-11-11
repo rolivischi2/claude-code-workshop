@@ -1,6 +1,6 @@
 # Sprechskript – Folie für Folie
 
-Zum Proben. Das Skript folgt der Präsentation in ihrer Reihenfolge: 7 Abschnitte, 30 Folien.
+Zum Proben. Das Skript folgt der Präsentation in ihrer Reihenfolge: 7 Abschnitte, 36 Folien.
 Für jede Folie: Ziel, dann pro Tastendruck **was erscheint** und **was du sagst**, der Übergang und die Fragen,
 die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage, keine Texte zum Ablesen.
 Am Schluss steht ein Glossar mit Definitionen in einem Satz.
@@ -9,24 +9,32 @@ Die Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
 
 | Abschnitt | Wann | Folien (Kürzel im Skript) |
 |-----------|------|---------------------------|
-| ▶ Start | 0:00 | Start 1 Ablauf · Start 2 Überblick · Start 3 Übung 00 |
-| A Kontext | 0:10 | A1 Kontext · A2 Übung 01 A · A3 Übung 01 B · A4 Übung 02 |
-| B Steuerung | 0:45 | B1 Leitplanken · B2 Übung 03 · B3 Übung 04 A · B4 Übung 04 B · B5 Rewind · B6 Übung 05 · B7 Pause (1:25) |
-| C MCP | 1:35 | C1 MCP · C2 Übung 06 |
-| R Suche | 1:55 | R1 Korpus · R2 Chunking · R3 BM25 · R4 Vektor-DB · R5 Vektorsuche · R6 Hybrid · R7 Agent · R8 Test · R9 Messung · R10 Fazit |
-| D Skalieren | 2:15 | D1 Skalieren · D2 Demo · (Live-Demo im eigenen Terminal) · D3 Ablauf |
-| ■ Schluss | 2:22 | Schluss 1 Rückblick |
+| ▶ Start | 0:00 | Start 1 Ablauf · Start 2 Überblick · Start 3 Setup · Start 4 Übung 00 |
+| A Kontext | 0:10 | A1 Kontext · A2 Übung 01 A · A3 Übung 01 B · A4 Übung 02 · A5 Teamfrage |
+| B Steuerung | 0:41 | B1 Leitplanken · B2 Übung 03 · B3 Übung 04 A · B4 Übung 04 B · B5 Rewind · B6 Demo 05 · B7 Teamfrage · B8 Pause (1:21) |
+| C MCP | 1:31 | C1 MCP · C2 Übung 06 · C3 Teamfrage |
+| R Suche | 1:54 | R1 Korpus · R2 Chunking · R3 BM25 · R4 Vektor-DB · R5 Vektorsuche · R6 Hybrid · R7 Agent · R8 Test · R9 Messung · R10 Fazit · R11 Teamfrage |
+| D Skalieren | 2:17 | D1 Skalieren · D2 Demo · (Live-Demo im eigenen Terminal) · D3 Ablauf |
+| ■ Schluss | 2:24 | Schluss 1 Rückblick · Schluss 2 Ausblick |
 
 Das Kürzel ist der Abschnitt plus die Nummer der Folie im Abschnitt. Die Nummer ist zugleich die Zifferntaste:
-In Abschnitt B springt `5` zur Folie Rewind. R10 hat keine Zifferntaste, dorthin mit `→` oder `o`.
+In Abschnitt B springt `5` zur Folie Rewind. R10 und R11 haben keine Zifferntaste, dorthin mit `→` oder `o`.
 
 **Tasten:** `→` nächster Schritt · `←` zurück · Shift+`→` nächster Abschnitt · Ziffer = Folie im Abschnitt · `o` Übersicht · `f` Vollbild ·
-`r` Animation nochmals · `g` Schätzfragen aus/ein · `?` Hilfe. Auf Übungsfolien und in der Pause `z` Uhr starten/anhalten, `x` Uhr zurücksetzen.
+`r` Animation nochmals · `g` Schätzfragen aus/ein · `?` Hilfe. Auf Übungsfolien, Teamfragen und in der Pause `z` Uhr starten/anhalten, `x` Uhr zurücksetzen.
 Im Abschnitt R zusätzlich `q` Frage wählen und `t` (Chunking umschalten).
 
 **Übungsfolien:** Jede hat drei Schritte: Ziel und Aufgabe, dann die Schritte, dann Prompts und Prüfung.
 Mit `→` durchgehen, das Ziel in einem Satz sagen, dann `z` für die Uhr. Die Folie bleibt während der Übung stehen.
 Die Uhr wird in den letzten zwei Minuten rot.
+
+Auf jeder Übungsfolie ab Übung 02 steht oben rechts der Befehl für alle, die vorher nicht fertig geworden sind
+(`scripts/reset-exercise.sh NN`). Unten steht eine **Zusatzaufgabe** für jene, die früh fertig sind. Freiwillige
+Prompts sind mit «optional» markiert. Sag beides beim ersten Mal an, danach reicht ein Fingerzeig.
+
+**Teamfrage:** Am Ende der Blöcke A, B, C und R steht eine Folie mit einer Frage ans Team, je 3 Minuten mit Uhr.
+Zwei, drei Beispiele aus den Projekten sammeln, nicht lösen. Meldet sich niemand, hilft eines der drei Stichworte
+auf der Folie. Läuft die Zeit davon, fällt zuerst die Teamfrage von R weg.
 
 **Schätzfrage:** `→` zeigt die Frage, du lässt per Handzeichen abstimmen («Wer ist für A?»), `→` zeigt die Antwort,
 `→` fährt weiter. Rund 30 Sekunden. Nicht kommentieren, wer falsch gelegen hat, sondern gleich die Erklärung zeigen.
@@ -43,7 +51,7 @@ rechts **nicht** «Beispieldaten» stehen.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | Titel und Zeitplan des Nachmittags, pro Block die Übungen | «Zweieinhalb Stunden, eine Pause. Das Muster ist immer gleich: kurzer Input, dann macht ihr es selbst im Terminal. Die Übungsblätter liegen im Repo unter `exercises/`, und jede Übung steht auch hier auf dem Beamer.» |
+| (Start) | Titel und Zeitplan des Nachmittags, pro Block die Übungen | «Zweieinhalb Stunden, eine Pause. Das Muster ist immer gleich: kurzer Input, dann macht ihr es selbst im Terminal. Die Übungsblätter liegen im Repo unter `exercises/`, und jede Übung steht auch hier auf dem Beamer. Am Ende jedes Blocks frage ich euch nach einem Beispiel aus euren Projekten.» |
 
 ## Start 2 · Überblick (4 Minuten)
 
@@ -54,10 +62,10 @@ rechts **nicht** «Beispieldaten» stehen.
 | (Start) | Prompt → Modell → Tool-Aufruf → Ergebnis | «Ihr kennt Agentic Engineering. Heute schauen wir, wie Claude Code das konkret baut. Der Kern ist klein: Ihr gebt einen Prompt. Das Modell entscheidet, was der nächste Schritt ist. Meistens ist das ein Tool-Aufruf: eine Datei lesen, etwas editieren, einen Befehl ausführen.» |
 | `→` | Schleife leuchtet reihum auf, «Antwort» erscheint | «Das Ergebnis geht zurück ans Modell, und es entscheidet wieder. Das wiederholt sich, bis das Modell findet, es sei fertig. Das ist der Agentic Loop. Wichtig: Das Modell *schlägt vor*, die Harness *führt aus*. Alles, was wir heute steuern, hängt an diesem Unterschied.» |
 | `→` | Band «Kontext» | «Das Modell sieht nur, was im Kontext steht: den System-Prompt, eure CLAUDE.md, die Beschreibungen der Skills, den Verlauf und alles, was Tools zurückgeben. Block A dreht sich darum: Übung 01 und 02.» |
-| `→` | Band «Steuerung» | «Autonomie braucht Leitplanken. Plan Mode, Permissions, Hooks und Rewind sitzen *um* die Schleife herum. Das ist Block B, Übungen 03 bis 05.» |
+| `→` | Band «Steuerung» | «Autonomie braucht Leitplanken. Plan Mode, Permissions, Hooks und Rewind sitzen *um* die Schleife herum. Das ist Block B, Übungen 03 und 04. Rewind zeige ich als Demo.» |
 | `→` | Band «Erweitern und skalieren» | «Und am Schluss machen wir die Schleife grösser: neue Werkzeuge über MCP, Wissen ausserhalb des Repos, mehrere Agenten gleichzeitig. Diese Karte seht ihr am Ende nochmals.» |
 
-**Übergang:** «Bevor wir loslegen: Übung 00. Vier Slash-Commands, fünf Minuten. Notiert euch die Zahl aus `/context`, die brauchen wir gleich.»
+**Übergang:** «Bevor wir loslegen: kurz das Setup, dann Übung 00. Vier Slash-Commands, fünf Minuten. Notiert euch die Zahl aus `/context`, die brauchen wir gleich.»
 
 **Häufige Fragen**
 
@@ -66,7 +74,17 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Wer entscheidet, wann Schluss ist?* Das Modell: Es antwortet ohne weiteren Tool-Aufruf. Ihr könnt jederzeit mit Esc unterbrechen.
 - *Ist das bei anderen Coding-Agenten gleich?* Das Grundmuster ja. Unterschiede liegen bei Werkzeugen, Kontextverwaltung und Steuerung.
 
-## Start 3 · Übung 00 – Setup-Check (5 Minuten)
+## Start 3 · Setup (höchstens 1 Minute)
+
+**Ziel:** Alle wissen, wo das Repo liegt und wie sie später zu einem sauberen Stand kommen.
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | Adresse des Repos, die vier Befehle, Voraussetzungen, Hinweis auf `reset-exercise` | «Das Setup habt ihr mit der Mail erledigt. Fehlt bei jemandem etwas: Hier steht die Adresse, der Rest steht in `SETUP.md`. Und merkt euch den Befehl unten. Wer bei einer Übung nicht fertig wird, holt sich damit den Startstand der nächsten. Eure Änderungen gehen dabei nicht verloren.» |
+
+Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 01 ein. Nicht darauf warten.
+
+## Start 4 · Übung 00 – Setup-Check (5 Minuten)
 
 **Ziel der Übung:** Alle arbeiten mit dem richtigen Login und mit Sonnet. Alle kennen die eigene Startbelegung des Kontexts.
 
@@ -82,7 +100,7 @@ rechts **nicht** «Beispieldaten» stehen.
 
 ---
 
-# A Kontext (0:10, 35 Minuten)
+# A Kontext (0:10, 31 Minuten)
 
 ## A1 · Kontext (5 Minuten)
 
@@ -138,23 +156,31 @@ rechts **nicht** «Beispieldaten» stehen.
 
 **Abholen nach der Übung:** «Was ist bei euch anders gewesen als in Teil A?» Zwei, drei Stimmen.
 
-## A4 · Übung 02 – Skills (15 Minuten)
+## A4 · Übung 02 – Skills (8 Minuten)
 
-**Ziel der Übung:** Einen Skill «Neuer REST-Endpoint nach Teamstandard» bauen und prüfen, ob Claude ihn von sich aus lädt.
+**Ziel der Übung:** Einen fertigen Skill «Neuer REST-Endpoint nach Teamstandard» übernehmen und prüfen, ob Claude ihn von sich aus lädt.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr baut einen Skill und prüft, ob Claude ihn von selbst lädt. Entscheidend ist der eine Satz in der `description`.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Den Skill bekommt ihr fertig, mit einem Git-Befehl. Lest ihn, vor allem den einen Satz in der `description`. Dann startet ihr Claude neu und verlangt den Endpoint, ohne den Skill zu erwähnen.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
-| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
+| `→` | Prompts, «Fertig, wenn …», Token-Tipp, Zusatzaufgabe | `z` startet die Uhr. «Wer früh fertig ist: Unten steht die Zusatzaufgabe, den Skill selbst bauen.» Durch den Raum gehen. |
 
-**Im Raum:** Wer Code in den Skill kopiert: auf bestehende Dateien verweisen lassen, das hält den Skill kurz.
+**Im Raum:** Häufigster Hänger: Claude nicht neu gestartet, dann kennt die Session den Skill nicht. Acht Minuten sind knapp, weil die Tests laufen müssen. Wer nach sechs Minuten noch auf Maven wartet, soll nur den `Skill`-Aufruf im Verlauf suchen.
 
-**Abholen nach der Übung:** «Bei wem hat Claude den Skill von selbst geladen? Bei wem nicht, und wie lautet eure Beschreibung?»
+**Abholen nach der Übung:** «Bei wem hat Claude den Skill von selbst geladen? Woran habt ihr es gesehen?»
+
+## A5 · Teamfrage (3 Minuten)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Frage, drei Stichworte, Uhr mit 3 Minuten | «Welche Regel aus eurem Projekt müsste in die CLAUDE.md, weil Claude sie nicht aus dem Code ablesen kann?» `z` startet die Uhr. Zwei, drei Antworten sammeln, jeweils nur nachfragen: «Steht das heute irgendwo geschrieben?» |
+
+**Wenn niemand etwas sagt:** eigenes Beispiel nennen (in der Übungs-App: «Antworten immer als DTO über einen Mapper»), dann nochmals fragen.
 
 ---
 
-# B Steuerung (0:45, 40 Minuten, danach Pause)
+# B Steuerung (0:41, 40 Minuten, danach Pause)
 
 ## B1 · Leitplanken (4 Minuten)
 
@@ -169,7 +195,7 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | `Edit src/generated/…` bleibt beim Hook stehen | «Für alles, was sich nicht als Muster schreiben lässt, gibt es Hooks: ein Skript von euch. Endet es mit Exit-Code 2, ist der Aufruf blockiert, und die Begründung geht zurück an Claude. Die Regeln werden dann gar nicht mehr gefragt.» |
 | `→` | `rm -r scratch/wegwerf` hält bei ask | «Und ask heisst: Claude hält an und fragt euch. Für alles, was selten und heikel ist.» |
 
-**Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen. Rewind, das Netz darunter, kommt vor Übung 05.»
+**Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen. Rewind, das Netz darunter, zeige ich euch nach Übung 04.»
 
 **Häufige Fragen**
 
@@ -218,50 +244,55 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Die Hooks kommen aus der Vorlage, hier wird kaum iteriert. Wer fertig ist, kann den blockierenden Hook mit einem Edit an generiertem Code testen.
+**Im Raum:** Die Hooks kommen aus der Vorlage, hier wird kaum iteriert. Prompt 5 (der Test des blockierenden Hooks) ist freiwillig. Wer auch damit fertig ist, kann Übung 05 selbst durchspielen (Zusatzaufgabe).
 
-**Abholen nach der Übung:** «Was hat Claude gemacht, nachdem der Hook blockiert hat?»
+**Abholen nach der Übung:** «Wer hat Prompt 5 gemacht? Was hat Claude getan, nachdem der Hook blockiert hat?»
 
 ## B5 · Rewind (1 Minute)
 
-**Ziel:** Alle wissen vor Übung 05, was ein Checkpoint ist und was `/rewind` zurücksetzt.
+**Ziel:** Alle wissen vor der Demo, was ein Checkpoint ist und was `/rewind` zurücksetzt.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | Zeitleiste: vier Prompts, vor jedem ein Checkpoint | «Die letzte Leitplanke ist ein Netz. Vor jedem Prompt legt Claude Code einen Checkpoint an: den Stand der Dateien und des Verlaufs.» |
 | `→` | Prompt 4 wird rot, «Tests rot» | «Prompt 4 ist schiefgegangen.» |
 | `→` | Checkpoint 4 wird grün, Prompt 4 ist durchgestrichen | «Mit `/rewind` oder zweimal Esc wählt ihr den Checkpoint vor Prompt 4.» |
-| `→` | drei Karten mit den Menüpunkten | «Dann fragt Claude Code, was zurückgeht: Code und Verlauf, nur der Verlauf oder nur der Code. In der Übung nehmt ihr den ersten Punkt.» |
-| `→` | Hinweis zu den Grenzen | «Erfasst wird nur, was über Edit und Write geändert worden ist. Was ein Bash-Befehl geändert hat, bleibt. Darum ersetzt Rewind Git nicht.» → Übung 05. |
+| `→` | drei Karten mit den Menüpunkten | «Dann fragt Claude Code, was zurückgeht: Code und Verlauf, nur der Verlauf oder nur der Code. Ich nehme gleich den ersten Punkt.» |
+| `→` | Hinweis zu den Grenzen | «Erfasst wird nur, was über Edit und Write geändert worden ist. Was ein Bash-Befehl geändert hat, bleibt. Darum ersetzt Rewind Git nicht.» → Demo. |
 
 **Häufige Fragen**
 
 - *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
 - *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
 
-## B6 · Übung 05 – Rewind (5 Minuten)
+## B6 · Demo 05 – Rewind (2 Minuten, du zeigst es)
 
-**Ziel der Übung:** Mit `/rewind` zu einem früheren Stand zurückgehen, mit Git vergleichen und wieder nach vorne kommen.
+**Ziel:** Alle haben `/rewind` einmal gesehen. Wer will, macht es mit dem Übungsblatt selbst.
 
-| Taste | Auf dem Bild | Du sagst oder tust |
-|-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Dieselbe Session wie in Übung 04. Zuerst committen, dann zurück zum Punkt vor Prompt 3, mit ‹Restore code and conversation›. Und ganz wichtig: Am Schluss startet ihr die App, sie fährt während der Pause hoch.» |
-| `→` | Schritte | Schritte kurz vorlesen. |
-| `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
-
-**Im Raum:** Kontrollieren, dass vor der Pause bei allen Backend und Frontend laufen. Übung 06 braucht die App.
-
-**Abholen nach der Übung:** Keine Runde. Direkt in die Pause.
-
-## B7 · Pause (1:25, 10 Minuten)
+**Vorbereitung:** Du brauchst eine eigene Session, in der du Übung 04 durchgespielt hast (Prompt 3 und 4 abgesetzt, kein `/clear`). Am besten vor dem Workshop vorbereiten und mit `claude -c` wieder öffnen.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Uhr mit 10 Minuten, Hinweis auf die laufende App | «Zehn Minuten. Lasst die App laufen.» `z` startet die Uhr. |
+| (Start) bis zweimal `→` | Schritte und der Commit-Befehl | «Das zeige ich euch, ihr müsst nichts tippen.» Ins Terminal wechseln. `z` startet die Uhr. |
+| im Terminal | | Committen. `/rewind`, den Punkt vor Prompt 3 wählen, «Restore code and conversation». Dann `git status` und `git diff --stat` zeigen: «Der Schutz-Hook ist weg, weil Claude ihn geschrieben hat. Der Formatier-Hook ist noch da, den habe ich mit `cp` kopiert.» `git restore .` holt den Stand zurück. |
+
+**Wenn die Demo hängt:** abbrechen, die Folie B5 trägt den Inhalt.
+
+## B7 · Teamfrage (3 Minuten)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Frage, drei Stichworte, Uhr mit 3 Minuten | «Welche Datei oder welcher Befehl in eurem Projekt braucht eine Deny-Regel oder einen Hook?» `z` startet die Uhr. Nachfragen: «Reicht dort eine Rückfrage, oder muss es verboten sein?» |
+
+## B8 · Pause (1:21, 10 Minuten)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Uhr mit 10 Minuten, die zwei Befehle zum Starten der App | «Bevor ihr aufsteht: Startet die App in zwei weiteren Terminals, die Befehle stehen hier. Sie fährt während der Pause hoch, Übung 06 braucht sie.» Kurz warten, bis die meisten getippt haben. `z` startet die Uhr. |
 
 ---
 
-# C MCP (1:35, 20 Minuten)
+# C MCP (1:31, 23 Minuten)
 
 ## C1 · MCP (3 Minuten)
 
@@ -274,7 +305,7 @@ rechts **nicht** «Beispieldaten» stehen.
 | `→` | Feedback-Loop leuchtet reihum | «Das eigentlich Neue ist aber das hier. Claude ändert Code, schaut im Browser nach, sieht den Fehler selbst, korrigiert und sichert das Ergebnis mit einem Test. Ein Agent, der seine Arbeit prüfen kann, braucht weniger Kontrolle durch euch.» |
 | `→` | zwei Merksätze: Kontext, Vertrauen | «Zwei Dinge zum Mitnehmen. Erstens Kontext: Beim Start laden nur die Namen der Tools, die Beschreibungen erst bei Bedarf. Zweitens Vertrauen: Was ein Server zurückgibt, ist fremder Inhalt. Eine Webseite kann Text enthalten, der wie eine Anweisung aussieht.» |
 
-**Übergang:** «Übung 06. Die App läuft bei euch seit vor der Pause. Der Fehler: Das Formular schluckt eine Ablehnung des Backends.»
+**Übergang:** «Übung 06. Die App habt ihr vor der Pause gestartet. Der Fehler: Das Formular schluckt eine Ablehnung des Backends.»
 
 **Häufige Fragen**
 
@@ -299,9 +330,15 @@ rechts **nicht** «Beispieldaten» stehen.
 
 **Abholen nach der Übung:** «Hat Claude den Fehler selbst gesehen? Woran habt ihr das gemerkt?»
 
+## C3 · Teamfrage (3 Minuten)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Frage, drei Stichworte, Uhr mit 3 Minuten | «Welches System würdet ihr per MCP anbinden? Und sieht Claude dort fremde Inhalte?» `z` startet die Uhr. Bei jeder Antwort die zweite Hälfte nachfragen: «Wer schreibt die Texte, die Claude dort liest?» |
+
 ---
 
-# R Suche: Agentic Search vs. RAG (1:55, 20 Minuten)
+# R Suche: Agentic Search vs. RAG (1:54, 23 Minuten mit Teamfrage)
 
 **Roter Faden:** Echte Dokumentation, zwei Wege zur Antwort. Erst zeigen, wo jede Suche blind ist, dann messen,
 dann den Agenten ohne Index dagegenstellen. Die Zahlen sind ehrlich gemessen und nicht nachgetunt.
@@ -485,7 +522,7 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 **Ein Satz zum Schluss (Vertrauensgrenze):** «Was eine Suche zurückgibt, ist fremder Inhalt und landet im Kontext des Agenten, auch eine versteckte Anweisung. Darum gelten die Permissions aus Übung 04 auch hier.»
 
-**Übergang zu Demo D:** «Der Agent hat gerade viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Abschnitt D, Folie «Skalieren» (Shift+`→`).
+**Übergang:** `→` zur Teamfrage R11. Danach zu Demo D: «Der Agent hat vorhin viel gelesen. Was, wenn ich das nicht in meinem Kontext haben will?» → Abschnitt D, Folie «Skalieren» (Shift+`→`).
 
 **Fragen**
 
@@ -496,9 +533,17 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 **Plan B für den ganzen Abschnitt R:** Streikt der Browser, im Terminal `uv run search "Welche Währungsangabe gilt für Fakturen in britischen Pfund?" --mode bm25`, dann `--mode vector`, dann `uv run eval`.
 
+## R11 · Teamfrage (3 Minuten, fällt bei Zeitnot als erste weg)
+
+| Taste | Auf dem Bild | Du sagst oder tust |
+|-------|--------------|--------------------|
+| (Start) | Frage, drei Stichworte, Uhr mit 3 Minuten | «Wo sucht ihr heute in Dokumentation? Würde dort eine Textsuche reichen?» `z` startet die Uhr. Nachfragen: «Wie viele Dokumente sind das, und in welchen Sprachen?» |
+
+Bei Zeitnot mit Shift+`→` direkt zu Abschnitt D und die Frage im Abschluss stellen.
+
 ---
 
-# D Skalieren (2:15, 7 Minuten)
+# D Skalieren (2:17, 7 Minuten)
 
 **Ziel:** Ein Subagent schützt den Kontext, ein Worktree schützt die Dateien.
 
@@ -547,7 +592,7 @@ Noch nicht gestoppt.
 
 ---
 
-# ■ Schluss (2:22, 8 Minuten)
+# ■ Schluss (2:24, 6 Minuten)
 
 ## Schluss 1 · Rückblick
 
@@ -555,7 +600,25 @@ Noch nicht gestoppt.
 |-------|--------------|----------|
 | (Start) | Landkarte, alle Teile grün, Schleife läuft | «Das ist die Karte vom Anfang. Der Unterschied: Jedes Teil habt ihr heute selbst in der Hand gehabt. Kontext mit CLAUDE.md und Skills. Steuerung mit Plan Mode, Permissions, Hooks und Rewind. Erweitern mit MCP. Und skalieren mit Subagents und Worktrees.» |
 
-Danach ohne Folienwechsel: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`), Links im README.
+Danach ohne Folienwechsel, kurz: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`). Dann `→` zum Ausblick.
+
+## Schluss 2 · Ausblick (1 Minute)
+
+**Ziel:** Alle wissen, dass es Remote Control und Cloud-Sessions gibt und wo sie nachlesen. Keine Demo.
+
+| Taste | Auf dem Bild | Du sagst |
+|-------|--------------|----------|
+| (Start) | vier Karten: Remote Control, Claude Code on the web, `claude -p`, Scheduled Tasks, darunter ein Hinweis | «Vier Dinge, die wir heute nicht angeschaut haben. Remote Control: Ihr führt eine Session vom Handy aus weiter, sie läuft aber weiterhin auf eurem Rechner. Claude Code on the web: Die Session läuft in der Cloud von Anthropic, auf einem GitHub-Repo, und pusht einen Branch. `claude -p` ist Claude ohne Dialog, für Skripte und CI. Und Scheduled Tasks starten Cloud-Sessions nach Zeitplan. Wichtig für uns: Bei allem, was in der Cloud läuft, verlässt der Code euren Rechner. Das klärt ihr vorher im Projekt.» |
+
+Links stehen im README unter «Weiterführend».
+
+**Häufige Fragen zum Ausblick** (Stand der Doku: November 2026)
+
+- *Läuft bei Remote Control der Code in der Cloud?* Nein. Dateien, Tools und MCP-Server bleiben auf dem eigenen Rechner. Handy oder Browser sind ein Fenster in die lokale Session. Der Rechner muss an bleiben.
+- *Wie starte ich Remote Control?* In der Session mit `/remote-control`, beim Start mit `claude --remote-control`.
+- *Wie kommt die Cloud-Session an mein Repo?* Über die GitHub-Anbindung, eingerichtet im Browser oder mit `/web-setup`. Das Ergebnis ist ein Branch, daraus entsteht ein Pull Request.
+- *Kann ich eine Cloud-Session lokal weiterführen?* Ja, `claude --teleport` holt sie ins Terminal. Das geht nur in diese Richtung.
+- *Ist das im Pro-Abo enthalten?* Ja, Remote Control und Claude Code on the web brauchen den claude.ai-Login. Die Nutzung zählt zum Kontingent.
 
 **Häufige Fragen im Abschluss**
 

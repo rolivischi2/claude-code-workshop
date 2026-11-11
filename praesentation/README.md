@@ -13,13 +13,13 @@ Ausgelegt für 1920×1080. `f` schaltet Vollbild.
 
 | Abschnitt | Szenen |
 |-----------|--------|
-| ▶ Start | Ablauf · Überblick · Übung 00 |
-| A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 |
-| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Rewind · Übung 05 · Pause |
-| C MCP | MCP · Übung 06 |
-| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Test · Messung · Fazit |
+| ▶ Start | Ablauf · Überblick · Setup · Übung 00 |
+| A Kontext | Kontext · Übung 01 A · Übung 01 B · Übung 02 · Teamfrage |
+| B Steuerung | Leitplanken · Übung 03 · Übung 04 A · Übung 04 B · Rewind · Demo 05 · Teamfrage · Pause |
+| C MCP | MCP · Übung 06 · Teamfrage |
+| R Suche | Korpus · Chunking · BM25 · Vektor-DB · Vektorsuche · Hybrid · Agent · Test · Messung · Fazit · Teamfrage |
 | D Skalieren | Skalieren · Demo (Ankündigung der Live-Demo im Terminal des Facilitators) · Ablauf (Animation nach der Demo) |
-| ■ Schluss | Rückblick |
+| ■ Schluss | Rückblick · Ausblick |
 
 Die Reihenfolge steht in `index.html` (`VIZ.SECTIONS`).
 
@@ -63,8 +63,8 @@ Wer ein Übungsblatt ändert, passt die Folie an und lässt die Prüfung laufen 
 |-------|--------|
 | `index.html` | Gerüst, Reihenfolge der Abschnitte und Szenen |
 | `viz.js`, `style.css` | Motor (Navigation, Tastatur, Schätzfragen, Bausteine) und Gestaltung |
-| `scenes-konzepte.js`, `konzepte.css` | Konzept-Szenen: Überblick, Kontext, Leitplanken, Rewind, MCP, Skalieren, Demo, Ablauf, Rückblick |
-| `scenes-uebungen.js`, `uebungen-daten.js` | Übungsfolien, Titelfolie mit Ablauf, Pause |
+| `scenes-konzepte.js`, `konzepte.css` | Konzept-Szenen: Überblick, Kontext, Leitplanken, Rewind, MCP, Skalieren, Demo, Ablauf, Rückblick, Ausblick |
+| `scenes-uebungen.js`, `uebungen-daten.js` | Übungsfolien (mit Einstiegsbefehl, optionalen Teilen und Zusatzaufgabe), Titelfolie mit Ablauf, Setup, Teamfragen, Pause |
 | `scenes-retrieval.js`, `scenes-results.js` | Abschnitt Suche |
 | `data.js` | Daten des Suchexperiments, erzeugt mit `cd rag && uv run export-viz` (nicht von Hand bearbeiten) |
 | `data.sample.js` | erfundene Beispieldaten, werden geladen, wenn `data.js` fehlt (Badge «Beispieldaten») |

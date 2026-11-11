@@ -51,6 +51,10 @@ Keine. In dieser Übung tippt ihr nur Slash-Commands.
 
 </details>
 
+## Zusatzaufgabe (für Schnelle)
+
+`/permissions` öffnen: Welche Regeln gelten, bevor ihr etwas konfiguriert habt? In Übung 04 legt ihr eigene an.
+
 ## Token-Tipp
 
 Slash-Commands wie `/context`, `/usage` oder `/model` verbrauchen keine Tokens.

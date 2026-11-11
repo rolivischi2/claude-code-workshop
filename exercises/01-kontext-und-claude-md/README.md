@@ -99,6 +99,11 @@ Ihr könnt erklären: Was kostet am meisten Kontext, eure Prompts, die Antworten
 
 </details>
 
+## Zusatzaufgabe (für Schnelle)
+
+`/memory` öffnen: Welche Memory-Dateien sind geladen? Eine persönliche Regel (z.B. eure bevorzugte
+Antwortsprache) gehört in `CLAUDE.local.md`, nicht in die `CLAUDE.md` des Teams.
+
 ## Token-Tipp
 
 Teil A und B sind je **ein** Feature-Prompt. Lasst Claude nicht iterieren: Es geht um den

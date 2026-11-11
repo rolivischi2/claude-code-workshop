@@ -17,6 +17,7 @@ for (const u of sandbox.window.UEBUNGEN) {
   const sheet = norm(readFileSync(path.join(root, u.sheet), 'utf8'));
   const blocks = [...(u.prompts || []), ...(u.code || [])].map((b) => [b.label, b.text]);
   if (u.fertig && u.fertig.cmd) blocks.push(['Fertig, wenn', u.fertig.cmd]);
+  if (u.einstieg) blocks.push(['Einstieg', u.einstieg]);
   for (const [label, text] of blocks) {
     for (const line of text.split('\n').map(norm).filter(Boolean)) {
       checked++;

@@ -1,10 +1,13 @@
 # Übung 02 – Progressive Disclosure mit Skills
 
-**Block:** A – Kontext und Skills · **Zeitbudget:** 15 Minuten
+**Block:** A – Kontext und Skills · **Zeitbudget:** 8 Minuten
+
+> **Vorherige Übung nicht fertig?** `scripts/reset-exercise.sh 02` stellt den Startstand dieser Übung her.
+> Eure Änderungen werden dabei mit `git stash` gesichert, nicht gelöscht.
 
 ## Ziel
 
-Einen Skill «Neuer REST-Endpoint nach Teamstandard» bauen und prüfen, ob Claude ihn von sich aus nutzt.
+Einen fertigen Skill «Neuer REST-Endpoint nach Teamstandard» übernehmen und prüfen, ob Claude ihn von sich aus nutzt.
 
 ## Konzept
 
@@ -15,10 +18,13 @@ Bedarf. Dasselbe Prinzip gilt für MCP-Tools.
 
 ## Aufgabe
 
-1. Skill anlegen unter `.claude/skills/rest-endpoint/SKILL.md`, am besten mit Claude zusammen (Prompt 1).
+1. Den Skill aus der Referenzlösung holen und `.claude/skills/rest-endpoint/SKILL.md` lesen:
+   ```bash
+   git checkout start/03 -- .claude/skills
+   ```
 2. Die **Beschreibung** im Frontmatter kritisch lesen. Sie entscheidet, ob Claude den Skill findet.
-3. Neue Session (`/clear`). Den Feature-Prompt (Prompt 2) absetzen, **ohne** den Skill zu erwähnen.
-4. Beobachten: Erscheint im Verlauf ein `Skill`-Aufruf? Falls nicht: Beschreibung schärfen und nochmals.
+3. Claude neu starten (`/exit`, dann `claude`). Den Feature-Prompt absetzen, **ohne** den Skill zu erwähnen.
+4. Beobachten: Erscheint im Verlauf ein `Skill`-Aufruf?
 
 ### Anforderung an den Endpoint
 
@@ -33,16 +39,7 @@ Unbekannte Garantie → 404 als Problem Detail.
 
 ## Vorgeschlagene Prompts
 
-Prompt 1 (Skill bauen):
-```
-Erstelle einen Project Skill unter .claude/skills/rest-endpoint/SKILL.md. Er beschreibt
-Schritt für Schritt, wie in diesem Backend ein neuer REST-Endpoint nach unserem Teamstandard
-entsteht (Schichten, DTO-Record + Mapper, Fehler als Problem Details, Tests). Verweise auf
-bestehende Dateien als Vorlage statt Code zu kopieren. Die description im Frontmatter soll
-klar sagen, wann der Skill zu verwenden ist.
-```
-
-Prompt 2 (Feature, neue Session):
+Prompt (Feature, neue Session):
 ```
 Wir brauchen den Endpoint GET /api/guarantees/{grn}/balance. Er liefert den Saldo einer
 Garantie (Format siehe exercises/02-skills/README.md).
@@ -68,10 +65,24 @@ Und: Der Skill ist ohne Erwähnung geladen worden, der Endpoint hält sich an di
 
 </details>
 
+## Zusatzaufgabe (für Schnelle)
+
+Den Skill selbst bauen: `.claude/skills` löschen und mit Claude neu anlegen. Lädt Claude auch euren
+Skill von sich aus? Falls nicht: die Beschreibung schärfen und nochmals versuchen.
+
+Prompt «Skill selbst bauen»:
+```
+Erstelle einen Project Skill unter .claude/skills/rest-endpoint/SKILL.md. Er beschreibt
+Schritt für Schritt, wie in diesem Backend ein neuer REST-Endpoint nach unserem Teamstandard
+entsteht (Schichten, DTO-Record + Mapper, Fehler als Problem Details, Tests). Verweise auf
+bestehende Dateien als Vorlage statt Code zu kopieren. Die description im Frontmatter soll
+klar sagen, wann der Skill zu verwenden ist.
+```
+
 ## Token-Tipp
 
-Verweist im Skill auf bestehende Dateien («siehe OfficeController als Vorlage»), statt Code
-hineinzukopieren. Das hält den Skill kurz, und Claude liest nur, was es braucht.
+Ein Skill verweist auf bestehende Dateien («siehe OfficeController als Vorlage»), statt Code
+zu kopieren. Das hält ihn kurz, und Claude liest nur, was es braucht.
 
 ## Doku
 

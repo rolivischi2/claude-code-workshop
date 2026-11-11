@@ -1,6 +1,6 @@
 # Übung 05 – Reversibilität mit `/rewind`
 
-**Block:** B – Steuerung · **Zeitbudget:** 5 Minuten
+**Block:** B – Steuerung · **Im Workshop:** Demo am Beamer (2 Minuten) · **Zum Selbermachen:** 5 Minuten, optional
 
 ## Ziel
 
@@ -22,11 +22,6 @@ Voraussetzung: dieselbe Session wie in Übung 04 (auch nach `claude -c`).
 4. Im Terminal vergleichen: `git status` und `git diff --stat`. Welche Dateien sind zurückgesetzt?
 5. Wieder nach vorne: `git restore .` holt den committeten Stand zurück.
 6. Kontrolle: `git status` ist sauber, `ls .claude/hooks` zeigt beide Skripte.
-7. **Vor der Pause** die App für Übung 06 starten, in zwei weiteren Terminals. Sie läuft während der Pause hoch:
-   ```bash
-   cd app/backend && ./mvnw -q spring-boot:run       # Windows: mvnw.cmd -q spring-boot:run
-   cd app/frontend && npm start                       # http://localhost:4200
-   ```
 
 ## Vorgeschlagene Prompts
 

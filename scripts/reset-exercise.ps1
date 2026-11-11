@@ -23,4 +23,4 @@ if (git status --porcelain) {
 git checkout -q -B "work/$Exercise" "start/$Exercise"
 git clean -fdq   # removes untracked files only; ignored files like .env stay
 Write-Ok "Stand von Uebung $Exercise hergestellt (Branch work/$Exercise)"
-Write-Host "Loesung zum Vergleich: git diff work/$Exercise solution/$Exercise"
+Write-Host "Loesung zum Vergleich: git diff work/$Exercise origin/solution/$Exercise"

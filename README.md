@@ -27,12 +27,15 @@ Lokal: `praesentation/index.html` öffnen.
 |------|-------|--------|---------|
 | 0:00 | Einstieg: Anatomie der Harness, Setup-Check | Input | [00](exercises/00-setup-check/) |
 | 0:10 | **A – Kontext und Skills** | Hands-on | [01](exercises/01-kontext-und-claude-md/) · [02](exercises/02-skills/) |
-| 0:45 | **B – Steuerung**: Plan Mode, Permissions, Hooks, Rewind | Hands-on | [03](exercises/03-plan-mode/) · [04](exercises/04-permissions-und-hooks/) · [05](exercises/05-rewind/) |
-| 1:25 | Pause | | |
-| 1:35 | **C – Browser über MCP** | Hands-on | [06](exercises/06-browser-mcp/) |
-| 1:55 | **R – Agentic Search vs. RAG** auf der NCTS-Dokumentation | Demo | |
-| 2:15 | **D – Skalieren**: Subagents und parallele Sessions | Demo | |
-| 2:22 | Abschluss: Modell- und Aufwandswahl, Teamregeln, nächste Schritte | Input | |
+| 0:41 | **B – Steuerung**: Plan Mode, Permissions, Hooks, Rewind | Hands-on | [03](exercises/03-plan-mode/) · [04](exercises/04-permissions-und-hooks/) · [05](exercises/05-rewind/) als Demo, optional selbst |
+| 1:21 | Pause | | |
+| 1:31 | **C – Browser über MCP** | Hands-on | [06](exercises/06-browser-mcp/) |
+| 1:54 | **R – Agentic Search vs. RAG** auf der NCTS-Dokumentation | Demo | |
+| 2:17 | **D – Skalieren**: Subagents und parallele Sessions | Demo | |
+| 2:24 | Abschluss: Modell- und Aufwandswahl, Teamregeln, Ausblick | Input | |
+
+Am Ende der Blöcke A, B, C und R gibt es eine kurze Frage ans Team: Wo kommt das in euren Projekten vor?
+Jedes Übungsblatt hat eine **Zusatzaufgabe** für alle, die früh fertig sind. Freiwillige Teile sind als «optional» markiert.
 
 ## Was ist in diesem Repo?
 
@@ -60,8 +63,8 @@ Die Übungen bauen aufeinander auf. Ihr arbeitet einfach weiter auf eurem Stand.
 |----------|-----------|
 | `main` | Startzustand (= `start/00`), solange ihr nicht selbst darauf committet |
 | `start/NN` (Git-Tag) | Stand **vor** Übung NN, inklusive aller Lösungen davor |
-| `solution/NN` (Branch) | Referenzlösung von Übung NN |
-| `solution/final` | Alles zusammen, inklusive Reviewer-Subagent aus der Demo D |
+| `origin/solution/NN` (Branch) | Referenzlösung von Übung NN |
+| `origin/solution/final` | Alles zusammen, inklusive Reviewer-Subagent aus der Demo D |
 
 **Abgehängt?** Kein Problem, so springt ihr zum Start einer Übung:
 
@@ -71,7 +74,7 @@ powershell -ExecutionPolicy Bypass -File scripts\reset-exercise.ps1 04   # Windo
 ```
 
 Eure bisherigen Änderungen werden dabei nicht gelöscht, sondern mit `git stash` gesichert.
-Lösung anschauen: `git diff start/04 solution/04`.
+Lösung anschauen: `git diff start/04 origin/solution/04`.
 
 ## Sparsam mit dem Pro-Abo
 
@@ -89,4 +92,5 @@ und ein Wochenlimit. Ein paar Gewohnheiten helfen:
 - [Claude Code Dokumentation](https://code.claude.com/docs/en/overview) · [What's new](https://code.claude.com/docs/en/whats-new/index)
 - [Anthropic Academy – alle Kurse](https://www.anthropic.com/learn)
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) (Anthropic Engineering Blog)
+- Heute nicht behandelt: [Remote Control](https://code.claude.com/docs/en/remote-control) (Session vom Handy aus weiterführen) · [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web) (Sessions in der Cloud) · [Headless](https://code.claude.com/docs/en/headless) (`claude -p` für Skripte und CI) · [Scheduled Tasks](https://code.claude.com/docs/en/routines)
 - Volle Tagesversion dieses Workshops (16 Übungen, inkl. Remote Control und Team-Plugin): Git-Tag `archive/fullday-v1`

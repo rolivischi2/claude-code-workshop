@@ -2,6 +2,9 @@
 
 **Block:** C – Browser über MCP · **Zeitbudget:** 17 Minuten
 
+> **Vorherige Übung nicht fertig?** `scripts/reset-exercise.sh 06` stellt den Startstand dieser Übung her.
+> Eure Änderungen werden dabei mit `git stash` gesichert, nicht gelöscht.
+
 ## Ziel
 
 Den Playwright-MCP-Server einbinden und Claude einen Frontend-Fehler **selbst im Browser**
@@ -24,7 +27,7 @@ Browser, dann mit einem e2e-Test. Ein Agent, der seine Arbeit verifizieren kann,
 weniger Kontrolle durch euch.
 
 1. `.mcp.json` im Repo-Root anlegen (Vorlage unten).
-2. Die App läuft seit dem Ende von Übung 05. Falls nicht, in **zwei weiteren Terminals** starten:
+2. Die App in **zwei weiteren Terminals** starten, falls sie nicht schon seit der Pause läuft:
    ```bash
    cd app/backend && ./mvnw -q spring-boot:run       # Windows: mvnw.cmd -q spring-boot:run
    cd app/frontend && npm start                       # http://localhost:4200
@@ -82,6 +85,11 @@ Fertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.
 - `--headless` in den `args` blendet das Browserfenster aus, spart aber keine Tokens.
 
 </details>
+
+## Zusatzaufgabe (für Schnelle)
+
+`/mcp` und `/context` aufrufen: Was von Playwright ist geladen, was erst bei Bedarf? Claude Code lädt
+von MCP-Tools zuerst nur die Namen und die Definitionen erst, wenn sie gebraucht werden.
 
 ## Token-Tipp
 

@@ -2,6 +2,9 @@
 
 **Block:** B – Steuerung · **Zeitbudget:** 15 Minuten
 
+> **Vorherige Übung nicht fertig?** `scripts/reset-exercise.sh 03` stellt den Startstand dieser Übung her.
+> Eure Änderungen werden dabei mit `git stash` gesichert, nicht gelöscht.
+
 ## Ziel
 
 Ein Feature zuerst im Plan Mode planen lassen, den Plan kritisch prüfen und erst dann umsetzen.
@@ -82,6 +85,11 @@ Prüfung gefunden und mit Test behoben, umso besser.
 - Die Spec-Datei hilft der nächsten Session (oder Kollegin), ohne den ganzen Verlauf zu laden.
 
 </details>
+
+## Zusatzaufgabe (für Schnelle)
+
+Den deaktivierten Test in `DeclarationServiceTest` aktivieren und den Fehler am Referenzbetrag von
+Claude beheben lassen. Was gilt genau **am** Referenzbetrag, und was sagt das Javadoc dazu?
 
 ## Token-Tipp
 

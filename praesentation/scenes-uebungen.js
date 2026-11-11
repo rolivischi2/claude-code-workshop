@@ -1,4 +1,5 @@
-/* Übungsfolien, Titelfolie und Pause. Inhalt: uebungen-daten.js (window.UEBUNGEN, window.ABLAUF).
+/* Übungsfolien, Titelfolie, Setup, Teamfragen und Pause. Inhalt: uebungen-daten.js
+ * (window.UEBUNGEN, window.ABLAUF, window.SETUP, window.TEAMFRAGEN).
  * Jede Übungsfolie zeigt am Ende alles gleichzeitig: Aufgabe, Schritte, Prompts, Prüfung.
  * Taste z startet/pausiert die Uhr der Folie, x setzt sie zurück. */
 'use strict';
@@ -59,7 +60,7 @@
   function uebung(u) {
     VIZ.defs[u.id] = {
       id: u.id, nav: u.nav, minutes: u.minutes,
-      title: 'Übung ' + u.nr + ' · ' + u.title,
+      title: (u.demo ? 'Demo · ' + u.title + ' (Übung ' + u.nr + ')' : 'Übung ' + u.nr + ' · ' + u.title),
       lead: u.ziel.replace(/[`*]/g, ''),
       beats: 3,
       help: [['z / x', 'Übungsfolien: Uhr starten oder pausieren / zurücksetzen']],
@@ -67,8 +68,11 @@
       render: function (stage) {
         stage.classList.add('stage-uebung');
         stage.appendChild(h('div', { class: 'ex-head' },
-          h('div', { class: 'ex-task' }, h('span', { class: 'ex-label', text: 'Aufgabe' }), u.aufgabe.map(function (a) { return h('p', {}, rich(a)); })),
-          h('div', { class: 'ex-meta' }, clockEl(u.id, u.minutes), h('span', { class: 'ex-sheet' }, 'Blatt: ', h('code', { text: u.sheet })))));
+          h('div', { class: 'ex-task' }, h('span', { class: 'ex-label', text: u.demo ? 'Demo' : 'Aufgabe' }), u.aufgabe.map(function (a) { return h('p', {}, rich(a)); })),
+          h('div', { class: 'ex-meta' }, clockEl(u.id, u.minutes),
+            h('div', { class: 'ex-meta-lines' },
+              u.einstieg ? h('span', { class: 'ex-einstieg' }, 'Vorherige Übung nicht fertig? ', h('code', { text: u.einstieg })) : null,
+              h('span', { class: 'ex-sheet' }, 'Blatt: ', h('code', { text: u.sheet }))))));
         var left = h('div', { class: 'ex-col' },
           at(h('div', { class: 'ex-box' }, h('span', { class: 'ex-label', text: 'Schritte' }),
             h('ol', { class: 'ex-steps' }, u.schritte.map(function (s) { return h('li', {}, rich(s)); }))), 1, 'left'));
@@ -79,13 +83,14 @@
           right.appendChild(at(h('div', { class: 'ex-prompt is-code' }, h('span', { class: 'ex-label', text: c.label }), h('pre', { text: c.text })), 2, 'right', i * 120));
         });
         (u.prompts || []).forEach(function (p, i) {
-          right.appendChild(at(h('div', { class: 'ex-prompt' + (p.kind === 'cmd' ? ' is-cmd' : '') }, h('span', { class: 'ex-label', text: p.label }), h('pre', { text: p.text })), 2, 'right', 100 + i * 120));
+          right.appendChild(at(h('div', { class: 'ex-prompt' + (p.kind === 'cmd' ? ' is-cmd' : '') + (p.optional ? ' is-optional' : '') }, h('span', { class: 'ex-label' }, p.label, p.optional ? h('span', { class: 'ex-opt', text: 'optional' }) : null), h('pre', { text: p.text })), 2, 'right', 100 + i * 120));
         });
         if (!right.children.length) right.appendChild(at(h('div', { class: 'ex-box ex-none', text: 'Keine Prompts. In dieser Übung tippt ihr nur Slash-Commands.' }), 2, 'fade'));
         var foot = at(h('div', { class: 'ex-foot' },
-          h('div', { class: 'ex-done' }, h('span', { class: 'ex-label', text: 'Fertig, wenn' }), h('p', {}, rich(u.fertig.text)), u.fertig.cmd ? h('pre', { text: u.fertig.cmd }) : null),
+          h('div', { class: 'ex-done' }, h('span', { class: 'ex-label', text: u.demo ? 'Am Schluss' : 'Fertig, wenn' }), h('p', {}, rich(u.fertig.text)), u.fertig.cmd ? h('pre', { text: u.fertig.cmd }) : null),
           h('div', { class: 'tidbit' }, h('b', { text: 'Token-Tipp' }), h('span', {}, rich(u.tipp)))), 2, 'up', 300);
-        stage.appendChild(h('div', { class: 'ex-fit' }, h('div', { class: 'ex-main' }, left, right), foot));
+        var extra = u.zusatz ? at(h('div', { class: 'ex-zusatz' }, h('b', { text: 'Schon fertig? Zusatzaufgabe' }), h('span', {}, rich(u.zusatz))), 2, 'up', 420) : null;
+        stage.appendChild(h('div', { class: 'ex-fit' }, h('div', { class: 'ex-main' }, left, right), foot, extra));
         fit(stage);
         paintClock();
       },
@@ -106,9 +111,48 @@
           h('span', { class: 'agenda-time', text: r.zeit }), h('b', { text: r.block }), h('span', { text: r.inhalt }),
           r.praxis ? h('span', { class: 'ex-tag', text: r.praxis }) : h('span', {})), 0, 'up', 150 + i * 90);
       })));
-      stage.appendChild(at(h('p', { class: 'agenda-note' }, 'Muster pro Block: Problem → Konzept → Umsetzung in Claude Code → Übung im Terminal. Alle Übungsblätter liegen im Repo unter ', h('code', { text: 'exercises/' }), '.'), 0, 'fade', 1000));
+      stage.appendChild(at(h('p', { class: 'agenda-note' }, 'Muster pro Block: Problem → Konzept → Umsetzung in Claude Code → Übung im Terminal → Frage ans Team. Repo: ', h('code', { text: (window.SETUP || {}).repo || '' }), ' · Übungsblätter unter ', h('code', { text: 'exercises/' }), '.'), 0, 'fade', 1000));
     }
   };
+
+  /* ---------- Setup: Repo und Einrichtung ---------- */
+  VIZ.defs.setup = {
+    id: 'setup', nav: 'Setup', title: 'Repo und Setup',
+    lead: 'Das Setup ist Hausaufgabe gewesen. Hier steht nochmals alles für jene, bei denen etwas fehlt.',
+    beats: 1,
+    render: function (stage) {
+      var S = window.SETUP || { repo: '', folien: '', befehle: '', braucht: [] };
+      stage.appendChild(h('div', { class: 'setup' },
+        at(h('div', { class: 'setup-repo' }, h('span', { class: 'ex-label', text: 'Repo' }), h('code', { text: S.repo }),
+          h('span', { class: 'setup-sub' }, 'Folien: ', h('code', { text: S.folien }))), 0, 'up', 150),
+        h('div', { class: 'setup-grid' },
+          at(h('div', { class: 'ex-prompt is-cmd' }, h('span', { class: 'ex-label', text: 'Klonen, einrichten, prüfen (macOS, Linux, Git Bash)' }), h('pre', { text: S.befehle }),
+            h('p', { class: 'setup-sub' }, rich('Windows ohne Git Bash und Devcontainer: siehe `SETUP.md`.'))), 0, 'left', 350),
+          at(h('div', { class: 'ex-box' }, h('span', { class: 'ex-label', text: 'Voraussetzungen' }),
+            h('ul', { class: 'setup-list' }, S.braucht.map(function (b) { return h('li', { text: b }); }))), 0, 'right', 450))));
+      stage.appendChild(at(h('div', { class: 'tidbit' }, h('b', { text: 'Unterwegs abgehängt?' }),
+        h('span', {}, rich('`scripts/reset-exercise.sh NN` stellt den Startstand von Übung NN her. Eure Änderungen werden mit `git stash` gesichert, nicht gelöscht. Der Befehl steht auf jeder Übungsfolie.'))), 0, 'fade', 800));
+    }
+  };
+
+  /* ---------- Teamfrage pro Block ---------- */
+  (window.TEAMFRAGEN || []).forEach(function (f) {
+    VIZ.defs[f.id] = {
+      id: f.id, nav: 'Teamfrage', title: 'Frage ans Team', minutes: 3,
+      lead: 'Block ' + f.block + '. Zwei, drei Beispiele aus euren Projekten. Kurz nennen, nicht lösen.',
+      beats: 1,
+      help: [],
+      keys: clockKeys(f.id, 3),
+      render: function (stage) {
+        stage.appendChild(h('div', { class: 'tf' },
+          at(h('p', { class: 'tf-frage', text: f.frage }), 0, 'up', 150),
+          h('div', { class: 'tf-row' },
+            at(h('ul', { class: 'tf-stich' }, f.stichworte.map(function (t) { return h('li', { text: t }); })), 0, 'fade', 600),
+            clockEl(f.id, 3))));
+        paintClock();
+      }
+    };
+  });
 
   /* ---------- Pause ---------- */
   VIZ.defs.pause = {
@@ -119,8 +163,9 @@
     keys: clockKeys('pause', 10),
     render: function (stage) {
       stage.appendChild(h('div', { class: 'pause' }, clockEl('pause', 10),
-        h('div', { class: 'tidbit' }, h('b', { text: 'Vor der Pause erledigt?' }),
-          h('span', {}, rich('Backend und Frontend für Übung 06 laufen in zwei Terminals (letzter Schritt von Übung 05). `http://localhost:4200` zeigt die App.')))));
+        h('div', { class: 'ex-prompt is-cmd pause-cmd' }, h('span', { class: 'ex-label', text: 'Vor der Pause: App für Übung 06 starten (zwei weitere Terminals)' }),
+          h('pre', { text: 'cd app/backend && ./mvnw -q spring-boot:run\ncd app/frontend && npm start' }),
+          h('p', { class: 'setup-sub' }, rich('Sie fährt während der Pause hoch. Danach zeigt `http://localhost:4200` die App.')))));
       paintClock();
     }
   };
