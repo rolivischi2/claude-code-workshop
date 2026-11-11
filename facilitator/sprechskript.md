@@ -507,7 +507,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 - *Was ist Recall@5?* Der Anteil der erwarteten Dokumente, die unter den ersten fünf Ergebnissen stehen. 0.76 entspricht 19 von 25 Fragen (zwei halbe Punkte zählen als einer).
 - *Was ist MRR?* Mean Reciprocal Rank: der Durchschnitt von eins durch den Rang des ersten Treffers. Er misst, wie weit oben der Treffer steht. Rang 1 gibt 1, Rang 2 gibt 0.5.
 - *Sind 25 Fragen genug?* Für eine Richtung ja, für Feinheiten nein. Eine Frage entspricht 0.04. Unterschiede unter 0.1 nicht überinterpretieren.
-- *Wer hat die Fragen geschrieben?* Entwurf von Claude, fachliche Prüfung durch dich (**noch offen**, vor dem Workshop erledigen), vor der ersten Messung festgelegt. Die Parameter sind danach nicht mehr angepasst worden.
+- *Wer hat die Fragen geschrieben?* Claude, aus den Dokumenten, vor der ersten Messung festgelegt. Eine Zollfachperson hat sie nicht geprüft. Das ist für den Zweck in Ordnung: Wir messen die Suche, der Zoll ist nur das Beispiel. Die Parameter sind danach nicht mehr angepasst worden.
 - *Warum ist BM25 bei Synonymen so gut (0.86)?* Gezählt wird auf Dokumentebene, und das grosse Dokument R-14-01 trifft fast immer irgendwo. Die Zahl ist geschönt, sag das offen.
 - *Warum ist das grosse Modell schlechter?* Das wissen wir nicht sicher. Gemessen ist: Es verfehlt mehr Fragen, deren Antwort in einem anderssprachigen Dokument steht. Genau darum misst man.
 

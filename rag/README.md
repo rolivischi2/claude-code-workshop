@@ -29,7 +29,7 @@ was kostet die agentische Suche im Vergleich?
 |----------|-----------|
 | Korpus | 16 öffentliche PDFs des BAZG (267 Seiten): 13 deutsch, 2 französisch, 1 italienisch (`sources.yaml`) |
 | Aufbereitung | PDF → Markdown mit `pymupdf4llm`, danach Kopf-/Fusszeilen, Seitenzahlen und Inhaltsverzeichnisse entfernt, Überschriftenebenen aus der Ziffer abgeleitet («4.2.1 Titel» → `###`), Tabellen zeilenweise (`indexer/pdf.py`) |
-| Fragen | 25 Fragen auf Deutsch mit erwarteten Dokumenten, in 4 Kategorien (`eval/questions.yaml`, Entwurf, fachliche Prüfung ausstehend) |
+| Fragen | 25 Fragen auf Deutsch mit erwarteten Dokumenten, in 4 Kategorien (`eval/questions.yaml`, von Claude aus den Dokumenten geschrieben) |
 | Lexikalisch | BM25 über SQLite FTS5 |
 | Semantisch | lokale, mehrsprachige Embedding-Modelle via `fastembed`, Vektoren in `sqlite-vec` |
 | Hybrid | Reciprocal Rank Fusion (zählt nur Ränge, nicht Scores; k=60, je 2×k Kandidaten) |
@@ -115,7 +115,7 @@ ungeprüft in den Treffern.
 ## Grenzen
 
 - 25 Fragen sind eine kleine Stichprobe. Eine Frage entspricht 0.04 Recall. Unterschiede unter ~0.1 nicht überinterpretieren.
-- Die Fragen und erwarteten Dokumente sind ein Entwurf ohne fachliche Prüfung durch eine Zollfachperson.
+- Die Fragen und erwarteten Dokumente hat Claude aus den Dokumenten geschrieben. Eine Zollfachperson hat sie nicht geprüft. Der Zoll ist hier nur das Beispielthema: Das Experiment misst die Suche, nicht das Zollwissen.
 - Gemessen wird auf Dokumentebene. Die Richtlinie R-14-01 stellt rund einen Drittel aller Chunks; wer irgendeinen Chunk daraus trifft, gilt bei Fragen zu R-14-01 als richtig, auch wenn der Abschnitt nicht passt. Das schont vor allem BM25 bei den Synonym-Fragen (0.86).
 - MiniLM sieht nur ca. 128 Wortteile pro Chunk; der vorangestellte Überschriftenpfad verbraucht davon einen Teil.
 - Die PDF-Konvertierung ist heuristisch: Tabellen (vor allem die 109 Seiten Datenanforderungen) und Formulare werden zu teils holprigem Text.

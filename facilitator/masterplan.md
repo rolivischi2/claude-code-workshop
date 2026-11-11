@@ -38,7 +38,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Domäne der App | synthetische NCTS-Transit-App (Zollstellen, Garantien, Transitanmeldungen) |
 | Repo | an Ort und Stelle umgebaut. Tagesversion archiviert unter `archive/fullday-v1` und `archive/fullday-v1-main`, alte 33 Refs gelöscht |
 | RAG-Korpus | öffentliche BAZG-Dokumentation, von Claude zusammengestellt, **geladen, nicht committet** |
-| RAG-Fragen | Entwurf von Claude, fachliche Prüfung durch Roland über eine Review-Seite |
+| RAG-Fragen | von Claude aus den BAZG-Dokumenten geschrieben. Keine fachliche Prüfung (Entscheid Roland, 2026-11-11): Der Zoll ist nur das Beispielthema, im Workshop geht es um die Suche |
 | Setup | ohne Python/uv: nur Git, JDK 21, Node, Claude Code. Devcontainer als Plan B |
 | Grundsätze | Ehrliches RAG-Ergebnis (nicht nachtunen, nachdem gemessen wurde) · Hooks als Node-`.mjs` in Exec-Form · Doku Deutsch, Schweizer Schreibweise (kein ß) |
 | Sprache der Folien (2026-11-10) | **Deutsch**, einfach und direkt: kurze Sätze, Fachbegriffe wie unter Entwicklern üblich (Chunk, Embedding, Tool-Aufruf), keine wörtlich übersetzten englischen Wendungen. Englische Folien wurden kurz versucht und verworfen |
@@ -256,9 +256,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 - [ ] Präsentation ganz durchgehen, Texte anpassen (Kernaussage 3 zum Chunking, Übungsfolien)
 - [ ] Szene «Kontext»: schematische Breiten durch die `/context`-Werte aus dem Dry-Run ersetzen
 
-- [ ] RAG-Fragen auf der Review-Seite prüfen (noch keine Urteile erfasst). Danach: `questions.yaml`
-      anpassen, Header «Entwurf» entfernen, `uv run index --all && uv run eval && uv run export-viz`,
-      Zahlen hier und in `demo-scripts.md` / `rag/README.md` nachführen
+- [x] RAG-Fragen: keine fachliche Prüfung nötig (Entscheid Roland, 2026-11-11). Das Zollwissen wird im Workshop nicht vertieft
 - [ ] Quellenliste `rag/sources.yaml` prüfen
 - [ ] Dry-Run 00–06 mit Pro-Konto auf Sonnet, Turns und `/usage` in [timing.md](timing.md) eintragen
 - [ ] `.ps1`-Skripte auf echtem Windows testen

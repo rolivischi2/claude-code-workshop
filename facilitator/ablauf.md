@@ -32,7 +32,6 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 - [ ] Setup-Mail an die Teilnehmenden mit Link auf `SETUP.md` (Frist: 2 Tage vorher `check-setup` grün). Devcontainer als Variante B erwähnen.
 - [ ] Dry-Run aller Übungen 00–06 mit einem **Pro-Konto auf Sonnet**, Turns und `/usage` in `timing.md` eintragen.
 - [ ] `scripts/verify-all.sh --e2e` grün.
-- [ ] Fragen in `rag/eval/questions.yaml` fachlich prüfen (Header «Entwurf» danach entfernen), Quellenliste `rag/sources.yaml` prüfen.
 
 **Am Vortag**
 
