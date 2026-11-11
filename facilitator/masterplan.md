@@ -36,7 +36,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Gestrichen | Feedback-Loops (in 06 enthalten), Vertrauensgrenzen (ein Satz in R), Team-Plugin. Remote Control nur als Karte auf der Folie «Ausblick» |
 | Übungs-Stack | Spring Boot 3 (Java 21) + Angular bleiben |
 | Domäne der App | synthetische NCTS-Transit-App (Zollstellen, Garantien, Transitanmeldungen) |
-| Repo | an Ort und Stelle umgebaut. Tagesversion archiviert unter `archive/fullday-v1` und `archive/fullday-v1-main`, alte 33 Refs gelöscht |
+| Repo | an Ort und Stelle umgebaut. Tagesversion lokal archiviert (Tags `archive/fullday-v1*`, nicht auf GitHub), alte 33 Refs gelöscht |
 | RAG-Korpus | öffentliche BAZG-Dokumentation, von Claude zusammengestellt, **geladen, nicht committet** |
 | RAG-Fragen | von Claude aus den BAZG-Dokumenten geschrieben. Keine fachliche Prüfung (Entscheid Roland, 2026-11-11): Der Zoll ist nur das Beispielthema, im Workshop geht es um die Suche |
 | Setup | ohne Python/uv: nur Git, JDK 21, Node, Claude Code. Devcontainer als Plan B |
@@ -126,7 +126,7 @@ main = start/00 ─▶ solution/00 = start/01 ─▶ solution/01 = start/02 ─�
 | `start/NN` (Tag) | Stand vor Übung NN = `solution/NN-1` |
 | `solution/NN` (Branch) | Referenzlösung inkl. `exercises/NN-*/LOESUNG.md` |
 | `solution/final` | + `.claude/agents/reviewer.md` (Haiku) und `"worktree": {"baseRef": "head"}` für Demo D |
-| `archive/fullday-v1`, `archive/fullday-v1-main` | Tagesversion (16 Übungen) |
+| `archive/fullday-v1`, `archive/fullday-v1-main` | Tagesversion (16 Übungen). Nur lokal, nicht auf GitHub |
 
 Was jede Lösung hinzufügt:
 01 `CLAUDE.md` · 02 Skill + `GuaranteeBalance*` · 03 `updateAmount`, Bugfix, Spec ·

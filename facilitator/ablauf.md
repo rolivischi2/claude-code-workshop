@@ -5,7 +5,7 @@ Ergänzt [timing.md](timing.md) (Zeitplan und Aufwand pro Übung) und [demo-scri
 
 ## 1. Von der Tagesversion zum Nachmittag
 
-Die Tagesversion (Git-Tag `archive/fullday-v1`, 16 Übungen) ist auf
+Die frühere Tagesversion (16 Übungen, nur noch lokal bei Roland archiviert) ist auf
 2,5 Stunden verdichtet:
 
 | Tagesversion | Nachmittag | Wie |
