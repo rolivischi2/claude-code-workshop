@@ -50,13 +50,13 @@ Hintergrund: [Data usage](https://code.claude.com/docs/en/data-usage)
 ## 4. Repo klonen und Setup ausführen
 
 ```bash
-git clone <repo-url> claude-code-workshop      # URL aus der Einladung
+git clone https://github.com/rolivischi2/claude-code-workshop
 cd claude-code-workshop
 scripts/setup.sh                 # macOS / Linux / Git Bash
 ```
 
 ```powershell
-git clone <repo-url> claude-code-workshop
+git clone https://github.com/rolivischi2/claude-code-workshop
 cd claude-code-workshop
 powershell -ExecutionPolicy Bypass -File scripts\setup.ps1     # Windows
 ```

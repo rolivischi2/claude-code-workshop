@@ -45,6 +45,8 @@ app/frontend/   Angular: Zollstellen, Detail, Formular «Transitanmeldung erfass
 exercises/      Ein Ordner pro Übung mit Aufgabe, Prompts und Erfolgskriterium
 scripts/        setup, check-setup, reset-exercise (je .sh und .ps1)
 rag/            Demo des Facilitators (Block R), für die Übungen nicht nötig
+praesentation/  Die Folien des Nachmittags als statische Seite (auch gehostet, siehe oben)
+facilitator/    Unterlagen für die Moderation: Masterplan, Zeitplan, Sprechskript, Demo-Abläufe, Plan B
 .claude/        Absichtlich fast leer: ihr baut es in den Übungen auf
 ```
 
@@ -54,6 +56,15 @@ NCTS-Regeln. Die App ist klein gehalten (Backend und Frontend je unter 1500 Zeil
 Absicht: Jede Datei, die Claude liest, kostet Kontext und damit Nutzung eures Pro-Abos.
 
 Die `.env` enthält nur Fake-Werte. Schützt sie in Übung 04 trotzdem so, als wären sie echt.
+
+## Wer liest was?
+
+| Ihr seid … | Dann lest … |
+|------------|-------------|
+| Teilnehmende | [SETUP.md](SETUP.md), dann am Nachmittag die Blätter unter [exercises/](exercises/) |
+| Moderation (den Workshop selbst halten) | [facilitator/masterplan.md](facilitator/masterplan.md) als Einstieg, dann das [Sprechskript](facilitator/sprechskript.md) (Folie für Folie: was erscheint, was gesagt wird, häufige Fragen), den [Zeitplan](facilitator/timing.md) und die [Demo-Abläufe](facilitator/demo-scripts.md) |
+| Neugierig auf die Folien | https://claude-code-workshop-black.vercel.app oder [praesentation/README.md](praesentation/README.md) |
+| Neugierig auf das Suchexperiment (Block R) | [rag/README.md](rag/README.md) |
 
 ## So arbeitet ihr mit dem Repo
 

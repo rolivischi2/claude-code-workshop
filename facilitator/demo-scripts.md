@@ -7,13 +7,14 @@ Vor jeder Demo: Terminal- bzw. Browser-Schrift gross, Benachrichtigungen aus.
 
 ## Demo R – Agentic Search vs. RAG auf der NCTS-Dokumentation (20')
 
-**Vorbereitung (am Vortag, braucht Netz):**
+**Vorbereitung:** Die Präsentation läuft ohne diesen Schritt, die gemessenen Daten liegen als `praesentation/data.js` im Repo.
+Nur wer neu messen will (am Vortag, braucht Netz und [uv](https://docs.astral.sh/uv/)):
 
 ```bash
 cd rag
 uv run fetch && uv run convert      # BAZG-PDFs laden und nach Markdown wandeln (rag/.cache/)
 uv run index --all && uv run eval   # alle Varianten indexieren und messen
-uv run export-viz                   # schreibt praesentation/data.js (nicht committet: enthält BAZG-Textauszüge)
+uv run export-viz                   # schreibt praesentation/data.js (ist committet; nur nötig, wenn neu gemessen wird)
 ```
 
 `uv run record-agent` nur, wenn die Agent-Läufe neu aufgenommen werden sollen (kostet echte
@@ -90,7 +91,8 @@ und `--mode vector` im Terminal, dann `uv run eval`.
 `"worktree": {"baseRef": "head"}`). Zwei Terminals nebeneinander, beide im Klon.
 
 ```bash
-git clone --branch solution/final . ../demo-d
+git clone --branch solution/final https://github.com/rolivischi2/claude-code-workshop ../demo-d
+(cd ../demo-d && scripts/setup.sh)
 ```
 
 **Nur der Facilitator.** Zuerst die Folie «Skalieren» zeigen, dann die Folie «Demo» (kündigt die Demo an).

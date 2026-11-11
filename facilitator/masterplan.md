@@ -8,9 +8,10 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Zeitplan, Aufwand pro Übung, Kürzungsreserve | [timing.md](timing.md) |
 | Blöcke im Detail, Vorbereitungs-Checkliste | [ablauf.md](ablauf.md) |
 | Exakte Abläufe der Demos R und D | [demo-scripts.md](demo-scripts.md) |
-| Sprechskript zum Proben: beide Decks Schritt für Schritt, häufige Fragen, Glossar | [sprechskript.md](sprechskript.md) |
+| Sprechskript zum Proben: die Präsentation Folie für Folie, häufige Fragen, Glossar | [sprechskript.md](sprechskript.md) |
 | Animierte Schemata für die Inputs | [../praesentation/README.md](../praesentation/README.md) |
 | Präparierte Fehler, Seed-Daten, Rezepte | [seeded-issues.md](seeded-issues.md) |
+| Mail an die Teilnehmenden vor dem Workshop (Repo, Setup) | [vorab-mail.md](vorab-mail.md) |
 | Plan B für Technik, Netz, Abo | [fallback.md](fallback.md), [troubleshooting.md](troubleshooting.md) |
 | Für Teilnehmende | [README.md](../README.md), [SETUP.md](../SETUP.md), [.claude/README.md](../.claude/README.md) |
 
