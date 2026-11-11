@@ -104,4 +104,3 @@ und ein Wochenlimit. Ein paar Gewohnheiten helfen:
 - [Anthropic Academy – alle Kurse](https://www.anthropic.com/learn)
 - [Building effective agents](https://www.anthropic.com/engineering/building-effective-agents) (Anthropic Engineering Blog)
 - Heute nicht behandelt: [Remote Control](https://code.claude.com/docs/en/remote-control) (Session vom Handy aus weiterführen) · [Claude Code on the web](https://code.claude.com/docs/en/claude-code-on-the-web) (Sessions in der Cloud) · [Headless](https://code.claude.com/docs/en/headless) (`claude -p` für Skripte und CI) · [Scheduled Tasks](https://code.claude.com/docs/en/routines)
-- Volle Tagesversion dieses Workshops (16 Übungen, inkl. Remote Control und Team-Plugin): Git-Tag `archive/fullday-v1`
