@@ -5,8 +5,8 @@ Ergänzt [timing.md](timing.md) (Zeitplan und Aufwand pro Übung) und [demo-scri
 
 ## 1. Von der Tagesversion zum Nachmittag
 
-Die Tagesversion (Git-Tag `archive/fullday-v1`, 16 Übungen, drei Facilitators) ist auf
-2,5 Stunden und einen Facilitator verdichtet:
+Die Tagesversion (Git-Tag `archive/fullday-v1`, 16 Übungen) ist auf
+2,5 Stunden verdichtet:
 
 | Tagesversion | Nachmittag | Wie |
 |--------------|------------|-----|

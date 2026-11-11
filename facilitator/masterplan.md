@@ -22,7 +22,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | | |
 |---|---|
 | Dauer | 2,5 Stunden, ein Nachmittag |
-| Facilitator | Roland, allein (keine Übergaben) |
+| Facilitator | Roland, allein |
 | Publikum | kennt Agentic Engineering und das Konzept einer Harness. **Konzepte vor Werkzeug.** |
 | Abo der Teilnehmenden | Claude Pro (20 $). Sonnet durchgehend, **höchstens 8 Turns pro Übung** |
 | Projektkontext | Schweizer Zoll-Transitverfahren (NCTS): Übungs-App **und** RAG-Demo teilen dieselbe Domäne |
@@ -126,7 +126,7 @@ main = start/00 ─▶ solution/00 = start/01 ─▶ solution/01 = start/02 ─�
 | `start/NN` (Tag) | Stand vor Übung NN = `solution/NN-1` |
 | `solution/NN` (Branch) | Referenzlösung inkl. `exercises/NN-*/LOESUNG.md` |
 | `solution/final` | + `.claude/agents/reviewer.md` (Haiku) und `"worktree": {"baseRef": "head"}` für Demo D |
-| `archive/fullday-v1`, `archive/fullday-v1-main` | Tagesversion (16 Übungen, drei Facilitators) |
+| `archive/fullday-v1`, `archive/fullday-v1-main` | Tagesversion (16 Übungen) |
 
 Was jede Lösung hinzufügt:
 01 `CLAUDE.md` · 02 Skill + `GuaranteeBalance*` · 03 `updateAmount`, Bugfix, Spec ·
