@@ -70,7 +70,7 @@ public class DeclarationService {
       throw new BusinessRuleException(
           "TR-4091",
           HttpStatus.CONFLICT,
-          "Referenzbetrag der Sicherheit überschritten (noch verfügbar: CHF " + available + ")");
+          "Referenzbetrag der Garantie überschritten (noch verfügbar: CHF " + available + ")");
     }
 
     String mrn = Mrn.generate(LocalDate.now(clock).getYear(), repository.count() + 1);

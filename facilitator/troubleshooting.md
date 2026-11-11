@@ -40,5 +40,5 @@
 | Hook: `spawnSync mvnw.cmd EINVAL` | 04 | Windows braucht `shell: true` für `.cmd` (im Referenz-Hook gelöst) |
 | `/rewind` zeigt nichts | 05 | Andere Session als in 04 (z.B. nach `/clear`). Dann direkt mit Git zeigen. |
 | Projekt-MCP-Server erscheint nicht | 06 | Nicht bestätigt? `claude mcp reset-project-choices`, Session neu starten |
-| TR-4091 kommt nicht (mehr) | 06 | Sicherheit G3 schon ausgeschöpft oder Backend neu gestartet? Mit Betrag 999999 auslösen, das ist immer zu hoch. |
+| TR-4091 kommt nicht (mehr) | 06 | Garantie G3 schon ausgeschöpft oder Backend neu gestartet? Mit Betrag 999999 auslösen, das ist immer zu hoch. |
 | Teilnehmer hängt hinterher | alle | `scripts/reset-exercise.sh NN` (sichert eigene Änderungen per `git stash`) |

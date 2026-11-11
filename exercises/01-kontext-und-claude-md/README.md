@@ -38,7 +38,7 @@ Sie wird in **jeder** Session geladen. `/init` erzeugt einen Startpunkt.
 
 - [ ] Controller → Service → Repository, keine Logik im Controller
 - [ ] Antwort als DTO (Record) über eine `*Mapper`-Klasse, keine Entity nach aussen
-- [ ] Unbekannte Sicherheit → `NotFoundException` → 404 als Problem Detail, keine Fehlerbehandlung im Controller
+- [ ] Unbekannte Garantie → `NotFoundException` → 404 als Problem Detail, keine Fehlerbehandlung im Controller
 - [ ] Service-Unit-Test **und** MockMvc-Test
 - [ ] `./mvnw -q test` grün
 
@@ -70,8 +70,8 @@ Welche HTTP-Status und Fehlercodes kann die API zurückgeben?
 
 Prompt 2 (Teil A und B identisch):
 ```
-Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Sicherheit liefert.
-Gibt es die Sicherheit nicht, soll ein 404 kommen.
+Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Garantie liefert.
+Gibt es die Garantie nicht, soll ein 404 kommen.
 ```
 
 ## Erfolgskriterium

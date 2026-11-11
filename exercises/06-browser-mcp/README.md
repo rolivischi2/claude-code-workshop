@@ -16,7 +16,7 @@ pro Scope (lokal, Projekt, User). Mit `.mcp.json` im Repo hat das ganze Team die
 
 ## Aufgabe
 
-Bug: Wird eine Transitanmeldung abgelehnt, weil die Sicherheit nicht reicht (409, Code `TR-4091`),
+Bug: Wird eine Transitanmeldung abgelehnt, weil die Garantie nicht reicht (409, Code `TR-4091`),
 zeigt das Formular **keine** Meldung. Der Button wird einfach wieder aktiv.
 
 Neu ist hier vor allem der **Feedback-Loop**: Claude prüft sein Ergebnis selbst, zuerst im
@@ -51,7 +51,7 @@ Kein Chrome installiert, aber Edge? Dann `"--browser", "msedge"` zu den `args` h
 Im Formular «Transitanmeldung erfassen» (http://localhost:4200) erscheint keine Meldung, wenn
 das Backend die Anmeldung ablehnt (z.B. HTTP 409, Code TR-4091).
 1. Reproduziere das im Browser mit dem Playwright-MCP-Server: Zollstelle Genève-Routes →
-   «Transitanmeldung erfassen», Bestimmung Basel/Weil-Autobahn, Sicherheit Léman Fret Sàrl,
+   «Transitanmeldung erfassen», Bestimmung Basel/Weil-Autobahn, Garantie Léman Fret Sàrl,
    Abgabenbetrag 600, Freigabe morgen.
 2. Behebe es: Bei Fehlern vom Backend soll die Meldung aus dem Problem Detail (Feld detail)
    im Formular erscheinen, mit einem allgemeinen deutschen Text als Rückfallebene.
@@ -75,7 +75,7 @@ Fertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.
   Paket (offline) und funktioniert auf Windows ohne `cmd /c`-Umweg.
 - Projekt-Server aus `.mcp.json` müssen einmal bestätigt werden. Zurücksetzen mit `claude mcp reset-project-choices`.
 - Für den e2e-Test: Die Seed-Daten liegen in einer In-Memory-Datenbank. Ein erfolgreicher
-  Testlauf verbraucht Sicherheit. Den Fehlerfall darum mit einem Betrag auslösen, der **immer**
+  Testlauf verbraucht Garantie. Den Fehlerfall darum mit einem Betrag auslösen, der **immer**
   zu hoch ist (z.B. 999999), statt auf den genauen Restbetrag zu bauen.
 - Flaky e2e-Test? Angular läuft hier ohne Zone.js. Wartet im Test auf sichtbare Inhalte
   (`await expect(…).toBeVisible()`), bevor ihr Felder ausfüllt.

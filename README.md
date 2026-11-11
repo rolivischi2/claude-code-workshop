@@ -37,7 +37,7 @@ Lokal: `praesentation/index.html` öffnen.
 ## Was ist in diesem Repo?
 
 ```
-app/backend/    Spring Boot 3 (Java 21): Zollstellen, Sicherheiten, Transitanmeldungen. H2, JUnit/MockMvc
+app/backend/    Spring Boot 3 (Java 21): Zollstellen, Garantien, Transitanmeldungen. H2, JUnit/MockMvc
 app/frontend/   Angular: Zollstellen, Detail, Formular «Transitanmeldung erfassen», Playwright-Smoke-Test
 exercises/      Ein Ordner pro Übung mit Aufgabe, Prompts und Erfolgskriterium
 scripts/        setup, check-setup, reset-exercise (je .sh und .ps1)

@@ -22,14 +22,14 @@ Bedarf. Dasselbe Prinzip gilt für MCP-Tools.
 
 ### Anforderung an den Endpoint
 
-`GET /api/guarantees/{grn}/balance` liefert den Saldo einer Sicherheit. Offen sind nur
+`GET /api/guarantees/{grn}/balance` liefert den Saldo einer Garantie. Offen sind nur
 Transitanmeldungen mit Status `OPEN`:
 
 ```json
 { "grn": "26CH1000000000033", "referenceAmount": 10000.00, "openAmount": 9500.00, "available": 500.00 }
 ```
 
-Unbekannte Sicherheit → 404 als Problem Detail.
+Unbekannte Garantie → 404 als Problem Detail.
 
 ## Vorgeschlagene Prompts
 
@@ -45,7 +45,7 @@ klar sagen, wann der Skill zu verwenden ist.
 Prompt 2 (Feature, neue Session):
 ```
 Wir brauchen den Endpoint GET /api/guarantees/{grn}/balance. Er liefert den Saldo einer
-Sicherheit (Format siehe exercises/02-skills/README.md).
+Garantie (Format siehe exercises/02-skills/README.md).
 ```
 
 ## Erfolgskriterium

@@ -25,7 +25,7 @@ window.UEBUNGEN = [
     id: 'ue01a', nav: 'Übung 01 A', nr: '01', title: 'Kontext und CLAUDE.md · Teil A: ohne CLAUDE.md', block: 'A', minutes: 7,
     sheet: 'exercises/01-kontext-und-claude-md/README.md',
     ziel: 'Sehen, was Kontext kostet. Und sehen, was Claude ohne Projektregeln baut.',
-    aufgabe: ['Neuer Endpoint `GET /api/guarantees/{grn}`: liefert eine einzelne Sicherheit, sonst 404.', 'Das Ergebnis mit der Checkliste «Teamstandard» vergleichen.'],
+    aufgabe: ['Neuer Endpoint `GET /api/guarantees/{grn}`: liefert eine einzelne Garantie, sonst 404.', 'Das Ergebnis mit der Checkliste «Teamstandard» vergleichen.'],
     schritte: [
       'Frische Session. `/context` aufrufen, Startbelegung notieren.',
       'Prompt 1 absetzen, danach wieder `/context`. Was ist gewachsen?',
@@ -36,13 +36,13 @@ window.UEBUNGEN = [
     liste: { title: 'Checkliste «Teamstandard»', items: [
       'Controller → Service → Repository, keine Logik im Controller',
       'Antwort als DTO (Record) über eine `*Mapper`-Klasse, keine Entity nach aussen',
-      'Unbekannte Sicherheit → `NotFoundException` → 404 als Problem Detail',
+      'Unbekannte Garantie → `NotFoundException` → 404 als Problem Detail',
       'Service-Unit-Test und MockMvc-Test',
       '`./mvnw -q test` grün'
     ] },
     prompts: [
       { label: 'Prompt 1', text: '@app/backend/src/main/java/com/example/transit/common/GlobalExceptionHandler.java\nWelche HTTP-Status und Fehlercodes kann die API zurückgeben?' },
-      { label: 'Prompt 2', text: 'Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Sicherheit liefert.\nGibt es die Sicherheit nicht, soll ein 404 kommen.' }
+      { label: 'Prompt 2', text: 'Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Garantie liefert.\nGibt es die Garantie nicht, soll ein 404 kommen.' }
     ],
     fertig: { text: 'Ihr wisst, welche Punkte der Checkliste ohne CLAUDE.md fehlen. Die Änderungen sind verworfen.' },
     tipp: 'Ein Feature-Prompt, keine Nachbesserung. Es zählt der Vergleich der ersten Antwort.'
@@ -60,7 +60,7 @@ window.UEBUNGEN = [
       'Die `CLAUDE.md` behalten und committen.'
     ],
     prompts: [
-      { label: 'Prompt 2 (wie in Teil A)', text: 'Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Sicherheit liefert.\nGibt es die Sicherheit nicht, soll ein 404 kommen.' },
+      { label: 'Prompt 2 (wie in Teil A)', text: 'Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Garantie liefert.\nGibt es die Garantie nicht, soll ein 404 kommen.' },
       { label: 'Committen', text: 'git add CLAUDE.md && git commit -m "Add CLAUDE.md with team conventions"', kind: 'cmd' }
     ],
     fertig: { text: 'Teil B erfüllt die Checkliste deutlich besser als Teil A. Die `CLAUDE.md` ist committet.', cmd: 'git log --oneline -1 -- CLAUDE.md' },
@@ -70,7 +70,7 @@ window.UEBUNGEN = [
     id: 'ue02', nav: 'Übung 02', nr: '02', title: 'Skills', block: 'A', minutes: 15,
     sheet: 'exercises/02-skills/README.md',
     ziel: 'Einen Skill «Neuer REST-Endpoint nach Teamstandard» bauen und prüfen, ob Claude ihn von sich aus lädt.',
-    aufgabe: ['Neuer Endpoint `GET /api/guarantees/{grn}/balance`: liefert den Saldo einer Sicherheit. Offen sind nur Anmeldungen mit Status `OPEN`.', 'Unbekannte Sicherheit → 404 als Problem Detail.'],
+    aufgabe: ['Neuer Endpoint `GET /api/guarantees/{grn}/balance`: liefert den Saldo einer Garantie. Offen sind nur Anmeldungen mit Status `OPEN`.', 'Unbekannte Garantie → 404 als Problem Detail.'],
     schritte: [
       'Skill anlegen unter `.claude/skills/rest-endpoint/SKILL.md`, zusammen mit Claude (Prompt 1).',
       'Die `description` im Frontmatter kritisch lesen. Sie entscheidet, ob Claude den Skill findet.',
@@ -79,7 +79,7 @@ window.UEBUNGEN = [
     ],
     prompts: [
       { label: 'Prompt 1 (Skill bauen)', text: 'Erstelle einen Project Skill unter .claude/skills/rest-endpoint/SKILL.md. Er beschreibt\nSchritt für Schritt, wie in diesem Backend ein neuer REST-Endpoint nach unserem Teamstandard\nentsteht (Schichten, DTO-Record + Mapper, Fehler als Problem Details, Tests). Verweise auf\nbestehende Dateien als Vorlage statt Code zu kopieren. Die description im Frontmatter soll\nklar sagen, wann der Skill zu verwenden ist.' },
-      { label: 'Prompt 2 (Feature, neue Session)', text: 'Wir brauchen den Endpoint GET /api/guarantees/{grn}/balance. Er liefert den Saldo einer\nSicherheit (Format siehe exercises/02-skills/README.md).' }
+      { label: 'Prompt 2 (Feature, neue Session)', text: 'Wir brauchen den Endpoint GET /api/guarantees/{grn}/balance. Er liefert den Saldo einer\nGarantie (Format siehe exercises/02-skills/README.md).' }
     ],
     fertig: { text: 'Tests grün, inklusive der neuen. Der Skill ist geladen worden, ohne dass ihr ihn erwähnt habt.', cmd: 'cd app/backend && ./mvnw -q test' },
     tipp: 'Im Skill auf bestehende Dateien verweisen, statt Code hineinzukopieren. Das hält ihn kurz.'
@@ -91,7 +91,7 @@ window.UEBUNGEN = [
     aufgabe: [
       'Feature «Abgabenbetrag korrigieren»: `PUT /api/declarations/{mrn}/amount` setzt den neuen Betrag.',
       'Nur Status `OPEN`, sonst 409 `TR-4092`. Betrag grösser als 0, sonst 400.',
-      'Die Sicherheit muss den **neuen** Betrag decken. Der alte Betrag derselben Anmeldung zählt nicht mehr mit. Sonst 409 `TR-4091`.'
+      'Die Garantie muss den **neuen** Betrag decken. Der alte Betrag derselben Anmeldung zählt nicht mehr mit. Sonst 409 `TR-4091`.'
     ],
     schritte: [
       'Neue Session. **Shift+Tab** drücken, bis unten «plan mode» steht.',
@@ -100,14 +100,14 @@ window.UEBUNGEN = [
       'Plan als Spec-Datei ablegen lassen, erst dann umsetzen (Prompt 3).'
     ],
     liste: { title: 'Checkliste für die Plan-Kritik', items: [
-      'Wird die bestehende Prüfung der Sicherheit wiederverwendet statt kopiert?',
+      'Wird die bestehende Prüfung der Garantie wiederverwendet statt kopiert?',
       'Wird der alte Betrag aus den offenen Beträgen herausgerechnet?',
       'Sind Tests geplant: Erhöhung ok, Erhöhung zu hoch, Senkung, Status nicht `OPEN`?',
       'Was gilt genau **am** Referenzbetrag?'
     ] },
     prompts: [
-      { label: 'Prompt 1 (im Plan Mode)', text: 'Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/README.md.\nZeig mir betroffene Dateien, die Logik der Prüfung gegen die Sicherheit und die geplanten Tests.' },
-      { label: 'Prompt 2 (Kritik, Beispiel)', text: 'Bitte überarbeite den Plan: Nutze exceedsReferenceAmount wieder, rechne den alten Betrag der\nAnmeldung aus den offenen Beträgen heraus und ergänze einen Test für einen Betrag, der die\nSicherheit genau ausschöpft. Prüf dabei, ob exceedsReferenceAmount zu seinem Javadoc passt.' },
+      { label: 'Prompt 1 (im Plan Mode)', text: 'Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/README.md.\nZeig mir betroffene Dateien, die Logik der Prüfung gegen die Garantie und die geplanten Tests.' },
+      { label: 'Prompt 2 (Kritik, Beispiel)', text: 'Bitte überarbeite den Plan: Nutze exceedsReferenceAmount wieder, rechne den alten Betrag der\nAnmeldung aus den offenen Beträgen heraus und ergänze einen Test für einen Betrag, der die\nGarantie genau ausschöpft. Prüf dabei, ob exceedsReferenceAmount zu seinem Javadoc passt.' },
       { label: 'Prompt 3 (vor der Freigabe)', text: 'Speichere den finalen Plan als docs/specs/betrag-korrigieren.md und setze ihn dann um.' }
     ],
     fertig: { text: 'Tests grün, inklusive der neuen. `docs/specs/betrag-korrigieren.md` existiert.', cmd: 'cd app/backend && ./mvnw -q test' },
@@ -187,7 +187,7 @@ window.UEBUNGEN = [
     ],
     code: [{ label: '.mcp.json', text: '{\n  "mcpServers": {\n    "playwright": {\n      "command": "node",\n      "args": ["app/frontend/node_modules/@playwright/mcp/cli.js", "--isolated"]\n    }\n  }\n}' }],
     prompts: [
-      { label: 'Prompt', text: 'Im Formular «Transitanmeldung erfassen» (http://localhost:4200) erscheint keine Meldung, wenn\ndas Backend die Anmeldung ablehnt (z.B. HTTP 409, Code TR-4091).\n1. Reproduziere das im Browser mit dem Playwright-MCP-Server: Zollstelle Genève-Routes →\n   «Transitanmeldung erfassen», Bestimmung Basel/Weil-Autobahn, Sicherheit Léman Fret Sàrl,\n   Abgabenbetrag 600, Freigabe morgen.\n2. Behebe es: Bei Fehlern vom Backend soll die Meldung aus dem Problem Detail (Feld detail)\n   im Formular erscheinen, mit einem allgemeinen deutschen Text als Rückfallebene.\n3. Verifiziere die Meldung im Browser.\n4. Ergänze einen Playwright-e2e-Test in app/frontend/e2e für diesen Fall.\nFertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.' }
+      { label: 'Prompt', text: 'Im Formular «Transitanmeldung erfassen» (http://localhost:4200) erscheint keine Meldung, wenn\ndas Backend die Anmeldung ablehnt (z.B. HTTP 409, Code TR-4091).\n1. Reproduziere das im Browser mit dem Playwright-MCP-Server: Zollstelle Genève-Routes →\n   «Transitanmeldung erfassen», Bestimmung Basel/Weil-Autobahn, Garantie Léman Fret Sàrl,\n   Abgabenbetrag 600, Freigabe morgen.\n2. Behebe es: Bei Fehlern vom Backend soll die Meldung aus dem Problem Detail (Feld detail)\n   im Formular erscheinen, mit einem allgemeinen deutschen Text als Rückfallebene.\n3. Verifiziere die Meldung im Browser.\n4. Ergänze einen Playwright-e2e-Test in app/frontend/e2e für diesen Fall.\nFertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.' }
     ],
     fertig: { text: 'e2e-Tests grün, inklusive des neuen Tests für die 409-Meldung.', cmd: '(cd app/frontend && npm run e2e)' },
     tipp: 'Browser-Snapshots sind gross. Genaue Anweisungen sparen Klick-Runden.'

@@ -22,7 +22,7 @@ Die Tagesversion (Git-Tag `archive/fullday-v1`, 16 Übungen, drei Facilitators) 
 | 12 Subagents, 13 Parallelisierung | Demo D | 7' live |
 | 14 Remote Control, 15 Team-Plugin | – | entfallen |
 
-Neu: Die Übungs-App ist eine **synthetische Transit-App** (Zollstellen, Sicherheiten,
+Neu: Die Übungs-App ist eine **synthetische Transit-App** (Zollstellen, Garantien,
 Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 ## 2. Vorbereitung

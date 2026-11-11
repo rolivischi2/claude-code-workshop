@@ -25,6 +25,6 @@ public class GuaranteeService {
   public Guarantee getGuarantee(String grn) {
     return repository
         .findById(grn)
-        .orElseThrow(() -> new NotFoundException("Sicherheit " + grn + " existiert nicht"));
+        .orElseThrow(() -> new NotFoundException("Garantie " + grn + " existiert nicht"));
   }
 }

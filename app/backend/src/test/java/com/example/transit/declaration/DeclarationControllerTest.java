@@ -61,7 +61,7 @@ class DeclarationControllerTest {
     when(service.create(any()))
         .thenThrow(
             new BusinessRuleException(
-                "TR-4091", HttpStatus.CONFLICT, "Referenzbetrag der Sicherheit überschritten"));
+                "TR-4091", HttpStatus.CONFLICT, "Referenzbetrag der Garantie überschritten"));
 
     mvc.perform(
             post("/api/declarations").contentType(MediaType.APPLICATION_JSON).content(VALID_BODY))

@@ -20,8 +20,8 @@ Wer bei einer Transitanmeldung einen falschen Abgabenbetrag erfasst hat, soll ih
 - `PUT /api/declarations/{mrn}/amount` mit `{ "amount": 1200.00 }` setzt den neuen Betrag und liefert die aktualisierte Anmeldung.
 - Nur Anmeldungen mit Status `OPEN` dürfen korrigiert werden, sonst 409 mit Code `TR-4092`.
 - Der Betrag muss grösser als 0 sein, sonst 400.
-- Die Sicherheit muss den **neuen** Betrag decken. Der **alte** Betrag derselben Anmeldung zählt
-  dabei nicht mehr zu den offenen Beträgen. Reicht die Sicherheit nicht, 409 mit Code `TR-4091`.
+- Die Garantie muss den **neuen** Betrag decken. Der **alte** Betrag derselben Anmeldung zählt
+  dabei nicht mehr zu den offenen Beträgen. Reicht die Garantie nicht, 409 mit Code `TR-4091`.
   Die Meldung nennt den höchsten zulässigen neuen Betrag.
 - Eine Senkung des Betrags ist immer erlaubt.
 
@@ -34,26 +34,26 @@ Ablauf:
 
 ### Checkliste für die Plan-Kritik
 
-- [ ] Wird die bestehende Prüfung der Sicherheit (`DeclarationService`) **wiederverwendet** statt kopiert?
+- [ ] Wird die bestehende Prüfung der Garantie (`DeclarationService`) **wiederverwendet** statt kopiert?
 - [ ] Wird der alte Betrag der Anmeldung aus den offenen Beträgen **herausgerechnet**?
 - [ ] Läuft alles in **einer** Transaktion?
 - [ ] Sind Tests geplant: Erhöhung ok, Erhöhung zu hoch, Senkung, Status nicht `OPEN`?
 - [ ] Bleiben Änderungen auf das Feature beschränkt?
-- [ ] Ist an der bestehenden Prüfung der Sicherheit etwas auffällig? (Tipp: Was gilt genau **am** Referenzbetrag?)
+- [ ] Ist an der bestehenden Prüfung der Garantie etwas auffällig? (Tipp: Was gilt genau **am** Referenzbetrag?)
 
 ## Vorgeschlagene Prompts
 
 Prompt 1 (im Plan Mode):
 ```
 Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/README.md.
-Zeig mir betroffene Dateien, die Logik der Prüfung gegen die Sicherheit und die geplanten Tests.
+Zeig mir betroffene Dateien, die Logik der Prüfung gegen die Garantie und die geplanten Tests.
 ```
 
 Prompt 2 (Kritik, Beispiel):
 ```
 Bitte überarbeite den Plan: Nutze exceedsReferenceAmount wieder, rechne den alten Betrag der
 Anmeldung aus den offenen Beträgen heraus und ergänze einen Test für einen Betrag, der die
-Sicherheit genau ausschöpft. Prüf dabei, ob exceedsReferenceAmount zu seinem Javadoc passt.
+Garantie genau ausschöpft. Prüf dabei, ob exceedsReferenceAmount zu seinem Javadoc passt.
 ```
 
 Prompt 3 (vor der Freigabe):
@@ -76,7 +76,7 @@ Prüfung gefunden und mit Test behoben, umso besser.
 - Plan Mode verlassen: Beim Freigeben des Plans fragt Claude, wie es weitergehen soll
   (z.B. mit «auto-accept edits»). Wieder hinein geht es mit Shift+Tab.
 - Ein guter Plan ist überprüfbar: Dateien, Schritte, Tests. «Ich implementiere die Korrektur» ist kein Plan.
-- Aus Übung 02 gibt es bei euch bereits Code, der den offenen Betrag einer Sicherheit berechnet.
+- Aus Übung 02 gibt es bei euch bereits Code, der den offenen Betrag einer Garantie berechnet.
   Name und Ort können von der Referenzlösung abweichen. Der Plan soll **euren** Code wiederverwenden.
 - Der deaktivierte Test in `DeclarationServiceTest` hat mit dem auffälligen Punkt zu tun.
 - Die Spec-Datei hilft der nächsten Session (oder Kollegin), ohne den ganzen Verlauf zu laden.

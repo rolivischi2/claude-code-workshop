@@ -34,7 +34,7 @@ und Stand**. Details stehen in den verlinkten Dokumenten. Bei Widersprüchen gil
 | Inhalt behalten | **A** Kontext und Skills · **B** Plan Mode, Permissions, Hooks, Rewind · **C** nur Browser über MCP · **R** RAG-Experiment als vorbereitete, animierte Demo · **D** sehr kurze Demo Subagents und Worktrees |
 | Gestrichen | Feedback-Loops (in 06 enthalten), Vertrauensgrenzen (ein Satz in R), Remote Control, Team-Plugin |
 | Übungs-Stack | Spring Boot 3 (Java 21) + Angular bleiben |
-| Domäne der App | synthetische NCTS-Transit-App (Zollstellen, Sicherheiten, Transitanmeldungen) |
+| Domäne der App | synthetische NCTS-Transit-App (Zollstellen, Garantien, Transitanmeldungen) |
 | Repo | an Ort und Stelle umgebaut. Tagesversion archiviert unter `archive/fullday-v1` und `archive/fullday-v1-main`, alte 33 Refs gelöscht |
 | RAG-Korpus | öffentliche BAZG-Dokumentation, von Claude zusammengestellt, **geladen, nicht committet** |
 | RAG-Fragen | Entwurf von Claude, fachliche Prüfung durch Roland über eine Review-Seite |
@@ -87,11 +87,11 @@ app/frontend/  Angular zoneless: Zollstellen, Detail, Formular «Transitanmeldun
 | Endpoint | Zweck |
 |----------|-------|
 | `GET/POST /api/offices`, `GET /api/offices/{code}` | Zollstellen (Rolle Abgang, Bestimmung oder beides) |
-| `GET /api/guarantees` | Sicherheiten (GRN, Referenzbetrag, offen) |
+| `GET /api/guarantees` | Garantien (GRN, Referenzbetrag, offen) |
 | `GET /api/declarations[?office=]`, `GET /api/declarations/{mrn}`, `POST /api/declarations` | Transitanmeldungen |
 | `POST /api/declarations/{mrn}/arrival` | Ankunft melden (TR-4092, wenn nicht `OPEN`) |
 
-Fehlercodes `TR-<Status><n>`: 4000–4004, 4091 (Sicherheit reicht nicht), 4092, 4093.
+Fehlercodes `TR-<Status><n>`: 4000–4004, 4091 (Garantie reicht nicht), 4092, 4093.
 
 **Präparierte Stellen** (Details in [seeded-issues.md](seeded-issues.md)):
 
@@ -104,7 +104,7 @@ Fehlercodes `TR-<Status><n>`: 4000–4004, 4091 (Sicherheit reicht nicht), 4092,
 | 5 | `src/generated/api-types.ts` «generiert», geschützt | 04 |
 | 6 | `GuaranteeService` baut DTO ohne Mapper | 01 |
 
-Rezept: Genève-Routes → Basel, Sicherheit G3 (noch 500 verfügbar): Betrag **600** → TR-4091,
+Rezept: Genève-Routes → Basel, Garantie G3 (noch 500 verfügbar): Betrag **600** → TR-4091,
 Betrag **500** → fälschlich abgelehnt (Fehler 1).
 
 ## 6. Git-Kette
@@ -221,7 +221,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 
 | Plan | Umgesetzt | Grund |
 |------|-----------|-------|
-| 03: «Ankunft melden» | 03: «Abgabenbetrag korrigieren» | Ankunft ist beim Umbau der App bereits entstanden. Das neue Feature muss die Sicherheitsprüfung wiederverwenden und führt so direkt zum Off-by-one |
+| 03: «Ankunft melden» | 03: «Abgabenbetrag korrigieren» | Ankunft ist beim Umbau der App bereits entstanden. Das neue Feature muss die Garantieprüfung wiederverwenden und führt so direkt zum Off-by-one |
 | 02: `GET /api/offices/{code}/declarations?status=OPEN` | 02: `GET /api/guarantees/{grn}/balance`, 01: `GET /api/guarantees/{grn}` | passt zum Mapper-Vergleich in 01 und zur Prüfung in 03 |
 | 6 Szenen in der Visualisierung | 9 Szenen (+ Corpus, + Vector DB, + Takeaways) | Bild für den Einstieg, die Vektor-Datenbank als Tabelle vor der Karte, Kernaussagen als eigene Schlussfolie |
 | Inputs nur gesprochen | Konzept-Szenen und Schätzfragen in Demo R | Review vom 2026-11-10. Demo D bleibt eine reine Live-Demo des Facilitators (Entscheid Roland, nach kurzem Versuch als Mitmach-Teil) |

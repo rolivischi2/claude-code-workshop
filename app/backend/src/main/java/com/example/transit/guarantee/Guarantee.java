@@ -6,8 +6,8 @@ import jakarta.persistence.Id;
 import java.math.BigDecimal;
 
 /**
- * A Sicherheit (guarantee), identified by its Guarantee Reference Number (GRN). It covers the
- * duties of open transit declarations up to its reference amount.
+ * A Garantie (guarantee), identified by its Guarantee Reference Number (GRN). It covers the duties
+ * of open transit declarations up to its reference amount.
  */
 @Entity
 public class Guarantee {
