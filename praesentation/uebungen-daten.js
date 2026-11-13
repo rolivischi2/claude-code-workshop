@@ -153,7 +153,7 @@ window.UEBUNGEN = [
       'Formatier-Hook kopieren (Befehl rechts). Lesen, nicht schreiben.',
       'Schutz-Hook von Claude bauen lassen (Prompt 3).',
       'Den Teil `hooks` aus dem Blatt in `.claude/settings.json` ergänzen.',
-      'Neu starten: `/exit`, `claude -c`. Mit `/hooks` prüfen.',
+      'Mit `/hooks` prüfen. Fehlen die Hooks: `/exit`, dann `claude -c`.',
       'Prompt 4 absetzen. Wer Zeit hat: Prompt 5.'
     ],
     prompts: [
@@ -215,7 +215,7 @@ window.ABLAUF = [
   { zeit: '1:31', block: 'C · MCP', inhalt: 'Claude prüft sich selbst im Browser', praxis: 'Übung 06' },
   { zeit: '1:54', block: 'R · Suche', inhalt: 'Suche des Agenten vs. RAG, gemessen auf Zolldokumentation', praxis: 'Demo' },
   { zeit: '2:17', block: 'D · Skalieren', inhalt: 'Subagents und parallele Sessions', praxis: 'Live-Demo' },
-  { zeit: '2:24', block: 'Schluss', inhalt: 'Rückblick, Ausblick, Teamregeln', praxis: '' }
+  { zeit: '2:24', block: 'Schluss', inhalt: 'Rückblick, Modell- und Aufwandswahl, Teamregeln, Ausblick', praxis: '' }
 ];
 
 /* Repo und Setup für die Setup-Folie (Quelle: SETUP.md) */
@@ -223,7 +223,7 @@ window.SETUP = {
   repo: 'https://github.com/rolivischi2/claude-code-workshop',
   folien: 'https://claude-code-workshop-black.vercel.app',
   befehle: 'git clone https://github.com/rolivischi2/claude-code-workshop\ncd claude-code-workshop\nscripts/setup.sh\nscripts/check-setup.sh',
-  braucht: ['Git', 'Java 21 oder neuer', 'Node.js 22 oder 24 (LTS)', 'Chrome oder Edge', 'Claude Code mit claude.ai-Login (Pro reicht, kein API-Key)']
+  braucht: ['Git', 'Java 21 oder neuer', 'Node.js 22.22.3+ oder 24.15+ (LTS)', 'Chrome oder Edge', 'Claude Code mit claude.ai-Login (Pro reicht, kein API-Key)']
 };
 
 /* Teamfragen: eine pro Block, je rund 3 Minuten. Beispiele aus den eigenen Projekten sammeln. */

@@ -36,7 +36,7 @@
 | Port 8080 belegt | 06 | Alten Backend-Prozess beenden (`lsof -i :8080` bzw. `netstat -ano \| findstr 8080`) |
 | Playwright MCP startet nicht | 06 | Kein Chrome? `"--browser", "msedge"` in `.mcp.json`. Im Devcontainer `"--headless"` ergänzen. `/mcp` zeigt den Fehler. |
 | e2e-Test flaky | 06 | Angular läuft zoneless: Im Test auf sichtbare Inhalte warten, bevor Felder gefüllt werden |
-| Hook läuft nicht | 04 | `/hooks` prüfen, `claude --debug hooks`. JSON in `settings.json` valide? Nach Änderung Session neu starten. |
+| Hook läuft nicht | 04 | `/hooks` prüfen. JSON in `settings.json` valide? Log mit `/debug` oder `claude --debug` (`~/.claude/debug/<session-id>.txt`). Sonst Session neu starten. |
 | Hook: `spawnSync mvnw.cmd EINVAL` | 04 | Windows braucht `shell: true` für `.cmd` (im Referenz-Hook gelöst) |
 | `/rewind` zeigt nichts | 05 | Andere Session als in 04 (z.B. nach `/clear`). Dann direkt mit Git zeigen. |
 | Projekt-MCP-Server erscheint nicht | 06 | Nicht bestätigt? `claude mcp reset-project-choices`, Session neu starten |

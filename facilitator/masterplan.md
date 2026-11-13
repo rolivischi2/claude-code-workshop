@@ -254,7 +254,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 **Offen (Roland)**
 
 - [ ] Präsentation ganz durchgehen, Texte anpassen (Kernaussage 3 zum Chunking, Übungsfolien)
-- [ ] Szene «Kontext»: schematische Breiten durch die `/context`-Werte aus dem Dry-Run ersetzen
+- [x] Szene «Kontext»: Breiten bleiben schematisch und sind auf der Folie so beschriftet (Entscheid Roland, 2026-11-13)
 
 - [x] RAG-Fragen: keine fachliche Prüfung nötig (Entscheid Roland, 2026-11-11). Das Zollwissen wird im Workshop nicht vertieft
 - [ ] Quellenliste `rag/sources.yaml` prüfen

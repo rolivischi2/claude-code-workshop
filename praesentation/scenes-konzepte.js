@@ -85,8 +85,8 @@
   };
 
   /* ===================== 2 Kontext als Budget ===================== */
-  /* Breiten in Prozent des Kontextfensters pro Beat. SCHEMA, nicht gemessen.
-     Nach dem Dry-Run hier die echten Werte aus /context eintragen. */
+  /* Breiten in Prozent des Kontextfensters pro Beat. Schema, bewusst nicht gemessen:
+     Die Folie zeigt Verhältnisse, die eigene Zahl liefert /context in Übung 00. */
   var SEG = [
     { id: 'sys', label: 'System-Prompt und Tools', kind: 'always', w: [0, 8, 8, 8, 8, 8] },
     { id: 'md', label: 'CLAUDE.md, Memory', kind: 'always', w: [0, 2, 2, 2, 2, 2] },

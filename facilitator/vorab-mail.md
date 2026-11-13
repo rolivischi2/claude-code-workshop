@@ -17,7 +17,7 @@ zum grössten Teil Übungen im Terminal. Damit wir am Nachmittag nicht installie
 
 - Git
 - Java (JDK) 21 oder neuer
-- Node.js 22 oder 24 (LTS)
+- Node.js 22.22.3 oder 24.15 und neuer (LTS). Ein älteres Node 22 genügt nicht.
 - Chrome oder Edge
 - Claude Code, eingeloggt mit eurem **claude.ai-Konto** (Pro reicht). Kein API-Key.
 

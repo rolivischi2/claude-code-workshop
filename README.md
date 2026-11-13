@@ -12,7 +12,7 @@ Harnesses übertragen. Claude Code ist das Werkzeug, an dem wir es üben.
 
 Am Ende des Nachmittags könnt ihr:
 
-- den Kontext einer Session bewusst verwalten, Projektwissen in der `CLAUDE.md` ablegen und Skills bauen,
+- den Kontext einer Session bewusst verwalten, Projektwissen in der `CLAUDE.md` ablegen und Skills einsetzen,
 - Claude mit Plan Mode, Permissions und Hooks steuern und Fehler mit `/rewind` rückgängig machen,
 - Claude über MCP einen Browser geben, damit es seine Arbeit selbst prüft,
 - einschätzen, wann eingebaute Suche reicht und wann Retrieval (RAG) etwas bringt,
@@ -25,14 +25,14 @@ Lokal: `praesentation/index.html` öffnen.
 
 | Zeit | Block | Format | Übungen |
 |------|-------|--------|---------|
-| 0:00 | Einstieg: Anatomie der Harness, Setup-Check | Input | [00](exercises/00-setup-check/) |
+| 0:00 | Einstieg: Überblick über Claude Code als Harness, Setup-Check | Input | [00](exercises/00-setup-check/) |
 | 0:10 | **A – Kontext und Skills** | Hands-on | [01](exercises/01-kontext-und-claude-md/) · [02](exercises/02-skills/) |
 | 0:41 | **B – Steuerung**: Plan Mode, Permissions, Hooks, Rewind | Hands-on | [03](exercises/03-plan-mode/) · [04](exercises/04-permissions-und-hooks/) · [05](exercises/05-rewind/) als Demo, optional selbst |
 | 1:21 | Pause | | |
 | 1:31 | **C – Browser über MCP** | Hands-on | [06](exercises/06-browser-mcp/) |
 | 1:54 | **R – Agentic Search vs. RAG** auf der NCTS-Dokumentation | Demo | |
 | 2:17 | **D – Skalieren**: Subagents und parallele Sessions | Demo | |
-| 2:24 | Abschluss: Modell- und Aufwandswahl, Teamregeln, Ausblick | Input | |
+| 2:24 | Abschluss: Rückblick, Modell- und Aufwandswahl, Teamregeln, Ausblick | Input | |
 
 Am Ende der Blöcke A, B, C und R gibt es eine kurze Frage ans Team: Wo kommt das in euren Projekten vor?
 Jedes Übungsblatt hat eine **Zusatzaufgabe** für alle, die früh fertig sind. Freiwillige Teile sind als «optional» markiert.
@@ -43,7 +43,7 @@ Jedes Übungsblatt hat eine **Zusatzaufgabe** für alle, die früh fertig sind. 
 app/backend/    Spring Boot 3 (Java 21): Zollstellen, Garantien, Transitanmeldungen. H2, JUnit/MockMvc
 app/frontend/   Angular: Zollstellen, Detail, Formular «Transitanmeldung erfassen», Playwright-Smoke-Test
 exercises/      Ein Ordner pro Übung mit Aufgabe, Prompts und Erfolgskriterium
-scripts/        setup, check-setup, reset-exercise (je .sh und .ps1)
+scripts/        setup, check-setup, reset-exercise (je .sh und .ps1). Für die Moderation: verify-all.sh, check-slides.mjs
 rag/            Demo des Facilitators (Block R), für die Übungen nicht nötig
 praesentation/  Die Folien des Nachmittags als statische Seite (auch gehostet, siehe oben)
 facilitator/    Unterlagen für die Moderation: Masterplan, Zeitplan, Sprechskript, Demo-Abläufe, Plan B
@@ -95,7 +95,7 @@ und ein Wochenlimit. Ein paar Gewohnheiten helfen:
 - **Sonnet** als Standardmodell (`/model sonnet`), Opus nur wenn wirklich nötig.
 - Eine Übung = eine Session. Danach `/clear`, statt alten Kontext mitzuschleppen.
 - Gezielt mit `@datei` referenzieren statt «lies das ganze Projekt».
-- Jede Übung hat einen **Token-Tipp** und ist in höchstens etwa 8 Turns lösbar.
+- Jede Übung hat einen **Token-Tipp** und ist auf wenige Turns ausgelegt.
 - Limit erreicht? Mit dem Nachbarn pairen und mit `reset-exercise` auf den nächsten Stand springen.
 
 ## Weiterführend

@@ -42,8 +42,8 @@ Wer Übung 05 (Rewind) selbst ausprobieren will: in dieser Session bis dahin kei
    mkdir -p .claude/hooks && cp exercises/04-permissions-und-hooks/vorlage/format-edited-file.mjs .claude/hooks/
    ```
 6. Den Schutz-Hook von Claude bauen lassen (Prompt 3).
-7. Den Teil `hooks` der Vorlage in `.claude/settings.json` ergänzen, Claude mit `/exit` und
-   `claude -c` neu starten (Hooks werden beim Start geladen) und mit `/hooks` prüfen.
+7. Den Teil `hooks` der Vorlage in `.claude/settings.json` ergänzen und mit `/hooks` prüfen.
+   Claude erkennt die Änderung in der laufenden Session. Fehlen die Hooks: `/exit`, dann `claude -c`.
 8. Prompt 4 absetzen. Wer Zeit hat: Prompt 5 (optional).
 
 ```json
@@ -133,7 +133,8 @@ ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des
 - Exit-Code 2 in einem PreToolUse-Hook blockiert, stderr geht als Begründung an Claude.
   Andere Exit-Codes blockieren **nicht**.
 - Exec-Form (`command` + `args`) läuft ohne Shell. Darum funktioniert dieselbe Konfiguration auf macOS und Windows.
-- Debuggen: `claude --debug hooks` zeigt, welche Hooks mit welchem Input laufen.
+- Debuggen: `claude --debug` schreibt ein Log nach `~/.claude/debug/<session-id>.txt` (nicht ins Terminal).
+  In einer laufenden Session schaltet `/debug` das Log ein.
 
 </details>
 
