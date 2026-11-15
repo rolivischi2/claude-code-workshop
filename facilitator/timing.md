@@ -20,6 +20,8 @@ Stand 2026-11-11, nach dem Feedback zur Präsentation: Übung 02 übernimmt den 
 ist eine Demo am Beamer (5' → 2'). Die gewonnenen 10 Minuten gehen an vier Teamfragen (je 3'), der Abschluss gibt
 2 Minuten ab. **Dieser Plan ist gerechnet, nicht gestoppt.** Er hat keine Reserve.
 
+Zeit pro Folie, alle 36 auf einer Seite: [laufzettel.md](laufzettel.md).
+
 ## Bilder zu den Inputs
 
 Die Folien aus `praesentation/` ersetzen Erklärzeit:

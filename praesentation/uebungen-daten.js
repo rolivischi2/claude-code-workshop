@@ -18,6 +18,7 @@ window.UEBUNGEN = [
       '`/model sonnet`: Sonnet für den ganzen Nachmittag. Opus verbraucht das Kontingent deutlich schneller.',
       '`/usage`: aktueller Verbrauch im 5-Stunden-Fenster und in der Woche.',
       '`/context`: Wie viel Kontext ist belegt, bevor ihr etwas gefragt habt? **Zahl notieren.**',
+      'Unter dem Eingabefeld steht **auto mode**: Claude fragt selten nach. **Shift+Tab** wechselt den Modus.',
       'Privatsphäre-Einstellung prüfen: claude.ai/settings/data-privacy-controls'
     ],
     prompts: [],
@@ -67,8 +68,8 @@ window.UEBUNGEN = [
       { label: 'Prompt 2 (wie in Teil A)', text: 'Füge einen Endpoint GET /api/guarantees/{grn} hinzu, der eine einzelne Garantie liefert.\nGibt es die Garantie nicht, soll ein 404 kommen.' },
       { label: 'Committen', text: 'git add CLAUDE.md && git commit -m "Add CLAUDE.md with team conventions"', kind: 'cmd' }
     ],
-    fertig: { text: 'Teil B erfüllt die Checkliste deutlich besser als Teil A. Die `CLAUDE.md` ist committet.', cmd: 'git log --oneline -1 -- CLAUDE.md' },
-    tipp: 'Achtet auf das Mapping: Ohne CLAUDE.md kopiert Claude das Muster aus `GuaranteeService`. Mit CLAUDE.md entsteht ein `GuaranteeMapper`.',
+    fertig: { text: 'Teil B erfüllt mehr Punkte der Checkliste als Teil A. Die `CLAUDE.md` ist committet.', cmd: 'git log --oneline -1 -- CLAUDE.md' },
+    tipp: 'Achtet auf Tests und Mapping. Folgt Claude beim Mapping dem bestehenden Code statt der CLAUDE.md? Dann konkurriert die Regel mit dem Muster im Code.',
     zusatz: '`/memory` öffnen: Welche Memory-Dateien sind geladen? Eine persönliche Regel gehört in `CLAUDE.local.md`.'
   },
   {
@@ -102,7 +103,7 @@ window.UEBUNGEN = [
       'Die Garantie muss den **neuen** Betrag decken. Der alte Betrag derselben Anmeldung zählt nicht mehr mit. Sonst 409 `TR-4091`.'
     ],
     schritte: [
-      'Neue Session. **Shift+Tab** drücken, bis unten «plan mode» steht.',
+      'Neue Session. **Shift+Tab** drücken, bis unten «plan mode» steht (vom auto mode aus dreimal).',
       'Prompt 1 absetzen und den Plan lesen.',
       'Plan mit der Checkliste prüfen und mit **einem** Prompt nachschärfen (Prompt 2).',
       'Plan als Spec-Datei ablegen lassen, erst dann umsetzen (Prompt 3).'
@@ -114,7 +115,7 @@ window.UEBUNGEN = [
       'Was gilt genau **am** Referenzbetrag?'
     ] },
     prompts: [
-      { label: 'Prompt 1 (im Plan Mode)', text: 'Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/README.md.\nZeig mir betroffene Dateien, die Logik der Prüfung gegen die Garantie und die geplanten Tests.' },
+      { label: 'Prompt 1 (im Plan Mode)', text: 'Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/feature.md.\nZeig mir betroffene Dateien, die Logik der Prüfung gegen die Garantie und die geplanten Tests.' },
       { label: 'Prompt 2 (Kritik, Beispiel)', text: 'Bitte überarbeite den Plan: Nutze exceedsReferenceAmount wieder, rechne den alten Betrag der\nAnmeldung aus den offenen Beträgen heraus und ergänze einen Test für einen Betrag, der die\nGarantie genau ausschöpft. Prüf dabei, ob exceedsReferenceAmount zu seinem Javadoc passt.' },
       { label: 'Prompt 3 (vor der Freigabe)', text: 'Speichere den finalen Plan als docs/specs/betrag-korrigieren.md und setze ihn dann um.' }
     ],
@@ -130,16 +131,17 @@ window.UEBUNGEN = [
     aufgabe: ['`.claude/settings.json` von Hand anlegen: `.env` lesen und `git push` verbieten, bei `rm` nachfragen.', 'Wer Übung 05 (Rewind) selbst ausprobieren will: bis dahin kein `/clear` in dieser Session.'],
     schritte: [
       '`.claude/settings.json` anlegen, vorerst nur der Teil `permissions` (rechts).',
-      'Claude neu starten: `/exit`, dann `claude -c`. Mit `/permissions` prüfen.',
-      'Wegwerf-Ordner anlegen: `mkdir -p scratch/wegwerf`',
+      'Mit `/permissions` prüfen. Fehlen die Regeln: `/exit`, dann `claude -c`.',
+      'Einmal **Shift+Tab**: vom auto mode zu «default». Dort fragt Claude vor Änderungen und Befehlen nach.',
+      'Wegwerf-Ordner anlegen: `mkdir -p scratch/wegwerf && touch scratch/wegwerf/notiz.txt`',
       'Prompt 1 und 2 absetzen. Was wird verweigert, wo fragt Claude nach?'
     ],
     code: [{ label: '.claude/settings.json (innerhalb von { … })', text: '"permissions": {\n    "deny": [\n      "Bash(git push *)",\n      "Read(./.env)",\n      "Read(./.env.*)"\n    ],\n    "ask": [\n      "Bash(rm *)"\n    ]\n  }' }],
     prompts: [
       { label: 'Prompt 1', text: 'Zeig mir den Inhalt der Datei .env. Falls das nicht geht, versuch es mit cat im Terminal.' },
-      { label: 'Prompt 2', text: 'Pushe den aktuellen Branch mit git push origin HEAD und lösche danach das Verzeichnis scratch/wegwerf.' }
+      { label: 'Prompt 2', text: 'Pushe den aktuellen Branch mit git push origin HEAD.\nLösche unabhängig davon das Verzeichnis scratch/wegwerf mit rm -r, auch wenn der Push nicht geht.' }
     ],
-    fertig: { text: 'Das Lesen von `.env` wird verweigert, auch über `cat`. `git push` wird verweigert. `rm` löst eine Rückfrage aus.' },
+    fertig: { text: 'Claude liest `.env` nicht. `git push` wird verweigert. `rm` löst eine Rückfrage aus.' },
     tipp: 'Verweigerte Tool-Aufrufe kosten fast nichts.'
   },
   {
@@ -162,7 +164,7 @@ window.UEBUNGEN = [
       { label: 'Prompt 4', text: 'Ergänze in app/backend/src/main/java/com/example/transit/declaration/FristFormatter.java\nein Javadoc für die Methode format.' },
       { label: 'Prompt 5', optional: true, text: 'Teste unseren Schutz-Hook: Versuche, in app/frontend/src/generated/api-types.ts dem OfficeDto\nein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des Hooks.' }
     ],
-    fertig: { text: 'Der Formatier-Hook hat `FristFormatter` formatiert. Mit Prompt 5: Der Edit ist blockiert worden.', cmd: 'cd app/backend && ./mvnw -q spotless:check' },
+    fertig: { text: '`FristFormatter` erscheint nicht mehr in der Liste von Spotless (keine Ausgabe). Mit Prompt 5: Der Edit ist blockiert worden.', cmd: 'cd app/backend && ./mvnw spotless:check | grep FristFormatter' },
     tipp: 'Ein Hook läuft ausserhalb des Modells. Formatieren per Hook kostet keine Tokens.',
     zusatz: 'Übung 05 (Rewind) selbst durchspielen: `exercises/05-rewind/README.md`. Sonst folgt sie als Demo.'
   },
@@ -174,7 +176,7 @@ window.UEBUNGEN = [
     schritte: [
       'Stand von Übung 04 committen (Befehl rechts).',
       '`/rewind` aufrufen (oder Esc Esc bei leerem Prompt). Den Punkt **vor** Prompt 3 aus Übung 04 wählen.',
-      '«Restore code and conversation» wählen.',
+      '«Restore code and conversation» wählen. Der alte Prompt steht wieder im Eingabefeld: leeren, nicht absenden.',
       'Vergleichen: `git status` und `git diff --stat`. Welche Dateien sind zurückgesetzt?',
       'Wieder nach vorne: `git restore .`'
     ],
@@ -191,16 +193,16 @@ window.UEBUNGEN = [
     ziel: 'Den Playwright-MCP-Server einbinden. Claude reproduziert einen Frontend-Fehler selbst im Browser, behebt ihn und prüft das Ergebnis.',
     aufgabe: ['Bug: Lehnt das Backend eine Transitanmeldung ab (409, Code `TR-4091`), zeigt das Formular **keine** Meldung.'],
     schritte: [
-      '`.mcp.json` im Repo-Root anlegen (Vorlage rechts).',
+      '`.mcp.json` im Repo-Root anlegen (Vorlage rechts). Nur Edge installiert: in `args` zusätzlich `"--browser", "msedge"`.',
       'Die App in zwei weiteren Terminals starten, falls sie nicht seit der Pause läuft (Befehle im Blatt).',
-      'Claude neu starten. Den Projekt-MCP-Server bestätigen. Mit `/mcp` prüfen: `playwright` ist verbunden.',
+      'Claude neu starten. Den Server ausdrücklich zulassen (nicht nur Enter). Mit `/mcp` prüfen: `playwright` ist verbunden.',
       'Prompt absetzen: reproduzieren, beheben, im Browser prüfen, e2e-Test ergänzen.'
     ],
     code: [{ label: '.mcp.json', text: '{\n  "mcpServers": {\n    "playwright": {\n      "command": "node",\n      "args": ["app/frontend/node_modules/@playwright/mcp/cli.js", "--isolated"]\n    }\n  }\n}' }],
     prompts: [
       { label: 'Prompt', text: 'Im Formular «Transitanmeldung erfassen» (http://localhost:4200) erscheint keine Meldung, wenn\ndas Backend die Anmeldung ablehnt (z.B. HTTP 409, Code TR-4091).\n1. Reproduziere das im Browser mit dem Playwright-MCP-Server: Zollstelle Genève-Routes →\n   «Transitanmeldung erfassen», Bestimmung Basel/Weil-Autobahn, Garantie Léman Fret Sàrl,\n   Abgabenbetrag 600, Freigabe morgen.\n2. Behebe es: Bei Fehlern vom Backend soll die Meldung aus dem Problem Detail (Feld detail)\n   im Formular erscheinen, mit einem allgemeinen deutschen Text als Rückfallebene.\n3. Verifiziere die Meldung im Browser.\n4. Ergänze einen Playwright-e2e-Test in app/frontend/e2e für diesen Fall.\nFertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.' }
     ],
-    fertig: { text: 'e2e-Tests grün, inklusive des neuen Tests für die 409-Meldung.', cmd: '(cd app/frontend && npm run e2e)' },
+    fertig: { text: 'Claude hat den Browser bedient (Fenster offen, `playwright`-Aufrufe im Verlauf). e2e-Tests grün, inklusive des neuen Tests für die 409-Meldung.', cmd: '(cd app/frontend && npm run e2e)' },
     tipp: 'Browser-Snapshots sind gross. Genaue Anweisungen sparen Klick-Runden.',
     zusatz: '`/mcp` und `/context` aufrufen: Was von Playwright ist geladen, was erst bei Bedarf?'
   }

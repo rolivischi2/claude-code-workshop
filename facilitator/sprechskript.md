@@ -3,6 +3,8 @@
 Zum Proben. Das Skript folgt der Präsentation in ihrer Reihenfolge: 7 Abschnitte, 36 Folien.
 Für jede Folie: Ziel, dann pro Tastendruck **was erscheint** und **was du sagst**, der Übergang und die Fragen,
 die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage, keine Texte zum Ablesen.
+Jede Überschrift nennt die Zeit auf der Workshop-Uhr (0:00 = Beginn) und das Budget der Folie. Alle Folien auf einer Seite:
+[laufzettel.md](laufzettel.md). Die Zeiten sind gerechnet. Die Modellzeiten stammen aus dem [Probelauf vom 14.11.](dry-run-2026-11-14.md), die Lesezeit der Menschen ist nicht gemessen.
 Am Schluss steht ein Glossar mit Definitionen in einem Satz.
 
 Die Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
@@ -47,13 +49,13 @@ rechts **nicht** «Beispieldaten» stehen.
 
 # ▶ Start (0:00, 10 Minuten)
 
-## Start 1 · Ablauf (1 Minute)
+## Start 1 · Ablauf · 0:00–0:01 (1 Min)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | Titel und Zeitplan des Nachmittags, pro Block die Übungen | «Zweieinhalb Stunden, eine Pause. Das Muster ist immer gleich: kurzer Input, dann macht ihr es selbst im Terminal. Die Übungsblätter liegen im Repo unter `exercises/`, und jede Übung steht auch hier auf dem Beamer. Am Ende jedes Blocks frage ich euch nach einem Beispiel aus euren Projekten.» |
 
-## Start 2 · Überblick (4 Minuten)
+## Start 2 · Überblick · 0:01–0:04 (3 Min)
 
 **Ziel:** Alle haben dasselbe Bild im Kopf: ein Modell in einer Schleife. Jede Übung bekommt einen Platz.
 
@@ -74,7 +76,7 @@ rechts **nicht** «Beispieldaten» stehen.
 - *Wer entscheidet, wann Schluss ist?* Das Modell: Es antwortet ohne weiteren Tool-Aufruf. Ihr könnt jederzeit mit Esc unterbrechen.
 - *Ist das bei anderen Coding-Agenten gleich?* Das Grundmuster ja. Unterschiede liegen bei Werkzeugen, Kontextverwaltung und Steuerung.
 
-## Start 3 · Setup (höchstens 1 Minute)
+## Start 3 · Setup · 0:04–0:05 (1 Min)
 
 **Ziel:** Alle wissen, wo das Repo liegt und wie sie später zu einem sauberen Stand kommen.
 
@@ -84,17 +86,17 @@ rechts **nicht** «Beispieldaten» stehen.
 
 Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 01 ein. Nicht darauf warten.
 
-## Start 4 · Übung 00 – Setup-Check (5 Minuten)
+## Start 4 · Übung 00 – Setup-Check · 0:05–0:10 (5 Min)
 
 **Ziel der Übung:** Alle arbeiten mit dem richtigen Login und mit Sonnet. Alle kennen die eigene Startbelegung des Kontexts.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Nur Slash-Commands, das kostet keine Tokens. Wichtig ist die Zahl aus `/context`. Schreibt sie auf.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Nur Slash-Commands. Wichtig ist die Zahl aus `/context`. Schreibt sie auf. Und schaut unter das Eingabefeld: Dort steht auto mode. Claude Code startet seit Kurzem so. Ein Klassifizierer prüft jede Aktion, darum fragt Claude selten nach. Was das heisst, schauen wir in Block B an.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Prüfen, ob alle auf Sonnet sind und ob jemand mit dem Login hängt.
+**Im Raum:** Prüfen, ob alle auf Sonnet sind und ob jemand mit dem Login hängt. Beim allerersten Start fragt Claude Code, ob man dem Ordner vertraut. Im Probelauf ist «No, exit» vorausgewählt gewesen: Wer nur Enter drückt, ist wieder draussen.
 
 **Abholen nach der Übung:** Nichts. Die Zahl aus `/context` kommt gleich in der Schätzfrage von A1.
 
@@ -102,14 +104,14 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 # A Kontext (0:10, 31 Minuten)
 
-## A1 · Kontext (5 Minuten)
+## A1 · Kontext · 0:10–0:15 (5 Min)
 
 **Ziel:** Kontext kostet in jedem Turn. Darum lohnt sich, was erst bei Bedarf geladen wird.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | (Start) | leerer Balken «Kontextfenster» | «Dieser Balken ist das Arbeitsgedächtnis des Modells. Was nicht drin ist, weiss es nicht. Was drin ist, bezahlt ihr.» |
-| `→` | **Schätzfrage:** «Wie viel Kontext ist in Übung 00 belegt gewesen …?» | Abstimmen lassen. Antwort zeigen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. |
+| `→` | **Schätzfrage:** «Wie viel Kontext ist in Übung 00 belegt gewesen …?» | Abstimmen lassen. Antwort zeigen: «Schaut auf eure Notiz.» Zwei, drei Zahlen zurufen lassen. Im Probelauf sind es rund 40k Tokens gewesen, davon 32k Werkzeuge des Systems. Wer Konnektoren im claude.ai-Konto hat, liegt höher. |
 | `→` | dunkle Segmente: System-Prompt, CLAUDE.md, Beschreibungen | «Das ist belegt, bevor ihr ein Wort tippt: System-Prompt und Werkzeuge, eure CLAUDE.md, die Beschreibungen der Skills, die Namen der MCP-Tools. Das Bild ist ein Schema, eure echte Zahl ist die aus `/context`.» |
 | `→` | Turn 1: kleines graues, grosses ockerfarbenes Segment | «Erster Turn. Euer Prompt ist winzig. Gross ist, was Claude dafür *liest*: Dateien, Suchergebnisse, Testausgaben. Tool-Ergebnisse sind fast immer der grösste Posten.» |
 | `→` | Balken wächst, darunter «Turn 1/2/3 sendet» | «Und jetzt der Punkt, den viele unterschätzen: Jeder Turn schickt *alles Bisherige* wieder mit. Der Prompt-Cache macht den unveränderten Anfang billiger, aber nicht kleiner. Darum der Token-Tipp auf den Blättern: Kritik in einem Prompt sammeln statt in fünf.» |
@@ -128,7 +130,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 - *Wann CLAUDE.md, wann Skill?* Immer gültig und kurz: CLAUDE.md. Nur für bestimmte Aufgaben und länger: Skill.
 - *Woher weiss Claude, wann ein Skill passt?* Aus der `description` im Kopf der `SKILL.md`. Darum ist dieser eine Satz das Wichtigste am Skill.
 
-## A2 · Übung 01 A – ohne CLAUDE.md (7 Minuten)
+## A2 · Übung 01 A – ohne CLAUDE.md · 0:15–0:22 (7 Min)
 
 **Ziel der Übung:** Sehen, was Kontext kostet. Und sehen, was Claude ohne Projektregeln baut.
 
@@ -142,7 +144,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 **Abholen nach der Übung:** Noch nichts. Direkt weiter zu Teil B.
 
-## A3 · Übung 01 B – mit CLAUDE.md (8 Minuten)
+## A3 · Übung 01 B – mit CLAUDE.md · 0:22–0:30 (8 Min)
 
 **Ziel der Übung:** Derselbe Prompt, diesmal mit Teamkonventionen in der CLAUDE.md.
 
@@ -152,11 +154,11 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Auf das Mapping hinweisen: Ohne CLAUDE.md kopiert Claude das Muster aus `GuaranteeService`, mit CLAUDE.md entsteht ein `GuaranteeMapper`.
+**Im Raum:** Der sichere Unterschied sind die Tests: Ohne CLAUDE.md fehlen sie, mit ihr entstehen Service-Test und MockMvc-Test. Beim Mapping ist es offen. Im Probelauf ist **kein** `GuaranteeMapper` entstanden: Claude hat sich ausdrücklich am bestehenden `GuaranteeService` orientiert. Nicht versprechen, sondern fragen.
 
-**Abholen nach der Übung:** «Was ist bei euch anders gewesen als in Teil A?» Zwei, drei Stimmen.
+**Abholen nach der Übung:** «Was ist bei euch anders gewesen als in Teil A?» Zwei, drei Stimmen. Dann: «Bei wem gibt es einen Mapper, bei wem nicht?» Die Pointe: Eine Regel in der CLAUDE.md konkurriert mit den Mustern im Code. Soll sie gewinnen, muss sie das sagen.
 
-## A4 · Übung 02 – Skills (8 Minuten)
+## A4 · Übung 02 – Skills · 0:30–0:38 (8 Min)
 
 **Ziel der Übung:** Einen fertigen Skill «Neuer REST-Endpoint nach Teamstandard» übernehmen und prüfen, ob Claude ihn von sich aus lädt.
 
@@ -170,7 +172,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 **Abholen nach der Übung:** «Bei wem hat Claude den Skill von selbst geladen? Woran habt ihr es gesehen?»
 
-## A5 · Teamfrage (3 Minuten)
+## A5 · Teamfrage · 0:38–0:41 (3 Min)
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
@@ -182,59 +184,61 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 # B Steuerung (0:41, 40 Minuten, danach Pause)
 
-## B1 · Leitplanken (4 Minuten)
+## B1 · Leitplanken · 0:41–0:45 (4 Min)
 
 **Ziel:** Jeder Tool-Aufruf läuft durch dieselben Tore. Eine Regel ist eine Garantie, eine Anweisung in der CLAUDE.md nur eine Bitte.
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
-| (Start) | sechs Tore in einer Reihe | «Ihr erinnert euch: Das Modell schlägt vor, die Harness führt aus. Dazwischen liegen diese Tore, in dieser Reihenfolge.» |
+| (Start) | sechs Tore in einer Reihe | «Ihr erinnert euch: Das Modell schlägt vor, die Harness führt aus. Dazwischen liegen diese Tore, in dieser Reihenfolge. Ihr habt es gemerkt: Claude hat euch bisher kaum etwas gefragt. Das ist der auto mode. Ein zweites Modell prüft jede Aktion und hält nur an, wenn etwas über euren Auftrag hinausgeht. Eure eigenen Regeln gelten trotzdem, in jedem Modus.» |
 | `→` | `Edit FristFormatter.java` läuft grün durch | «Ein harmloser Edit. Der PreToolUse-Hook hat nichts dagegen, keine deny-Regel, keine ask-Regel, erlaubt. Das Tool läuft. Und danach formatiert der PostToolUse-Hook genau diese eine Datei. Das kostet keinen einzigen Token.» |
 | `→` | **Schätzfrage:** allow im Projekt, deny beim User | Abstimmen. Antwort zeigen: «deny. Geprüft wird immer deny, dann ask, dann allow, über alle Ebenen hinweg.» |
 | `→` | `Read .env` bleibt rot bei deny stehen | «Darum ist deny die verlässlichste Regel, die ihr habt. In Übung 04 sperrt ihr damit `.env` und `git push`.» |
 | `→` | `Edit src/generated/…` bleibt beim Hook stehen | «Für alles, was sich nicht als Muster schreiben lässt, gibt es Hooks: ein Skript von euch. Endet es mit Exit-Code 2, ist der Aufruf blockiert, und die Begründung geht zurück an Claude. Die Regeln werden dann gar nicht mehr gefragt.» |
-| `→` | `rm -r scratch/wegwerf` hält bei ask | «Und ask heisst: Claude hält an und fragt euch. Für alles, was selten und heikel ist.» |
+| `→` | `rm -r scratch/wegwerf` hält bei ask | «Und ask heisst: Claude hält an und fragt euch, auch im auto mode. Für alles, was selten und heikel ist. Noch etwas zum Eingabefeld: Nach einer Antwort steht dort oft ein grauer Vorschlag für den nächsten Prompt. Das ist nur ein Vorschlag. Nach einer verweigerten Aktion nicht übernehmen.» |
 
 **Übergang:** «Übung 03 zuerst: Plan Mode. Da lernt ihr die billigste Leitplanke überhaupt, nämlich erst denken lassen, dann schreiben lassen. Rewind, das Netz darunter, zeige ich euch nach Übung 04.»
 
 **Häufige Fragen**
 
-- *Welche Permission-Modi gibt es?* default (fragt nach), acceptEdits (Datei-Edits ohne Rückfrage), plan (nur lesen und planen), auto, dontAsk und bypassPermissions. Shift+Tab schaltet durch default, acceptEdits und plan.
+- *Welche Permission-Modi gibt es?* auto (Start, ein Klassifizierer prüft jede Aktion), default (fragt nach), acceptEdits (Datei-Edits ohne Rückfrage), plan (nur lesen und planen), dazu dontAsk und bypassPermissions. Shift+Tab geht von auto zu default, dann acceptEdits, dann plan, am Schluss wieder auto.
+- *Wie stelle ich den Startmodus ein?* Mit `permissions.defaultMode` in den Settings oder mit `claude --permission-mode`. `auto` in den Projekt-Settings wird ignoriert, ein Repo kann den Modus also nicht lockern.
+- *Wie schalte ich die grauen Vorschläge aus?* In `/config` «Prompt suggestions» ausschalten. Übernommen wird ein Vorschlag mit Tab oder Pfeil rechts, dann Enter.
 - *Kann ein Hook eine deny-Regel aushebeln?* Nein. Deny- und ask-Regeln werden auch dann noch geprüft, wenn ein Hook «erlauben» zurückgibt.
 - *Was passiert bei einem anderen Exit-Code als 2?* Der Aufruf läuft weiter, die erste Zeile von stderr erscheint als Hinweis. Nur 2 blockiert.
 - *Ist deny eine Sicherheitsgrenze?* Nein, eine Leitplanke. Ein Skript, das die Datei selbst öffnet, kommt daran vorbei. Für harte Grenzen gibt es die Bash-Sandbox und Managed Settings.
 - *Welche Settings-Datei gewinnt?* Von oben nach unten: Managed, Kommandozeile, `settings.local.json`, `settings.json` im Projekt, User. Listen wie `permissions.allow` werden zusammengeführt.
 - *Warum Hooks als Node-Skript?* Dieselbe Konfiguration läuft auf macOS und Windows, weil keine Shell dazwischen ist.
 
-## B2 · Übung 03 – Plan Mode (15 Minuten)
+## B2 · Übung 03 – Plan Mode · 0:45–1:00 (15 Min)
 
 **Ziel der Übung:** Ein Feature zuerst planen lassen, den Plan kritisch prüfen und erst dann umsetzen.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Erst planen lassen, dann den Plan kritisieren, dann umsetzen. Sammelt eure Kritik in einem Prompt: Jeder Turn schickt den ganzen Kontext nochmals.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Erst planen lassen, dann den Plan kritisieren, dann umsetzen. In den Plan Mode kommt ihr mit Shift+Tab, vom auto mode aus dreimal. Sammelt eure Kritik in einem Prompt: Jeder Turn schickt den ganzen Kontext nochmals.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Das ist die grösste Code-Übung. Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen.
+**Im Raum:** Das ist die grösste Code-Übung (im Probelauf rund 3 Minuten Modellzeit, davon 2 für die Umsetzung). Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen. Der erste Plan ist oft schon gut. Dann sollen sie einen Punkt suchen, den sie anders wollen, und ihn mit Prompt 2 verlangen. Beim Freigeben heissen die Optionen «Yes, and use auto mode», «Yes, manually approve edits» und «No, keep planning».
 
 **Abholen nach der Übung:** «Was habt ihr am Plan geändert, bevor Code entstanden ist?»
 
-## B3 · Übung 04 A – Permissions (6 Minuten)
+## B3 · Übung 04 A – Permissions · 1:00–1:06 (6 Min)
 
 **Ziel der Übung:** Festlegen, was Claude in diesem Projekt nie darf und wo es nachfragen muss.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr schreibt deny- und ask-Regeln und probiert aus, ob sie halten. Ein verweigerter Aufruf kostet fast nichts.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr schreibt deny- und ask-Regeln und probiert aus, ob sie halten. Dann drückt ihr einmal Shift+Tab, vom auto mode zu default. Dort fragt Claude vor jeder Änderung nach. So seht ihr beides: die Rückfragen des Modus und eure Regeln. Ein verweigerter Aufruf kostet fast nichts.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Bei wem eine Regel nicht greift: Schreibweise des Musters und die Settings-Datei prüfen.
+**Im Raum:** Bei wem eine Regel nicht greift: Schreibweise des Musters und die Settings-Datei prüfen. Bei Prompt 1 versucht Claude den Umweg über `cat` oft gar nicht und lehnt selbst ab. Das ist in Ordnung, die Regel hätte ihn blockiert. Kommt bei Prompt 2 keine Rückfrage zu `rm`: Liegt die Datei `notiz.txt` im Ordner? Ohne sie nimmt Claude `rmdir`, und die Regel greift nicht.
 
 **Abholen nach der Übung:** Noch nichts. Direkt weiter zu Teil B.
 
-## B4 · Übung 04 B – Hooks (9 Minuten)
+## B4 · Übung 04 B – Hooks · 1:06–1:15 (9 Min)
 
 **Ziel der Übung:** Zwei Hooks einbinden: Einer formatiert nach jedem Edit die geänderte Datei, einer blockiert Edits an generiertem Code.
 
@@ -244,11 +248,11 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Die Hooks kommen aus der Vorlage, hier wird kaum iteriert. Prompt 5 (der Test des blockierenden Hooks) ist freiwillig. Wer auch damit fertig ist, kann Übung 05 selbst durchspielen (Zusatzaufgabe).
+**Im Raum:** Die Hooks kommen aus der Vorlage, hier wird kaum iteriert. Geprüft wird nur, ob `FristFormatter` aus der Liste von Spotless verschwunden ist. Andere Dateien in der Liste stammen aus Übung 02 und 03, bevor es den Hook gab. Prompt 5 (der Test des blockierenden Hooks) ist freiwillig. Wer auch damit fertig ist, kann Übung 05 selbst durchspielen (Zusatzaufgabe).
 
 **Abholen nach der Übung:** «Wer hat Prompt 5 gemacht? Was hat Claude getan, nachdem der Hook blockiert hat?»
 
-## B5 · Rewind (1 Minute)
+## B5 · Rewind · 1:15–1:16 (1 Min)
 
 **Ziel:** Alle wissen vor der Demo, was ein Checkpoint ist und was `/rewind` zurücksetzt.
 
@@ -265,7 +269,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 - *Was erfasst ein Checkpoint nicht?* Dateien, die nur per Bash, von einem Subagent oder von aussen geändert worden sind. Darum ersetzt Rewind Git nicht.
 - *Wie lange bleiben Checkpoints?* Sie gehören zur Session und überleben ein `claude -c`. Laut Doku werden die letzten 100 behalten.
 
-## B6 · Demo 05 – Rewind (2 Minuten, du zeigst es)
+## B6 · Demo 05 – Rewind · 1:16–1:18 (2 Min, du zeigst es)
 
 **Ziel:** Alle haben `/rewind` einmal gesehen. Wer will, macht es mit dem Übungsblatt selbst.
 
@@ -274,27 +278,27 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
 | (Start) bis zweimal `→` | Schritte und der Commit-Befehl | «Das zeige ich euch, ihr müsst nichts tippen.» Ins Terminal wechseln. `z` startet die Uhr. |
-| im Terminal | | Committen. `/rewind`, den Punkt vor Prompt 3 wählen, «Restore code and conversation». Dann `git status` und `git diff --stat` zeigen: «Der Schutz-Hook ist weg, weil Claude ihn geschrieben hat. Der Formatier-Hook ist noch da, den habe ich mit `cp` kopiert.» `git restore .` holt den Stand zurück. |
+| im Terminal | | Committen. `/rewind`, den Punkt vor Prompt 3 wählen, «Restore code and conversation». Danach steht Prompt 3 wieder im Eingabefeld: leeren, **nicht** Enter drücken. Dann `git status` und `git diff --stat` zeigen: «Der Schutz-Hook ist weg, weil Claude ihn geschrieben hat. Der Formatier-Hook ist noch da, den habe ich mit `cp` kopiert.» `git restore .` holt den Stand zurück. |
 
 **Wenn die Demo hängt:** abbrechen, die Folie B5 trägt den Inhalt.
 
-## B7 · Teamfrage (3 Minuten)
+## B7 · Teamfrage · 1:18–1:21 (3 Min)
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
 | (Start) | Frage, drei Stichworte, Uhr mit 3 Minuten | «Welche Datei oder welcher Befehl in eurem Projekt braucht eine Deny-Regel oder einen Hook?» `z` startet die Uhr. Nachfragen: «Reicht dort eine Rückfrage, oder muss es verboten sein?» |
 
-## B8 · Pause (1:21, 10 Minuten)
+## B8 · Pause · 1:21–1:31 (10 Min)
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Uhr mit 10 Minuten, die zwei Befehle zum Starten der App | «Bevor ihr aufsteht: Startet die App in zwei weiteren Terminals, die Befehle stehen hier. Sie fährt während der Pause hoch, Übung 06 braucht sie.» Kurz warten, bis die meisten getippt haben. `z` startet die Uhr. |
+| (Start) | Uhr mit 10 Minuten, die zwei Befehle zum Starten der App | «Bevor ihr aufsteht: Startet die App in zwei weiteren Terminals, die Befehle stehen hier. Sie fährt während der Pause hoch, Übung 06 braucht sie.» Kurz warten, bis die meisten getippt haben. `z` startet die Uhr. Und: «Wer in Übung 04 zu default gewechselt hat, kann mit Shift+Tab zurück in den auto mode.» |
 
 ---
 
 # C MCP (1:31, 23 Minuten)
 
-## C1 · MCP (3 Minuten)
+## C1 · MCP · 1:31–1:34 (3 Min)
 
 **Ziel:** MCP ist ein Stecker, kein Produkt. Und: Ein Agent, der sein Ergebnis sieht, braucht weniger Kontrolle.
 
@@ -316,21 +320,21 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 - *Brauche ich MCP, wenn es ein CLI gibt?* Oft nicht. Ein gutes CLI über Bash reicht häufig und kostet weniger Kontext. MCP lohnt sich bei strukturierten Daten, Anmeldung und geteilten Diensten.
 - *Warum `node` statt `npx` in der Vorlage?* Es nutzt das bereits installierte Paket, funktioniert offline und auf Windows ohne Umweg.
 
-## C2 · Übung 06 – Browser über MCP (17 Minuten)
+## C2 · Übung 06 – Browser über MCP · 1:34–1:51 (17 Min)
 
 **Ziel der Übung:** Den Playwright-MCP-Server einbinden. Claude reproduziert einen Frontend-Fehler selbst im Browser, behebt ihn und prüft das Ergebnis.
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr tragt den Server in `.mcp.json` ein, startet Claude neu und bestätigt den Server. Dann ein Prompt: reproduzieren, beheben, im Browser prüfen, Test ergänzen.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr tragt den Server in `.mcp.json` ein, startet Claude neu und lasst den Server zu. Lest den Dialog, drückt nicht einfach Enter. Der Server steuert euren installierten Chrome. Wer nur Edge hat, ergänzt die zwei Wörter, die auf der Folie stehen. Dann ein Prompt: reproduzieren, beheben, im Browser prüfen, Test ergänzen.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Häufigste Hänger: Claude nicht neu gestartet, Server nicht bestätigt (`/mcp` muss `playwright` als verbunden zeigen), App läuft nicht. Browser-Snapshots sind gross: genaue Anweisungen sparen Klick-Runden.
+**Im Raum:** Häufigste Hänger: Claude nicht neu gestartet, Server nicht zugelassen (`/mcp` muss `playwright` als verbunden zeigen; im Probelauf ist im Dialog «Continue without using this MCP server» vorausgewählt gewesen), App läuft nicht, weder Chrome noch Edge installiert. Ohne Browser weicht Claude auf einen e2e-Test aus: Die Tests werden grün, aber das Browserfenster ist nie aufgegangen. Darauf achten. Browser-Snapshots sind gross: genaue Anweisungen sparen Klick-Runden.
 
 **Abholen nach der Übung:** «Hat Claude den Fehler selbst gesehen? Woran habt ihr das gemerkt?»
 
-## C3 · Teamfrage (3 Minuten)
+## C3 · Teamfrage · 1:51–1:54 (3 Min)
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
@@ -358,7 +362,7 @@ nur, wenn du mit `q` wechselst (vorgesehen auf R3, R5, R6 und R7).
 **Zeit:** Der Abschnitt hat keine Reserve. Die Folie R8 «Test» ist neu dazugekommen und noch nicht gestoppt.
 Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
-## R1 · Korpus (0–1½')
+## R1 · Korpus · 1:54–1:55½ (1½ Min)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -368,7 +372,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
 **Fragen:** *Warum nicht einfach alles in den Kontext?* 267 Seiten bei jedem Turn mitzuschicken ist teuer und macht Antworten ungenauer. · *Sind die Dokumente im Repo?* Nein, sie werden von der BAZG-Seite geladen, die Liste steht in `rag/sources.yaml`.
 
-## R2 · Chunking (1½–3')
+## R2 · Chunking · 1:55½–1:57 (1½ Min)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -380,7 +384,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
 **Fragen:** *Wie gross soll ein Chunk sein?* Gross genug für einen vollständigen Gedanken, klein genug, dass fünf davon in den Kontext passen. · *Wozu Überlappung?* Damit ein Satz an der Schnittkante in mindestens einem Chunk ganz bleibt. · *Bringt das besseres Chunking etwas?* Hier ein bis zwei Fragen von 25. Das ist im Rauschen. Sag das so.
 
-## R3 · BM25 (3–5½'), Fragen S2, dann E1
+## R3 · BM25 · 1:57–1:59½ (2½ Min), Fragen S2, dann E1
 
 **Ziel:** Alle verstehen die drei Schritte der Stichwortsuche und sehen, warum sie bei S2 nichts findet.
 
@@ -407,7 +411,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 - *Woher kommen die Füllwörter?* Aus einer festen Stoppwortliste in `rag/indexer/store.py`.
 - *Sind die Zahlen echt?* Ja. Die Chunk-Zahlen stammen aus dem Index, die Scores aus SQLite FTS5.
 
-## R4 · Vektor-DB (5½–7½'), Frage S2
+## R4 · Vektor-DB · 1:59½–2:01½ (2 Min), Frage S2
 
 **Ziel:** Bevor die Karte kommt, sehen alle, was eigentlich gespeichert und verglichen wird: Zahlen pro Chunk.
 
@@ -429,7 +433,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 - *Was bedeuten die einzelnen Zahlen?* Einzeln nichts Lesbares. Erst das Muster aller 384 Zahlen zusammen beschreibt die Bedeutung.
 - *Woher kommen die Zahlen auf der Folie?* Es sind die echten ersten 16 Werte aus dem Index, die Ähnlichkeiten sind die echten Kosinus-Werte der Suche.
 
-## R5 · Vektorsuche (7½–11½'), Fragen S2, E1, C3
+## R5 · Vektorsuche · 2:01½–2:05½ (4 Min), Fragen S2, E1, C3
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -453,7 +457,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 - *Wo werden die Vektoren gespeichert?* In derselben SQLite-Datei, mit der Erweiterung sqlite-vec. Eine eigene Vektor-Datenbank braucht es bei dieser Grösse nicht.
 - *Hat das etwas mit dem Sprachmodell zu tun?* Nein. Embedding-Modelle sind eigene, viel kleinere Modelle. Claude kommt in diesem Teil gar nicht vor.
 
-## R6 · Hybrid (11½–13½'), Fragen S2, dann E1
+## R6 · Hybrid · 2:05½–2:07½ (2 Min), Fragen S2, dann E1
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -465,7 +469,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
 **Fragen:** *Warum 60?* Der Wert aus der Originalarbeit zu RRF von 2009. Er dämpft den Vorsprung der obersten Ränge und ist kaum empfindlich. · *Warum nicht die Scores addieren?* BM25-Scores und Kosinus-Werte haben verschiedene Skalen und sind nicht vergleichbar. · *Geht das besser?* Ja, etwa mit einem Reranker, der die Kandidaten nochmals bewertet. Das kostet Zeit und ein weiteres Modell.
 
-## R7 · Agent (13½–16'), Frage C3 oder M3
+## R7 · Agent · 2:07½–2:10 (2½ Min), Frage C3 oder M3
 
 **Ziel:** Alle sehen den Weg von der Frage zur Antwort: ein Punkt pro Turn. Ein Turn ist eine Antwort des Modells, also ein Tool-Aufruf oder am Schluss der Text.
 
@@ -480,7 +484,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
 **Fragen:** *Skaliert das?* Bei 16 Dateien mühelos. Bei Tausenden liefert Grep zu viele Treffer, Turns und Kontext steigen. Dort beginnt der Bereich von RAG. · *Kann man beides verbinden?* Ja: Der Index wird ein Werkzeug des Agenten, zum Beispiel über MCP. Im Repo liegt dafür `rag/mcp_server/`. · *Warum zählen Tokens bei Grep?* Jedes Suchergebnis landet im Kontext und wird in den folgenden Turns wieder mitgeschickt. · *Warum 3 Turns bei nur 2 Tool-Aufrufen?* Der letzte Turn ist die Antwort selbst. Darin ruft Claude kein Tool mehr auf.
 
-## R8 · Test (16–17')
+## R8 · Test · 2:10–2:11 (1 Min)
 
 **Ziel:** Bevor die Punkte kommen, wissen alle, was gemessen wird und was die vier Gruppen sind.
 
@@ -492,7 +496,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 
 **Fragen:** *Warum zählt ihr Dokumente und nicht Chunks?* Weil vorab nur festgelegt ist, in welchem Dokument die Antwort steht. Das ist grosszügig: Ein Treffer im richtigen Dokument kann an der falschen Stelle liegen. · *Was heisst der halbe Punkt?* Die Frage erwartet zwei Dokumente, gefunden ist eines.
 
-## R9 · Messung (17–19')
+## R9 · Messung · 2:11–2:13 (2 Min)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -511,7 +515,7 @@ Bei Zeitnot: `g` schaltet die Schätzfragen aus, R2 lässt sich überspringen.
 - *Warum ist BM25 bei Synonymen so gut (0.86)?* Gezählt wird auf Dokumentebene, und das grosse Dokument R-14-01 trifft fast immer irgendwo. Die Zahl ist geschönt, sag das offen.
 - *Warum ist das grosse Modell schlechter?* Das wissen wir nicht sicher. Gemessen ist: Es verfehlt mehr Fragen, deren Antwort in einem anderssprachigen Dokument steht. Genau darum misst man.
 
-## R10 · Fazit (19–20')
+## R10 · Fazit · 2:13–2:14 (1 Min)
 
 Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
@@ -533,7 +537,7 @@ Je `→` eine Kernaussage. Lies sie nicht vor, sondern sag je einen Satz dazu:
 
 **Plan B für den ganzen Abschnitt R:** Streikt der Browser, im Terminal `uv run search "Welche Währungsangabe gilt für Fakturen in britischen Pfund?" --mode bm25`, dann `--mode vector`, dann `uv run eval`.
 
-## R11 · Teamfrage (3 Minuten, fällt bei Zeitnot als erste weg)
+## R11 · Teamfrage · 2:14–2:17 (3 Min, fällt bei Zeitnot als erste weg)
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
@@ -555,7 +559,7 @@ was passiert ist. Die Teilnehmenden machen hier nichts selbst. Ablauf im Termina
 Mit D1 und D3 reicht es nur, wenn die Live-Demo bei rund 4 Minuten bleibt. Sonst geht die Zeit vom Abschluss ab.
 Noch nicht gestoppt.
 
-## D1 · Skalieren (rund 1½ Minuten)
+## D1 · Skalieren · 2:17–2:18½ (1½ Min)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -565,13 +569,13 @@ Noch nicht gestoppt.
 | `→` | Repo fächert sich in zwei Worktrees auf | «Zweiter Teil: zwei Sessions, zwei Features, gleichzeitig. Jede hat ihr eigenes Arbeitsverzeichnis und ihren eigenen Branch.» |
 | `→` | Merksatz | «Sie überschreiben sich nicht gegenseitig. Zusammengeführt wird mit Git.» Weiter mit `→` zur Folie «Demo». |
 
-## D2 · Demo (Folie bleibt stehen, Live-Demo rund 4 Minuten)
+## D2 · Demo · 2:18½–2:22½ (4 Min, Folie bleibt stehen, Live-Demo)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
 | `→` | Zwei Karten: Teil 1 Reviewer-Subagent, Teil 2 zwei Sessions in Worktrees, je mit «Achtet auf» | «Jetzt zeige ich das live. Achtet in Teil 1 auf `/context` vorher und nachher, in Teil 2 darauf, wo die Dateien liegen.» → **Ins Terminal wechseln:** Reviewer-Subagent (3'), dann `claude -w office-search` und `claude -w declaration-csv`, drittes Terminal `git worktree list`. Nicht abwarten, bis die Sessions fertig sind. Danach zurück zur Präsentation. |
 
-## D3 · Ablauf (nach der Demo, rund 1½ Minuten)
+## D3 · Ablauf · 2:22½–2:24 (1½ Min, nach der Demo)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -594,7 +598,7 @@ Noch nicht gestoppt.
 
 # ■ Schluss (2:24, 6 Minuten)
 
-## Schluss 1 · Rückblick
+## Schluss 1 · Rückblick · 2:24–2:29 (5 Min, mit Modellwahl und Teamregeln)
 
 | Taste | Auf dem Bild | Du sagst |
 |-------|--------------|----------|
@@ -602,7 +606,7 @@ Noch nicht gestoppt.
 
 Danach ohne Folienwechsel, kurz: Modell- und Aufwandswahl (`/model`, `/effort`), erste Teamregeln (Review-Pflicht, Umgang mit Kunden- und Projektdaten, gemeinsame `CLAUDE.md` und `settings.json`). Dann `→` zum Ausblick.
 
-## Schluss 2 · Ausblick (1 Minute)
+## Schluss 2 · Ausblick · 2:29–2:30 (1 Min)
 
 **Ziel:** Alle wissen, dass es Remote Control und Cloud-Sessions gibt und wo sie nachlesen. Keine Demo.
 

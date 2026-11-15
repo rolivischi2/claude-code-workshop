@@ -26,7 +26,8 @@ curl -fsSL https://claude.ai/install.sh | bash        # macOS / Linux / WSL
 irm https://claude.ai/install.ps1 | iex               # Windows PowerShell
 ```
 
-Dann im Repo `claude` starten und mit eurem **claude.ai-Konto (Pro reicht)** einloggen:
+Dann im Repo `claude` starten. Beim ersten Start fragt Claude Code, ob ihr dem Ordner vertraut: Dialog lesen
+und bestätigen, nicht blind Enter drücken. Danach mit eurem **claude.ai-Konto (Pro reicht)** einloggen:
 
 ```
 /login      → «Claude account with subscription» wählen

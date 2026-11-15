@@ -34,11 +34,17 @@
 | Problem | Übung | Lösung |
 |---------|-------|--------|
 | Port 8080 belegt | 06 | Alten Backend-Prozess beenden (`lsof -i :8080` bzw. `netstat -ano \| findstr 8080`) |
-| Playwright MCP startet nicht | 06 | Kein Chrome? `"--browser", "msedge"` in `.mcp.json`. Im Devcontainer `"--headless"` ergänzen. `/mcp` zeigt den Fehler. |
+| Playwright MCP startet nicht | 06 | Kein Chrome? `"--browser", "msedge"` in `.mcp.json`. Im Devcontainer `"--headless"` ergänzen. `/mcp` zeigt den Fehler. Weder Chrome noch Edge: zu zweit an einem Laptop. |
+| Tests grün, aber kein Browserfenster | 06 | Claude ist auf einen e2e-Test ausgewichen, MCP ist nicht genutzt worden. `/mcp` prüfen, Server zulassen, Prompt nochmals. |
+| Keine Rückfrage bei `rm` | 04 | Ordner leer? Dann nimmt Claude `rmdir`. `touch scratch/wegwerf/notiz.txt`, Prompt 2 nochmals. |
+| `spotless:check` bleibt rot | 04 | Normal, wenn in 02 und 03 Dateien ohne Hook entstanden sind. Massgeblich: `FristFormatter` steht nicht mehr in der Liste. |
+| Claude fragt nie nach | alle | auto mode ist der Startmodus. Einmal Shift+Tab wechselt zu default. deny- und ask-Regeln gelten in jedem Modus. |
+| Grauer Vorschlag im Eingabefeld | alle | Nur ein Vorschlag (Tab übernimmt ihn). Nach einer verweigerten Aktion nicht übernehmen. Ausschalten: `/config`, «Prompt suggestions». |
+| Nach `/rewind` läuft der alte Prompt nochmals | 05 | Der Prompt steht nach dem Rewind wieder im Eingabefeld. Vor dem Weitertippen leeren. |
 | e2e-Test flaky | 06 | Angular läuft zoneless: Im Test auf sichtbare Inhalte warten, bevor Felder gefüllt werden |
 | Hook läuft nicht | 04 | `/hooks` prüfen. JSON in `settings.json` valide? Log mit `/debug` oder `claude --debug` (`~/.claude/debug/<session-id>.txt`). Sonst Session neu starten. |
 | Hook: `spawnSync mvnw.cmd EINVAL` | 04 | Windows braucht `shell: true` für `.cmd` (im Referenz-Hook gelöst) |
 | `/rewind` zeigt nichts | 05 | Andere Session als in 04 (z.B. nach `/clear`). Dann direkt mit Git zeigen. |
-| Projekt-MCP-Server erscheint nicht | 06 | Nicht bestätigt? `claude mcp reset-project-choices`, Session neu starten |
+| Projekt-MCP-Server erscheint nicht | 06 | Im Dialog nur Enter gedrückt? Dann ist er abgelehnt. `claude mcp reset-project-choices`, Session neu starten, Server zulassen |
 | TR-4091 kommt nicht (mehr) | 06 | Garantie G3 schon ausgeschöpft oder Backend neu gestartet? Mit Betrag 999999 auslösen, das ist immer zu hoch. |
 | Teilnehmer hängt hinterher | alle | `scripts/reset-exercise.sh NN` (sichert eigene Änderungen per `git stash`) |

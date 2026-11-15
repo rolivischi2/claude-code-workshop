@@ -62,7 +62,7 @@ Die `.env` enthält nur Fake-Werte. Schützt sie in Übung 04 trotzdem so, als w
 | Ihr seid … | Dann lest … |
 |------------|-------------|
 | Teilnehmende | [SETUP.md](SETUP.md), dann am Nachmittag die Blätter unter [exercises/](exercises/) |
-| Moderation (den Workshop selbst halten) | [facilitator/masterplan.md](facilitator/masterplan.md) als Einstieg, dann das [Sprechskript](facilitator/sprechskript.md) (Folie für Folie: was erscheint, was gesagt wird, häufige Fragen), den [Zeitplan](facilitator/timing.md) und die [Demo-Abläufe](facilitator/demo-scripts.md) |
+| Moderation (den Workshop selbst halten) | [facilitator/masterplan.md](facilitator/masterplan.md) als Einstieg, dann das [Sprechskript](facilitator/sprechskript.md) (Folie für Folie: was erscheint, was gesagt wird, häufige Fragen), den [Laufzettel](facilitator/laufzettel.md) (alle Folien mit Zeit auf einer Seite), den [Zeitplan](facilitator/timing.md) und die [Demo-Abläufe](facilitator/demo-scripts.md) |
 | Neugierig auf die Folien | https://claude-code-workshop-black.vercel.app oder [praesentation/README.md](praesentation/README.md) |
 | Neugierig auf das Suchexperiment (Block R) | [rag/README.md](rag/README.md) |
 

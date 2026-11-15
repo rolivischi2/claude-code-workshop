@@ -30,6 +30,8 @@ Tests aus und dauert mehrere Minuten). Windows: Die Befehle der Übungsblätter 
    - `/model sonnet`: Sonnet für den ganzen Nachmittag. Der Standard ist Opus, das braucht euer Kontingent deutlich schneller auf.
    - `/usage`: euer aktueller Verbrauch im 5-Stunden-Fenster und in der Woche.
    - `/context`: Wie viel Kontext ist belegt, **bevor** ihr etwas gefragt habt? Zahl notieren.
+   - Ein Blick unter das Eingabefeld: Claude Code startet im **auto mode**. Ein Klassifizierer prüft jede Aktion,
+     Rückfragen sind selten. **Shift+Tab** wechselt den Modus, das braucht ihr in Übung 03 und 04.
 2. Privatsphäre-Einstellung unter
    [claude.ai/settings/data-privacy-controls](https://claude.ai/settings/data-privacy-controls) bewusst prüfen.
 

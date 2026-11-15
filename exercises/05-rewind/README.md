@@ -19,9 +19,10 @@ Voraussetzung: dieselbe Session wie in Übung 04 (auch nach `claude -c`).
 1. Stand von Übung 04 sichern: `git add -A && git commit -m "Add formatting and protection hooks"`
 2. `/rewind` aufrufen (oder Esc Esc bei leerem Prompt) und den Punkt **vor** Prompt 3 aus Übung 04 (Schutz-Hook bauen) wählen.
 3. «Restore code and conversation» wählen.
-4. Im Terminal vergleichen: `git status` und `git diff --stat`. Welche Dateien sind zurückgesetzt?
-5. Wieder nach vorne: `git restore .` holt den committeten Stand zurück.
-6. Kontrolle: `git status` ist sauber, `ls .claude/hooks` zeigt beide Skripte.
+4. Im Eingabefeld steht jetzt wieder der alte Prompt 3. **Nicht** mit Enter absenden, sondern das Feld leeren.
+5. Im Terminal vergleichen: `git status` und `git diff --stat`. Welche Dateien sind zurückgesetzt?
+6. Wieder nach vorne: `git restore .` holt den committeten Stand zurück.
+7. Kontrolle: `git status` ist sauber, `ls .claude/hooks` zeigt beide Skripte.
 
 ## Vorgeschlagene Prompts
 
@@ -29,7 +30,7 @@ Keine. Diese Übung läuft über `/rewind` und Git.
 
 ## Erfolgskriterium
 
-Nach Schritt 5 stimmt der Stand wieder mit dem Commit überein:
+Nach Schritt 6 stimmt der Stand wieder mit dem Commit überein:
 
 ```bash
 git status --short       # leer

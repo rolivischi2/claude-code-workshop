@@ -76,7 +76,7 @@ Gibt es die Garantie nicht, soll ein 404 kommen.
 
 ## Erfolgskriterium
 
-Das Ergebnis aus Teil B erfüllt die Checkliste deutlich besser als Teil A, und die `CLAUDE.md` ist committet:
+Das Ergebnis aus Teil B erfüllt mehr Punkte der Checkliste als Teil A (meist kommen die Tests dazu), und die `CLAUDE.md` ist committet:
 
 ```bash
 git log --oneline -1 -- CLAUDE.md
@@ -87,9 +87,13 @@ Ihr könnt erklären: Was kostet am meisten Kontext, eure Prompts, die Antworten
 <details>
 <summary>Hinweise</summary>
 
-- Schaut auf das Mapping: Der bestehende `GuaranteeService` baut sein DTO direkt. Ohne
-  `CLAUDE.md` kopiert Claude meist dieses Muster. Mit `CLAUDE.md` entsteht ein `GuaranteeMapper`.
-  Genau dafür ist sie da: Regeln, die man **nicht** aus dem Code ablesen kann.
+- Am deutlichsten ist der Unterschied bei den Tests: Ohne `CLAUDE.md` fehlen sie meist, mit ihr entstehen
+  Service-Test und MockMvc-Test. Dafür ist sie da: Regeln, die man **nicht** aus dem Code ablesen kann.
+- Schaut auch auf das Mapping: Der bestehende `GuaranteeService` baut sein DTO direkt. Die Konvention verlangt
+  eine `*Mapper`-Klasse. Manchmal entsteht ein `GuaranteeMapper`, manchmal folgt Claude dem bestehenden Code
+  und begründet das. Eine Regel in der `CLAUDE.md` konkurriert mit den Mustern im Code. Soll sie gewinnen,
+  muss sie das sagen («auch wenn bestehender Code es anders macht»).
+- `/init` liest auch die Übungsblätter und erwähnt sie vielleicht in der `CLAUDE.md`. Das dürft ihr streichen.
 - `/compact Behalte nur …` fasst den Verlauf mit Fokus zusammen. Claude kompaktiert auch
   automatisch, wenn das Fenster voll wird. Besser ist es, vorher selbst aufzuräumen.
 - `@` mit Tab vervollständigt Pfade. Die Datei landet direkt im Kontext, ohne Such-Turns.

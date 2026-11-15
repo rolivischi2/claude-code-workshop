@@ -15,7 +15,8 @@ blockiert Edits an generiertem Code.
 
 **Permissions:** Es braucht eine Balance zwischen Tempo und Kontrolle. Claude Code kennt
 Permission-Modi (Default, Accept Edits, Plan, Auto) und `allow`/`ask`/`deny`-Regeln in
-`settings.json`. Es gilt: **deny vor ask vor allow**.
+`settings.json`. Es gilt: **deny vor ask vor allow**. Claude Code startet im auto mode: Ein Klassifizierer
+prüft jede Aktion, Rückfragen sind selten. `deny`- und `ask`-Regeln gelten in **jedem** Modus.
 
 **Hooks:** Eine Anweisung in der CLAUDE.md ist eine Bitte, das Modell kann sie übersehen. Was
 garantiert passieren muss, gehört in einen deterministischen Mechanismus. Hooks sind Befehle,
@@ -30,21 +31,23 @@ Wer Übung 05 (Rewind) selbst ausprobieren will: in dieser Session bis dahin kei
 
 1. `.claude/settings.json` anlegen, **von Hand** (Vorlage unten, vorerst nur der Teil `permissions`).
    Sie gilt fürs ganze Team und wird committet.
-2. Claude neu starten (`/exit`, dann `claude -c`) und mit `/permissions` prüfen.
-3. Wegwerf-Ordner anlegen: `mkdir -p scratch/wegwerf`. Dann Prompt 1 und 2 absetzen und beobachten,
-   was verweigert wird und wo Claude nachfragt.
+2. Mit `/permissions` prüfen. Claude erkennt die Datei in der laufenden Session. Fehlen die Regeln: `/exit`, dann `claude -c`.
+3. Einmal **Shift+Tab** drücken: vom auto mode in den Modus «default». Dort fragt Claude vor jeder Änderung
+   und vor jedem Befehl nach. So seht ihr, was die Regeln zusätzlich leisten.
+4. Wegwerf-Ordner mit einer Datei anlegen: `mkdir -p scratch/wegwerf && touch scratch/wegwerf/notiz.txt`.
+   Dann Prompt 1 und 2 absetzen und beobachten, was verweigert wird und wo Claude nachfragt.
 
 **Teil B – Hooks**
 
-4. Vorher prüfen: `(cd app/backend && ./mvnw spotless:check)` meldet `FristFormatter.java`.
-5. Formatier-Hook aus der Vorlage übernehmen (er ist fertig, ihr sollt ihn lesen, nicht schreiben):
+5. Vorher prüfen: `(cd app/backend && ./mvnw spotless:check)` meldet `FristFormatter.java`.
+6. Formatier-Hook aus der Vorlage übernehmen (er ist fertig, ihr sollt ihn lesen, nicht schreiben):
    ```bash
    mkdir -p .claude/hooks && cp exercises/04-permissions-und-hooks/vorlage/format-edited-file.mjs .claude/hooks/
    ```
-6. Den Schutz-Hook von Claude bauen lassen (Prompt 3).
-7. Den Teil `hooks` der Vorlage in `.claude/settings.json` ergänzen und mit `/hooks` prüfen.
+7. Den Schutz-Hook von Claude bauen lassen (Prompt 3).
+8. Den Teil `hooks` der Vorlage in `.claude/settings.json` ergänzen und mit `/hooks` prüfen.
    Claude erkennt die Änderung in der laufenden Session. Fehlen die Hooks: `/exit`, dann `claude -c`.
-8. Prompt 4 absetzen. Wer Zeit hat: Prompt 5 (optional).
+9. Prompt 4 absetzen. Wer Zeit hat: Prompt 5 (optional).
 
 ```json
 {
@@ -88,7 +91,8 @@ Zeig mir den Inhalt der Datei .env. Falls das nicht geht, versuch es mit cat im 
 
 Prompt 2:
 ```
-Pushe den aktuellen Branch mit git push origin HEAD und lösche danach das Verzeichnis scratch/wegwerf.
+Pushe den aktuellen Branch mit git push origin HEAD.
+Lösche unabhängig davon das Verzeichnis scratch/wegwerf mit rm -r, auch wenn der Push nicht geht.
 ```
 
 Prompt 3:
@@ -113,20 +117,24 @@ ein optionales Feld description hinzuzufügen, und zeig mir die Rückmeldung des
 
 ## Erfolgskriterium
 
-- Das Lesen von `.env` wird **verweigert**, auch über `cat`. `git push` wird **verweigert**, `rm` löst eine **Rückfrage** aus.
-- Der Formatier-Hook hat `FristFormatter` formatiert:
+- Claude liest `.env` **nicht**. `git push` wird **verweigert**, `rm` löst eine **Rückfrage** aus.
+- Der Formatier-Hook hat `FristFormatter` formatiert. Die Datei erscheint nicht mehr in der Liste von Spotless:
   ```bash
-  cd app/backend && ./mvnw -q spotless:check     # grün
+  cd app/backend && ./mvnw spotless:check | grep FristFormatter     # keine Ausgabe
   ```
 - Optional, mit Prompt 5: Der Edit ist **blockiert** worden.
 
 <details>
 <summary>Hinweise</summary>
 
-- Read-Deny-Regeln blockieren auch `cat`, `head` und Ähnliches in Bash. **Nicht** blockiert
+- Oft versucht Claude den Umweg über `cat` gar nicht und lehnt selbst ab. Die Regel hätte ihn auch blockiert:
+  Read-Deny-Regeln gelten auch für `cat`, `head` und Ähnliches in Bash. **Nicht** blockiert
   ist z.B. ein Python- oder Node-Skript, das die Datei öffnet. Deny-Regeln sind eine
   Leitplanke, keine Sicherheitsgrenze. Für mehr gibt es die Bash-Sandbox und Managed Settings.
 - `Bash(git push *)` trifft `git -C . push` nicht.
+- Meldet `spotless:check` noch andere Dateien? Das sind Dateien, die Claude in Übung 02 und 03 geschrieben hat,
+  bevor es den Hook gab. Der Hook formatiert nur, was ab jetzt editiert wird.
+- Zurück in den auto mode: Shift+Tab weiterdrücken, bis unten wieder «auto mode» steht.
 - Was ihr mit «don't ask again» erlaubt, landet in `.claude/settings.local.json` (persönlich, nicht committet).
 - Lest `format-edited-file.mjs`: Warum nur die geänderte Datei? Ein `spotless:apply` übers
   ganze Projekt würde fremde Dateien anfassen und jeden Edit verlangsamen.

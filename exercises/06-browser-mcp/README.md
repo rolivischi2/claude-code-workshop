@@ -32,7 +32,8 @@ weniger Kontrolle durch euch.
    cd app/backend && ./mvnw -q spring-boot:run       # Windows: mvnw.cmd -q spring-boot:run
    cd app/frontend && npm start                       # http://localhost:4200
    ```
-3. Claude neu starten. Den Projekt-MCP-Server bestätigen, wenn gefragt. Mit `/mcp` prüfen: `playwright` ist verbunden.
+3. Claude neu starten. Claude Code fragt, ob es den Server aus `.mcp.json` verwenden darf: ausdrücklich zulassen,
+   nicht nur Enter drücken. Mit `/mcp` prüfen: `playwright` ist verbunden.
 4. Mit dem Prompt unten den Fehler reproduzieren, beheben und verifizieren lassen.
 
 ```json
@@ -46,7 +47,14 @@ weniger Kontrolle durch euch.
 }
 ```
 
-Kein Chrome installiert, aber Edge? Dann `"--browser", "msedge"` zu den `args` hinzufügen.
+Der Server steuert einen **installierten** Browser, in dieser Form Chrome. Habt ihr nur Edge (auf Windows
+vorinstalliert), nehmt diese Zeile für `args`:
+
+```json
+      "args": ["app/frontend/node_modules/@playwright/mcp/cli.js", "--isolated", "--browser", "msedge"]
+```
+
+Ohne Chrome und ohne Edge startet der Server nicht. Dann zu zweit an einem Laptop arbeiten.
 
 ## Vorgeschlagene Prompts
 
@@ -70,6 +78,9 @@ Fertig ist es, wenn `npm test` und `npm run e2e` in app/frontend grün sind.
 (cd app/frontend && npm run e2e)    # grün, inkl. neuem Test für die 409-Meldung
 (cd app/frontend && npm test)       # grün
 ```
+
+Und: Claude hat den Browser wirklich bedient. Ein Browserfenster ist aufgegangen, und im Verlauf stehen
+Aufrufe von `playwright`-Tools. Sind nur die Tests grün, hat Claude den Umweg über einen e2e-Test genommen.
 
 <details>
 <summary>Hinweise</summary>

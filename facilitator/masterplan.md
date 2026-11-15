@@ -258,8 +258,11 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 
 - [x] RAG-Fragen: keine fachliche Prüfung nötig (Entscheid Roland, 2026-11-11). Das Zollwissen wird im Workshop nicht vertieft
 - [ ] Quellenliste `rag/sources.yaml` prüfen
-- [ ] Dry-Run 00–06 mit Pro-Konto auf Sonnet, Turns und `/usage` in [timing.md](timing.md) eintragen
+- [x] Dry-Run 00–06 auf Sonnet (2026-11-14, simulierter Teilnehmer, Team-Konto): [dry-run-2026-11-14.md](dry-run-2026-11-14.md), Werte in [timing.md](timing.md)
+- [x] Befunde aus dem Dry-Run eingearbeitet (2026-11-15): auto mode als Startmodus, Übung 01 ohne Mapper-Versprechen, Übung 03 mit `feature.md`,
+      Übung 04 mit Wechsel zu default, `notiz.txt` und neuem Kriterium, Übung 05 und 06 mit den Stolperstellen, `angular.json` ohne Analytics-Frage
+- [ ] Zweiter Lauf für Übung 01 und 03 (Antworten streuen) und ein Lauf mit echtem **Pro**-Konto
 - [ ] `.ps1`-Skripte auf echtem Windows testen
 - [ ] Devcontainer einmal bauen (Codespaces oder Docker)
-- [ ] `/rewind`-Verhalten in `LOESUNG.md` von 05 und die Vorher/Nachher-Unterschiede in 01 im Dry-Run bestätigen
-- [ ] Generalprobe der 150' mit Uhr
+- [x] `/rewind`-Verhalten in `LOESUNG.md` von 05 im Dry-Run bestätigt. Vorher/Nachher in 01 nur teilweise (Tests ja, Mapper nein), Blatt angepasst
+- [ ] Generalprobe der 150' mit Uhr, Zeiten in [laufzettel.md](laufzettel.md) eintragen

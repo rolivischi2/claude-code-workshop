@@ -20,17 +20,12 @@ er ein dauerhaftes Zwischenergebnis.
 
 Wer bei einer Transitanmeldung einen falschen Abgabenbetrag erfasst hat, soll ihn korrigieren können.
 
-- `PUT /api/declarations/{mrn}/amount` mit `{ "amount": 1200.00 }` setzt den neuen Betrag und liefert die aktualisierte Anmeldung.
-- Nur Anmeldungen mit Status `OPEN` dürfen korrigiert werden, sonst 409 mit Code `TR-4092`.
-- Der Betrag muss grösser als 0 sein, sonst 400.
-- Die Garantie muss den **neuen** Betrag decken. Der **alte** Betrag derselben Anmeldung zählt
-  dabei nicht mehr zu den offenen Beträgen. Reicht die Garantie nicht, 409 mit Code `TR-4091`.
-  Die Meldung nennt den höchsten zulässigen neuen Betrag.
-- Eine Senkung des Betrags ist immer erlaubt.
+Die genauen Anforderungen stehen in [feature.md](feature.md). Prompt 1 verweist Claude auf diese Datei.
 
 Ablauf:
 
-1. Neue Session, **Shift+Tab** so oft drücken, bis unten «plan mode» steht (die Taste schaltet reihum durch die Modi).
+1. Neue Session, **Shift+Tab** so oft drücken, bis unten «plan mode» steht. Die Taste schaltet reihum durch die Modi,
+   vom auto mode aus sind es drei Tastendrücke.
 2. Prompt 1 absetzen und den Plan lesen.
 3. Plan mit der Checkliste unten kritisieren und mit **einem** Prompt nachschärfen (Prompt 2).
 4. Plan als Spec-Datei ablegen lassen und erst dann die Umsetzung freigeben (Prompt 3).
@@ -48,7 +43,7 @@ Ablauf:
 
 Prompt 1 (im Plan Mode):
 ```
-Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/README.md.
+Plane das Feature «Abgabenbetrag korrigieren» gemäss exercises/03-plan-mode/feature.md.
 Zeig mir betroffene Dateien, die Logik der Prüfung gegen die Garantie und die geplanten Tests.
 ```
 
@@ -76,8 +71,10 @@ Prüfung gefunden und mit Test behoben, umso besser.
 <details>
 <summary>Hinweise</summary>
 
-- Plan Mode verlassen: Beim Freigeben des Plans fragt Claude, wie es weitergehen soll
-  (z.B. mit «auto-accept edits»). Wieder hinein geht es mit Shift+Tab.
+- Plan Mode verlassen: Beim Freigeben des Plans fragt Claude, wie es weitergehen soll: «Yes, and use auto mode»,
+  «Yes, manually approve edits» oder «No, keep planning». Wieder hinein geht es mit Shift+Tab.
+- Erfüllt schon der erste Plan die ganze Checkliste? Dann sucht einen Punkt, den ihr anders wollt (Namen, Ort der
+  Logik, zusätzlicher Test), und verlangt ihn mit Prompt 2. Das Ziel ist, den Plan zu ändern, bevor Code entsteht.
 - Ein guter Plan ist überprüfbar: Dateien, Schritte, Tests. «Ich implementiere die Korrektur» ist kein Plan.
 - Aus Übung 02 gibt es bei euch bereits Code, der den offenen Betrag einer Garantie berechnet.
   Name und Ort können von der Referenzlösung abweichen. Der Plan soll **euren** Code wiederverwenden.
