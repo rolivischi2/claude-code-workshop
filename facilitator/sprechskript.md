@@ -65,7 +65,7 @@ Schätzfragen gibt es auf A1, B1, R3, R5, R7 und R9.
 | **[T2]** | Terminal links im Klon `demo-d` | Demo D, Teil 1 und Teil 2 links |
 | **[T3]** | Terminal rechts im Klon `demo-d` | Demo D, Teil 2 rechts |
 | **[T4]** | drittes Terminal im Klon `demo-d` | Demo D: `git worktree list` |
-| **[Editor]** | `facilitator/demo-scripts.md`, Abschnitt «Demo D» | daraus kopierst du die drei Prompts von Demo D |
+| **[Editor]** | dieses Skript (`facilitator/sprechskript.md`) im Editor, bei D2 unter «Die drei Prompts zum Kopieren» | daraus kopierst du die drei Prompts von Demo D |
 
 Dieses Skript und der [Laufzettel](laufzettel.md) liegen ausgedruckt oder auf einem zweiten Gerät neben dir, nicht auf dem Beamer.
 
@@ -96,7 +96,7 @@ und Demo D legt Worktrees und Branches an. Nach einer Probe die Ordner `demo-05`
 2. **[T1]** öffnen: `cd ../demo-05 && claude -c`. Der Verlauf von Übung 04 erscheint. Nichts tippen, Fenster offen lassen.
    Daneben **[T5]** öffnen: `cd ../demo-05`, sonst nichts. Dort tippst du in der Demo die Git-Befehle.
 3. **[T2]**, **[T3]**, **[T4]** öffnen, in jedem `cd ../demo-d`. [T2] und [T3] nebeneinander legen. Noch kein `claude` starten.
-4. **[Editor]** öffnen: `facilitator/demo-scripts.md`, zum Abschnitt «Demo D» scrollen.
+4. **[Editor]** öffnen: `facilitator/sprechskript.md`, nach «Die drei Prompts zum Kopieren» suchen (steht bei D2).
 5. **[Folien]** öffnen. `f` für Vollbild. Mit `o` die Übersicht öffnen, im Abschnitt R «BM25» wählen, Enter:
    Auf der Folie darf nirgends «Beispieldaten» stehen. Dann `Home`: Die Folie «Ablauf» steht.
 6. Beamer prüfen: Die Folie ist ganz sichtbar, die Fusszeile mit den Tasten ist lesbar.
@@ -113,6 +113,17 @@ und Demo D legt Worktrees und Branches an. Nach einer Probe die Ordner `demo-05`
 | Im Abschnitt R steht die falsche Frage | `q`, mit `↑` `↓` die Frage wählen, Enter. Die Folie beginnt wieder beim ersten Schritt. |
 | Eine Schätzfrage erscheint, die du nicht willst | Zweimal `→`, ohne abzustimmen. `g` schaltet alle Schätzfragen aus. |
 | Alles ist verstellt | Seite neu laden (Cmd+R, Windows: F5). Die Folie bleibt dieselbe, Uhren und Schätzfragen beginnen neu. Danach wieder `f`. |
+
+## Wenn die Zeit knapp wird
+
+Kontrollpunkte auf der Workshop-Uhr: **0:10** Block A · **0:41** Block B · **1:21** Pause · **1:31** Block C · **1:54** Block R · **2:17** Block D · **2:24** Schluss.
+Bist du an einem Kontrollpunkt hinten, kürzt du in dieser Reihenfolge:
+
+1. R11 weglassen, die Frage im Schluss stellen (3 Minuten).
+2. Eine weitere Teamfrage weglassen (je 3 Minuten), die von B zuletzt.
+3. In R die Schätzfragen mit `g` ausschalten (je rund 30 Sekunden) und R2 überspringen.
+4. D1 nur kurz zeigen oder D3 weglassen.
+5. Übung 03: Plan nur kritisieren und ablegen, Umsetzung mit `scripts/reset-exercise.sh 04` überspringen.
 
 ---
 
@@ -427,7 +438,7 @@ Erwartete Ausgabe in Schritt 8: `deleted: .claude/hooks/protect-generated.mjs` u
 
 1. [Folien] stehen lassen, die Uhr läuft für alle sichtbar.
 2. **[T2]**, **[T3]**, **[T4]** prüfen: Alle drei stehen im Ordner `demo-d` (`pwd`). Kein `claude` läuft.
-3. **[Editor]** prüfen: `demo-scripts.md` ist offen beim Abschnitt «Demo D».
+3. **[Editor]** prüfen: `sprechskript.md` ist offen bei «Die drei Prompts zum Kopieren».
 4. Laufzettel: Ist-Zeit eintragen. Bist du mehr als 5 Minuten hinten, R11 streichen.
 5. Zwei Minuten vor Ende durch den Raum: Bei wem zeigt `http://localhost:4200` die App noch nicht?
 
@@ -758,7 +769,7 @@ Die erste Kernaussage steht beim Ankommen. Dann dreimal `→`, je eine weitere. 
 
 **Form:** Drei Folien und eine Live-Demo. D1 erklärt das Konzept. D2 kündigt die Demo an und bleibt stehen,
 während du auf dein Terminal wechselst und den Bildschirm teilst. D3 zeigt nach der Demo als Animation,
-was passiert ist. Die Teilnehmenden machen hier nichts selbst. Ablauf im Terminal: `demo-scripts.md`, Demo D.
+was passiert ist. Die Teilnehmenden machen hier nichts selbst. Der Ablauf im Terminal steht Schritt für Schritt bei D2.
 
 **Zeit:** Das Budget ist 7 Minuten und ist für die Live-Demo allein geplant gewesen (3 + 4 Minuten).
 Mit D1 und D3 reicht es nur, wenn die Live-Demo bei rund 4 Minuten bleibt. Sonst geht die Zeit vom Abschluss ab.
@@ -778,7 +789,7 @@ Noch nicht gestoppt.
 
 ## D2 · Demo · 2:18½–2:22½ (4 Min, Folie bleibt stehen, Live-Demo)
 
-Die Prompts tippst du nicht, du kopierst sie aus **[Editor]** (`demo-scripts.md`, Abschnitt «Demo D»). Schau beim Start auf die Uhr: Nach 4 Minuten gehst du zurück zu [Folien], egal wie weit die Sessions sind.
+Die Prompts tippst du nicht, du kopierst sie aus **[Editor]** (die drei Blöcke unter der Tabelle). Schau beim Start auf die Uhr: Nach 4 Minuten gehst du zurück zu [Folien], egal wie weit die Sessions sind.
 
 | Schritt | Wo | Du tust | Du sagst |
 |---------|----|---------|----------|
@@ -792,6 +803,26 @@ Die Prompts tippst du nicht, du kopierst sie aus **[Editor]** (`demo-scripts.md`
 | 8 | [T3] | Aus [Editor] den Prompt «Rechts» kopieren (`Füge GET /api/declarations/export.csv …`), in [T3] einfügen, Enter. | «Rechts der CSV-Export. Beide arbeiten jetzt gleichzeitig.» |
 | 9 | **[T4]** | In [T4]: `git worktree list`, Enter. Dann `git branch`, Enter. | «Drei Arbeitsverzeichnisse, drei Branches, ein Repo. Keine Session sieht die Edits der anderen.» |
 | 10 | [Folien] | **Nicht warten, bis die Sessions fertig sind.** Cmd+Tab zurück zu [Folien]. | «Die lassen wir laufen. Zusammenführen ist normales Git.» |
+
+### Die drei Prompts zum Kopieren
+
+Teil 1, in [T2] (Schritt 3):
+
+```
+Nutze den reviewer-Subagent, um die Änderungen seit start/03 unter app/backend/src zu reviewen (git diff start/03 -- app/backend/src). Fasse sein Ergebnis in 5 Zeilen zusammen.
+```
+
+Links, in [T2] (Schritt 7):
+
+```
+Füge GET /api/offices?query=... hinzu (Suche im Namen, ohne Gross-/Kleinschreibung), mit Tests.
+```
+
+Rechts, in [T3] (Schritt 8):
+
+```
+Füge GET /api/declarations/export.csv hinzu (MRN, Route, Betrag, Status), mit Tests.
+```
 
 **Wenn es hängt:** Dauert der Reviewer in Schritt 3 länger als 2 Minuten: Esc, «das Ergebnis seht ihr gleich als Bild», weiter mit Schritt 5. Startet `claude -w` nicht: nur Schritt 9 zeigen, dann zurück zu [Folien]. D3 trägt den Inhalt auch ohne Demo.
 
