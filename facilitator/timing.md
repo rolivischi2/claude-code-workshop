@@ -47,20 +47,22 @@ Eine Schätzfrage kostet rund 30 Sekunden. `g` schaltet alle aus.
 
 ## Pro Übung: Aufwand
 
-Gemessen bei einem Dry-Run mit einem **Pro-Konto auf Sonnet**. Die Spalten «Turns» und «Nutzung»
-werden beim Dry-Run ausgefüllt. Alles über 8 Turns muss vereinfacht werden.
+Gemessen beim Dry-Run vom 2026-11-14 mit einem **Team-Konto auf Sonnet 5.5** (kein Pro-Konto zur Hand), simulierter
+Teilnehmer, Details in [dry-run-2026-11-14.md](dry-run-2026-11-14.md). «Turns» = abgesetzte Prompts. «Nutzung» = Tokens aus
+den Transkripten und API-Gegenwert, weil die `/usage`-Prozente die steuernde Session mitzählen. Alles über 8 Turns muss vereinfacht werden.
 
-| Übung | Zeitbudget | Turns (Dry-Run) | Nutzung 5h-Fenster (Dry-Run) | Bemerkung |
-|-------|-----------|-----------------|------------------------------|-----------|
-| 00 Setup-Check | 5' | zu messen | zu messen | nur Slash-Commands |
-| 01 Kontext und CLAUDE.md | 15' | zu messen | zu messen | 2 Feature-Prompts + `/init` |
-| 02 Skills | 8' | zu messen | zu messen | Skill übernehmen + 1 Feature-Prompt. Knapp, weil die Tests laufen müssen |
-| 03 Plan Mode | 15' | zu messen | zu messen | grösste Code-Übung |
-| 04 Permissions und Hooks | 15' | zu messen | zu messen | Hooks aus der Vorlage, kaum Iteration |
+| Übung | Zeitbudget | Turns (Dry-Run) | Nutzung (Dry-Run) | Bemerkung |
+|-------|-----------|-----------------|-------------------|-----------|
+| 00 Setup-Check | 5' | 0 | 0 Tokens | nur Slash-Commands. Startbelegung 40.1k |
+| 01 Kontext und CLAUDE.md | 15' | 3 + `/init` | 16 Aufrufe, 8.6k Output, ≈ 0.31 $ | 2 Feature-Prompts + `/init`. Mapper-Effekt blieb aus |
+| 02 Skills | 8' | 1 | 6 Aufrufe, 5.0k Output, ≈ 0.16 $ | Skill lud von selbst, Modellzeit 45 s |
+| 03 Plan Mode | 15' | 3 | 12 Aufrufe, 15.1k Output, ≈ 0.36 $ | grösste Code-Übung, Umsetzung 1:58 min |
+| 04 Permissions und Hooks | 15' | 4 (+1) | 12 Aufrufe, 4.7k Output, ≈ 0.15 $ | +1, weil Prompt 2 das `rm` nicht ausführt |
 | 05 Rewind | 2' Demo | – | – | nur der Facilitator, keine Modellnutzung |
-| 06 Browser über MCP | 17' | zu messen | zu messen | Browser-Snapshots sind teuer |
+| 06 Browser über MCP | 17' | 1 | 21 Aufrufe, 5.3k Output, ≈ 0.25 $ | Browser-Snapshots: höchster Cache-Read (1.1M). Ohne Chrome läuft MCP nicht |
 
 Ziel: Alle Übungen zusammen brauchen **deutlich weniger als ein 5-Stunden-Fenster** eines Pro-Kontos.
+Dry-Run: zusammen ≈ 1.20 $ API-Gegenwert. Das 5h-Fenster (Team) stieg von 3 % auf 13 %, inklusive der steuernden Session. Ziel erreicht.
 
 ## Puffer
 
