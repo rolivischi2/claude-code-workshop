@@ -260,7 +260,7 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 - [ ] Quellenliste `rag/sources.yaml` prüfen
 - [x] Dry-Run 00–06 auf Sonnet (2026-11-14, simulierter Teilnehmer, Team-Konto): [dry-run-2026-11-14.md](dry-run-2026-11-14.md), Werte in [timing.md](timing.md)
 - [x] Befunde aus dem Dry-Run eingearbeitet (2026-11-15): auto mode als Startmodus, Übung 01 ohne Mapper-Versprechen, Übung 03 mit `feature.md`,
-      Übung 04 mit Wechsel zu default, `notiz.txt` und neuem Kriterium, Übung 05 und 06 mit den Stolperstellen, `angular.json` ohne Analytics-Frage
+      Übung 04 mit Wechsel aus dem auto mode, `notiz.txt` und neuem Kriterium, Übung 05 und 06 mit den Stolperstellen, `angular.json` ohne Analytics-Frage
 - [x] Zweiter Lauf (2026-11-15): [dry-run-2026-11-15.md](dry-run-2026-11-15.md). Befunde eingearbeitet: «manual mode» statt «default», Übung 03 mit
       richtigen Optionsnamen, Umweg bei Prompt 3 und Grenzwert-Rückfrage, Übung 06 und `check-setup.sh` mit Chromium-Variante, Hinweis zu `/init` in 01
 - [ ] Ein Lauf mit echtem **Pro**-Konto

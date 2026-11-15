@@ -4,7 +4,7 @@ Zum Proben. Das Skript folgt der Präsentation in ihrer Reihenfolge: 7 Abschnitt
 Für jede Folie: Ziel, dann pro Tastendruck **was erscheint** und **was du sagst**, der Übergang und die Fragen,
 die am ehesten kommen. Die Sätze sind Vorschläge in deiner Tonlage, keine Texte zum Ablesen.
 Jede Überschrift nennt die Zeit auf der Workshop-Uhr (0:00 = Beginn) und das Budget der Folie. Alle Folien auf einer Seite:
-[laufzettel.md](laufzettel.md). Die Zeiten sind gerechnet. Die Modellzeiten stammen aus dem [Probelauf vom 14.11.](dry-run-2026-11-14.md), die Lesezeit der Menschen ist nicht gemessen.
+[laufzettel.md](laufzettel.md). Die Zeiten sind gerechnet. Die Modellzeiten stammen aus den Probeläufen vom [14.11.](dry-run-2026-11-14.md) und [15.11.](dry-run-2026-11-15.md), die Lesezeit der Menschen ist nicht gemessen.
 Am Schluss steht ein Glossar mit Definitionen in einem Satz.
 
 Die Präsentation: `praesentation/index.html` (lokal) bzw. die gehostete Seite.
@@ -220,7 +220,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Das ist die grösste Code-Übung (im Probelauf rund 3 Minuten Modellzeit, davon 2 für die Umsetzung). Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen. Der erste Plan ist oft schon gut. Dann sollen sie einen Punkt suchen, den sie anders wollen, und ihn mit Prompt 2 verlangen. Beim Freigeben heissen die Optionen «Yes, and use auto mode», «Yes, manually approve edits» und «Tell Claude what to change». Prompt 2 und 3 gehen über die dritte Option. Bei Prompt 3 fragt Claude noch einmal, ob es den Plan Mode verlassen darf, und zeigt den Freigabedialog erneut. Oft fragt Claude schon vor dem ersten Plan nach dem Grenzwert am Referenzbetrag: Die Leute sollen wählen, was sie für richtig halten.
+**Im Raum:** Das ist die grösste Code-Übung (in den Probeläufen 2 bis 3 Minuten Modellzeit allein für die Umsetzung, dazu das Planen und zwei Dialoge). Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen. Der erste Plan ist oft schon gut. Dann sollen sie einen Punkt suchen, den sie anders wollen, und ihn mit Prompt 2 verlangen. Beim Freigeben heissen die Optionen «Yes, and use auto mode», «Yes, manually approve edits» und «Tell Claude what to change». Prompt 2 und 3 gehen über die dritte Option. Bei Prompt 3 fragt Claude noch einmal, ob es den Plan Mode verlassen darf, und zeigt den Freigabedialog erneut. Oft fragt Claude schon vor dem ersten Plan nach dem Grenzwert am Referenzbetrag: Die Leute sollen wählen, was sie für richtig halten.
 
 **Abholen nach der Übung:** «Was habt ihr am Plan geändert, bevor Code entstanden ist?»
 

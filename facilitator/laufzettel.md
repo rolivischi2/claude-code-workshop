@@ -49,7 +49,7 @@ Kontrollpunkte: **0:10** Block A · **0:41** Block B · **1:21** Pause · **1:31
 
 - **Start 2** hat fünf Schritte in drei Minuten. Pro Schritt zwei Sätze, nicht mehr.
 - **A4** (8 Minuten): Im Probelauf hat das Modell 45 Sekunden gebraucht. Eng wird es durch Lesen und Neustart.
-- **B2** (15 Minuten): rund 3 Minuten Modellzeit. Wer bei 0:57 noch plant, legt den Plan ab und überspringt die Umsetzung.
+- **B2** (15 Minuten): Die Umsetzung allein braucht 2 bis 3 Minuten Modellzeit, dazu kommen das Planen und zwei Dialoge. Wer bei 0:57 noch plant, legt den Plan ab und überspringt die Umsetzung.
 - **Block R** hat keine Reserve. `g` schaltet die Schätzfragen aus (je rund 30 Sekunden), R2 lässt sich überspringen.
 - **D2**: Die Live-Demo darf höchstens 4 Minuten dauern, sonst geht die Zeit vom Schluss ab.
 
