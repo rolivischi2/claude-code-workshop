@@ -106,7 +106,7 @@ window.UEBUNGEN = [
       'Neue Session. **Shift+Tab** drücken, bis unten «plan mode» steht (vom auto mode aus dreimal).',
       'Prompt 1 absetzen und den Plan lesen.',
       'Plan mit der Checkliste prüfen und mit **einem** Prompt nachschärfen (Prompt 2).',
-      'Plan als Spec-Datei ablegen lassen, erst dann umsetzen (Prompt 3).'
+      'Plan als Spec-Datei ablegen lassen, erst dann umsetzen (Prompt 3). Prompt 2 und 3 im Freigabedialog über «Tell Claude what to change» eingeben.'
     ],
     liste: { title: 'Checkliste für die Plan-Kritik', items: [
       'Wird die bestehende Prüfung der Garantie wiederverwendet statt kopiert?',

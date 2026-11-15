@@ -3,6 +3,7 @@
 Zum Proben und zum Mitlaufen am Workshop. Die Zeit ist die Workshop-Uhr (0:00 = Beginn). Ausführlich, mit Text pro
 Tastendruck und häufigen Fragen: [sprechskript.md](sprechskript.md). Die Zeiten sind gerechnet, nicht gestoppt.
 Beim Proben die Spalte «Ist» ausfüllen.
+Was vor Beginn offen sein muss (Fenster, zwei Demo-Klone), steht im Sprechskript unter «Vorbereitung».
 
 Kontrollpunkte: **0:10** Block A · **0:41** Block B · **1:21** Pause · **1:31** Block C · **1:54** Block R · **2:17** Block D · **2:24** Schluss.
 

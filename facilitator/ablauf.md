@@ -37,6 +37,7 @@ Transitanmeldungen). Damit teilen App und RAG-Demo denselben Projektkontext.
 
 - [ ] RAG-Pipeline laufen lassen und `praesentation/index.html` einmal komplett durchklicken (siehe demo-scripts.md, Demo R).
 - [ ] Demo-Klon für D: `git clone --branch solution/final https://github.com/rolivischi2/claude-code-workshop ../demo-d`, darin `scripts/setup.sh`.
+- [ ] Demo-Klon für Demo 05 (`../demo-05`, Übung 04 darin durchspielen). Die genauen Schritte für beide Klone und die Fenster stehen im [Sprechskript](sprechskript.md), Abschnitt «Vorbereitung».
 - [ ] Plan B auf USB-Stick: gepacktes Repo inkl. `node_modules`, `rag/.cache/` und `praesentation/data.js`.
 
 **Am Morgen**
