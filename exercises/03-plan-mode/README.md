@@ -29,8 +29,8 @@ Ablauf:
 2. Prompt 1 absetzen und den Plan lesen.
 3. Plan mit der Checkliste unten kritisieren und mit **einem** Prompt nachschärfen (Prompt 2).
 4. Plan als Spec-Datei ablegen lassen und erst dann die Umsetzung freigeben (Prompt 3): im Freigabedialog
-   «Tell Claude what to change» wählen und Prompt 3 eintippen. Claude fragt nach, ob es den Plan Mode verlassen darf,
-   und zeigt den Freigabedialog noch einmal. Dann «Yes, and use auto mode».
+   «Tell Claude what to change» wählen und Prompt 3 eintippen. Claude zeigt den Freigabedialog noch einmal, manchmal mit einer
+   Rückfrage davor, ob es den Plan Mode verlassen darf. Dann «Yes, and use auto mode».
 
 ### Checkliste für die Plan-Kritik
 

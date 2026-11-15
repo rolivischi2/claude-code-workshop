@@ -24,14 +24,14 @@ Sie wird in **jeder** Session geladen. `/init` erzeugt einen Startpunkt.
 1. Frische Session. `/context` aufrufen und die Startbelegung notieren (aus Übung 00).
 2. Prompt 1 absetzen (gezielte `@`-Referenz), danach wieder `/context`. Was ist gewachsen?
 3. `/clear`, dann Prompt 2 (Feature) absetzen. Ergebnis mit der Checkliste unten vergleichen und notieren, was fehlt.
-4. Änderungen verwerfen: `git restore . && git clean -fd app/`
+4. Änderungen verwerfen: `git restore app/ && git clean -fd app/`
 
 **Teil B – mit CLAUDE.md**
 
 5. `/init` ausführen und die erzeugte `CLAUDE.md` lesen.
 6. Den Abschnitt «Teamkonventionen» unten in die `CLAUDE.md` übernehmen, kürzen und anpassen.
 7. `/clear`, Prompt 2 nochmals absetzen und mit Teil A vergleichen.
-8. Endpoint wieder verwerfen (wie in Schritt 4). Die `CLAUDE.md` behaltet ihr und committet sie:
+8. Endpoint wieder verwerfen (wie in Schritt 4, nur `app/`, sonst ist die neue `CLAUDE.md` leer). Die `CLAUDE.md` behaltet ihr und committet sie:
    `git add CLAUDE.md && git commit -m "Add CLAUDE.md with team conventions"`
 
 ### Checkliste «Teamstandard»

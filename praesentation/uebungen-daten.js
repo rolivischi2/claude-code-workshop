@@ -36,7 +36,7 @@ window.UEBUNGEN = [
       'Prompt 1 absetzen, danach wieder `/context`. Was ist gewachsen?',
       '`/clear`, dann Prompt 2 absetzen.',
       'Ergebnis mit der Checkliste vergleichen. Notieren, was fehlt.',
-      'Änderungen verwerfen: `git restore . && git clean -fd app/`'
+      'Änderungen verwerfen: `git restore app/ && git clean -fd app/`'
     ],
     liste: { title: 'Checkliste «Teamstandard»', items: [
       'Controller → Service → Repository, keine Logik im Controller',
@@ -61,7 +61,7 @@ window.UEBUNGEN = [
       '`/init` ausführen und die erzeugte `CLAUDE.md` lesen.',
       'Den Abschnitt «Teamkonventionen» aus dem Übungsblatt in die `CLAUDE.md` übernehmen, kürzen, anpassen.',
       '`/clear`, Prompt 2 nochmals absetzen. Mit Teil A vergleichen.',
-      'Endpoint wieder verwerfen: `git restore . && git clean -fd app/`',
+      'Endpoint wieder verwerfen: `git restore app/ && git clean -fd app/`',
       'Die `CLAUDE.md` behalten und committen.'
     ],
     prompts: [
