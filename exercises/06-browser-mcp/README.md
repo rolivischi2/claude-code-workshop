@@ -54,7 +54,14 @@ vorinstalliert), nehmt diese Zeile für `args`:
       "args": ["app/frontend/node_modules/@playwright/mcp/cli.js", "--isolated", "--browser", "msedge"]
 ```
 
-Ohne Chrome und ohne Edge startet der Server nicht. Dann zu zweit an einem Laptop arbeiten.
+Nur Chromium installiert (Linux)? Dann den Pfad zum Programm angeben (`which chromium`, je nach Distribution auch
+`chromium-browser`):
+
+```json
+      "args": ["app/frontend/node_modules/@playwright/mcp/cli.js", "--isolated", "--executable-path", "/usr/bin/chromium"]
+```
+
+Ohne Chrome, Edge und Chromium startet der Server nicht. Dann zu zweit an einem Laptop arbeiten.
 
 ## Vorgeschlagene Prompts
 

@@ -132,7 +132,7 @@ window.UEBUNGEN = [
     schritte: [
       '`.claude/settings.json` anlegen, vorerst nur der Teil `permissions` (rechts).',
       'Mit `/permissions` prüfen. Fehlen die Regeln: `/exit`, dann `claude -c`.',
-      'Einmal **Shift+Tab**: vom auto mode zu «default». Dort fragt Claude vor Änderungen und Befehlen nach.',
+      'Einmal **Shift+Tab**: vom auto mode zum «manual mode». Dort fragt Claude vor Änderungen und Befehlen nach.',
       'Wegwerf-Ordner anlegen: `mkdir -p scratch/wegwerf && touch scratch/wegwerf/notiz.txt`',
       'Prompt 1 und 2 absetzen. Was wird verweigert, wo fragt Claude nach?'
     ],
@@ -193,7 +193,7 @@ window.UEBUNGEN = [
     ziel: 'Den Playwright-MCP-Server einbinden. Claude reproduziert einen Frontend-Fehler selbst im Browser, behebt ihn und prüft das Ergebnis.',
     aufgabe: ['Bug: Lehnt das Backend eine Transitanmeldung ab (409, Code `TR-4091`), zeigt das Formular **keine** Meldung.'],
     schritte: [
-      '`.mcp.json` im Repo-Root anlegen (Vorlage rechts). Nur Edge installiert: in `args` zusätzlich `"--browser", "msedge"`.',
+      '`.mcp.json` im Repo-Root anlegen (Vorlage rechts). Nur Edge: in `args` zusätzlich `"--browser", "msedge"`. Nur Chromium: Varianten im Blatt.',
       'Die App in zwei weiteren Terminals starten, falls sie nicht seit der Pause läuft (Befehle im Blatt).',
       'Claude neu starten. Den Server ausdrücklich zulassen (nicht nur Enter). Mit `/mcp` prüfen: `playwright` ist verbunden.',
       'Prompt absetzen: reproduzieren, beheben, im Browser prüfen, e2e-Test ergänzen.'

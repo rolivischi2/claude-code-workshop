@@ -34,11 +34,11 @@
 | Problem | Übung | Lösung |
 |---------|-------|--------|
 | Port 8080 belegt | 06 | Alten Backend-Prozess beenden (`lsof -i :8080` bzw. `netstat -ano \| findstr 8080`) |
-| Playwright MCP startet nicht | 06 | Kein Chrome? `"--browser", "msedge"` in `.mcp.json`. Im Devcontainer `"--headless"` ergänzen. `/mcp` zeigt den Fehler. Weder Chrome noch Edge: zu zweit an einem Laptop. |
+| Playwright MCP startet nicht | 06 | Kein Chrome? `"--browser", "msedge"` in `.mcp.json`. Im Devcontainer `"--headless"` ergänzen. `/mcp` zeigt den Fehler. Nur Chromium (Linux): `"--executable-path", "/usr/bin/chromium"`. Kein Browser: zu zweit an einem Laptop. |
 | Tests grün, aber kein Browserfenster | 06 | Claude ist auf einen e2e-Test ausgewichen, MCP ist nicht genutzt worden. `/mcp` prüfen, Server zulassen, Prompt nochmals. |
 | Keine Rückfrage bei `rm` | 04 | Ordner leer? Dann nimmt Claude `rmdir`. `touch scratch/wegwerf/notiz.txt`, Prompt 2 nochmals. |
 | `spotless:check` bleibt rot | 04 | Normal, wenn in 02 und 03 Dateien ohne Hook entstanden sind. Massgeblich: `FristFormatter` steht nicht mehr in der Liste. |
-| Claude fragt nie nach | alle | auto mode ist der Startmodus. Einmal Shift+Tab wechselt zu default. deny- und ask-Regeln gelten in jedem Modus. |
+| Claude fragt nie nach | alle | auto mode ist der Startmodus. Einmal Shift+Tab wechselt zum manual mode (früher default). deny- und ask-Regeln gelten in jedem Modus. |
 | Grauer Vorschlag im Eingabefeld | alle | Nur ein Vorschlag (Tab übernimmt ihn). Nach einer verweigerten Aktion nicht übernehmen. Ausschalten: `/config`, «Prompt suggestions». |
 | Nach `/rewind` läuft der alte Prompt nochmals | 05 | Der Prompt steht nach dem Rewind wieder im Eingabefeld. Vor dem Weitertippen leeren. |
 | e2e-Test flaky | 06 | Angular läuft zoneless: Im Test auf sichtbare Inhalte warten, bevor Felder gefüllt werden |

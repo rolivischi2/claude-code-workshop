@@ -14,7 +14,7 @@ blockiert Edits an generiertem Code.
 ## Konzept
 
 **Permissions:** Es braucht eine Balance zwischen Tempo und Kontrolle. Claude Code kennt
-Permission-Modi (Default, Accept Edits, Plan, Auto) und `allow`/`ask`/`deny`-Regeln in
+Permission-Modi (auto mode, manual mode, accept edits, plan mode) und `allow`/`ask`/`deny`-Regeln in
 `settings.json`. Es gilt: **deny vor ask vor allow**. Claude Code startet im auto mode: Ein Klassifizierer
 prüft jede Aktion, Rückfragen sind selten. `deny`- und `ask`-Regeln gelten in **jedem** Modus.
 
@@ -32,7 +32,7 @@ Wer Übung 05 (Rewind) selbst ausprobieren will: in dieser Session bis dahin kei
 1. `.claude/settings.json` anlegen, **von Hand** (Vorlage unten, vorerst nur der Teil `permissions`).
    Sie gilt fürs ganze Team und wird committet.
 2. Mit `/permissions` prüfen. Claude erkennt die Datei in der laufenden Session. Fehlen die Regeln: `/exit`, dann `claude -c`.
-3. Einmal **Shift+Tab** drücken: vom auto mode in den Modus «default». Dort fragt Claude vor jeder Änderung
+3. Einmal **Shift+Tab** drücken: vom auto mode in den «manual mode» (früher «default»). Dort fragt Claude vor jeder Änderung
    und vor jedem Befehl nach. So seht ihr, was die Regeln zusätzlich leisten.
 4. Wegwerf-Ordner mit einer Datei anlegen: `mkdir -p scratch/wegwerf && touch scratch/wegwerf/notiz.txt`.
    Dann Prompt 1 und 2 absetzen und beobachten, was verweigert wird und wo Claude nachfragt.

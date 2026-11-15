@@ -28,7 +28,9 @@ Ablauf:
    vom auto mode aus sind es drei Tastendrücke.
 2. Prompt 1 absetzen und den Plan lesen.
 3. Plan mit der Checkliste unten kritisieren und mit **einem** Prompt nachschärfen (Prompt 2).
-4. Plan als Spec-Datei ablegen lassen und erst dann die Umsetzung freigeben (Prompt 3).
+4. Plan als Spec-Datei ablegen lassen und erst dann die Umsetzung freigeben (Prompt 3): im Freigabedialog
+   «Tell Claude what to change» wählen und Prompt 3 eintippen. Claude fragt nach, ob es den Plan Mode verlassen darf,
+   und zeigt den Freigabedialog noch einmal. Dann «Yes, and use auto mode».
 
 ### Checkliste für die Plan-Kritik
 
@@ -72,7 +74,10 @@ Prüfung gefunden und mit Test behoben, umso besser.
 <summary>Hinweise</summary>
 
 - Plan Mode verlassen: Beim Freigeben des Plans fragt Claude, wie es weitergehen soll: «Yes, and use auto mode»,
-  «Yes, manually approve edits» oder «No, keep planning». Wieder hinein geht es mit Shift+Tab.
+  «Yes, manually approve edits» oder «Tell Claude what to change». Mit der dritten Option gebt ihr Prompt 2 und 3 ein.
+  Wieder hinein geht es mit Shift+Tab.
+- Fragt Claude schon vor dem ersten Plan nach dem Grenzwert am Referenzbetrag? Wählt, was ihr für richtig haltet.
+  Prompt 2 klärt den Punkt ohnehin.
 - Erfüllt schon der erste Plan die ganze Checkliste? Dann sucht einen Punkt, den ihr anders wollt (Namen, Ort der
   Logik, zusätzlicher Test), und verlangt ihn mit Prompt 2. Das Ziel ist, den Plan zu ändern, bevor Code entsteht.
 - Ein guter Plan ist überprüfbar: Dateien, Schritte, Tests. «Ich implementiere die Korrektur» ist kein Plan.

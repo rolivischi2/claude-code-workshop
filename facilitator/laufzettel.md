@@ -19,7 +19,7 @@ Kontrollpunkte: **0:10** Block A · **0:41** Block B · **1:21** Pause · **1:31
 | A5 Teamfrage | 0:38 | 3 | Frage, Uhr | Welche Regel aus eurem Projekt müsste in die CLAUDE.md? | |
 | **B1 Leitplanken** | **0:41** | 4 | Sechs Tore, 1 Schätzfrage | deny vor ask vor allow, in jedem Modus. Auch im auto mode. | |
 | B2 Übung 03 | 0:45 | 15 | Übung: Plan Mode | Im Plan korrigieren ist billig, im Code teuer. | |
-| B3 Übung 04 A | 1:00 | 6 | Übung: deny und ask, einmal Shift+Tab zu default | Eine Regel ist eine Garantie, eine Bitte nicht. | |
+| B3 Übung 04 A | 1:00 | 6 | Übung: deny und ask, einmal Shift+Tab zu manual mode | Eine Regel ist eine Garantie, eine Bitte nicht. | |
 | B4 Übung 04 B | 1:06 | 9 | Übung: zwei Hooks | Ein Hook läuft ausserhalb des Modells und kostet keine Tokens. | |
 | B5 Rewind | 1:15 | 1 | Zeitleiste mit Checkpoints | Erfasst ist nur, was über Edit und Write geändert worden ist. | |
 | B6 Demo 05 | 1:16 | 2 | Du zeigst `/rewind` im Terminal | Der Schutz-Hook ist weg, der kopierte Formatier-Hook nicht. Eingabefeld leeren. | |

@@ -49,22 +49,25 @@ Eine Schätzfrage kostet rund 30 Sekunden. `g` schaltet alle aus.
 
 ## Pro Übung: Aufwand
 
-Gemessen beim Dry-Run vom 2026-11-14 mit einem **Team-Konto auf Sonnet 5.5** (kein Pro-Konto zur Hand), simulierter
-Teilnehmer, Details in [dry-run-2026-11-14.md](dry-run-2026-11-14.md). «Turns» = abgesetzte Prompts. «Nutzung» = Tokens aus
-den Transkripten und API-Gegenwert, weil die `/usage`-Prozente die steuernde Session mitzählen. Alles über 8 Turns muss vereinfacht werden.
+Gemessen bei zwei Dry-Runs mit einem **Team-Konto auf Sonnet 5.5** (kein Pro-Konto zur Hand), simulierter
+Teilnehmer, Details in [dry-run-2026-11-14.md](dry-run-2026-11-14.md) und [dry-run-2026-11-15.md](dry-run-2026-11-15.md)
+(zweiter Lauf, nach den Korrekturen). Die Tabelle zeigt den zweiten Lauf, in Klammern den Gegenwert des ersten.
+«Turns» = abgesetzte Prompts. «Nutzung» = Tokens aus den Transkripten und API-Gegenwert, weil die `/usage`-Prozente die
+steuernde Session mitzählen. Alles über 8 Turns muss vereinfacht werden.
 
 | Übung | Zeitbudget | Turns (Dry-Run) | Nutzung (Dry-Run) | Bemerkung |
 |-------|-----------|-----------------|-------------------|-----------|
-| 00 Setup-Check | 5' | 0 | 0 Tokens | nur Slash-Commands. Startbelegung 40.1k |
-| 01 Kontext und CLAUDE.md | 15' | 3 + `/init` | 16 Aufrufe, 8.6k Output, ≈ 0.31 $ | 2 Feature-Prompts + `/init`. Mapper-Effekt blieb aus |
-| 02 Skills | 8' | 1 | 6 Aufrufe, 5.0k Output, ≈ 0.16 $ | Skill lud von selbst, Modellzeit 45 s |
-| 03 Plan Mode | 15' | 3 | 12 Aufrufe, 15.1k Output, ≈ 0.36 $ | grösste Code-Übung, Umsetzung 1:58 min |
-| 04 Permissions und Hooks | 15' | 4 (+1) | 12 Aufrufe, 4.7k Output, ≈ 0.15 $ | +1, weil Prompt 2 das `rm` nicht ausführt |
+| 00 Setup-Check | 5' | 0 | 0 Tokens | nur Slash-Commands. Startbelegung 38.4k (Lauf 1: 40.1k) |
+| 01 Kontext und CLAUDE.md | 15' | 3 + `/init` | 16 Aufrufe, 8.4k Output, ≈ 0.31 $ (0.31) | beide Läufe: Tests ja, Mapper nein |
+| 02 Skills | 8' | 1 | 5 Aufrufe, 4.7k Output, ≈ 0.14 $ (0.16) | Skill lud von selbst, Modellzeit 43 s |
+| 03 Plan Mode | 15' | 3 (+2 Dialoge) | 16 Aufrufe, 20.8k Output, ≈ 0.48 $ (0.36) | grösste Code-Übung, Umsetzung 3:07 min. Prompt 2 ändert jetzt den Plan |
+| 04 Permissions und Hooks | 15' | 4 | 12 Aufrufe, 5.7k Output, ≈ 0.19 $ (0.15) | 4 Rückfragen im manual mode, `rm` fragt nach |
 | 05 Rewind | 2' Demo | – | – | nur der Facilitator, keine Modellnutzung |
-| 06 Browser über MCP | 17' | 1 | 21 Aufrufe, 5.3k Output, ≈ 0.25 $ | Browser-Snapshots: höchster Cache-Read (1.1M). Ohne Chrome läuft MCP nicht |
+| 06 Browser über MCP | 17' | 1 | 17 Aufrufe, 4.7k Output, ≈ 0.22 $ (0.25) | mit Browser. Ohne Chrome/Edge läuft MCP nicht, Claude weicht auf einen e2e-Test aus |
 
 Ziel: Alle Übungen zusammen brauchen **deutlich weniger als ein 5-Stunden-Fenster** eines Pro-Kontos.
-Dry-Run: zusammen ≈ 1.20 $ API-Gegenwert. Das 5h-Fenster (Team) stieg von 3 % auf 13 %, inklusive der steuernden Session. Ziel erreicht.
+Dry-Run: zusammen ≈ 1.35 $ API-Gegenwert (Lauf 1: ≈ 1.20 $). Das 5h-Fenster (Team) stieg in beiden Läufen von 3 % auf 13 %,
+inklusive der steuernden Session. Ziel erreicht.
 
 ## Puffer
 

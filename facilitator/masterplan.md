@@ -261,7 +261,9 @@ Nicht committet (`.gitignore`): `*.pdf`, `rag/.cache/`, `praesentation/data.js` 
 - [x] Dry-Run 00–06 auf Sonnet (2026-11-14, simulierter Teilnehmer, Team-Konto): [dry-run-2026-11-14.md](dry-run-2026-11-14.md), Werte in [timing.md](timing.md)
 - [x] Befunde aus dem Dry-Run eingearbeitet (2026-11-15): auto mode als Startmodus, Übung 01 ohne Mapper-Versprechen, Übung 03 mit `feature.md`,
       Übung 04 mit Wechsel zu default, `notiz.txt` und neuem Kriterium, Übung 05 und 06 mit den Stolperstellen, `angular.json` ohne Analytics-Frage
-- [ ] Zweiter Lauf für Übung 01 und 03 (Antworten streuen) und ein Lauf mit echtem **Pro**-Konto
+- [x] Zweiter Lauf (2026-11-15): [dry-run-2026-11-15.md](dry-run-2026-11-15.md). Befunde eingearbeitet: «manual mode» statt «default», Übung 03 mit
+      richtigen Optionsnamen, Umweg bei Prompt 3 und Grenzwert-Rückfrage, Übung 06 und `check-setup.sh` mit Chromium-Variante, Hinweis zu `/init` in 01
+- [ ] Ein Lauf mit echtem **Pro**-Konto
 - [ ] `.ps1`-Skripte auf echtem Windows testen
 - [ ] Devcontainer einmal bauen (Codespaces oder Docker)
 - [x] `/rewind`-Verhalten in `LOESUNG.md` von 05 im Dry-Run bestätigt. Vorher/Nachher in 01 nur teilweise (Tests ja, Mapper nein), Blatt angepasst

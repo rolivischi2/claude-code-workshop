@@ -201,7 +201,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 **Häufige Fragen**
 
-- *Welche Permission-Modi gibt es?* auto (Start, ein Klassifizierer prüft jede Aktion), default (fragt nach), acceptEdits (Datei-Edits ohne Rückfrage), plan (nur lesen und planen), dazu dontAsk und bypassPermissions. Shift+Tab geht von auto zu default, dann acceptEdits, dann plan, am Schluss wieder auto.
+- *Welche Permission-Modi gibt es?* auto (Start, ein Klassifizierer prüft jede Aktion), manual mode (fragt nach, früher default), acceptEdits (Datei-Edits ohne Rückfrage), plan (nur lesen und planen), dazu dontAsk und bypassPermissions. Shift+Tab geht von auto zu manual mode, dann acceptEdits, dann plan, am Schluss wieder auto.
 - *Wie stelle ich den Startmodus ein?* Mit `permissions.defaultMode` in den Settings oder mit `claude --permission-mode`. `auto` in den Projekt-Settings wird ignoriert, ein Repo kann den Modus also nicht lockern.
 - *Wie schalte ich die grauen Vorschläge aus?* In `/config` «Prompt suggestions» ausschalten. Übernommen wird ein Vorschlag mit Tab oder Pfeil rechts, dann Enter.
 - *Kann ein Hook eine deny-Regel aushebeln?* Nein. Deny- und ask-Regeln werden auch dann noch geprüft, wenn ein Hook «erlauben» zurückgibt.
@@ -220,7 +220,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Das ist die grösste Code-Übung (im Probelauf rund 3 Minuten Modellzeit, davon 2 für die Umsetzung). Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen. Der erste Plan ist oft schon gut. Dann sollen sie einen Punkt suchen, den sie anders wollen, und ihn mit Prompt 2 verlangen. Beim Freigeben heissen die Optionen «Yes, and use auto mode», «Yes, manually approve edits» und «No, keep planning».
+**Im Raum:** Das ist die grösste Code-Übung (im Probelauf rund 3 Minuten Modellzeit, davon 2 für die Umsetzung). Wer in Zeitnot kommt: Plan kritisieren und ablegen genügt, die Umsetzung lässt sich mit `scripts/reset-exercise.sh 04` überspringen. Der erste Plan ist oft schon gut. Dann sollen sie einen Punkt suchen, den sie anders wollen, und ihn mit Prompt 2 verlangen. Beim Freigeben heissen die Optionen «Yes, and use auto mode», «Yes, manually approve edits» und «Tell Claude what to change». Prompt 2 und 3 gehen über die dritte Option. Bei Prompt 3 fragt Claude noch einmal, ob es den Plan Mode verlassen darf, und zeigt den Freigabedialog erneut. Oft fragt Claude schon vor dem ersten Plan nach dem Grenzwert am Referenzbetrag: Die Leute sollen wählen, was sie für richtig halten.
 
 **Abholen nach der Übung:** «Was habt ihr am Plan geändert, bevor Code entstanden ist?»
 
@@ -230,7 +230,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr schreibt deny- und ask-Regeln und probiert aus, ob sie halten. Dann drückt ihr einmal Shift+Tab, vom auto mode zu default. Dort fragt Claude vor jeder Änderung nach. So seht ihr beides: die Rückfragen des Modus und eure Regeln. Ein verweigerter Aufruf kostet fast nichts.» |
+| (Start) | Nummer, Zeitbudget, Ziel und Aufgabe | «Ihr schreibt deny- und ask-Regeln und probiert aus, ob sie halten. Dann drückt ihr einmal Shift+Tab, vom auto mode zum manual mode. Dort fragt Claude vor jeder Änderung nach. So seht ihr beides: die Rückfragen des Modus und eure Regeln. Ein verweigerter Aufruf kostet fast nichts.» |
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
@@ -292,7 +292,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 
 | Taste | Auf dem Bild | Du sagst oder tust |
 |-------|--------------|--------------------|
-| (Start) | Uhr mit 10 Minuten, die zwei Befehle zum Starten der App | «Bevor ihr aufsteht: Startet die App in zwei weiteren Terminals, die Befehle stehen hier. Sie fährt während der Pause hoch, Übung 06 braucht sie.» Kurz warten, bis die meisten getippt haben. `z` startet die Uhr. Und: «Wer in Übung 04 zu default gewechselt hat, kann mit Shift+Tab zurück in den auto mode.» |
+| (Start) | Uhr mit 10 Minuten, die zwei Befehle zum Starten der App | «Bevor ihr aufsteht: Startet die App in zwei weiteren Terminals, die Befehle stehen hier. Sie fährt während der Pause hoch, Übung 06 braucht sie.» Kurz warten, bis die meisten getippt haben. `z` startet die Uhr. Und: «Wer in Übung 04 zum manual mode gewechselt hat, kann mit Shift+Tab zurück in den auto mode.» |
 
 ---
 
@@ -330,7 +330,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Schritte | Schritte kurz vorlesen. |
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | `z` startet die Uhr. Die Folie bleibt stehen. Durch den Raum gehen. |
 
-**Im Raum:** Häufigste Hänger: Claude nicht neu gestartet, Server nicht zugelassen (`/mcp` muss `playwright` als verbunden zeigen; im Probelauf ist im Dialog «Continue without using this MCP server» vorausgewählt gewesen), App läuft nicht, weder Chrome noch Edge installiert. Ohne Browser weicht Claude auf einen e2e-Test aus: Die Tests werden grün, aber das Browserfenster ist nie aufgegangen. Darauf achten. Browser-Snapshots sind gross: genaue Anweisungen sparen Klick-Runden.
+**Im Raum:** Häufigste Hänger: Claude nicht neu gestartet, Server nicht zugelassen (`/mcp` muss `playwright` als verbunden zeigen; im Probelauf ist im Dialog «Continue without using this MCP server» vorausgewählt gewesen), App läuft nicht, weder Chrome noch Edge installiert (auf Linux hilft `--executable-path` mit dem Pfad zu Chromium, siehe Blatt). Ohne Browser weicht Claude auf einen e2e-Test aus: Die Tests werden grün, aber das Browserfenster ist nie aufgegangen. Darauf achten. Browser-Snapshots sind gross: genaue Anweisungen sparen Klick-Runden.
 
 **Abholen nach der Übung:** «Hat Claude den Fehler selbst gesehen? Woran habt ihr das gemerkt?»
 

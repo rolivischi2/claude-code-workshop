@@ -29,8 +29,10 @@ if [ -d "/Applications/Google Chrome.app" ] || command -v google-chrome >/dev/nu
   ok "Google Chrome gefunden (für Playwright MCP, Übung 06)"
 elif [ -d "/Applications/Microsoft Edge.app" ] || command -v microsoft-edge >/dev/null; then
   ok "Microsoft Edge gefunden (Übung 06: Variante mit --browser msedge verwenden)"
+elif chromium_path="$(command -v chromium || command -v chromium-browser)"; then
+  ok "Chromium gefunden (Übung 06: Variante mit --executable-path $chromium_path verwenden)"
 else
-  warn "Weder Chrome noch Edge gefunden: Übung 06 (Playwright MCP) braucht einen der beiden"
+  warn "Weder Chrome, Edge noch Chromium gefunden: Übung 06 (Playwright MCP) braucht einen davon"
 fi
 
 section "Projekt"

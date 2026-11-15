@@ -93,7 +93,8 @@ Ihr könnt erklären: Was kostet am meisten Kontext, eure Prompts, die Antworten
   eine `*Mapper`-Klasse. Manchmal entsteht ein `GuaranteeMapper`, manchmal folgt Claude dem bestehenden Code
   und begründet das. Eine Regel in der `CLAUDE.md` konkurriert mit den Mustern im Code. Soll sie gewinnen,
   muss sie das sagen («auch wenn bestehender Code es anders macht»).
-- `/init` liest auch die Übungsblätter und erwähnt sie vielleicht in der `CLAUDE.md`. Das dürft ihr streichen.
+- `/init` liest auch die Übungsblätter und das Workshop-Material und erwähnt sie vielleicht in der `CLAUDE.md`, etwa mit
+  «`.claude/` is intentionally almost empty … Don't pre-populate it». Solche Sätze streichen: Ab Übung 02 füllt ihr `.claude/`.
 - `/compact Behalte nur …` fasst den Verlauf mit Fokus zusammen. Claude kompaktiert auch
   automatisch, wenn das Fenster voll wird. Besser ist es, vorher selbst aufzuräumen.
 - `@` mit Tab vervollständigt Pfade. Die Datei landet direkt im Kontext, ohne Such-Turns.
