@@ -185,7 +185,7 @@ Wer das Setup nicht gemacht hat, macht es jetzt nebenher und steigt bei Übung 0
 | `→` | Prompts, «Fertig, wenn …», Token-Tipp | Sagen: «Los.» |
 | `z` | Die Uhr läuft | **TUN:** Die Folie bleibt stehen, keine Taste mehr drücken. Durch den Raum gehen. |
 
-**Im Raum:** Prüfen, ob alle auf Sonnet sind und ob jemand mit dem Login hängt. Beim allerersten Start fragt Claude Code, ob man dem Ordner vertraut. Im Probelauf ist «No, exit» vorausgewählt gewesen: Wer nur Enter drückt, ist wieder draussen.
+**Im Raum:** Prüfen, ob alle auf Sonnet sind und ob jemand mit dem Login hängt. Beim allerersten Start fragt Claude Code, ob man dem Ordner vertraut. Im Probelauf ist «No, exit» vorausgewählt gewesen: Wer nur Enter drückt, ist wieder draussen. Steht bei jemandem unten nicht «auto mode»: Shift+Tab drücken, bis «auto mode on» erscheint, oder neu starten mit `claude --permission-mode auto`. Erscheint der Modus nie, bleibt die Person im manual mode. Die Übungen gehen auch so, Claude fragt dann öfter nach.
 
 **Abholen nach der Übung:** Nichts. Die Zahl aus `/context` kommt gleich in der Schätzfrage von A1.
 

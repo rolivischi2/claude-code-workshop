@@ -39,6 +39,7 @@
 | Keine Rückfrage bei `rm` | 04 | Ordner leer? Dann nimmt Claude `rmdir`. `touch scratch/wegwerf/notiz.txt`, Prompt 2 nochmals. |
 | `spotless:check` bleibt rot | 04 | Normal, wenn in 02 und 03 Dateien ohne Hook entstanden sind. Massgeblich: `FristFormatter` steht nicht mehr in der Liste. |
 | Claude fragt nie nach | alle | auto mode ist der Startmodus. Einmal Shift+Tab wechselt zum manual mode (früher default). deny- und ask-Regeln gelten in jedem Modus. |
+| Unten steht nicht «auto mode» | alle | Shift+Tab drücken, bis «auto mode on» erscheint. Oder neu starten mit `claude --permission-mode auto`. Erscheint der Modus nie: `claude --version` prüfen (Startmodus ab v2.1.283) und aktualisieren, oder im manual mode bleiben. Dann fragt Claude öfter nach, in Übung 03 sind es weniger als drei Tastendrücke bis «plan mode», in Übung 04 Teil A entfällt das Shift+Tab. |
 | Grauer Vorschlag im Eingabefeld | alle | Nur ein Vorschlag (Tab übernimmt ihn). Nach einer verweigerten Aktion nicht übernehmen. Ausschalten: `/config`, «Prompt suggestions». |
 | Nach `/rewind` läuft der alte Prompt nochmals | 05 | Der Prompt steht nach dem Rewind wieder im Eingabefeld. Vor dem Weitertippen leeren. |
 | e2e-Test flaky | 06 | Angular läuft zoneless: Im Test auf sichtbare Inhalte warten, bevor Felder gefüllt werden |
